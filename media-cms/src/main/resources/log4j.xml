@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%t] [%c] - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="dailyRollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/d1/joblog/tomcat/cms/info/media-cms.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} %-5p [%t] [%c] - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="errorRollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/d1/joblog/tomcat/cms/error/media-cms.log" />
+		<param name="threshold" value="error" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} %-5p [%t] [%c] - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="picUpToCdnFaild" class="org.apache.log4j.RollingFileAppender">
+	    <param name="File" value="/d1/joblog/tomcat/cms/error/picUpToCdnFaild.log"/>
+	    <param name="Append" value="true"/>
+	    <param name="MaxFileSize" value="10000KB"/>
+	    <param name="MaxBackupIndex" value="50"/>
+	    <layout class="org.apache.log4j.PatternLayout">
+	    	<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} %-5p [%t] [%c] - %m%n"/>
+	    </layout>
+	    <!-- <filter class="org.apache.log4j.varia.LevelRangeFilter">
+	    <param name="LevelMin" value="INFO" />
+	    <param name="LevelMax" value="INFO" />
+	    </filter> -->
+    </appender>
+    <appender name="picIsNull" class="org.apache.log4j.RollingFileAppender">
+	    <param name="File" value="/d1/joblog/tomcat/cms/error/picIsNull.log"/>
+	    <param name="Append" value="true"/>
+	    <param name="MaxFileSize" value="10000KB"/>
+	    <param name="MaxBackupIndex" value="50"/>
+	    <layout class="org.apache.log4j.PatternLayout">
+	    	<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} %-5p [%t] [%c] - %m%n"/>
+	    </layout>
+    </appender>
+
+	<logger name="com.dangdang">
+		<level value="INFO" />
+	</logger>
+	<logger name="org.springframework.cache">
+		<level value="INFO"/>
+	</logger>
+    
+    <logger name="org.mybatis">
+        <level value="INFO"/>
+    </logger>
+    <logger name="java.sql">
+        <level value="INFO"/>
+    </logger>
+   	<logger name="org.apache.ibatis">
+        <level value="WARN"/>
+    </logger>
+    
+   	<logger name="java.sql">
+        <level value="INFO"/>
+    </logger> 
+    
+    <!--  category 部分定义了特定包或者类的输出级别和方式，可以有多个 
+    <category name="org.apache">
+       <priority value="warn"/>
+       <appender-ref ref="WARN"/>
+    </category>-->
+     
+    <!--  打印日志到固定的文件中WATCHTASK 选择自定义的日志级别设置 -->
+    <category name="com.dangdang.digital.listenbook.task.PicUpCdnSychTask">
+       <priority value="ERROR"/>
+       <appender-ref ref="picUpToCdnFaild"/>
+    </category>
+    <category name="com.dangdang.digital.utils.UploadPicToCDN">
+       <priority value="ERROR"/>
+       <appender-ref ref="picIsNull"/>
+    </category>
+	
+	<root>
+		<level value="ERROR" />
+		<appender-ref ref="console" />
+		<appender-ref ref="dailyRollingFile" />
+	</root>
+</log4j:configuration>

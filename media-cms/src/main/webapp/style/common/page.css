@@ -1,0 +1,58 @@
+.divcenter {
+	text-align:center; 
+	color: #0066CC; 
+	margin:5px auto;
+	background-color:#ccc;
+}
+a {
+	behavior: url(/script/jquery/hideFoucs.htc);
+}
+.rightPager{
+	float: right; 
+	height: 20px; 
+	margin: 15px 5px 0 0 ;
+}
+
+.leftPager{
+	float: right;
+    font-size: 13px;
+    height: 20px;
+    margin-top: 15px;
+    text-align: right;
+    width: 400px;
+}
+
+.pagination .current {
+	background: none repeat scroll 0 0 #647cbc;
+    border: 1px solid #cccccc;
+    color: #ffffff;
+    display: block;
+    float: left;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    padding: 3px 5px;
+}
+.pagination a,.pagination span {
+ 	border: 1px solid #cccccc;
+    color: #000000;
+    display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 2px;
+    text-decoration: none;
+    text-align: center;
+    padding: 3px 5px;
+}
+
+.pagination .prev {
+	width: 40px;
+}
+
+.pagination .next {
+	width: 40px;
+}
+
+.Left {
+	text-align: left;
+}

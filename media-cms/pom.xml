@@ -1,0 +1,1307 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.dangdang.digital.read</groupId>
+	<artifactId>media-cms</artifactId>
+	<packaging>war</packaging>
+	<version>1.0.0</version>
+	<name>media-cms Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.framework.version>3.2.0.RELEASE</spring.framework.version>
+		<spring.amqp.version>1.1.3.RELEASE</spring.amqp.version>
+		<spring.redis.version>1.0.6.RELEASE</spring.redis.version>
+		<spring.mongodb.version>1.1.1.RELEASE</spring.mongodb.version>
+	</properties>
+
+	<dependencies>
+<dependency>
+  <groupId>com.twelvemonkeys.imageio</groupId>
+  <artifactId>twelvemonkeys-imageio-core</artifactId>
+  <version>2.3</version>
+</dependency>
+		<!-- 引入公司内api -->
+		<dependency>
+			<groupId>org.apache.ws.commons.util</groupId>
+			<artifactId>ws-commons-util</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dangdang.digital.read</groupId>
+			<artifactId>media-soa-client</artifactId>
+			<version>1.0.3-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dangdang</groupId>
+			<artifactId>soatool-client</artifactId>
+			<version>1.2.4-SNAPSHOT</version>
+		</dependency>
+		<dependency> 
+	        <groupId>com.dangdang.base</groupId> 
+	        <artifactId>account</artifactId> 
+	        <version>1.0.3-SNAPSHOT</version>
+	        <exclusions>
+				<exclusion>
+		  			<groupId>com.dangdang</groupId>
+		  			<artifactId>soatool-client</artifactId>
+				</exclusion>	
+				<exclusion>
+					<groupId>org.mybatis</groupId>
+					<artifactId>mybatis</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.mybatis</groupId>
+					<artifactId>mybatis-spring</artifactId>
+				</exclusion>
+		
+		
+				<exclusion>
+					<groupId>com.codingever</groupId>
+					<artifactId>javacommon</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.alibaba</groupId>
+					<artifactId>dubbo</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>tomcat-servlet-api</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>tomcat-jsp-api</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.github.sgroschupf</groupId>
+					<artifactId>zkclient</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache.zookeeper</groupId>
+					<artifactId>zookeeper</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.jsoup</groupId>
+					<artifactId>jsoup</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.aspectj</groupId>
+					<artifactId>aspectjrt</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.aspectj</groupId>
+					<artifactId>aspectjweaver</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>cglib</groupId>
+					<artifactId>cglib-nodep</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-codec</groupId>
+					<artifactId>commons-codec</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-beanutils</groupId>
+					<artifactId>commons-beanutils</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-collections</groupId>
+					<artifactId>commons-collections</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-configuration</groupId>
+					<artifactId>commons-configuration</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-dbcp</groupId>
+					<artifactId>commons-dbcp</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-digester</groupId>
+					<artifactId>commons-digester</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-fileupload</groupId>
+					<artifactId>commons-fileupload</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-httpclient</groupId>
+					<artifactId>commons-httpclient</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-io</groupId>
+					<artifactId>commons-io</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-lang</groupId>
+					<artifactId>commons-lang</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-net</groupId>
+					<artifactId>commons-net</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-pool</groupId>
+					<artifactId>commons-pool</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>commons-validator</groupId>
+					<artifactId>commons-validator</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>dom4j</groupId>
+					<artifactId>dom4j</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>net.sf.ezmorph</groupId>
+					<artifactId>ezmorph</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.freemarker</groupId>
+					<artifactId>freemarker</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>oro</groupId>
+					<artifactId>oro</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>jaxen</groupId>
+					<artifactId>jaxen</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>javax.annotation</groupId>
+					<artifactId>jsr250-api</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>jstl</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>javax.transaction</groupId>
+					<artifactId>jta</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>net.sourceforge.jexcelapi</groupId>
+					<artifactId>jxl</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-asm</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aspects</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context-support</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-jdbc</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-instrument</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-orm</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-tx</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-webmvc</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-data-commons-core</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-data-mongodb</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-data-mongodb-cross-store</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-data-mongodb-log4j</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework.data</groupId>
+					<artifactId>spring-data-redis</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.quartz</groupId>
+					<artifactId>quartz-all</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-core</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-acl</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-config</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-core</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-taglibs</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-web</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>taglibs</groupId>
+					<artifactId>standard</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.thoughtworks.xstream</groupId>
+					<artifactId>xstream</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>javax.activation</groupId>
+					<artifactId>activation</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.alibaba</groupId>
+					<artifactId>fastjson</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>ant</groupId>
+					<artifactId>ant</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache</groupId>
+					<artifactId>pdfbox</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache.solr</groupId>
+					<artifactId>solr-solrj</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.chenlb</groupId>
+					<artifactId>mmseg4j</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.icepdf</groupId>
+					<artifactId>core</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>bouncycastle</groupId>
+					<artifactId>bcprov-jdk16</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache.httpcomponents</groupId>
+					<artifactId>httpcore</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache.httpcomponents</groupId>
+					<artifactId>httpclient</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.hazelcast</groupId>
+					<artifactId>hazelcast-all</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.hazelcast</groupId>
+					<artifactId>hazelcast-wm</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.googlecode.jmockit</groupId>
+					<artifactId>jmockit</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.dbunit</groupId>
+					<artifactId>dbunit</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.antlr</groupId>
+					<artifactId>antlr</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.mozilla.intl.chardet</groupId>
+					<artifactId>chardet</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>jargs</groupId>
+					<artifactId>jargs</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>info.monitorenter.cpdetector</groupId>
+					<artifactId>cpdetector</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-email</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.umpay</groupId>
+					<artifactId>umpay</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi-ooxml</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi-ooxml-schemas</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>net.sf</groupId>
+					<artifactId>log4jdbc4</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>jmagick</groupId>
+					<artifactId>jmagick</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>mongo</groupId>
+					<artifactId>mongo-connector-java</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.dangdang</groupId>
+					<artifactId>emobile-service</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>kafka</groupId>
+					<artifactId>scala-library</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>kafka</groupId>
+					<artifactId>scala-compiler</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>kafka</groupId>
+					<artifactId>kafka</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>kafka</groupId>
+					<artifactId>kafka-perf</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.alibaba.rocketmq</groupId>
+					<artifactId>rocketmq-client</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.googlecode.concurrentlinkedhashmap</groupId>
+					<artifactId>concurrentlinkedhashmap-lru</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>com.caucho</groupId>
+					<artifactId>hessian</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>net.sourceforge.pinyin4j</groupId>
+					<artifactId>pinyin4j</artifactId>
+				</exclusion>
+		
+				<exclusion>
+					<groupId>org.databene</groupId>
+					<artifactId>contiperf</artifactId>
+				</exclusion>
+			</exclusions> 
+	   </dependency>
+		<!-- Spring framework -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.33</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dangdang.ibatis3</groupId>
+			<artifactId>ibatis3-spring-support</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>
+
+		<!-- redis -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>${spring.redis.version}</version>
+		</dependency>
+
+		<!-- mongodb -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>${spring.mongodb.version}</version>
+		</dependency>
+
+		<!-- fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.45</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>2.5.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- zkclient -->
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.1</version>
+		</dependency>
+
+		<!-- apache & commons -->
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils-core</artifactId>
+			<version>1.8.3</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.9</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>3.9</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-discovery</groupId>
+			<artifactId>commons-discovery</artifactId>
+			<version>0.5</version>
+		</dependency>
+
+		<!-- web -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.16</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ezmorph</groupId>
+			<artifactId>ezmorph</artifactId>
+			<version>1.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
+		<!-- other -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ostermiller</groupId>
+			<artifactId>utils</artifactId>
+			<version>1.07.00</version>
+		</dependency>
+		<dependency>
+			<groupId>ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.1.6</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jta</artifactId>
+					<groupId>javax.transaction</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-core</artifactId>
+			<version>4.6.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.solr</groupId>
+					<artifactId>solr-solrj</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>wstx-asl</artifactId>
+					<groupId>woodstox</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.hadoop</groupId>
+					<artifactId>hadoop-annotations</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>4.6.0</version>
+		</dependency>
+
+
+		<!-- axis2 -->
+		<dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-adb</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-http</artifactId>
+            <version>1.6.0</version>
+            <exclusions>
+				<exclusion>
+		  			 <groupId>org.apache.httpcomponents</groupId>
+            		 <artifactId>httpcore</artifactId>
+				</exclusion>
+			</exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-local</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+        
+         <!-- jmagick -->
+        <dependency>
+    		<groupId>jmagick</groupId>
+    		<artifactId>jmagick</artifactId>
+    		<version>6.4.0</version>
+		</dependency>
+		
+		<!-- JMS -->
+		<dependency>
+			<groupId>stax</groupId>
+			<artifactId>stax-api</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.framework.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- logging -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.belerweb</groupId>
+		    <artifactId>pinyin4j</artifactId>
+		    <version>2.5.0</version>
+		</dependency>
+		<!-- rabbitMQ -->
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+			<version>1.1.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.9</version>
+		</dependency>
+		<!-- 暂时引入javacommon -->
+		<dependency>
+			<groupId>com.codingever</groupId>
+			<artifactId>javacommon</artifactId>
+			<version>1.0.42</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-aop</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-lang</artifactId>
+					<groupId>commons-lang</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>tomcat-servlet-api</artifactId>
+					<groupId>org.apache.tomcat</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>oro</artifactId>
+					<groupId>oro</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-io</artifactId>
+					<groupId>commons-io</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-security-config</artifactId>
+					<groupId>org.springframework.security</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jna</artifactId>
+					<groupId>com.sun.jna</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-beanutils</artifactId>
+					<groupId>commons-beanutils</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>mysql-connector-java</artifactId>
+					<groupId>mysql</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>xstream</artifactId>
+					<groupId>com.thoughtworks.xstream</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>httpcore</artifactId>
+					<groupId>org.apache.httpcomponents</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>cpdetector</artifactId>
+					<groupId>info.monitorenter.cpdetector</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>pdfbox</artifactId>
+					<groupId>org.apache</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>poi</artifactId>
+					<groupId>org.apache.poi</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jsr250-api</artifactId>
+					<groupId>javax.annotation</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jstl</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-jdbc</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>tomcat-jsp-api</artifactId>
+					<groupId>org.apache.tomcat</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>dbunit</artifactId>
+					<groupId>org.dbunit</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>chardet</artifactId>
+					<groupId>org.mozilla.intl.chardet</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ezmorph</artifactId>
+					<groupId>net.sf.ezmorph</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>xmemcached</artifactId>
+					<groupId>com.googlecode.xmemcached</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ant</artifactId>
+					<groupId>org.apache.ant</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jargs</artifactId>
+					<groupId>jargs</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>tomcat-el-api</artifactId>
+					<groupId>org.apache.tomcat</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-security-web</artifactId>
+					<groupId>org.springframework.security</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-security-acl</artifactId>
+					<groupId>org.springframework.security</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-pool</artifactId>
+					<groupId>commons-pool</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>fastjson</artifactId>
+					<groupId>com.alibaba</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-dbcp</artifactId>
+					<groupId>commons-dbcp</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>freemarker</artifactId>
+					<groupId>org.freemarker</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hibernate-core</artifactId>
+					<groupId>org.hibernate</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>concurrentlinkedhashmap-lru</artifactId>
+					<groupId>com.googlecode.concurrentlinkedhashmap</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>cglib-nodep</artifactId>
+					<groupId>cglib</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hazelcast-wm</artifactId>
+					<groupId>com.hazelcast</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jsoup</artifactId>
+					<groupId>org.jsoup</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hessian</artifactId>
+					<groupId>com.caucho</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>solr-solrj</artifactId>
+					<groupId>org.apache.solr</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-webmvc</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>quartz-all</artifactId>
+					<groupId>org.quartz</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hazelcast-all</artifactId>
+					<groupId>com.hazelcast</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-tx</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>antlr</artifactId>
+					<groupId>org.antlr</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-email</artifactId>
+					<groupId>org.apache.commons</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>poi-ooxml-schemas</artifactId>
+					<groupId>org.apache.poi</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-asm</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-security-core</artifactId>
+					<groupId>org.springframework.security</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>junit</artifactId>
+					<groupId>junit</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-beans</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>httpclient</artifactId>
+					<groupId>org.apache.httpcomponents</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-orm</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ibatis</artifactId>
+					<groupId>com.ibatis</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-net</artifactId>
+					<groupId>commons-net</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-configuration</artifactId>
+					<groupId>commons-configuration</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>mail</artifactId>
+					<groupId>javax.mail</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jta</artifactId>
+					<groupId>javax.transaction</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jxl</artifactId>
+					<groupId>net.sourceforge.jexcelapi</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jaxen</artifactId>
+					<groupId>jaxen</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>core</artifactId>
+					<groupId>org.icepdf</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-fileupload</artifactId>
+					<groupId>commons-fileupload</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-security-taglibs</artifactId>
+					<groupId>org.springframework.security</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>activation</artifactId>
+					<groupId>javax.activation</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context-support</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-aspects</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-instrument</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>poi-ooxml</artifactId>
+					<groupId>org.apache.poi</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ehcache-core</artifactId>
+					<groupId>net.sf.ehcache</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>rocketmq-client</artifactId>
+					<groupId>com.alibaba.rocketmq</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>solr-core</artifactId>
+					<groupId>org.apache.solr</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-collections</artifactId>
+					<groupId>commons-collections</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>media-cms</finalName>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.0.0.RC0</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webApp>/</webApp>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>

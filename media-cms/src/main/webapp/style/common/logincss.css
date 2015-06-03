@@ -1,0 +1,33 @@
+body,table,tr,th,td,dl,dt,dd,div,span,h1,h2,h3,h4,ul,lip,textarea,select,form,input
+{font-size:12px;font-weight:normal;margin:0; padding:0;font-family:Arial;list-style-type:none;color:#444; text-decoration:none; line-height:21px;}
+img			{ border:0;}
+/*html {overflow-y:scroll}*/
+
+a         { color:#444; text-decoration: none;}
+a:visited { color:#444; text-decoration: none;}
+a:hover   { color:#333; text-decoration: underline;}
+a:active  { color:#444; text-decoration: none;}
+a,area { blr:expression(this.onFocus=this.blur())}
+:focus { -moz-outline-style: none; }
+
+body	{ background:url(/images/login/title.jpg) repeat-x 0 0;}
+
+/*ͷ����ʽ*/
+.head	{ height:72px; position:relative;}
+#logo	{ position:absolute; left:14px; top:6px;}
+#banner	{ position:absolute; left:267px; top:6px;}
+
+.main	{ width:500px; height:254px; margin:80px auto 0 auto;}
+.main ul{ width:300px; height:254px; float:right; padding-left:40px; border-left:1px solid #ddd;}
+.main li{ padding-top:15px; width:400px ; *width:300px}
+
+#lt		{ margin-top:10px; float:left;}
+
+.ipt1	{ border-top:1px solid #babcc0; border-right:1px solid #ecf1f5; border-bottom:1px solid #ecf1f5; border-left:1px solid #d1d3d5; width:140px; height:19px; line-height:19px; color:#a0a0a0;}
+.ipt2	{ border-top:1px solid #3d7bad; border-right:1px solid #a4c9e3; border-bottom:1px solid #b7d9ed; border-left:1px solid #b5cfe7; width:140px; height:19px; line-height:19px; color:#444;}
+
+.ipt1_code	{ border-top:1px solid #babcc0; border-right:1px solid #ecf1f5; border-bottom:1px solid #ecf1f5; border-left:1px solid #d1d3d5; width:80px; height:19px; line-height:19px; color:#a0a0a0;}
+.ipt2_code	{ border-top:1px solid #3d7bad; border-right:1px solid #a4c9e3; border-bottom:1px solid #b7d9ed; border-left:1px solid #b5cfe7; width:80px; height:19px; line-height:19px; color:#444;}
+
+.btn1	{ background:url(/images//login/btn.gif) 0 0 no-repeat; width:72px; height:25px; border:0; cursor:pointer;}
+.btn2	{ background:url(/images//login/btn.gif) 0 -25px no-repeat; width:72px; height:25px; border:0; cursor:pointer;}
