@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	 http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	default-lazy-init="false" default-autowire="byName">
+	<description>Dubbo provider配置</description>
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="media-hapi" />
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
+	<!-- 设置不依赖 -->
+	<dubbo:consumer check="false" timeout="10000" />
+
+	<dubbo:provider timeout="30000" />
+	<!-- 充值api -->
+	<dubbo:reference interface="com.dangdang.digital.api.IConsumerDepositApi" id="consumerDepositApi" version="2.0" protocol="dubbo" timeout="30000" retries="0"/>
+	<!-- 消费api -->
+	<dubbo:reference interface="com.dangdang.digital.api.IConsumeApi" id="consumeApi" version="2.0" protocol="dubbo" />
+	<!-- 订单接口 -->
+	<dubbo:reference id="orderApi" interface="com.dangdang.digital.api.IOrderApi" version="2.0" protocol="dubbo" />
+	<!-- 系统配置接口 -->
+	<dubbo:reference id="systemApi" interface="com.dangdang.digital.api.ISystemApi" version="2.0" protocol="dubbo" />
+	<!-- 榜单接口 -->
+	<dubbo:reference id="rankingListApi" interface="com.dangdang.digital.api.IRankingListApi" version="2.0" protocol="dubbo" />
+	<!-- 缓存接口 -->
+	<dubbo:reference id="cacheApi" interface="com.dangdang.digital.api.ICacheApi" version="2.0" protocol="dubbo">
+		<dubbo:method name="setMediaSaleCache" async="true" return="false" />
+		<dubbo:method name="batchSetMediaSaleCache" async="true" return="false" />
+		<dubbo:method name="setMediaCache" async="true" return="false" />
+		<dubbo:method name="batchSetMediaCache" async="true" return="false" />
+		<dubbo:method name="setChapterCache" async="true" return="false" />
+		<dubbo:method name="batchSetChapterCache" async="true" return="false" />
+		<dubbo:method name="refreshActivityCache" async="true" return="false" />
+		<dubbo:method name="batchRefreshActivityCache" async="true" return="false" />
+	</dubbo:reference>
+	<!-- 评论接口 -->
+	<dubbo:reference id="bookReviewApi" interface="com.dangdang.bookreview.api.IBookReviewApi" protocol="dubbo" version="1.0" />
+	 <!-- 用户信息接口 -->
+	<dubbo:reference id="commonApi" interface="com.dangdang.common.api.ICommonApi" protocol="dubbo" version="1.0" />
+	
+	<!-- 用户接口 -->
+	<dubbo:reference id="userApi" interface="com.dangdang.digital.api.IUserApi" protocol="dubbo" version="2.0" />
+	<!-- 用户权限接口 -->
+	<dubbo:reference id="userAuthorityApi" interface="com.dangdang.digital.api.IUserAuthorityApi" protocol="dubbo" version="2.0" />
+	
+	 <!-- 主附账户消费接口 -->
+    <dubbo:reference id="accountConsumeApi" interface="com.dangdang.base.account.client.api.IAccountConsumeApi" protocol="dubbo"  version="2.0" />
+
+	<!-- 账户信息接口 -->
+    <dubbo:reference id="accountApi" interface="com.dangdang.base.account.client.api.IAccountApi" protocol="dubbo"  version="2.0" />
+    
+    <!-- 弹幕接口 -->
+    <dubbo:reference id="barrageCommentApi" interface="com.dangdang.base.comment.client.api.IBarrageCommentApi" protocol="dubbo" version="2.0" />
+	
+	<!-- 电子书接口 -->
+	<dubbo:reference id="iEbookApi" interface="com.dangdang.ebook.api.api.IEbookApi" protocol="dubbo" version="1.0" />
+	
+	<!-- 发表频率控制接口 -->
+	<dubbo:reference id="controApi" interface="com.dangdang.common.api.IControApi" protocol="dubbo" version="1.0" />
+	
+	<!-- 敏感词接口 -->
+	<dubbo:reference id="illegalWordApi" interface="com.dangdang.digital.api.IIllegalWordApi" protocol="dubbo" version="2.0" />
+    
+    <dubbo:reference id="messageApi" interface="com.dangdang.digital.api.IMessageApi" protocol="dubbo" version="2.0" />
+    
+    <dubbo:reference id="thirdUserApi" interface="com.dangdang.thirduser.api.IThirdUser" protocol="dubbo" version="1.0"  />
+
+	<dubbo:reference id="attachAccountItemsApi" interface="com.dangdang.base.account.client.api.IAttachAccountItemsApi" protocol="dubbo"  version="1.0" />
+	<!--  IM接口 lvxiang 
+	<dubbo:reference id="imApi" interface="com.dangdang.digital.api.IMApi" protocol="dubbo"  version="1.0" />
+	-->
+	<!-- 购物车 -->
+	<dubbo:reference id="cartApi" interface="com.dangdang.digital.api.ICartApi" protocol="dubbo" version="2.0" />
+	<dubbo:reference id="userDeviceApi" interface="com.dangdang.digital.api.IUserDeviceApi" protocol="dubbo" version="2.0" />
+	
+	<!-- 个人中心UCenter -->
+	<dubbo:reference id="ucenterApi" interface="com.dangdang.ucenter.api.service.IUcenterApi" protocol="dubbo" version="1.0" />
+	<dubbo:reference id="ucenterLoginApi" interface="com.dangdang.ucenter.api.service.IUcenterLoginApi" protocol="dubbo" version="1.0" />
+	
+	<dubbo:reference id="digestApi" interface="com.dangdang.digital.api.IDigestApi" protocol="dubbo" version="2.0" />
+</beans>

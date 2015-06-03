@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%t] [%c] - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="dailyRollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/d1/joblog/media-hapi/info/media-hapi.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} %-5p [%t] [%c] - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="errorRollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/d1/joblog/media-hapi/error/media-hapi.log" />
+		<param name="threshold" value="error" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} %-5p [%t] [%c] - %m%n" />
+		</layout>
+	</appender>
+	
+	<logger name="com.dangdang">
+		<level value="INFO" />
+	</logger>
+	<logger name="org.springframework.cache">
+		<level value="INFO"/>
+	</logger>
+    
+    <logger name="org.mybatis">
+        <level value="WARN"/>
+    </logger>
+    
+   	<logger name="org.apache.ibatis">
+        <level value="WARN"/>
+    </logger>
+    
+   	<logger name="java.sql">
+        <level value="WARN"/>
+    </logger> 
+    
+    <!-- dubbo接口调用日志 -->
+    <logger name="com.dangdang.digital.profile">
+        <level value="INFO"/>
+    </logger> 
+	
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="console" />
+		<appender-ref ref="dailyRollingFile" />
+		<appender-ref ref="errorRollingFile" />
+	</root>
+	
+</log4j:configuration>

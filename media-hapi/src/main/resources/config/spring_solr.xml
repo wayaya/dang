@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+       default-autowire="byName"
+        >
+
+    <bean id="poolConfig" class="com.dangdang.cms.service.nearby.impl.monitor.PoolConfig">
+        <property name="corePoolSize" value="200"/>
+        <property name="maxPoolSize" value="200"/>
+        <property name="poolName" value="snb-pool"/>
+        <property name="queueSize" value="5000"/>
+        <property name="qlthreshold" value="80"/>
+    </bean>
+    <!--用户location更新任务-->
+    <bean id="locationTask" class="com.dangdang.cms.service.nearby.impl.nearby.asyn.DefaultBatchTask">
+        <property name="batchSize" value="5000"/>
+        <property name="maxQueueLength" value="10000"/>
+        <property name="syncSecTimeout" value="1"/>
+        <property name="workThreadSize" value="10"/>
+        <property name="clazz" value="com.dangdang.cms.service.nearby.impl.nearby.bean.SolrLocation"/>
+    </bean>
+    <!--批量任务-->
+    <util:map id="batchTask">
+        <entry key="com.dangdang.cms.service.nearby.impl.nearby.bean.SolrLocation" value-ref="locationTask"/>
+    </util:map>
+    <bean id="locationTotal" class="java.util.concurrent.atomic.AtomicLong"></bean>
+    <!--线程池管理器-->
+    <bean id="tpmanager" class="com.dangdang.cms.service.nearby.impl.nearby.asyn.TPExecutorManager" init-method="init"
+          destroy-method="destory">
+        <property name="batchTask" ref="batchTask"/>
+        <property name="poolConfig" ref="poolConfig"/>
+        <property name="locationTotal" ref="locationTotal"/>
+    </bean>
+    
+    <!--搜索服务器-->
+    <bean id="solrServer" class="com.dangdang.cms.service.nearby.impl.nearby.solr.NearbySolrServer" init-method="start"
+          destroy-method="destory">
+        <property name="coreName" value="booknearby"/>
+        <property name="zkHosts" value="${lbs.zk.hosts}"/>
+        <property name="tpmanager" ref="tpmanager"/>
+        <property name="range" value="5000"/>
+    </bean>
+    <!--批量处理索引更新管理器-->
+    <bean id="taskManager" class="com.dangdang.cms.service.nearby.impl.nearby.asyn.BatchTaskManager"
+          init-method="init" destroy-method="destory">
+        <property name="batchTask" ref="batchTask"/>
+        <property name="solrServer" ref="solrServer"/>
+        <property name="tpmanager" ref="tpmanager"/>
+    </bean>
+    <!--服务提供者-->
+    <bean id="updateService" class="com.dangdang.cms.service.nearby.impl.nearby.NearbyUpdateServiceImpl"
+          init-method="init" destroy-method="destory">
+        <property name="solrServer" ref="solrServer"/>
+        <property name="geoTree" ref="geoTree"/>
+        <property name="locationTotal" ref="locationTotal"/>
+        <property name="enableClear" value="false"/>
+        <property name="profileExpiredDays" value="3"/>
+    </bean>
+    <!--服务提供者-->
+    <bean id="nearbyService" class="com.dangdang.cms.service.nearby.impl.nearby.UserNearbyServiceImpl" destroy-method="destory"/>
+
+    <!--用于编码geocode的树-->
+    <bean id="geoTree" class="com.dangdang.cms.service.nearby.impl.nearby.bean.BlockTree" init-method="init">
+        <!--使用深度为20-->
+        <property name="treeDepth" value="${lbs.geo.tree.depth}"/>
+    </bean>
+
+</beans>
