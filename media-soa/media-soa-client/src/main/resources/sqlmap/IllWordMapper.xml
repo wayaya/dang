@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="IllWordMapper" >
+  <resultMap id="BaseResultMap" type="IllWord" >
+    <id column="illegal_word_id" property="illegalWordId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="words" property="words" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="illegalWordId != null" > and illegal_word_id=#{illegalWordId} </if>
+    <if test="type != null" > and type=#{type} </if>
+    <if test="words != null " > and words like CONCAT('%',#{words} ,'%')</if>
+  </sql>
+  <sql id="Base_Column_List" >
+    illegal_word_id, type, words
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_illegal_word
+    where illegal_word_id = #{illegalWordId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_illegal_word
+    where illegal_word_id = #{illegalWordId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="IllWord" >
+    insert into media_illegal_word (illegal_word_id, type, words
+      )
+    values (#{illegalWordId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{words,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="IllWord" >
+    insert into media_illegal_word
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="illegalWordId != null" >
+        illegal_word_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="words != null" >
+        words,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="illegalWordId != null" >
+        #{illegalWordId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="words != null" >
+        #{words,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="IllWord" >
+    update media_illegal_word
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="words != null" >
+        words = #{words,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where illegal_word_id = #{illegalWordId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="IllWord" >
+    update media_illegal_word
+    set type = #{type,jdbcType=INTEGER},
+      words = #{words,jdbcType=VARCHAR}
+    where illegal_word_id = #{illegalWordId,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_illegal_word where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_illegal_word where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_illegal_word where 1=1 <include refid="Base_Where" />
+    order by illegal_word_id desc
+  </select>
+</mapper>

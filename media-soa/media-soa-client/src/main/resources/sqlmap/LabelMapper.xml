@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="LabelMapper" >
+  <resultMap id="BaseResultMap" type="Label" >
+    <id column="lable_id" property="lableId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="isEnabled" property="isenabled" jdbcType="BIT" />
+  </resultMap>
+  
+  <sql id="Base_Where">
+		<if test="lable_id != null"> and lable_id=#{lableId} </if>
+		<if test="type != null"> and type=#{type} </if>
+		<if test="name != null"> and name=#{name} </if>
+		<if test="isEnabled != null"> and isEnabled=#{isenabled} </if>
+	</sql>
+	
+	
+  <sql id="Base_Column_List" >
+    lable_id, type, name, isEnabled
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_label
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select
+		count(1)
+		from media_label
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_label
+    where lable_id = #{lableId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_label
+    where lable_id = #{lableId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Label" >
+    insert into media_label (lable_id, type, name, 
+      isEnabled)
+    values (#{lableId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{isenabled,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="Label" >
+    insert into media_label
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lableId != null" >
+        lable_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="isenabled != null" >
+        isEnabled,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lableId != null" >
+        #{lableId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isenabled != null" >
+        #{isenabled,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Label" >
+    update media_label
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isenabled != null" >
+        isEnabled = #{isenabled,jdbcType=BIT},
+      </if>
+    </set>
+    where lable_id = #{lableId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Label" >
+    update media_label
+    set type = #{type,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      isEnabled = #{isenabled,jdbcType=BIT}
+    where lable_id = #{lableId,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_label where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(1) from media_label where 1=1
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_label where 1=1
+		<include refid="Base_Where" />
+		order by lable_id desc
+	</select>
+</mapper>

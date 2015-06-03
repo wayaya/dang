@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CustomerMediaHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.CustomerMediaHistory" >
+    <id column="customer_media_history_id" property="customerMediaHistoryId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="media_data" property="mediaData" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="customerMediaHistoryId != null" > and customer_media_history_id=#{customerMediaHistoryId} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="type != null" > and type=#{type} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    customer_media_history_id, cust_id, type, creation_date , media_data
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_customer_media_history
+    where customer_media_history_id = #{customerMediaHistoryId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_customer_media_history
+    where customer_media_history_id = #{customerMediaHistoryId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.CustomerMediaHistory" useGeneratedKeys="true" keyProperty="customerMediaHistoryId" >
+    insert into media_customer_media_history (customer_media_history_id, cust_id, type, 
+      creation_date, media_data)
+    values (#{customerMediaHistoryId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{type,jdbcType=TINYINT}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{mediaData,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.CustomerMediaHistory"  useGeneratedKeys="true" keyProperty="customerMediaHistoryId" >
+    insert into media_customer_media_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerMediaHistoryId != null" >
+        customer_media_history_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="mediaData != null" >
+        media_data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerMediaHistoryId != null" >
+        #{customerMediaHistoryId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaData != null" >
+        #{mediaData,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.CustomerMediaHistory" >
+    update media_customer_media_history
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaData != null" >
+        media_data = #{mediaData,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where customer_media_history_id = #{customerMediaHistoryId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.CustomerMediaHistory" >
+    update media_customer_media_history
+    set cust_id = #{custId,jdbcType=BIGINT},
+      type = #{type,jdbcType=TINYINT},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      media_data = #{mediaData,jdbcType=LONGVARCHAR}
+    where customer_media_history_id = #{customerMediaHistoryId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_media_history where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_customer_media_history where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_media_history where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

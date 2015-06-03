@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BookCityFragContentMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.BookCityFragContent" >
+    <id column="bookcity_frag_content_id" property="bookcityFragContentId" jdbcType="BIGINT" />
+    <result column="fragment_id" property="fragmentId" jdbcType="BIGINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+    <result column="content_html" property="contentHtml" jdbcType="LONGVARCHAR" />
+    <result column="content_html_editing" property="contentHtmlEditing" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="bookcityFragContentId != null" > and bookcity_frag_content_id=#{bookcityFragContentId} </if>
+    <if test="fragmentId != null" > and fragment_id=#{fragmentId} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="modifier != null" > and modifier=#{modifier} </if>
+    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    bookcity_frag_content_id, fragment_id, creator, creation_date, modifier, last_changed_date, content_html, content_html_editing
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_bookcity_frag_content
+    where bookcity_frag_content_id = #{bookcityFragContentId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_bookcity_frag_content
+    where bookcity_frag_content_id = #{bookcityFragContentId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.BookCityFragContent" useGeneratedKeys="true" keyProperty="bookcityFragContentId" >
+    insert into media_bookcity_frag_content (bookcity_frag_content_id, fragment_id, 
+      creator, creation_date, modifier, 
+      last_changed_date, content_html, content_html_editing
+      )
+    values (#{bookcityFragContentId,jdbcType=BIGINT}, #{fragmentId,jdbcType=BIGINT}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lastChangedDate,jdbcType=TIMESTAMP}, #{contentHtml,jdbcType=LONGVARCHAR}, #{contentHtmlEditing,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.BookCityFragContent"  useGeneratedKeys="true" keyProperty="bookcityFragContentId" >
+    insert into media_bookcity_frag_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookcityFragContentId != null" >
+        bookcity_frag_content_id,
+      </if>
+      <if test="fragmentId != null" >
+        fragment_id,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date,
+      </if>
+      <if test="contentHtml != null" >
+        content_html,
+      </if>
+      <if test="contentHtmlEditing != null" >
+        content_html_editing,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookcityFragContentId != null" >
+        #{bookcityFragContentId,jdbcType=BIGINT},
+      </if>
+      <if test="fragmentId != null" >
+        #{fragmentId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contentHtml != null" >
+        #{contentHtml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentHtmlEditing != null" >
+        #{contentHtmlEditing,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.BookCityFragContent" >
+    update media_bookcity_frag_content
+    <set >
+      <if test="fragmentId != null" >
+        fragment_id = #{fragmentId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contentHtml != null" >
+        content_html = #{contentHtml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentHtmlEditing != null" >
+        content_html_editing = #{contentHtmlEditing,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where bookcity_frag_content_id = #{bookcityFragContentId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.BookCityFragContent" >
+   update media_bookcity_frag_content
+    set fragment_id = #{fragmentId,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      content_html = #{contentHtml,jdbcType=LONGVARCHAR},
+      content_html_editing = #{contentHtmlEditing,jdbcType=LONGVARCHAR}
+    where bookcity_frag_content_id = #{bookcityFragContentId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_bookcity_frag_content where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_bookcity_frag_content where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_bookcity_frag_content where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ActivityRecordMapper" >
+  <resultMap id="BaseResultMap" type="ActivityRecord" >
+    <id column="media_activity_record_id" property="mediaActivityRecordId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="prize_id" property="prizeId" jdbcType="BIGINT" />
+    <result column="activity_type" property="activityType" jdbcType="INTEGER" />
+    <result column="prize_type" property="prizeType" jdbcType="INTEGER" />
+    <result column="prize_vest_type" property="prizeVestType" jdbcType="INTEGER" />
+    <result column="prize_name" property="prizeName" jdbcType="VARCHAR" />
+    <result column="worshiped_cust_id" property="worshipedCustId" jdbcType="BIGINT" />
+    <result column="worshiped_username" property="worshipedUsername" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="mediaActivityRecordId != null" > and media_activity_record_id=#{mediaActivityRecordId} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="username != null" > and username like CONCAT('%',#{username} ,'%')  </if>
+    <if test="prizeId != null" > and prize_id=#{prizeId} </if>
+    <if test="activityType != null" > and activity_type=#{activityType} </if>
+    <if test="amount != null" > and amount=#{amount} </if>
+    <if test="prizeType != null" > and prize_type=#{prizeType} </if>
+    <if test="prizeVestType != null" > and prize_vest_type=#{prizeVestType} </if>
+    <if test="prizeName != null" > and prize_name like CONCAT('%',#{prizeName} ,'%')  </if>
+    <if test="worshipedCustId != null" > and worshiped_cust_id=#{worshipedCustId} </if>
+    <if test="worshipedUsername != null" > and worshiped_username like CONCAT('%',#{worshipedUsername} ,'%')  </if>
+    <if test="creationDateStart != null" ><![CDATA[ and creation_date > #{creationDateStart}]]> </if>
+    <if test="creationDateEnd != null" ><![CDATA[ and creation_date < #{creationDateEnd}]]> </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    
+  </sql>
+  
+  <sql id="CustID_Base_Where" >
+    <if test="custId != null" > cust_id=#{custId} </if>
+    <if test="username != null" > and username=#{username} </if>
+    <if test="prizeId != null" > and prize_id=#{prizeId} </if>
+    <if test="activityType != null and activityType!=0" > and activity_type=#{activityType} </if>
+    <if test="prizeType != null and prizeType!=0" > and prize_type=#{prizeType} </if>
+    <if test="prizeVestType != null" > and prize_vest_type=#{prizeVestType} </if>
+    <if test="amount != null" > and amount=#{amount} </if>
+    <if test="prizeName != null" > and prize_name=#{prizeName} </if>
+    <if test="worshipedCustId != null" > and worshiped_cust_id=#{worshipedCustId} </if>
+    <if test="worshipedUsername != null" > and worshiped_username=#{worshipedUsername} </if>
+    <if test="creationDateStart != null" ><![CDATA[ and creation_date > #{creationDateStart}]]> </if>
+    <if test="creationDateEnd != null" ><![CDATA[ and creation_date < #{creationDateEnd}]]> </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    media_activity_record_id, cust_id, username, prize_id, activity_type, prize_type, 
+    prize_vest_type,amount,prize_name, worshiped_cust_id, worshiped_username, creation_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_activity_record
+    where media_activity_record_id = #{mediaActivityRecordId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCustId" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_activity_record
+    where <include refid="CustID_Base_Where" /> order by media_activity_record_id desc limit #{start,jdbcType=INTEGER},#{count,jdbcType=INTEGER} 
+  </select>
+  
+  
+    <select id="selectUserActivityRecordCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) total
+    from media_activity_record
+    where <include refid="CustID_Base_Where" /> 
+  </select>
+  
+   <select id="selectCountByCustId" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) total
+    from media_activity_record
+    where <include refid="CustID_Base_Where" /> 
+  </select>
+  
+  
+  <select id="selectByActivityType" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_activity_record where
+    <if test="activityType != null and activityType!=0" >  activity_type=#{activityType,jdbcType=INTEGER} </if> 
+    order by media_activity_record_id desc limit #{amount,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_activity_record
+    where media_activity_record_id = #{mediaActivityRecordId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="ActivityRecord" >
+    insert into media_activity_record (media_activity_record_id, cust_id, username, 
+      prize_id, activity_type, prize_type, 
+      prize_vest_type, prize_name,amount, worshiped_cust_id, 
+      worshiped_username, creation_date)
+    values (#{mediaActivityRecordId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, 
+      #{prizeId,jdbcType=BIGINT}, #{activityType,jdbcType=INTEGER}, #{prizeType,jdbcType=INTEGER}, 
+      #{prizeVestType,jdbcType=INTEGER}, #{prizeName,jdbcType=VARCHAR},#{amount,jdbcType=INTEGER}, #{worshipedCustId,jdbcType=BIGINT}, 
+      #{worshipedUsername,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="ActivityRecord" useGeneratedKeys="true" keyProperty="mediaActivityRecordId">
+    insert into media_activity_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaActivityRecordId != null" >
+        media_activity_record_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="prizeId != null" >
+        prize_id,
+      </if>
+      <if test="activityType != null" >
+        activity_type,
+      </if>
+      <if test="prizeType != null" >
+        prize_type,
+      </if>
+      <if test="prizeVestType != null" >
+        prize_vest_type,
+      </if>
+      <if test="prizeName != null" >
+        prize_name,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="worshipedCustId != null" >
+        worshiped_cust_id,
+      </if>
+      <if test="worshipedUsername != null" >
+        worshiped_username,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaActivityRecordId != null" >
+        #{mediaActivityRecordId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeId != null" >
+        #{prizeId,jdbcType=BIGINT},
+      </if>
+      <if test="activityType != null" >
+        #{activityType,jdbcType=INTEGER},
+      </if>
+      <if test="prizeType != null" >
+        #{prizeType,jdbcType=INTEGER},
+      </if>
+      <if test="prizeVestType != null" >
+        #{prizeVestType,jdbcType=INTEGER},
+      </if>
+      <if test="prizeName != null" >
+        #{prizeName,jdbcType=VARCHAR},
+      </if>
+       <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="worshipedCustId != null" >
+        #{worshipedCustId,jdbcType=BIGINT},
+      </if>
+      <if test="worshipedUsername != null" >
+        #{worshipedUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="ActivityRecord" >
+    update media_activity_record
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeId != null" >
+        prize_id = #{prizeId,jdbcType=BIGINT},
+      </if>
+      <if test="activityType != null" >
+        activity_type = #{activityType,jdbcType=INTEGER},
+      </if>
+      <if test="prizeType != null" >
+        prize_type = #{prizeType,jdbcType=INTEGER},
+      </if>
+      <if test="prizeVestType != null" >
+        prize_vest_type = #{prizeVestType,jdbcType=INTEGER},
+      </if>
+      <if test="prizeName != null" >
+        prize_name = #{prizeName,jdbcType=VARCHAR},
+      </if>
+       <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="worshipedCustId != null" >
+        worshiped_cust_id = #{worshipedCustId,jdbcType=BIGINT},
+      </if>
+      <if test="worshipedUsername != null" >
+        worshiped_username = #{worshipedUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where media_activity_record_id = #{mediaActivityRecordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ActivityRecord" >
+    update media_activity_record
+    set cust_id = #{custId,jdbcType=BIGINT},
+      username = #{username,jdbcType=VARCHAR},
+      prize_id = #{prizeId,jdbcType=BIGINT},
+      activity_type = #{activityType,jdbcType=INTEGER},
+      prize_type = #{prizeType,jdbcType=INTEGER},
+      prize_vest_type = #{prizeVestType,jdbcType=INTEGER},
+      prize_name = #{prizeName,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      worshiped_cust_id = #{worshipedCustId,jdbcType=BIGINT},
+      worshiped_username = #{worshipedUsername,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where media_activity_record_id = #{mediaActivityRecordId,jdbcType=BIGINT}
+  </update>
+  <!-- 奖品该日发放量 -->
+  <select id="prizeTodayPutCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_activity_record where prize_id = #{prizeId,jdbcType=BIGINT} and TO_DAYS(creation_date) = TO_DAYS(now())
+  </select>
+  <!-- 奖品总发放量 -->
+  <select id="prizeTotalPutCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_activity_record where prize_id = #{prizeId,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 今日膜拜的次数 -->
+  <select id="selectTodayWorshipTimes" resultType="java.lang.Integer" parameterType="java.lang.Long" >
+    select count(1) from media_activity_record where cust_id = #{worshipCustId,jdbcType=BIGINT} and TO_DAYS(creation_date) = TO_DAYS(now()) 
+  </select>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_activity_record where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_activity_record where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_activity_record where 1=1 <include refid="Base_Where"  />
+     order by media_activity_record_id desc
+  </select>
+  
+  <!-- 判断今天此次是否重复领取撒金币 -->
+  <select id="selectTodayGetSpreadByType" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_activity_record where 
+    cust_id = #{custId,jdbcType=BIGINT} and prize_type = #{prizeType,jdbcType=INTEGER} and TO_DAYS(creation_date) = TO_DAYS(now()) limit 1 
+  </select>
+  
+   <!-- 获取该用户领取该红包的钱，如果没领过返回null -->
+   <select id="selectGettedCoinsByRedPacketId" resultType="java.lang.Integer" parameterType="map" >
+    select amount from media_activity_record where  cust_id = #{custId,jdbcType=BIGINT} and activity_type = 4 and prize_id = #{prize_id,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 送包月人数 -->
+  <select id="selectUserCountSend" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from 
+  	(select distinct(cust_id) 
+  		from media_activity_record where activity_type in (7,8,9) and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}) T
+  </select>
+  <!-- 福袋抽奖人数 -->
+  <select id="selectUserCountLottery" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from (select distinct(cust_id) from media_activity_record where prize_type=1 and prize_vest_type=1 and activity_type=1 and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}) T
+  </select>
+  <!-- 福袋抽奖次数 -->
+  <select id="selectTimesLottery" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from media_activity_record where prize_type=1 and prize_vest_type=1 and activity_type=1 and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <!-- 福袋抽奖总银铃铛 -->
+  <select id="selectTotalSilverLottery" resultType="java.lang.Long" parameterType="map">
+  	select sum(amount) from media_activity_record where prize_type=1 and prize_vest_type=1 and activity_type=1 and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <!-- 膜拜总人数 -->
+  <select id="selectUserCountWorship" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from ( select distinct(cust_id) from media_activity_record where activity_type=2 and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}) T
+  </select>
+  <!-- 膜拜次数 -->
+  <select id="selectTimesWorship" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from media_activity_record where activity_type=2 and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <!-- 膜拜总银铃铛 -->
+  <select id="selectTotalSilverWorship" resultType="java.lang.Long" parameterType="map">
+  	select sum(amount) from media_activity_record where activity_type=2 and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <!-- 领取掉钱带（撒金币）人数 -->
+  <select id="selectUserCountSpreadCoins" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from ( select distinct(cust_id) from media_activity_record where activity_type=6 and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}) T
+  </select>
+  <!-- 领取掉钱带（撒金币）次数 -->
+  <select id="selectTimesSpreadCoins" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from media_activity_record where activity_type=6 and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <!-- 领取掉钱带（撒金币）银铃铛总数 -->
+  <select id="selectTotalSilverSpreadCoins" resultType="java.lang.Long" parameterType="map">
+  	select sum(amount) from media_activity_record where activity_type=6 and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}
+  </select>
+</mapper>

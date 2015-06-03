@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CatetoryMapper">
+
+	<resultMap id="BaseResultMap" type="Catetory">
+		<id column="catetory_id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="index_order" property="indexOrder" jdbcType="INTEGER" />
+		<result column="path" property="path" jdbcType="VARCHAR" />
+		<result column="image" property="image" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		<![CDATA[
+			catetory_id, name,code,parent_id,status,path,index_order,image
+	 	]]>
+	</sql>
+	
+	<select id="getTreeByParentId" resultMap="BaseResultMap" parameterType="Catetory">
+		select
+		<include refid="Base_Column_List" />
+		from media_catetory
+		where 1=1
+		<if test="id != null">
+			AND parent_id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="id == null">
+			AND parent_id is null
+		</if>
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		    select 
+		    <include refid="Base_Column_List" />
+		    from media_catetory
+		    where catetory_id = #{id,jdbcType=INTEGER}
+   </select>
+  
+  <!-- 查询指定media集合的分类信息 -->
+	<select id="selectByMediaIds" resultType="java.util.HashMap" parameterType="list" >
+		    select 
+		    <include refid="Base_Column_List" />
+		    from media_catetory
+		    where medid_id in
+		    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  					#{item}  
+  		   </foreach>
+   </select>
+  
+  <delete id="delCatetoryByMediaId" parameterType="java.lang.Long">
+  		delete from media_book_catetory where media_id = #{mediaId,jdbcType=BIGINT}
+  </delete>
+  <select id="getMediaCountByCatetoryId" parameterType="com.dangdang.digital.model.Catetory" resultType="Integer">
+  		select count(*) from media_book_catetory where catetory_id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getCatetoryByMediaId" resultType="com.dangdang.digital.model.Catetory" parameterType="java.lang.Long">
+  		select c.catetory_id id,c.name name,c.code,c.path,c.image from media_book_catetory m left join media_catetory c on c.catetory_id = m.catetory_id
+  		where m.media_id = #{mediaId,jdbcType=BIGINT}
+  </select>
+  
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from media_catetory
+		where catetory_id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insert" parameterType="Catetory" useGeneratedKeys="true" keyProperty="id">
+		insert into media_catetory (catetory_id,name,parent_id,code,status,index_order,path,image)
+		values (#{id,jdbcType=INTEGER},#{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}
+		, #{code,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{indexOrder,jdbcType=INTEGER},#{path,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR})
+	</insert>
+	<update id="updateOrder" parameterType="map">
+		update media_catetory set index_order = #{indexOrder,jdbcType=INTEGER} where
+		catetory_id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="Catetory">
+		update media_catetory
+		set name = #{name,jdbcType=VARCHAR},
+		index_order = #{indexOrder,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		<if test="path != null">
+			path = #{path,jdbcType=VARCHAR},
+		</if>
+		code = #{code,jdbcType=VARCHAR},
+		image = #{image,jdbcType=VARCHAR}
+		where catetory_id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		<![CDATA[
+			select
+			count(1)
+			from media_catetory where 1=1
+		]]>
+		<if test="parentId != null">
+			AND parent_id = #{parentId,jdbcType=INTEGER}
+		</if>
+		<if test="id != null">
+			AND catetory_id = #{id,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_catetory where 1=1
+		<if test="parentId != null">
+			AND parent_id = #{parentId,jdbcType=INTEGER}
+		</if>
+		<if test="id != null">
+			AND catetory_id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="code != null">
+			AND code = #{code,jdbcType=VARCHAR}
+		</if> 
+		<if test="path != null">
+			AND path like CONCAT('%',#{path},'%')
+		</if> 
+		<if test="name != null">
+			AND name = #{name,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		<![CDATA[
+			select
+			]]>
+			<include refid="Base_Column_List" />
+			<![CDATA[
+			from media_catetory where 1=1
+		]]>
+		<if test="parentId != null">
+			AND parent_id = #{parentId,jdbcType=INTEGER}
+		</if>
+		<if test="id != null">
+			AND catetory_id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="code != null">
+			AND code = #{code,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null">
+			AND name = #{name,jdbcType=VARCHAR}
+		</if>
+		order by index_order desc
+	</select>
+	<!-- <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from test
+	</select> -->
+		<select id="getTreeByParentCode" resultMap="BaseResultMap" parameterType="map">
+			select <include refid="Base_Column_List" />
+			from media_catetory where code='${code}' or path like '${code}%'
+	</select>
+	<select id="getCatetoryByCode" resultMap="BaseResultMap" parameterType="map">
+			select <include refid="Base_Column_List" />
+			from media_catetory where code='${code}'
+	</select>
+
+	
+	<select id="getSubCatetoryByParentPath" resultMap="BaseResultMap" parameterType="map">
+			select <include refid="Base_Column_List" />
+			from media_catetory where path like '${pathPrefix}%' and path !='${pathPrefix}' 
+			and status=1 
+			order by index_order desc
+	</select>
+	
+	
+	<select id="selectByPathPrefix" resultMap="BaseResultMap" parameterType="map">
+			select <include refid="Base_Column_List" />
+			from media_catetory where path like '${pathPrefix}%'
+	</select>
+	
+	<select id="getEpubCategoryByCode" resultType="java.lang.String" parameterType="map">
+		select name from media_epub_category 
+		where code = '${code}'
+	</select>
+</mapper>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ActivityTypeMapper">
+
+	<resultMap id="BaseResultMap" type="ActivityType">
+		<id column="activity_type_id" property="activityTypeId" jdbcType="INTEGER" />
+		<result column="activity_type_name" property="activityTypeName" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="activity_type_code" property="activityTypeCode" jdbcType="VARCHAR" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
+		<result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+		<result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+		<result column="is_promptly_to_account" property="isPromptlyToAccount" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Where">
+		<if test="activityTypeId != null"> and activity_type_id=#{activityTypeId} </if>
+		<if test="activityTypeName != null"> and activity_type_name=#{activityTypeName} </if>
+		<if test="status != null"> and status=#{status} </if>
+		<if test="activityTypeCode != null"> and activity_type_code=#{activityTypeCode} </if>
+		<if test="creator != null"> and creator=#{creator} </if>
+		<if test="modifier != null"> and modifier=#{modifier} </if>
+		<if test="creationDate != null"> and creation_date=#{creationDate} </if>
+		<if test="lastChangedDate != null"> and last_changed_date=#{lastChangedDate} </if>
+		<if test="isPromptlyToAccount != null"> and is_promptly_to_account=#{isPromptlyToAccount} </if>
+	</sql>
+	
+	<sql id="Base_Column_List">
+		activity_type_id, activity_type_name, status, activity_type_code, creator, modifier,
+		creation_date, last_changed_date, is_promptly_to_account
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from media_activity_type
+		where activity_type_id = #{activityTypeId,jdbcType=INTEGER}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from media_activity_type
+		where activity_type_id = #{activityTypeId,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insert" parameterType="ActivityType" useGeneratedKeys="true" keyProperty="activityTypeId">
+		insert into media_activity_type (activity_type_id, activity_type_name,
+		status, activity_type_code, creator,
+		modifier, creation_date, last_changed_date,
+		is_promptly_to_account)
+		values (#{activityTypeId,jdbcType=INTEGER},
+		#{activityTypeName,jdbcType=VARCHAR},
+		#{status,jdbcType=INTEGER}, #{activityTypeCode,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR},
+		#{modifier,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP},
+		#{lastChangedDate,jdbcType=TIMESTAMP},
+		#{isPromptlyToAccount,jdbcType=INTEGER})
+	</insert>
+	
+	<insert id="insertSelective" parameterType="ActivityType" useGeneratedKeys="true" keyProperty="activityTypeId">
+		insert into media_activity_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="activityTypeId != null">
+				activity_type_id,
+			</if>
+			<if test="activityTypeName != null">
+				activity_type_name,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="activityTypeCode != null">
+				activity_type_code,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="creationDate != null">
+				creation_date,
+			</if>
+			<if test="lastChangedDate != null">
+				last_changed_date,
+			</if>
+			<if test="isPromptlyToAccount != null">
+				is_promptly_to_account,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="activityTypeId != null">
+				#{activityTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="activityTypeName != null">
+				#{activityTypeName,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="activityTypeCode != null">
+				#{activityTypeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="creationDate != null">
+				#{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastChangedDate != null">
+				#{lastChangedDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isPromptlyToAccount != null">
+				#{isPromptlyToAccount,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="ActivityType">
+		update media_activity_type
+		<set>
+			<if test="activityTypeName != null">
+				activity_type_name = #{activityTypeName,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="activityTypeCode != null">
+				activity_type_code = #{activityTypeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="creationDate != null">
+				creation_date = #{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastChangedDate != null">
+				last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isPromptlyToAccount != null">
+				is_promptly_to_account = #{isPromptlyToAccount,jdbcType=INTEGER},
+			</if>
+		</set>
+		where activity_type_id = #{activityTypeId,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="ActivityType">
+		update media_activity_type
+		set activity_type_name = #{activityTypeName,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		activity_type_code = #{activityTypeCode,jdbcType=VARCHAR},
+		creator = #{creator,jdbcType=VARCHAR},
+		modifier = #{modifier,jdbcType=VARCHAR},
+		creation_date = #{creationDate,jdbcType=TIMESTAMP},
+		last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+		is_promptly_to_account = #{isPromptlyToAccount,jdbcType=INTEGER}
+		where activity_type_id = #{activityTypeId,jdbcType=INTEGER}
+	</update>
+	
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_activity_type where 1=1
+		<include refid="Base_Where" /> order by activity_type_id desc
+	</select>
+	
+	<select id="pageCount" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(1) from media_activity_type where 1=1
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_activity_type where 1=1
+		<include refid="Base_Where" /> order by activity_type_id desc
+	</select>
+</mapper>

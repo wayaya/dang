@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PushConditionVariableMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.PushConditionVariable" >
+    <id column="push_condition_variable_id" property="pushConditionVariableId" jdbcType="BIGINT" />
+    <result column="condition_id" property="conditionId" jdbcType="BIGINT" />
+    <result column="variable_name" property="variableName" jdbcType="VARCHAR" />
+    <result column="variable_description" property="variableDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="pushConditionVariableId != null" > and push_condition_variable_id=#{pushConditionVariableId} </if>
+    <if test="conditionId != null" > and condition_id=#{conditionId} </if>
+    <if test="variableName != null" > and variable_name=#{variableName} </if>
+    <if test="variableDescription != null" > and variable_description=#{variableDescription} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    push_condition_variable_id, condition_id, variable_name, variable_description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_push_condition_variable
+    where push_condition_variable_id = #{pushConditionVariableId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_push_condition_variable
+    where push_condition_variable_id = #{pushConditionVariableId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.PushConditionVariable"  useGeneratedKeys="true" keyProperty="pushConditionVariableId" >
+    insert into media_push_condition_variable (push_condition_variable_id, condition_id, 
+      variable_name, variable_description)
+    values (#{pushConditionVariableId,jdbcType=BIGINT}, #{conditionId,jdbcType=BIGINT}, 
+      #{variableName,jdbcType=VARCHAR}, #{variableDescription,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.PushConditionVariable"  useGeneratedKeys="true" keyProperty="pushConditionVariableId" >
+    insert into media_push_condition_variable
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pushConditionVariableId != null" >
+        push_condition_variable_id,
+      </if>
+      <if test="conditionId != null" >
+        condition_id,
+      </if>
+      <if test="variableName != null" >
+        variable_name,
+      </if>
+      <if test="variableDescription != null" >
+        variable_description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pushConditionVariableId != null" >
+        #{pushConditionVariableId,jdbcType=BIGINT},
+      </if>
+      <if test="conditionId != null" >
+        #{conditionId,jdbcType=BIGINT},
+      </if>
+      <if test="variableName != null" >
+        #{variableName,jdbcType=VARCHAR},
+      </if>
+      <if test="variableDescription != null" >
+        #{variableDescription,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.PushConditionVariable" >
+    update media_push_condition_variable
+    <set >
+      <if test="conditionId != null" >
+        condition_id = #{conditionId,jdbcType=BIGINT},
+      </if>
+      <if test="variableName != null" >
+        variable_name = #{variableName,jdbcType=VARCHAR},
+      </if>
+      <if test="variableDescription != null" >
+        variable_description = #{variableDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where push_condition_variable_id = #{pushConditionVariableId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.PushConditionVariable" >
+    update media_push_condition_variable
+    set condition_id = #{conditionId,jdbcType=BIGINT},
+      variable_name = #{variableName,jdbcType=VARCHAR},
+      variable_description = #{variableDescription,jdbcType=VARCHAR}
+    where push_condition_variable_id = #{pushConditionVariableId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_push_condition_variable where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_push_condition_variable where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_push_condition_variable where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserDeviceMapper" >
+    <resultMap id="BaseResultMap" type="com.dangdang.digital.model.UserDevice">
+        <result property="id" column="ID"/>
+        <result property="deviceNo" column="DEVICE_NO"/>
+        <result property="deviceType" column="DEVICE_TYPE"/>
+        <result property="username" column="USERNAME"/>
+        <result property="state" column="STATE"/>
+        <result property="created" column="CREATED"/>
+        <result property="publicKey" column="PUBLIC_KEY"/>
+        <result property="publicKey_pdf" column="PUBLIC_KEY_PDF"/>
+        <result property="custId" column="CUST_ID"/>
+        <result property="loginToken" column="LOGIN_TOKEN"/>
+        <result property="lastLoginTime" column="LAST_LOGIN_TIME"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List" >
+   		ID , DEVICE_NO , DEVICE_TYPE , USERNAME , STATE , CREATED , PUBLIC_KEY ,
+        CUST_ID, PUBLIC_KEY_PDF, LOGIN_TOKEN, LAST_LOGIN_TIME
+ 	</sql>
+
+ 	<sql id="Base_Where" >
+    	<if test="id != null" > and ID = #{id} </if>
+    	<if test="deviceNo != null" > and DEVICE_NO = #{deviceNo} </if>	
+    	<if test="deviceType != null" > and DEVICE_TYPE = #{deviceType} </if>
+    	<if test="username != null" > and USERNAME = #{username} </if>
+    	<if test="state != null" > and STATE = #{state} </if>
+    	<if test="created != null" > and CREATED = #{created} </if>
+    	<if test="publicKey != null" > and PUBLIC_KEY = #{publicKey} </if>
+    	<if test="publicKey_pdf != null" > and PUBLIC_KEY_PDF = #{publicKey_pdf} </if>
+    	<if test="custId != null" > and CUST_ID = #{custId} </if>
+    	<if test="loginToken != null" > and LOGIN_TOKEN = #{loginToken} </if>
+    	<if test="lastLoginTime != null" > and LAST_LOGIN_TIME = #{lastLoginTime} </if>
+    	<if test="ids != null" > and ID in (${ids}) </if>
+    </sql>
+
+	<insert id="insert" parameterType="com.dangdang.digital.model.UserDevice" useGeneratedKeys="true" keyProperty="ID"  >
+		<selectKey resultType="long" order="AFTER" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+        INSERT INTO USER_DEVICE (
+        	ID , DEVICE_NO , DEVICE_TYPE , USERNAME , STATE , CREATED , PUBLIC_KEY ,
+        	CUST_ID, PUBLIC_KEY_PDF, LOGIN_TOKEN, LAST_LOGIN_TIME
+        ) VALUES (
+        	#{id}, #{deviceNo}, #{deviceType}, #{username},#{state}, #{created}, #{publicKey}, #{custId},
+        	#{publicKey_pdf}, #{loginToken}, #{lastLoginTime}
+        )
+    </insert>
+
+	<update id="update" parameterType="com.dangdang.digital.model.UserDevice" >
+         UPDATE USER_DEVICE <set >
+         <if test="deviceNo != null" >
+        	DEVICE_NO = #{deviceNo},
+      	 </if>	
+      	 <if test="deviceType != null" >
+        	DEVICE_TYPE = #{deviceType},
+      	 </if>
+      	 <if test="username != null" >
+        	USERNAME = #{username},
+      	 </if>
+      	 <if test="state != null" >
+        	STATE = #{state},
+      	 </if>
+      	 <if test="created != null" >
+        	CREATED = #{created},
+      	 </if>
+      	 <if test="publicKey != null" >
+        	PUBLIC_KEY = #{publicKey},
+      	 </if>
+      	 <if test="publicKey_pdf != null" >
+        	PUBLIC_KEY_PDF = #{publicKey_pdf},
+      	 </if>
+      	 <if test="custId != null" >
+        	CUST_ID = #{custId},
+      	 </if>
+      	 <if test="loginToken != null" >
+        	LOGIN_TOKEN = #{loginToken},
+      	 </if>
+      	 <if test="lastLoginTime != null" >
+        	LAST_LOGIN_TIME = #{lastLoginTime},
+      	 </if>
+      	 </set>
+      	 ID = #{id}
+        WHERE 
+	        ID = #{id}
+    </update>
+      	
+
+    <delete id="delete" parameterType="map" >
+      delete from USER_DEVICE where 1=1 <include refid="Base_Where" />
+    </delete>
+
+    <select id="getById" resultMap="BaseResultMap">
+	    select <include refid="Base_Column_List"/>
+	    <![CDATA[
+	        from USER_DEVICE 
+	        where 
+		        ID = #id# 
+	    ]]>
+    </select>
+	 
+	<select id="getLastUsernameNoOfDay" resultType="string">
+		select max(REGEXP_SUBSTR(USERNAME, #{value})) as USERNAME from USER_DEVICE
+    </select>
+    
+  	<select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+  	  	select <include refid="Base_Column_List" /> from USER_DEVICE where 1=1 <include refid="Base_Where" />
+  	</select>
+  	<select id="pageCount" resultType="java.lang.Long" parameterType="map" >
+     	select count(1) from USER_DEVICE where 1=1 <include refid="Base_Where" />
+  	</select>
+  	<select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    	select <include refid="Base_Column_List" /> from USER_DEVICE where 1=1 <include refid="Base_Where" />
+  	</select>
+
+	<select id="getCustIdByToken" resultType="string">
+		SELECT `CUST_ID` FROM user_device WHERE LOGIN_TOKEN = #{value}
+	</select>
+	
+</mapper>

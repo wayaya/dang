@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PushStrategyMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.PushStrategy" >
+    <id column="cloud_push_strategy_id" property="cloudPushStrategyId" jdbcType="BIGINT" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="strategy_type" property="strategyType" jdbcType="INTEGER" />
+    <result column="strategy_name" property="strategyName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="cloudPushStrategyId != null" > and cloud_push_strategy_id=#{cloudPushStrategyId} </if>
+    <if test="appId != null" > and app_id=#{appId} </if>
+    <if test="strategyType != null" > and strategy_type=#{strategyType} </if>
+    <if test="strategyName != null" > and strategy_name=#{strategyName} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    cloud_push_strategy_id, app_id, strategy_type, strategy_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_cloud_push_strategy
+    where cloud_push_strategy_id = #{cloudPushStrategyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_cloud_push_strategy
+    where cloud_push_strategy_id = #{cloudPushStrategyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.PushStrategy" >
+    insert into media_cloud_push_strategy (cloud_push_strategy_id, app_id, strategy_type, 
+      strategy_name)
+    values (#{cloudPushStrategyId,jdbcType=BIGINT}, #{appId,jdbcType=INTEGER}, #{strategyType,jdbcType=INTEGER}, 
+      #{strategyName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.PushStrategy" >
+    insert into media_cloud_push_strategy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cloudPushStrategyId != null" >
+        cloud_push_strategy_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="strategyType != null" >
+        strategy_type,
+      </if>
+      <if test="strategyName != null" >
+        strategy_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cloudPushStrategyId != null" >
+        #{cloudPushStrategyId,jdbcType=BIGINT},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="strategyType != null" >
+        #{strategyType,jdbcType=INTEGER},
+      </if>
+      <if test="strategyName != null" >
+        #{strategyName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.PushStrategy" >
+    update media_cloud_push_strategy
+    <set >
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="strategyType != null" >
+        strategy_type = #{strategyType,jdbcType=INTEGER},
+      </if>
+      <if test="strategyName != null" >
+        strategy_name = #{strategyName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cloud_push_strategy_id = #{cloudPushStrategyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.PushStrategy" >
+    update media_cloud_push_strategy
+    set app_id = #{appId,jdbcType=INTEGER},
+      strategy_type = #{strategyType,jdbcType=INTEGER},
+      strategy_name = #{strategyName,jdbcType=VARCHAR}
+    where cloud_push_strategy_id = #{cloudPushStrategyId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cloud_push_strategy where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_cloud_push_strategy where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cloud_push_strategy where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

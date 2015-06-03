@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CloudPushPlanMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.CloudPushPlan" >
+    <id column="cloud_push_plan_id" property="cloudPushPlanId" jdbcType="BIGINT" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="plan_name" property="planName" jdbcType="VARCHAR" />
+    <result column="plan_type" property="planType" jdbcType="INTEGER" />
+    <result column="pushed_number" property="pushedNumber" jdbcType="BIGINT" />
+    <result column="opened_number" property="openedNumber" jdbcType="BIGINT" />
+    <result column="plan_status" property="planStatus" jdbcType="INTEGER" />
+    <result column="plan_condition" property="planCondition" jdbcType="BIGINT" />
+    <result column="push_strategy_id" property="pushStrategyId" jdbcType="BIGINT" />
+    <result column="ios_version_above" property="iosVersionAbove" jdbcType="VARCHAR" />
+    <result column="version_above" property="versionAbove" jdbcType="VARCHAR" />
+    <result column="message_type" property="messageType" jdbcType="INTEGER" />
+    <result column="message_title" property="messageTitle" jdbcType="VARCHAR" />
+    <result column="message_description" property="messageDescription" jdbcType="VARCHAR" />
+    <result column="device_type_android" property="deviceTypeAndroid" jdbcType="BIT" />
+    <result column="device_type_ios" property="deviceTypeIos" jdbcType="BIT" />
+    <result column="push_scope" property="pushScope" jdbcType="INTEGER" />
+    <result column="send_mode" property="sendMode" jdbcType="INTEGER" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="open_type" property="openType" jdbcType="INTEGER" />
+    <result column="open_url" property="openUrl" jdbcType="VARCHAR" />
+    <result column="custom_content" property="customContent" jdbcType="VARCHAR" />
+    <result column="custom_content_ios" property="customContentIos" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="send_frequency" property="sendFrequency" jdbcType="INTEGER" />
+    <result column="send_frequency_value" property="sendFrequencyValue" jdbcType="VARCHAR" />
+    <result column="send_time_begin" property="sendTimeBegin" jdbcType="VARCHAR" />
+    <result column="send_time_end" property="sendTimeEnd" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+    <result column="user_ids" property="userIds" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Where" >
+    <if test="cloudPushPlanId != null" > and cloud_push_plan_id=#{cloudPushPlanId} </if>
+    <if test="appId != null" > and app_id=#{appId} </if>
+    <if test="planName != null" > and plan_name=#{planName} </if>
+    <if test="planType != null" > and plan_type=#{planType} </if>
+    <if test="pushedNumber != null" > and pushed_number=#{pushedNumber} </if>
+    <if test="openedNumber != null" > and opened_number=#{openedNumber} </if>
+    <if test="planStatus != null" > and plan_status=#{planStatus} </if>
+    <if test="planCondition != null" > and plan_condition=#{planCondition} </if>
+    <if test="pushStrategyId != null" > and push_strategy_id=#{pushStrategyId} </if>
+    <if test="iosVersionAbove != null" > and ios_version_above=#{iosVersionAbove} </if>
+    <if test="versionAbove != null" > and version_above=#{versionAbove} </if>
+    <if test="messageType != null" > and message_type=#{messageType} </if>
+    <if test="messageTitle != null" > and message_title=#{messageTitle} </if>
+    <if test="messageDescription != null" > and message_description like '%${messageDescription}%' </if>
+    <if test="deviceTypeAndroid != null" > and device_type_android=#{deviceTypeAndroid} </if>
+    <if test="deviceTypeIos != null" > and device_type_ios=#{deviceTypeIos} </if>
+    <if test="pushScope != null" > and push_scope=#{pushScope} </if>
+    <if test="sendMode != null" > and send_mode=#{sendMode} </if>
+    <if test="sendTime != null" > and send_time=#{sendTime} </if>
+    <if test="openType != null" > and open_type=#{openType} </if>
+    <if test="openUrl != null" > and open_url=#{openUrl} </if>
+    <if test="customContent != null" > and custom_content=#{customContent} </if>
+    <if test="customContentIos != null" > and custom_content_ios=#{customContentIos} </if>
+    <if test="startDate != null" > and start_date=#{startDate} </if>
+    <if test="endDate != null" > and end_date=#{endDate} </if>
+    <if test="sendFrequency != null" > and send_frequency=#{sendFrequency} </if>
+    <if test="sendFrequencyValue != null" > and send_frequency_value=#{sendFrequencyValue} </if>
+    <if test="sendTimeBegin != null" > and send_time_begin=#{sendTimeBegin} </if>
+    <if test="sendTimeEnd != null" > and send_time_end=#{sendTimeEnd} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="modifier != null" > and modifier=#{modifier} </if>
+    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    cloud_push_plan_id, app_id, plan_name, plan_type, pushed_number, opened_number, plan_status, 
+    plan_condition,  push_strategy_id, ios_version_above, version_above, message_type, message_title, message_description, device_type_android, device_type_ios, 
+    push_scope, send_mode, send_time, open_type, open_url, custom_content, custom_content_ios, start_date, 
+    end_date, send_frequency, send_frequency_value, send_time_begin, send_time_end, creator, 
+    creation_date, modifier, last_changed_date, user_ids
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_cloud_push_plan
+    where cloud_push_plan_id = #{cloudPushPlanId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_cloud_push_plan
+    where cloud_push_plan_id = #{cloudPushPlanId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.CloudPushPlan" useGeneratedKeys="true" keyProperty="cloudPushPlanId"  >
+    insert into media_cloud_push_plan (cloud_push_plan_id, app_id, plan_name, 
+      plan_type, pushed_number, opened_number, 
+      plan_status, plan_condition, push_strategy_id, ios_version_above, version_above, message_type, message_title, 
+      message_description, device_type_android, device_type_ios, 
+      push_scope, send_mode, send_time, 
+      open_type, open_url, custom_content, custom_content_ios,
+      start_date, end_date, send_frequency, 
+      send_frequency_value, send_time_begin, send_time_end, 
+      creator, creation_date, modifier, 
+      last_changed_date, user_ids)
+    values (#{cloudPushPlanId,jdbcType=BIGINT}, #{appId,jdbcType=INTEGER}, #{planName,jdbcType=VARCHAR}, 
+      #{planType,jdbcType=INTEGER}, #{pushedNumber,jdbcType=BIGINT}, #{openedNumber,jdbcType=BIGINT}, 
+      #{planStatus,jdbcType=INTEGER}, #{planCondition,jdbcType=BIGINT}, #{pushStrategyId,jdbcType=BIGINT}, #{iosVersionAbove,jdbcType=VARCHAR}, #{versionAbove,jdbcType=VARCHAR},  
+      #{messageType,jdbcType=INTEGER}, #{messageTitle,jdbcType=VARCHAR}, 
+      #{messageDescription,jdbcType=VARCHAR}, #{deviceTypeAndroid,jdbcType=BIT}, #{deviceTypeIos,jdbcType=BIT}, 
+      #{pushScope,jdbcType=INTEGER}, #{sendMode,jdbcType=INTEGER}, #{sendTime,jdbcType=TIMESTAMP}, 
+      #{openType,jdbcType=INTEGER}, #{openUrl,jdbcType=VARCHAR}, #{customContent,jdbcType=VARCHAR},  #{customContentIos,jdbcType=VARCHAR}, 
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{sendFrequency,jdbcType=INTEGER}, 
+      #{sendFrequencyValue,jdbcType=VARCHAR}, #{sendTimeBegin,jdbcType=VARCHAR}, #{sendTimeEnd,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lastChangedDate,jdbcType=TIMESTAMP}, #{userIds,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.CloudPushPlan"  useGeneratedKeys="true" keyProperty="cloudPushPlanId"  >
+    insert into media_cloud_push_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cloudPushPlanId != null" >
+        cloud_push_plan_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="planName != null" >
+        plan_name,
+      </if>
+      <if test="planType != null" >
+        plan_type,
+      </if>
+      <if test="pushedNumber != null" >
+        pushed_number,
+      </if>
+      <if test="openedNumber != null" >
+        opened_number,
+      </if>
+      <if test="planStatus != null" >
+        plan_status,
+      </if>
+      <if test="planCondition != null" >
+        plan_condition,
+      </if>
+      <if test="pushStrategyId != null" >
+        push_strategy_id,
+      </if>
+      <if test="iosVersionAbove != null" >
+        ios_version_above,
+      </if>
+      <if test="versionAbove != null" >
+        version_above,
+      </if>
+      <if test="messageType != null" >
+        message_type,
+      </if>
+      <if test="messageTitle != null" >
+        message_title,
+      </if>
+      <if test="messageDescription != null" >
+        message_description,
+      </if>
+      <if test="deviceTypeAndroid != null" >
+        device_type_android,
+      </if>
+      <if test="deviceTypeIos != null" >
+        device_type_ios,
+      </if>
+      <if test="pushScope != null" >
+        push_scope,
+      </if>
+      <if test="sendMode != null" >
+        send_mode,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+      <if test="openType != null" >
+        open_type,
+      </if>
+      <if test="openUrl != null" >
+        open_url,
+      </if>
+      <if test="customContent != null" >
+        custom_content,
+      </if>
+      <if test="customContentIos != null" >
+        custom_content_ios,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="sendFrequency != null" >
+        send_frequency,
+      </if>
+      <if test="sendFrequencyValue != null" >
+        send_frequency_value,
+      </if>
+      <if test="sendTimeBegin != null" >
+        send_time_begin,
+      </if>
+      <if test="sendTimeEnd != null" >
+        send_time_end,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date,
+      </if>
+      <if test="userIds != null" >
+        user_ids,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cloudPushPlanId != null" >
+        #{cloudPushPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="planName != null" >
+        #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="planType != null" >
+        #{planType,jdbcType=INTEGER},
+      </if>
+      <if test="pushedNumber != null" >
+        #{pushedNumber,jdbcType=BIGINT},
+      </if>
+      <if test="openedNumber != null" >
+        #{openedNumber,jdbcType=BIGINT},
+      </if>
+      <if test="planStatus != null" >
+        #{planStatus,jdbcType=INTEGER},
+      </if>
+      <if test="planCondition != null" >
+        #{planCondition,jdbcType=BIGINT},
+      </if>
+      <if test="pushStrategyId != null" >
+        #{pushStrategyId,jdbcType=BIGINT},
+      </if>
+      <if test="iosVersionAbove != null" >
+        #{iosVersionAbove,jdbcType=VARCHAR},
+      </if>
+      <if test="versionAbove != null" >
+        #{versionAbove,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        #{messageType,jdbcType=INTEGER},
+      </if>
+      <if test="messageTitle != null" >
+        #{messageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDescription != null" >
+        #{messageDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceTypeAndroid != null" >
+        #{deviceTypeAndroid,jdbcType=BIT},
+      </if>
+      <if test="deviceTypeIos != null" >
+        #{deviceTypeIos,jdbcType=BIT},
+      </if>
+      <if test="pushScope != null" >
+        #{pushScope,jdbcType=INTEGER},
+      </if>
+      <if test="sendMode != null" >
+        #{sendMode,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openType != null" >
+        #{openType,jdbcType=INTEGER},
+      </if>
+      <if test="openUrl != null" >
+        #{openUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="customContent != null" >
+        #{customContent,jdbcType=VARCHAR},
+      </if>
+      <if test="customContentIos != null" >
+        #{customContentIos,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendFrequency != null" >
+        #{sendFrequency,jdbcType=INTEGER},
+      </if>
+      <if test="sendFrequencyValue != null" >
+        #{sendFrequencyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTimeBegin != null" >
+        #{sendTimeBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTimeEnd != null" >
+        #{sendTimeEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userIds != null" >
+        #{userIds,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.CloudPushPlan" >
+    update media_cloud_push_plan
+    <set >
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="planName != null" >
+        plan_name = #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="planType != null" >
+        plan_type = #{planType,jdbcType=INTEGER},
+      </if>
+      <if test="pushedNumber != null" >
+        pushed_number = #{pushedNumber,jdbcType=BIGINT},
+      </if>
+      <if test="openedNumber != null" >
+        opened_number = #{openedNumber,jdbcType=BIGINT},
+      </if>
+      <if test="planStatus != null" >
+        plan_status = #{planStatus,jdbcType=INTEGER},
+      </if>
+      <if test="planCondition != null" >
+        plan_condition = #{planCondition,jdbcType=BIGINT},
+      </if>
+      <if test="pushStrategyId != null" >
+        push_strategy_id = #{pushStrategyId,jdbcType=BIGINT},
+      </if>
+      <if test="iosVersionAbove != null" >
+        ios_version_above = #{iosVersionAbove,jdbcType=VARCHAR},
+      </if>
+      <if test="versionAbove != null" >
+        version_above = #{versionAbove,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        message_type = #{messageType,jdbcType=INTEGER},
+      </if>
+      <if test="messageTitle != null" >
+        message_title = #{messageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDescription != null" >
+        message_description = #{messageDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceTypeAndroid != null" >
+        device_type_android = #{deviceTypeAndroid,jdbcType=BIT},
+      </if>
+      <if test="deviceTypeIos != null" >
+        device_type_ios = #{deviceTypeIos,jdbcType=BIT},
+      </if>
+      <if test="pushScope != null" >
+        push_scope = #{pushScope,jdbcType=INTEGER},
+      </if>
+      <if test="sendMode != null" >
+        send_mode = #{sendMode,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openType != null" >
+        open_type = #{openType,jdbcType=INTEGER},
+      </if>
+      <if test="openUrl != null" >
+        open_url = #{openUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="customContent != null" >
+        custom_content = #{customContent,jdbcType=VARCHAR},
+      </if>
+      <if test="customContentIos != null" >
+        custom_content_ios = #{customContentIos,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendFrequency != null" >
+        send_frequency = #{sendFrequency,jdbcType=INTEGER},
+      </if>
+      <if test="sendFrequencyValue != null" >
+        send_frequency_value = #{sendFrequencyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTimeBegin != null" >
+        send_time_begin = #{sendTimeBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTimeEnd != null" >
+        send_time_end = #{sendTimeEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userIds != null" >
+        user_ids = #{userIds,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where cloud_push_plan_id = #{cloudPushPlanId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.CloudPushPlan" >
+    update media_cloud_push_plan
+    set app_id = #{appId,jdbcType=INTEGER},
+      plan_name = #{planName,jdbcType=VARCHAR},
+      plan_type = #{planType,jdbcType=INTEGER},
+      pushed_number = #{pushedNumber,jdbcType=BIGINT},
+      opened_number = #{openedNumber,jdbcType=BIGINT},
+      plan_status = #{planStatus,jdbcType=INTEGER},
+      plan_condition = #{planCondition,jdbcType=BIGINT},
+      push_strategy_id = #{pushStrategyId,jdbcType=BIGINT},
+      ios_version_above = #{iosVersionAbove,jdbcType=VARCHAR},
+      version_above = #{versionAbove,jdbcType=VARCHAR},
+      message_type = #{messageType,jdbcType=INTEGER},
+      message_title = #{messageTitle,jdbcType=VARCHAR},
+      message_description = #{messageDescription,jdbcType=VARCHAR},
+      device_type_android = #{deviceTypeAndroid,jdbcType=BIT},
+      device_type_ios = #{deviceTypeIos,jdbcType=BIT},
+      push_scope = #{pushScope,jdbcType=INTEGER},
+      send_mode = #{sendMode,jdbcType=INTEGER},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      open_type = #{openType,jdbcType=INTEGER},
+      open_url = #{openUrl,jdbcType=VARCHAR},
+      custom_content = #{customContent,jdbcType=VARCHAR},
+      custom_content_ios = #{customContentIos,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      send_frequency = #{sendFrequency,jdbcType=INTEGER},
+      send_frequency_value = #{sendFrequencyValue,jdbcType=VARCHAR},
+      send_time_begin = #{sendTimeBegin,jdbcType=VARCHAR},
+      send_time_end = #{sendTimeEnd,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      user_ids = #{userIds,jdbcType=LONGVARCHAR}
+    where cloud_push_plan_id = #{cloudPushPlanId,jdbcType=BIGINT}
+  </update>
+  
+  <delete id="deleteByIds" parameterType="list" >
+    delete from media_cloud_push_plan
+    where cloud_push_plan_id in 
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  		#{item}  
+  	</foreach>
+  </delete>
+  
+  <update id="addOpenNumber" parameterType="com.dangdang.digital.model.CloudPushPlan">
+  	update media_cloud_push_plan set opened_number = (opened_number+#{openedNumber,jdbcType=BIGINT}) where cloud_push_plan_id = #{cloudPushPlanId,jdbcType=BIGINT}
+  </update>
+  <update id="addPushNumber" parameterType="com.dangdang.digital.model.CloudPushPlan">
+  	update media_cloud_push_plan set pushed_number = (pushed_number+#{pushedNumber,jdbcType=BIGINT}) where cloud_push_plan_id = #{cloudPushPlanId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updatePushPlanStatus" >
+  	update media_cloud_push_plan set plan_status=#{planStatus} where cloud_push_plan_id	in 
+	  	<foreach collection="ids" item="planId"
+	        index="index" open="(" close=")" separator=",">
+	        #{planId}
+	    </foreach>
+  </update>
+  
+  <update id="updateExpiredJobStatus" parameterType="map" >
+  	update media_cloud_push_plan p set p.plan_status=1001 where p.plan_type=2 and p.end_date &lt; #{todayTime, jdbcType=TIMESTAMP}
+  </update>
+  
+  <select id="getValidAutoPlan" resultMap="BaseResultMap" parameterType="map" >
+  	select <include refid="Base_Column_List" /> from media_cloud_push_plan t 
+	 where t.plan_type=#{planType, jdbcType=INTEGER} 
+	 	 and t.start_date &lt;= #{todayTime, jdbcType=TIMESTAMP}
+		 and t.end_date &gt; #{todayTime, jdbcType=TIMESTAMP} 
+		 and t.plan_status!=1001
+  </select>
+  
+  <select id="findTodayUnpreparedPushPlans" resultMap="BaseResultMap" parameterType="map" >
+	 select <include refid="Base_Column_List" /> from media_cloud_push_plan t 
+	 where t.send_time &gt;= #{todayMorning, jdbcType=TIMESTAMP}
+		 and t.send_time &lt; #{tomorrowMorning, jdbcType=TIMESTAMP}
+		 and (t.plan_type=1 or t.plan_type=2)
+		 and t.plan_status!=1001 and t.plan_status!=1
+		 and t.cloud_push_plan_id not in (select a.plan_id from media_cloud_push_plan_status a where a.creation_date=#{todayMorning, jdbcType=TIMESTAMP})    
+  </select>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cloud_push_plan where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_cloud_push_plan where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cloud_push_plan where 1=1 <include refid="Base_Where" /> order by cloud_push_plan_id desc
+  </select>
+</mapper>

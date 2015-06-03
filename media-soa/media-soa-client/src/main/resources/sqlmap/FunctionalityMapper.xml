@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="FunctionalityMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Functionality" >
+    <id column="functionality_id" property="functionalityId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="level" property="level" jdbcType="BIGINT" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="url_pattern" property="urlPattern" jdbcType="VARCHAR" />
+    <result column="leaf" property="leaf" jdbcType="BIT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="functionalityId != null" > and functionality_id=#{functionalityId} </if>
+    <if test="name != null and name !='' " > and name=#{name} </if>
+    <if test="parentId != null" > and parent_id=#{parentId} </if>
+    <if test="level != null" > and level=#{level} </if>
+    <if test="path != null and path !='' " > and path=#{path} </if>
+    <if test="urlPattern != null and urlPattern !='' " > and url_pattern=#{urlPattern} </if>
+    <if test="leaf != null" > and leaf=#{leaf} </if>
+    <if test="creator != null and creator !='' " > and creator=#{creator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="modifier != null  and modifier !='' " > and modifier=#{modifier} </if>
+    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    functionality_id, name, parent_id, level, path, url_pattern, leaf, creator, creation_date, 
+    modifier, last_changed_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_functionality
+    where functionality_id = #{functionalityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_functionality
+    where functionality_id = #{functionalityId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByIds" parameterType="list" >
+    delete from media_functionality
+    where functionality_id in 
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  		#{item}  
+  	</foreach>
+  </delete>
+  <select id="selectByIds" resultMap="BaseResultMap">  
+    select  
+    <include refid="Base_Column_List" />  
+    from media_functionality where functionality_id in  
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+     	#{item}  
+    </foreach>  
+  </select>  
+  <delete id="deleteByMap" parameterType="map" >
+  	delete from media_functionality where 1=1 <include refid="Base_Where" />
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.Functionality" useGeneratedKeys="true" keyProperty="functionalityId" >
+    insert into media_functionality (functionality_id, name, parent_id, 
+      level, path, url_pattern, 
+      leaf, creator, creation_date, 
+      modifier, last_changed_date)
+    values (#{functionalityId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
+      #{level,jdbcType=BIGINT}, #{path,jdbcType=VARCHAR}, #{urlPattern,jdbcType=VARCHAR}, 
+      #{leaf,jdbcType=BIT}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lastChangedDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Functionality" useGeneratedKeys="true" keyProperty="functionalityId" >
+    insert into media_functionality
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="functionalityId != null" >
+        functionality_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="urlPattern != null" >
+        url_pattern,
+      </if>
+      <if test="leaf != null" >
+        leaf,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="functionalityId != null" >
+        #{functionalityId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=BIGINT},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="urlPattern != null" >
+        #{urlPattern,jdbcType=VARCHAR},
+      </if>
+      <if test="leaf != null" >
+        #{leaf,jdbcType=BIT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Functionality" >
+    update media_functionality
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=BIGINT},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="urlPattern != null" >
+        url_pattern = #{urlPattern,jdbcType=VARCHAR},
+      </if>
+      <if test="leaf != null" >
+        leaf = #{leaf,jdbcType=BIT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where functionality_id = #{functionalityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Functionality" >
+    update media_functionality
+    set name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      level = #{level,jdbcType=BIGINT},
+      path = #{path,jdbcType=VARCHAR},
+      url_pattern = #{urlPattern,jdbcType=VARCHAR},
+      leaf = #{leaf,jdbcType=BIT},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP}
+    where functionality_id = #{functionalityId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_functionality where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_functionality where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_functionality where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UsercmsMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Usercms" >
+    <id column="usercms_id" property="usercmsId" jdbcType="BIGINT" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="cpId" property="cpid" jdbcType="BIGINT" />
+    <result column="cpName" property="cpname" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="previledge" property="previledge" jdbcType="TINYINT" />
+    <result column="online_status" property="onlineStatus" jdbcType="TINYINT" />
+    <result column="password_encryption_key" property="passwordEncryptionKey" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="usercmsId != null" > and usercms_id=#{usercmsId} </if>
+    <if test="loginName != null and loginName !='' " > and login_name=#{loginName} </if>
+    <if test="password != null and password !='' " > and password=#{password} </if>
+    <if test="name != null and name !='' " > and name like '%${name}%' </if>
+    <if test="email != null and email != '' " > and email=#{email} </if>
+    <if test="cpid != null" > and cpId=#{cpid} </if>
+    <if test="cpname != null and cpname !='' " > and cpName=#{cpname} </if>
+    <if test="department != null and department !='' " > and department=#{department} </if>
+    <if test="creator != null and creator !='' " > and creator=#{creator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="modifier != null and modifier !='' " > and modifier=#{modifier} </if>
+    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="previledge != null" > and previledge=#{previledge} </if>
+    <if test="onlineStatus != null" > and online_status=#{onlineStatus} </if>
+    <if test="passwordEncryptionKey != null and passwordEncryptionKey !='' " > and password_encryption_key=#{passwordEncryptionKey} </if>
+    
+    <if test="ids != null" > 
+	     and usercms_id in 
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+	     	${item}  
+	    </foreach>  
+    </if>
+    
+  </sql>
+  <sql id="Base_Column_List" >
+    usercms_id, login_name, password, name, email, cpId, cpName, department, creator, 
+    creation_date, modifier, last_changed_date, status, previledge, online_status, password_encryption_key
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_usercms
+    where usercms_id = #{usercmsId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByIds" resultMap="BaseResultMap"  parameterType="list">
+    select 
+    <include refid="Base_Column_List" />
+    from media_usercms
+    where usercms_id in 
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  		#{item}  
+  	</foreach>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_usercms
+    where usercms_id = #{usercmsId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByIds" parameterType="list" >
+    delete from media_usercms
+    where usercms_id in 
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  		#{item}  
+  	</foreach>
+  </delete>
+ 
+  <insert id="insert" parameterType="com.dangdang.digital.model.Usercms" useGeneratedKeys="true" keyProperty="usercmsId" >
+    insert into media_usercms (usercms_id, login_name, password, 
+      name, email, cpId, cpName, 
+      department, creator, creation_date, 
+      modifier, last_changed_date, status, 
+      previledge, online_status, password_encryption_key
+      )
+    values (#{usercmsId,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{cpid,jdbcType=BIGINT}, #{cpname,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lastChangedDate,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{previledge,jdbcType=TINYINT}, #{onlineStatus,jdbcType=TINYINT}, #{passwordEncryptionKey,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Usercms" useGeneratedKeys="true" keyProperty="usercmsId" >
+    insert into media_usercms
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="usercmsId != null" >
+        usercms_id,
+      </if>
+      <if test="loginName != null" >
+        login_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="cpid != null" >
+        cpId,
+      </if>
+      <if test="cpname != null" >
+        cpName,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="previledge != null" >
+        previledge,
+      </if>
+      <if test="onlineStatus != null" >
+        online_status,
+      </if>
+      <if test="passwordEncryptionKey != null" >
+        password_encryption_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="usercmsId != null" >
+        #{usercmsId,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="cpid != null" >
+        #{cpid,jdbcType=BIGINT},
+      </if>
+      <if test="cpname != null" >
+        #{cpname,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="previledge != null" >
+        #{previledge,jdbcType=TINYINT},
+      </if>
+      <if test="onlineStatus != null" >
+        #{onlineStatus,jdbcType=TINYINT},
+      </if>
+      <if test="passwordEncryptionKey != null" >
+        #{passwordEncryptionKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Usercms" >
+    update media_usercms
+    <set >
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="cpid != null" >
+        cpId = #{cpid,jdbcType=BIGINT},
+      </if>
+      <if test="cpname != null" >
+        cpName = #{cpname,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="previledge != null" >
+        previledge = #{previledge,jdbcType=TINYINT},
+      </if>
+      <if test="onlineStatus != null" >
+        online_status = #{onlineStatus,jdbcType=TINYINT},
+      </if>
+      <if test="passwordEncryptionKey != null" >
+        password_encryption_key = #{passwordEncryptionKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where usercms_id = #{usercmsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Usercms" >
+    update media_usercms
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      cpId = #{cpid,jdbcType=BIGINT},
+      cpName = #{cpname,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      previledge = #{previledge,jdbcType=TINYINT},
+      online_status = #{onlineStatus,jdbcType=TINYINT},
+      password_encryption_key = #{passwordEncryptionKey,jdbcType=VARCHAR}
+    where usercms_id = #{usercmsId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_usercms where 1=1 <include refid="Base_Where" />  order by usercms_id desc
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_usercms where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_usercms where 1=1 <include refid="Base_Where" />  order by usercms_id desc
+  </select>
+</mapper>

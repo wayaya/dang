@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MessageMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Message" >
+    <id column="message_id" property="messageId" jdbcType="BIGINT" />
+    <result column="receiver_cust_id" property="receiverCustId" jdbcType="BIGINT" />
+    <result column="sender_cust_id" property="senderCustId" jdbcType="BIGINT" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="open_date" property="openDate" jdbcType="TIMESTAMP" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="open_share_type" property="openShareType" jdbcType="INTEGER" />
+    <result column="is_read" property="isRead" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="BIGINT" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="is_all_device" property="isAllDevice" jdbcType="INTEGER" />
+    <result column="custom_content" property="customContent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="messageId != null" > and message_id=#{messageId} </if>
+    <if test="receiverCustId != null" > and receiver_cust_id=#{receiverCustId} </if>
+    <if test="senderCustId != null" > and sender_cust_id=#{senderCustId} </if>
+    <if test="appId != null" > and app_id=#{appId} </if>
+    <if test="title != null" > and title=#{title} </if>
+    <if test="description != null" > and description=#{description} </if>
+    <if test="openDate != null" > and open_date=#{openDate} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="openShareType != null" > and open_share_type=#{openShareType} </if>
+    <if test="isRead != null" > and is_read=#{isRead} </if>
+    <if test="amount != null" > and amount=#{amount} </if>
+    <if test="deviceType != null" > and device_type=#{deviceType} </if>
+    <if test="isAllDevice != null" > and is_all_device=#{isAllDevice} </if>
+    <if test="customContent != null" > and custom_content=#{customContent} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    message_id, receiver_cust_id, sender_cust_id, app_id, title, description, open_date, 
+    creation_date, open_share_type, is_read, amount, device_type, is_all_device, custom_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_message
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_message
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.Message" >
+    insert into media_message (message_id, receiver_cust_id, sender_cust_id, 
+      app_id, title, description, 
+      open_date, creation_date, open_share_type, 
+      is_read, amount, device_type, 
+      is_all_device, custom_content)
+    values (#{messageId,jdbcType=BIGINT}, #{receiverCustId,jdbcType=BIGINT}, #{senderCustId,jdbcType=BIGINT}, 
+      #{appId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{openDate,jdbcType=TIMESTAMP}, #{creationDate,jdbcType=TIMESTAMP}, #{openShareType,jdbcType=INTEGER}, 
+      #{isRead,jdbcType=INTEGER}, #{amount,jdbcType=BIGINT}, #{deviceType,jdbcType=VARCHAR}, 
+      #{isAllDevice,jdbcType=INTEGER}, #{customContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Message" >
+    insert into media_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="messageId != null" >
+        message_id,
+      </if>
+      <if test="receiverCustId != null" >
+        receiver_cust_id,
+      </if>
+      <if test="senderCustId != null" >
+        sender_cust_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="openDate != null" >
+        open_date,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="openShareType != null" >
+        open_share_type,
+      </if>
+      <if test="isRead != null" >
+        is_read,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="isAllDevice != null" >
+        is_all_device,
+      </if>
+      <if test="customContent != null" >
+        custom_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="messageId != null" >
+        #{messageId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverCustId != null" >
+        #{receiverCustId,jdbcType=BIGINT},
+      </if>
+      <if test="senderCustId != null" >
+        #{senderCustId,jdbcType=BIGINT},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="openDate != null" >
+        #{openDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openShareType != null" >
+        #{openShareType,jdbcType=INTEGER},
+      </if>
+      <if test="isRead != null" >
+        #{isRead,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllDevice != null" >
+        #{isAllDevice,jdbcType=INTEGER},
+      </if>
+      <if test="customContent != null" >
+        #{customContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Message" >
+    update media_message
+    <set >
+      <if test="receiverCustId != null" >
+        receiver_cust_id = #{receiverCustId,jdbcType=BIGINT},
+      </if>
+      <if test="senderCustId != null" >
+        sender_cust_id = #{senderCustId,jdbcType=BIGINT},
+      </if>
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="openDate != null" >
+        open_date = #{openDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openShareType != null" >
+        open_share_type = #{openShareType,jdbcType=INTEGER},
+      </if>
+      <if test="isRead != null" >
+        is_read = #{isRead,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllDevice != null" >
+        is_all_device = #{isAllDevice,jdbcType=INTEGER},
+      </if>
+      <if test="customContent != null" >
+        custom_content = #{customContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Message" >
+    update media_message
+    set receiver_cust_id = #{receiverCustId,jdbcType=BIGINT},
+      sender_cust_id = #{senderCustId,jdbcType=BIGINT},
+      app_id = #{appId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      open_date = #{openDate,jdbcType=TIMESTAMP},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      open_share_type = #{openShareType,jdbcType=INTEGER},
+      is_read = #{isRead,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=BIGINT},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      is_all_device = #{isAllDevice,jdbcType=INTEGER},
+      custom_content = #{customContent,jdbcType=VARCHAR}
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_message where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_message where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_message where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="selectMessageCount" resultType="java.lang.Integer" parameterType="map" >
+   SELECT COUNT(1) FROM media_message WHERE receiver_cust_id = #{custId,jdbcType=VARCHAR} and app_id = #{appId,jdbcType=VARCHAR} and is_read='0'    
+  and  (is_all_device=1 or (is_all_device=0 and device_type=#{deviceType,jdbcType=VARCHAR}))
+  </select> 
+   <select id="findListByCustId" resultMap="BaseResultMap" parameterType="map" >
+    SELECT title,description,sender_cust_id,app_id,creation_date,open_share_type,is_read,amount , custom_content FROM media_message 
+    WHERE receiver_cust_id = #{custId,jdbcType=BIGINT} and app_id = #{appId,jdbcType=INTEGER} and 
+    (is_all_device=1 or (is_all_device=0 and device_type=#{deviceType,jdbcType=VARCHAR}) )
+    order by creation_date desc limit #{start,jdbcType=INTEGER},#{count,jdbcType=INTEGER} 
+  </select>
+  <select id="selectAllMessageCount" resultType="java.lang.Integer" parameterType="map" >
+   SELECT COUNT(1) FROM media_message WHERE receiver_cust_id = #{custId,jdbcType=VARCHAR} and app_id = #{appId,jdbcType=VARCHAR}     
+  and  (is_all_device=1 or (is_all_device=0 and device_type=#{deviceType,jdbcType=VARCHAR}))
+  </select> 
+  <update id="updateIsRead"  parameterType="map" >
+    update media_message
+    set is_read='1' , open_date = #{openDate,jdbcType=TIMESTAMP}
+    WHERE receiver_cust_id = #{custId,jdbcType=VARCHAR} and app_id = #{appId,jdbcType=VARCHAR} and (is_all_device=1 or (is_all_device=0 and device_type=#{deviceType,jdbcType=VARCHAR}))
+  </update>
+  
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MediaRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.MediaRelation" >
+    <id column="media_relation_id" property="mediaRelationId" jdbcType="BIGINT" />
+    <result column="sale_id" property="saleId" jdbcType="BIGINT" />
+    <result column="chapter_id" property="chapterId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="mediaRelationId != null" > and media_relation_id=#{mediaRelationId} </if>
+    <if test="saleId != null" > and sale_id=#{saleId} </if>
+    <if test="chapterId != null" > and chapter_id=#{chapterId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    media_relation_id, sale_id, chapter_id, media_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_relation
+    where media_relation_id = #{mediaRelationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_relation
+    where media_relation_id = #{mediaRelationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.MediaRelation" >
+    insert into media_relation (media_relation_id, sale_id, chapter_id, 
+      media_id)
+    values (#{mediaRelationId,jdbcType=BIGINT}, #{saleId,jdbcType=BIGINT}, #{chapterId,jdbcType=BIGINT}, 
+      #{mediaId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.MediaRelation" >
+    insert into media_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaRelationId != null" >
+        media_relation_id,
+      </if>
+      <if test="saleId != null" >
+        sale_id,
+      </if>
+      <if test="chapterId != null" >
+        chapter_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaRelationId != null" >
+        #{mediaRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="saleId != null" >
+        #{saleId,jdbcType=BIGINT},
+      </if>
+      <if test="chapterId != null" >
+        #{chapterId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.MediaRelation" >
+    update media_relation
+    <set >
+      <if test="saleId != null" >
+        sale_id = #{saleId,jdbcType=BIGINT},
+      </if>
+      <if test="chapterId != null" >
+        chapter_id = #{chapterId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where media_relation_id = #{mediaRelationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.MediaRelation" >
+    update media_relation
+    set sale_id = #{saleId,jdbcType=BIGINT},
+      chapter_id = #{chapterId,jdbcType=BIGINT},
+      media_id = #{mediaId,jdbcType=BIGINT}
+    where media_relation_id = #{mediaRelationId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_relation where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_relation where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_relation where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

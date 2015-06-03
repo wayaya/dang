@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="IWantMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.IWant">
+		<id column="ID" property="id" jdbcType="BIGINT" />
+		<result column="CUST_ID" property="custId" jdbcType="BIGINT" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="TITLE" property="title" jdbcType="VARCHAR" />
+		<result column="AUTHOR" property="author" jdbcType="VARCHAR" />
+		<result column="SPEAKER" property="speaker" jdbcType="VARCHAR" />
+		<result column="CONTACT_INFO" property="contactInfo" jdbcType="VARCHAR" />
+		<result column="PLATFORM" property="platform" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="id != null"> and ID= #{id}</if>
+		<if test="custId != null"> and CUST_ID= #{custId}</if>
+		<if test="createTime != null"> and CREATE_TIME= #{createTime}</if>
+		<if test="createTimeStart != null"> and CREATE_TIME &gt;= #{createTimeStart}</if>
+		<if test="createTimeEnd != null"> and CREATE_TIME &lt;= #{createTimeEnd}</if>
+		<if test="title != null"> and TITLE like CONCAT(#{title} ,'%') </if>
+		<if test="author != null"> and AUTHOR like CONCAT(#{author} ,'%') </if>
+		<if test="speaker != null"> and SPEAKER like CONCAT(#{speaker} ,'%') </if>
+		<if test="contactInfo != null"> and CONTACT_INFO like CONCAT(#{contactInfo} ,'%') </if>
+		<if test="platform != null"> and PLATFORM= #{platform}</if>
+	</sql>
+	<sql id="Base_Column_List">
+		ID ,
+		CUST_ID ,
+		CREATE_TIME ,
+		TITLE ,
+		AUTHOR ,
+		SPEAKER ,
+		CONTACT_INFO ,
+		PLATFORM
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from media_i_want
+		where
+		ID = #{id,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from media_i_want
+		where
+		ID = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insert" parameterType="com.dangdang.digital.model.IWant">
+		insert into media_i_want (
+		ID ,
+		CUST_ID ,
+		CREATE_TIME ,
+		TITLE ,
+		AUTHOR ,
+		SPEAKER ,
+		CONTACT_INFO ,
+		PLATFORM
+		)
+		values (
+		#{id,jdbcType=BIGINT},
+		#{custId,jdbcType=BIGINT},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{title,jdbcType=VARCHAR},
+		#{author,jdbcType=VARCHAR},
+		#{speaker,jdbcType=VARCHAR},
+		#{contactInfo,jdbcType=VARCHAR},
+		#{platform,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.IWant">
+		insert into media_i_want
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">ID,</if>
+			<if test="custId != null">CUST_ID,</if>
+			<if test="createTime != null">CREATE_TIME,</if>
+			<if test="title != null">TITLE,</if>
+			<if test="author != null">AUTHOR,</if>
+			<if test="speaker != null">SPEAKER,</if>
+			<if test="contactInfo != null">CONTACT_INFO,</if>
+			<if test="platform != null">PLATFORM,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{ID,jdbcType=BIGINT},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="author != null">
+				#{author,jdbcType=VARCHAR},
+			</if>
+			<if test="speaker != null">
+				#{speaker,jdbcType=VARCHAR},
+			</if>
+			<if test="contactInfo != null">
+				#{contactInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="platform != null">
+				#{platform,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.IWant">
+		update media_i_want
+		<set>
+			<if test="custId != null">
+				#{CUST_ID,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{CREATE_TIME,jdbcType=TIMESTAMP},
+			</if>
+			<if test="title != null">
+				#{TITLE,jdbcType=VARCHAR},
+			</if>
+			<if test="author != null">
+				#{AUTHOR,jdbcType=VARCHAR},
+			</if>
+			<if test="speaker != null">
+				#{SPEAKER,jdbcType=VARCHAR},
+			</if>
+			<if test="contactInfo != null">
+				#{CONTACT_INFO,jdbcType=VARCHAR},
+			</if>
+			<if test="platform != null">
+				#{PLATFORM,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		ID = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.IWant">
+		update media_i_want
+		set
+		CUST_ID= #{custId,jdbcType=BIGINT},
+		CREATE_TIME= #{createTime,jdbcType=TIMESTAMP},
+		TITLE= #{title,jdbcType=VARCHAR},
+		AUTHOR=
+		#{author,jdbcType=VARCHAR},
+		SPEAKER= #{speaker,jdbcType=VARCHAR},
+		CONTACT_INFO= #{contactInfo,jdbcType=VARCHAR},
+		PLATFORM= #{platform,jdbcType=VARCHAR},
+		where
+		ID = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_i_want where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from media_i_want where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_i_want where 1=1
+		<include refid="Base_Where" />
+		order by CREATE_TIME desc
+	</select>
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from media_i_want where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserAuthorityMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.UserAuthority" >
+    <id column="user_authority_id" property="userAuthorityId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="media_type" property="mediaType" jdbcType="SMALLINT" />
+    <result column="authority_type" property="authorityType" jdbcType="SMALLINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="authority_start" property="authorityStart" jdbcType="TIMESTAMP" />
+    <result column="authority_end" property="authorityEnd" jdbcType="TIMESTAMP" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+    <result column="pay_main_price" property="payMainPrice" jdbcType="INTEGER" />
+    <result column="pay_sub_price" property="paySubPrice" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="BaseResultWithDetailMap" type="com.dangdang.digital.model.UserAuthority" >
+    <id column="user_authority_id" property="userAuthorityId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="media_type" property="mediaType" jdbcType="SMALLINT" />
+    <result column="authority_type" property="authorityType" jdbcType="SMALLINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="authority_start" property="authorityStart" jdbcType="TIMESTAMP" />
+    <result column="authority_end" property="authorityEnd" jdbcType="TIMESTAMP" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+    <result column="pay_main_price" property="payMainPrice" jdbcType="INTEGER" />
+    <result column="pay_sub_price" property="paySubPrice" jdbcType="INTEGER" />
+    
+    <collection property="userAuthorityDetails" ofType="com.dangdang.digital.model.UserAuthorityDetail" column="user_authority_id"> 
+	  	<id column="d_user_authority_detail_id" property="userAuthorityDetailId" jdbcType="BIGINT" />
+	    <result column="d_user_authority_id" property="userAuthorityId" jdbcType="BIGINT" />
+	    <result column="d_media_chapter_id" property="mediaChapterId" jdbcType="BIGINT" />
+	    <result column="d_creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+	    <result column="d_media_id" property="mediaId" jdbcType="BIGINT" />
+	    <result column="d_cust_id" property="custId" jdbcType="BIGINT" />
+    </collection>  	
+  </resultMap>
+  
+  <sql id="Base_Where" >
+    <if test="userAuthorityId != null" > and user_authority_id=#{userAuthorityId} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="mediaType != null" > and media_type=#{mediaType} </if>
+    <if test="authorityType != null" > and authority_type=#{authorityType} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="authorityStart != null" > and authority_start=#{authorityStart} </if>
+    <if test="authorityEnd != null" > and authority_end=#{authorityEnd} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="lastModifiedDate != null" > and last_modified_date=#{lastModifiedDate} </if>
+    <if test="payMainPrice != null" > and pay_main_price=#{payMainPrice} </if>
+    <if test="paySubPrice != null" > and pay_sub_price=#{paySubPrice} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_authority_id, cust_id, media_type, authority_type, media_id, authority_start, 
+    authority_end, creation_date, last_modified_date, pay_main_price, pay_sub_price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_user_authority
+    where user_authority_id = #{userAuthorityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_user_authority
+    where user_authority_id = #{userAuthorityId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.UserAuthority" >
+    insert into media_user_authority (user_authority_id, cust_id, media_type, 
+      authority_type, media_id, authority_start, 
+      authority_end, creation_date, last_modified_date, 
+      pay_main_price, pay_sub_price)
+    values (#{userAuthorityId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{mediaType,jdbcType=SMALLINT}, 
+      #{authorityType,jdbcType=SMALLINT}, #{mediaId,jdbcType=BIGINT}, #{authorityStart,jdbcType=TIMESTAMP}, 
+      #{authorityEnd,jdbcType=TIMESTAMP}, #{creationDate,jdbcType=TIMESTAMP}, #{lastModifiedDate,jdbcType=TIMESTAMP}, 
+      #{payMainPrice,jdbcType=INTEGER}, #{paySubPrice,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.UserAuthority" useGeneratedKeys="true" keyProperty="userAuthorityId">
+    insert into media_user_authority
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userAuthorityId != null" >
+        user_authority_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="mediaType != null" >
+        media_type,
+      </if>
+      <if test="authorityType != null" >
+        authority_type,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="authorityStart != null" >
+        authority_start,
+      </if>
+      <if test="authorityEnd != null" >
+        authority_end,
+      </if>
+      <if test="payMainPrice != null" >
+        pay_main_price,
+      </if>
+      <if test="paySubPrice != null" >
+        pay_sub_price,
+      </if>
+        last_modified_date,creation_date
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userAuthorityId != null" >
+        #{userAuthorityId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaType != null" >
+        #{mediaType,jdbcType=SMALLINT},
+      </if>
+      <if test="authorityType != null" >
+        #{authorityType,jdbcType=SMALLINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="authorityStart != null" >
+        #{authorityStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorityEnd != null" >
+        #{authorityEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMainPrice != null" >
+        #{payMainPrice,jdbcType=INTEGER},
+      </if>
+      <if test="paySubPrice != null" >
+        #{paySubPrice,jdbcType=INTEGER},
+      </if>
+        now(),now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.UserAuthority" >
+    update media_user_authority
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaType != null" >
+        media_type = #{mediaType,jdbcType=SMALLINT},
+      </if>
+      <if test="authorityType != null" >
+        authority_type = #{authorityType,jdbcType=SMALLINT},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="authorityStart != null" >
+        authority_start = #{authorityStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorityEnd != null" >
+        authority_end = #{authorityEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMainPrice != null" >
+        pay_main_price = #{payMainPrice,jdbcType=INTEGER},
+      </if>
+      <if test="paySubPrice != null" >
+        pay_sub_price = #{paySubPrice,jdbcType=INTEGER},
+      </if>
+        last_modified_date = now()
+    </set>
+    where user_authority_id = #{userAuthorityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.UserAuthority" >
+    update media_user_authority
+    set cust_id = #{custId,jdbcType=BIGINT},
+      media_type = #{mediaType,jdbcType=SMALLINT},
+      authority_type = #{authorityType,jdbcType=SMALLINT},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      authority_start = #{authorityStart,jdbcType=TIMESTAMP},
+      authority_end = #{authorityEnd,jdbcType=TIMESTAMP},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      pay_main_price = #{payMainPrice,jdbcType=INTEGER},
+      pay_sub_price = #{paySubPrice,jdbcType=INTEGER}
+    where user_authority_id = #{userAuthorityId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_user_authority where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_user_authority where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_user_authority where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="getWithDetail" resultMap="BaseResultWithDetailMap" parameterType="map">
+		select m.*,d.user_authority_detail_id d_user_authority_detail_id, d.user_authority_id d_user_authority_id, 
+		d.media_chapter_id d_media_chapter_id, d.creation_date d_creation_date, d.media_id d_media_id, d.cust_id d_cust_id
+		from media_user_authority m,media_user_authority_detail d where m.user_authority_id=d.user_authority_id
+		<if test="custId != null"> and m.cust_id=#{custId} </if>
+        <if test="mediaId != null">
+			 and d.media_id = #{mediaId} 
+		</if>
+	</select>
+</mapper>

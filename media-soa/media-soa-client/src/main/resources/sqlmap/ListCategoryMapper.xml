@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ListCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.ListCategory" >
+    <id column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="category_code" property="categoryCode" jdbcType="VARCHAR" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+    <result column="list_code" property="listCode" jdbcType="VARCHAR" />
+    <result column="min_records" property="minRecords" jdbcType="INTEGER" />
+    <result column="max_records" property="maxRecords" jdbcType="INTEGER" />
+    <result column="days" property="days" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modifer" property="modifer" jdbcType="VARCHAR" />
+    <result column="last_change_date" property="lastChangeDate" jdbcType="TIMESTAMP" />
+    <result column="oreder_dimension" property="orederDimension" jdbcType="VARCHAR" />
+    <result column="last_record_id" property="lastRecordId" jdbcType="BIGINT" />
+    <result column="last_list_issue" property="lastListIssue" jdbcType="INTEGER" />
+    <result column="last_schedule_start_time" property="lastScheduleStartTime" jdbcType="TIMESTAMP" />
+    <result column="last_schedule_end_time" property="lastScheduleEndTime" jdbcType="TIMESTAMP" />
+    
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="categoryId != null" > and category_id=#{categoryId} </if>
+    <if test="parentId != null" > and parent_id=#{parentId} </if>
+    <if test="path != null" > and path like concat('%',#{path},'%') </if>
+    <if test="listCode != null" > and list_code=#{listCode} </if>
+    <if test="categoryName != null" > and category_name=#{categoryName} </if>
+    <if test="categoryCode != null" > and category_code=#{categoryCode} </if>
+    <if test="minRecords != null" > and min_records=#{minRecords} </if>
+    <if test="maxRecords != null" > and max_records=#{maxRecords} </if>
+    <if test="days != null" > and days=#{days} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="createDate != null" > and create_date=#{createDate} </if>
+    <if test="modifer != null" > and modifer=#{modifer} </if>
+    <if test="lastChangeDate != null" > and last_change_date=#{lastChangeDate} </if>
+    <if test="orederDimension != null" > and oreder_dimension=#{orederDimension} </if>
+    <if test="lastRecordId != null" > and last_record_id=#{lastRecordId} </if>
+    <if test="lastListIssue != null" > and last_list_issue=#{lastListIssue} </if>
+    <if test="lastScheduleStartTime != null" > and last_schedule_start_time=#{lastScheduleStartTime} </if>
+    <if test="lastScheduleEndTime != null" > and last_schedule_end_time=#{lastScheduleEndTime} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    category_id, list_code,parent_id,path,category_name, category_code, min_records, max_records, days, creator, 
+    create_date, modifer, last_change_date, oreder_dimension, last_record_id, last_list_issue, 
+    last_schedule_start_time, last_schedule_end_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_list_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_list_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.ListCategory" >
+    insert into media_list_category (category_id, parent_id,category_name, category_code, 
+      min_records, max_records, days, 
+      creator, create_date, modifer, 
+      last_change_date, oreder_dimension, last_record_id, 
+      last_list_issue, last_schedule_start_time, 
+      last_schedule_end_time)
+    values (#{categoryId,jdbcType=INTEGER},#{parentId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{categoryCode,jdbcType=VARCHAR}, 
+      #{minRecords,jdbcType=INTEGER}, #{maxRecords,jdbcType=INTEGER}, #{days,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifer,jdbcType=VARCHAR}, 
+      #{lastChangeDate,jdbcType=TIMESTAMP}, #{orederDimension,jdbcType=VARCHAR}, #{lastRecordId,jdbcType=BIGINT}, 
+      #{lastListIssue,jdbcType=INTEGER}, #{lastScheduleStartTime,jdbcType=TIMESTAMP}, 
+      #{lastScheduleEndTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.ListCategory" >
+    insert into media_list_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="listCode != null" >
+        list_code,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="categoryCode != null" >
+        category_code,
+      </if>
+      <if test="minRecords != null" >
+        min_records,
+      </if>
+      <if test="maxRecords != null" >
+        max_records,
+      </if>
+      <if test="days != null" >
+        days,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifer != null" >
+        modifer,
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date,
+      </if>
+      <if test="orederDimension != null" >
+        oreder_dimension,
+      </if>
+      <if test="lastRecordId != null" >
+        last_record_id,
+      </if>
+      <if test="lastListIssue != null" >
+        last_list_issue,
+      </if>
+      <if test="lastScheduleStartTime != null" >
+        last_schedule_start_time,
+      </if>
+      <if test="lastScheduleEndTime != null" >
+        last_schedule_end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="listCode != null" >
+        #{listCode,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryCode != null" >
+        #{categoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="minRecords != null" >
+        #{minRecords,jdbcType=INTEGER},
+      </if>
+      <if test="maxRecords != null" >
+        #{maxRecords,jdbcType=INTEGER},
+      </if>
+      <if test="days != null" >
+        #{days,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifer != null" >
+        #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangeDate != null" >
+        #{lastChangeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orederDimension != null" >
+        #{orederDimension,jdbcType=VARCHAR},
+      </if>
+      <if test="lastRecordId != null" >
+        #{lastRecordId,jdbcType=BIGINT},
+      </if>
+      <if test="lastListIssue != null" >
+        #{lastListIssue,jdbcType=INTEGER},
+      </if>
+      <if test="lastScheduleStartTime != null" >
+        #{lastScheduleStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastScheduleEndTime != null" >
+        #{lastScheduleEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ListCategory" >
+    update media_list_category
+    <set >
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryCode != null" >
+        category_code = #{categoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="minRecords != null" >
+        min_records = #{minRecords,jdbcType=INTEGER},
+      </if>
+      <if test="maxRecords != null" >
+        max_records = #{maxRecords,jdbcType=INTEGER},
+      </if>
+      <if test="days != null" >
+        days = #{days,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifer != null" >
+        modifer = #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date = #{lastChangeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orederDimension != null" >
+        oreder_dimension = #{orederDimension,jdbcType=VARCHAR},
+      </if>
+      <if test="lastRecordId != null" >
+        last_record_id = #{lastRecordId,jdbcType=BIGINT},
+      </if>
+      <if test="lastListIssue != null" >
+        last_list_issue = #{lastListIssue,jdbcType=INTEGER},
+      </if>
+      <if test="lastScheduleStartTime != null" >
+        last_schedule_start_time = #{lastScheduleStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastScheduleEndTime != null" >
+        last_schedule_end_time = #{lastScheduleEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.ListCategory" >
+    update media_list_category
+    set category_name = #{categoryName,jdbcType=VARCHAR},
+      category_code = #{categoryCode,jdbcType=VARCHAR},
+      min_records = #{minRecords,jdbcType=INTEGER},
+      max_records = #{maxRecords,jdbcType=INTEGER},
+      days = #{days,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modifer = #{modifer,jdbcType=VARCHAR},
+      last_change_date = #{lastChangeDate,jdbcType=TIMESTAMP},
+      oreder_dimension = #{orederDimension,jdbcType=VARCHAR},
+      last_record_id = #{lastRecordId,jdbcType=BIGINT},
+      last_list_issue = #{lastListIssue,jdbcType=INTEGER},
+      last_schedule_start_time = #{lastScheduleStartTime,jdbcType=TIMESTAMP},
+      last_schedule_end_time = #{lastScheduleEndTime,jdbcType=TIMESTAMP}
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_list_category where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_list_category where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_list_category where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="getListCategoryByCode" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_list_category where category_code='${category_code}'
+   </select>
+</mapper>

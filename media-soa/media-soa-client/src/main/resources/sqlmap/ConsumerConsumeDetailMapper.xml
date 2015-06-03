@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ConsumerConsumeDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.ConsumerConsumeDetail" >
+    <id column="consumer_consume_deatil_id" property="consumerConsumeDeatilId" jdbcType="BIGINT" />
+    <result column="consumer_consume_id" property="consumerConsumeId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+    <result column="media_consume_chapter_num" property="mediaConsumeChapterNum" jdbcType="INTEGER" />
+    <result column="prop_id" property="propId" jdbcType="INTEGER" />
+    <result column="prop_name" property="propName" jdbcType="VARCHAR" />
+    <result column="total_price" property="totalPrice" jdbcType="INTEGER" />
+    <result column="pre_price" property="prePrice" jdbcType="INTEGER" />
+    <result column="main_gold_price" property="mainGoldPrice" jdbcType="INTEGER" />
+    <result column="sub_gold_price" property="subGoldPrice" jdbcType="INTEGER" />
+    <result column="prop_count" property="propCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="consumerConsumeDeatilId != null" > and consumer_consume_deatil_id=#{consumerConsumeDeatilId} </if>
+    <if test="consumerConsumeId != null" > and consumer_consume_id=#{consumerConsumeId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="mediaName != null" > and media_name=#{mediaName} </if>
+    <if test="mediaConsumeChapterNum != null" > and media_consume_chapter_num=#{mediaConsumeChapterNum} </if>
+    <if test="propId != null" > and prop_id=#{propId} </if>
+    <if test="propName != null" > and prop_name=#{propName} </if>
+    <if test="totalPrice != null" > and total_price=#{totalPrice} </if>
+    <if test="prePrice != null" > and pre_price=#{prePrice} </if>
+    <if test="mainGoldPrice != null" > and main_gold_price=#{mainGoldPrice} </if>
+    <if test="subGoldPrice != null" > and sub_gold_price=#{subGoldPrice} </if>
+    <if test="propCount != null" > and prop_count=#{propCount} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    consumer_consume_deatil_id, consumer_consume_id, media_id, media_name, media_consume_chapter_num, 
+    prop_id, prop_name, total_price, pre_price, main_gold_price, sub_gold_price, prop_count
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_consumer_consume_detail
+    where consumer_consume_deatil_id = #{consumerConsumeDeatilId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_consumer_consume_detail
+    where consumer_consume_deatil_id = #{consumerConsumeDeatilId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.ConsumerConsumeDetail" >
+    insert into media_consumer_consume_detail (consumer_consume_deatil_id, consumer_consume_id, 
+      media_id, media_name, media_consume_chapter_num, 
+      prop_id, prop_name, total_price, 
+      pre_price, main_gold_price, sub_gold_price, 
+      prop_count)
+    values (#{consumerConsumeDeatilId,jdbcType=BIGINT}, #{consumerConsumeId,jdbcType=BIGINT}, 
+      #{mediaId,jdbcType=BIGINT}, #{mediaName,jdbcType=VARCHAR}, #{mediaConsumeChapterNum,jdbcType=INTEGER}, 
+      #{propId,jdbcType=INTEGER}, #{propName,jdbcType=VARCHAR}, #{totalPrice,jdbcType=INTEGER}, 
+      #{prePrice,jdbcType=INTEGER}, #{mainGoldPrice,jdbcType=INTEGER}, #{subGoldPrice,jdbcType=INTEGER}, 
+      #{propCount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.ConsumerConsumeDetail" >
+    insert into media_consumer_consume_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="consumerConsumeDeatilId != null" >
+        consumer_consume_deatil_id,
+      </if>
+      <if test="consumerConsumeId != null" >
+        consumer_consume_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="mediaName != null" >
+        media_name,
+      </if>
+      <if test="mediaConsumeChapterNum != null" >
+        media_consume_chapter_num,
+      </if>
+      <if test="propId != null" >
+        prop_id,
+      </if>
+      <if test="propName != null" >
+        prop_name,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="prePrice != null" >
+        pre_price,
+      </if>
+      <if test="mainGoldPrice != null" >
+        main_gold_price,
+      </if>
+      <if test="subGoldPrice != null" >
+        sub_gold_price,
+      </if>
+      <if test="propCount != null" >
+        prop_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="consumerConsumeDeatilId != null" >
+        #{consumerConsumeDeatilId,jdbcType=BIGINT},
+      </if>
+      <if test="consumerConsumeId != null" >
+        #{consumerConsumeId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaConsumeChapterNum != null" >
+        #{mediaConsumeChapterNum,jdbcType=INTEGER},
+      </if>
+      <if test="propId != null" >
+        #{propId,jdbcType=INTEGER},
+      </if>
+      <if test="propName != null" >
+        #{propName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="prePrice != null" >
+        #{prePrice,jdbcType=INTEGER},
+      </if>
+      <if test="mainGoldPrice != null" >
+        #{mainGoldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="subGoldPrice != null" >
+        #{subGoldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="propCount != null" >
+        #{propCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ConsumerConsumeDetail" >
+    update media_consumer_consume_detail
+    <set >
+      <if test="consumerConsumeId != null" >
+        consumer_consume_id = #{consumerConsumeId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        media_name = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaConsumeChapterNum != null" >
+        media_consume_chapter_num = #{mediaConsumeChapterNum,jdbcType=INTEGER},
+      </if>
+      <if test="propId != null" >
+        prop_id = #{propId,jdbcType=INTEGER},
+      </if>
+      <if test="propName != null" >
+        prop_name = #{propName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="prePrice != null" >
+        pre_price = #{prePrice,jdbcType=INTEGER},
+      </if>
+      <if test="mainGoldPrice != null" >
+        main_gold_price = #{mainGoldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="subGoldPrice != null" >
+        sub_gold_price = #{subGoldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="propCount != null" >
+        prop_count = #{propCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where consumer_consume_deatil_id = #{consumerConsumeDeatilId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.ConsumerConsumeDetail" >
+    update media_consumer_consume_detail
+    set consumer_consume_id = #{consumerConsumeId,jdbcType=BIGINT},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      media_consume_chapter_num = #{mediaConsumeChapterNum,jdbcType=INTEGER},
+      prop_id = #{propId,jdbcType=INTEGER},
+      prop_name = #{propName,jdbcType=VARCHAR},
+      total_price = #{totalPrice,jdbcType=INTEGER},
+      pre_price = #{prePrice,jdbcType=INTEGER},
+      main_gold_price = #{mainGoldPrice,jdbcType=INTEGER},
+      sub_gold_price = #{subGoldPrice,jdbcType=INTEGER},
+      prop_count = #{propCount,jdbcType=INTEGER}
+    where consumer_consume_deatil_id = #{consumerConsumeDeatilId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_consumer_consume_detail where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_consumer_consume_detail where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_consumer_consume_detail where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

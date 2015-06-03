@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BookListMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.BookList" >
+    <id column="booklist_id" property="booklistId" jdbcType="BIGINT" />
+    <result column="channel_id" property="channelId" jdbcType="BIGINT" />
+    <result column="owner" property="owner" jdbcType="BIGINT" />
+    <result column="is_show" property="isShow" jdbcType="TINYINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="booklistId != null" > and booklist_id=#{booklistId} </if>
+    <if test="channelId != null" > and channel_id=#{channelId} </if>
+    <if test="owner != null" > and owner=#{owner} </if>
+    <if test="isShow != null" > and is_show=#{isShow} </if>
+    <if test="name != null" > and name=#{name} </if>
+    <if test="imageUrl != null" > and image_url=#{imageUrl} </if>
+    <if test="description != null" > and description=#{description} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="lastUpdateTime != null" > and last_update_time=#{lastUpdateTime} </if>
+    <if test="modifier != null" > and modifier=#{modifier} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    booklist_id, channel_id, owner, is_show, name, image_url, description, status, creation_date, 
+    creator, last_update_time, modifier
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_booklist
+    where booklist_id = #{booklistId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_booklist
+    where booklist_id = #{booklistId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.BookList" >
+    insert into media_booklist (booklist_id, channel_id, owner, 
+      is_show, name, image_url, 
+      description, status, creation_date, 
+      creator, last_update_time, modifier
+      )
+    values (#{booklistId,jdbcType=BIGINT}, #{channelId,jdbcType=BIGINT}, #{owner,jdbcType=BIGINT}, 
+      #{isShow,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=BIGINT}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.BookList" >
+    insert into media_booklist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="booklistId != null" >
+        booklist_id,
+      </if>
+      <if test="channelId != null" >
+        channel_id,
+      </if>
+      <if test="owner != null" >
+        owner,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="imageUrl != null" >
+        image_url,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="booklistId != null" >
+        #{booklistId,jdbcType=BIGINT},
+      </if>
+      <if test="channelId != null" >
+        #{channelId,jdbcType=BIGINT},
+      </if>
+      <if test="owner != null" >
+        #{owner,jdbcType=BIGINT},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=TINYINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.BookList" >
+    update media_booklist
+    <set >
+      <if test="channelId != null" >
+        channel_id = #{channelId,jdbcType=BIGINT},
+      </if>
+      <if test="owner != null" >
+        owner = #{owner,jdbcType=BIGINT},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=TINYINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=BIGINT},
+      </if>
+    </set>
+    where booklist_id = #{booklistId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.BookList" >
+    update media_booklist
+    set channel_id = #{channelId,jdbcType=BIGINT},
+      owner = #{owner,jdbcType=BIGINT},
+      is_show = #{isShow,jdbcType=TINYINT},
+      name = #{name,jdbcType=VARCHAR},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=BIGINT},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=BIGINT}
+    where booklist_id = #{booklistId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_booklist where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_booklist where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_booklist where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BoughtDetailMapper">
+
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.BoughtDetail">
+		<id column="bought_detail_id" property="boughtDetailId" jdbcType="BIGINT" />
+		<result column="bought_id" property="boughtId" jdbcType="BIGINT" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+		<result column="order_content" property="orderContent" jdbcType="VARCHAR" />
+		<result column="order_type" property="orderType" jdbcType="SMALLINT" />
+		<result column="pay_main_price" property="payMainPrice" jdbcType="INTEGER" />
+		<result column="pay_sub_price" property="paySubPrice" jdbcType="INTEGER" />
+		<result column="chapter_id" property="chapterId" jdbcType="BIGINT" />
+		<result column="bought_type" property="boughtType" jdbcType="VARCHAR" />
+		<result column="media_title" property="mediaTitle" jdbcType="VARCHAR" />
+		<result column="author_pen_name" property="authorPenName" jdbcType="VARCHAR" />
+		<result column="media_id" property="mediaId" jdbcType="BIGINT" />
+		<result column="unit_price" property="unitPrice" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Where">
+		<if test="boughtDetailId != null"> and bought_detail_id= #{boughtDetailId}</if>	
+		<if test="boughtId != null"> and bought_id= #{boughtId}</if>	
+		<if test="orderNo != null and orderNo !=''"> and order_no= #{orderNo}</if>
+		<if test="orderTime != null"> and order_time= #{orderTime}</if>	
+		<if test="orderContent != null and orderContent !=''"> and order_content= #{orderContent}</if>
+		<if test="orderType != null"> and order_type= #{orderType}</if>	
+		<if test="payMainPrice != null"> and pay_main_price= #{payMainPrice}</if>	
+		<if test="paySubPrice != null"> and pay_sub_price= #{paySubPrice}</if>	
+		<if test="chapterId != null"> and chapter_id= #{chapterId}</if>	
+		<if test="boughtType != null and boughtType !=''"> and bought_type= #{boughtType}</if>
+		<if test="mediaTitle != null and mediaTitle !=''"> and media_title= #{mediaTitle}</if>
+		<if test="authorPenName != null and authorPenName !=''"> and author_pen_name= #{authorPenName}</if>
+		<if test="mediaId != null"> and media_id= #{mediaId}</if>	
+		<if test="unitPrice != null"> and unit_price= #{unitPrice}</if>	
+	</sql>
+
+	<sql id="Base_Column_List">
+		bought_detail_id ,
+		bought_id ,
+		order_no ,
+		order_time ,
+		order_content ,
+		order_type ,
+		pay_main_price ,
+		pay_sub_price ,
+		chapter_id ,
+		bought_type ,
+		media_title ,
+		author_pen_name ,
+		media_id ,
+		unit_price 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from media_bought_detail
+		where bought_detail_id = #{boughtDetailId,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from media_bought_detail
+		where bought_detail_id = #{boughtDetailId,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insert" useGeneratedKeys="true" parameterType="com.dangdang.digital.model.BoughtDetail" keyProperty="boughtDetailId" >
+		insert into media_bought_detail (bought_detail_id, bought_id, order_no, order_time, order_content, order_type,
+		pay_main_price, pay_sub_price, chapter_id,bought_type ,media_title ,author_pen_name ,media_id ,unit_price)
+		values (#{boughtDetailId,jdbcType=BIGINT},#{boughtId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{orderTime,jdbcType=TIMESTAMP},
+		#{orderContent,jdbcType=VARCHAR},#{orderType,jdbcType=SMALLINT},#{payMainPrice,jdbcType=INTEGER},#{paySubPrice,jdbcType=INTEGER},#{chapterId,jdbcType=BIGINT},
+		#{boughtType,jdbcType=VARCHAR},#{mediaTitle,jdbcType=VARCHAR},#{authorPenName,jdbcType=VARCHAR},#{mediaId,jdbcType=BIGINT},#{unitPrice,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.BoughtDetail" keyProperty="boughtDetailId"  useGeneratedKeys="true">
+		insert into media_bought_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="boughtDetailId != null">bought_detail_id,</if>	
+			<if test="boughtId != null">bought_id,</if>	
+			<if test="orderNo != null and orderNo !=''">order_no,</if>
+			<if test="orderTime != null">order_time,</if>	
+			<if test="orderContent != null and orderContent !=''">order_content,</if>
+			<if test="orderType != null">order_type,</if>	
+			<if test="payMainPrice != null">pay_main_price,</if>	
+			<if test="paySubPrice != null">pay_sub_price,</if>	
+			<if test="chapterId != null">chapter_id,</if>	
+			<if test="boughtType != null and boughtType !=''">bought_type,</if>
+			<if test="mediaTitle != null and mediaTitle !=''">media_title,</if>
+			<if test="authorPenName != null and authorPenName !=''">author_pen_name,</if>
+			<if test="mediaId != null">media_id,</if>	
+			<if test="unitPrice != null">unit_price,</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="boughtDetailId != null">
+				#{boughtDetailId,jdbcType=BIGINT},
+			</if>
+			<if test="boughtId != null">
+				#{boughtId,jdbcType=BIGINT},
+			</if>
+			<if test="orderNo != null and orderNo !=''">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTime != null">
+				#{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderContent != null and orderContent !=''">
+				#{orderContent,jdbcType=VARCHAR},
+			</if>
+			<if test="orderType != null">
+				#{orderType,jdbcType=SMALLINT},
+			</if>
+			<if test="payMainPrice != null">
+				#{payMainPrice,jdbcType=INTEGER},
+			</if>
+			<if test="paySubPrice != null">
+				#{paySubPrice,jdbcType=INTEGER},
+			</if>
+			<if test="chapterId != null">
+				#{chapterId,jdbcType=BIGINT},
+			</if>
+			<if test="boughtType != null and boughtType !=''">
+				#{boughtType,jdbcType=VARCHAR},
+			</if>
+			<if test="mediaTitle != null and mediaTitle !=''">
+				#{mediaTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="authorPenName != null and authorPenName !=''">
+				#{authorPenName,jdbcType=VARCHAR},
+			</if>
+			<if test="mediaId != null">
+				#{mediaId,jdbcType=BIGINT},
+			</if>
+			<if test="unitPrice != null">
+				#{unitPrice,jdbcType=INTEGER},
+			</if>			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.BoughtDetail">
+		update media_bought_detail
+		<set>
+			<if test="boughtId != null">
+				bought_id = #{boughtId,jdbcType=BIGINT},
+			</if>
+			<if test="orderNo != null and orderNo !=''">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTime != null">
+				order_time = #{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderContent != null and orderContent !=''">
+				order_content = #{orderContent,jdbcType=VARCHAR},
+			</if>
+			<if test="orderType != null">
+				order_type = #{orderType,jdbcType=SMALLINT},
+			</if>
+			<if test="payMainPrice != null">
+				pay_main_price = #{payMainPrice,jdbcType=INTEGER},
+			</if>
+			<if test="paySubPrice != null">
+				pay_sub_price = #{paySubPrice,jdbcType=INTEGER},
+			</if>
+			<if test="chapterId != null">
+				chapter_id = #{chapterId,jdbcType=BIGINT},
+			</if>
+			<if test="boughtType != null and boughtType !=''">
+				bought_type = #{boughtType,jdbcType=VARCHAR},
+			</if>
+			<if test="mediaTitle != null and mediaTitle !=''">
+				media_title = #{mediaTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="authorPenName != null and authorPenName !=''">
+				author_pen_name = #{authorPenName,jdbcType=VARCHAR},
+			</if>
+			<if test="mediaId != null">
+				media_id = #{mediaId,jdbcType=BIGINT},
+			</if>
+			<if test="unitPrice != null">
+				unit_price = #{unitPrice,jdbcType=INTEGER}
+			</if>
+		</set>
+		where
+		bought_detail_id = #{boughtDetailId,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.BoughtDetail">
+		update media_bought_detail
+		set
+			bought_detail_id = #{boughtDetailId,jdbcType=BIGINT},
+			bought_id = #{boughtId,jdbcType=BIGINT},
+			order_no = #{orderNo,jdbcType=VARCHAR},
+			order_time = #{orderTime,jdbcType=TIMESTAMP},
+			order_content = #{orderContent,jdbcType=VARCHAR},
+			order_type = #{orderType,jdbcType=SMALLINT},
+			pay_main_price = #{payMainPrice,jdbcType=INTEGER},
+			pay_sub_price = #{paySubPrice,jdbcType=INTEGER},
+			chapter_id = #{chapterId,jdbcType=BIGINT},
+			bought_type = #{boughtType,jdbcType=VARCHAR},
+			media_title = #{mediaTitle,jdbcType=VARCHAR},
+			author_pen_name = #{authorPenName,jdbcType=VARCHAR},
+			media_id = #{mediaId,jdbcType=BIGINT},
+			unit_price = #{unitPrice,jdbcType=INTEGER}
+		where bought_detail_id =
+		#{boughtDetailId,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_bought_detail where 1=1
+		<include refid="Base_Where" />
+		order by bought_detail_id desc
+	</select>
+
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from media_bought_detail where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_bought_detail where 1=1
+		<include refid="Base_Where" />
+		order by index_order
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from media_bought_detail where bought_detail_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+</mapper>

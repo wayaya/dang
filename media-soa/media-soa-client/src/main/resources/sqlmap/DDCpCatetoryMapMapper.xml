@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DDCpCatetoryMapMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.DDCpCatetoryMap" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="catetory_id" property="catetoryId" jdbcType="INTEGER" />
+    <result column="catetory_code" property="catetoryCode" jdbcType="VARCHAR" />
+    <result column="cp_catetory_id" property="cpCatetoryId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="id != null" > and id=#{id} </if>
+    <if test="catetoryId != null" > and catetory_id=#{catetoryId} </if>
+    <if test="catetoryCode != null" > and catetory_code=#{catetoryCode} </if>
+    <if test="cpCatetoryId != null" > and cp_catetory_id=#{cpCatetoryId} </if>
+    <if test="type != null" > and type=#{type} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, catetory_id, catetory_code, cp_catetory_id, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_dd_cp_catetory_map
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_dd_cp_catetory_map
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.DDCpCatetoryMap" >
+    insert into media_dd_cp_catetory_map (id, catetory_id, catetory_code, 
+      cp_catetory_id, type)
+    values (#{id,jdbcType=BIGINT}, #{catetoryId,jdbcType=INTEGER}, #{catetoryCode,jdbcType=VARCHAR}, 
+      #{cpCatetoryId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.DDCpCatetoryMap" >
+    insert into media_dd_cp_catetory_map
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="catetoryId != null" >
+        catetory_id,
+      </if>
+      <if test="catetoryCode != null" >
+        catetory_code,
+      </if>
+      <if test="cpCatetoryId != null" >
+        cp_catetory_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="catetoryId != null" >
+        #{catetoryId,jdbcType=INTEGER},
+      </if>
+      <if test="catetoryCode != null" >
+        #{catetoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cpCatetoryId != null" >
+        #{cpCatetoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.DDCpCatetoryMap" >
+    update media_dd_cp_catetory_map
+    <set >
+      <if test="catetoryId != null" >
+        catetory_id = #{catetoryId,jdbcType=INTEGER},
+      </if>
+      <if test="catetoryCode != null" >
+        catetory_code = #{catetoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cpCatetoryId != null" >
+        cp_catetory_id = #{cpCatetoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.DDCpCatetoryMap" >
+    update media_dd_cp_catetory_map
+    set catetory_id = #{catetoryId,jdbcType=INTEGER},
+      catetory_code = #{catetoryCode,jdbcType=VARCHAR},
+      cp_catetory_id = #{cpCatetoryId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_dd_cp_catetory_map where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_dd_cp_catetory_map where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_dd_cp_catetory_map where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="findDDCpCategoryByCategoryIds" resultMap="BaseResultMap"  parameterType="list">  
+	  select <include refid="Base_Column_List" /> 
+	  from media_dd_cp_catetory_map where cp_catetory_id in 
+	  <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+	    #{item}  
+	  </foreach>  
+	</select>
+</mapper>

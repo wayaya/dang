@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ChannelOwnerMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.ChannelOwner">
+		<id column="owner_id" property="ownerId" jdbcType="BIGINT" />
+		<result column="cust_id" property="custId" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+		<result column="id_back_path" property="idBackPath" jdbcType="VARCHAR" />
+		<result column="id_front_path" property="idFrontPath" jdbcType="VARCHAR" />
+		<result column="company" property="company" jdbcType="VARCHAR" />
+		<result column="bank_subbranch" property="bankSubbranch" jdbcType="VARCHAR" />
+		<result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+		<result column="employee_card_path" property="employeeCardPath" jdbcType="VARCHAR" />
+		<result column="bank_area" property="bankArea" jdbcType="VARCHAR" />
+		<result column="bank_city" property="bankCity" jdbcType="VARCHAR" />
+		<result column="bank_province" property="bankProvince" jdbcType="VARCHAR" />
+		<result column="bank_owner_name" property="bankOwnerName" jdbcType="VARCHAR" />
+		<result column="bank_card_number" property="bankCardNumber" jdbcType="BIGINT" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="verification_code" property="verificationCode" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="introduction_pic_path" property="introductionPicPath" jdbcType="VARCHAR" />
+		<result column="company_name" property="companyName" jdbcType="VARCHAR" />
+		<result column="license_number" property="licenseNumber" jdbcType="VARCHAR" />
+		<result column="license_pic_path" property="licensePicPath" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+		<result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+		<result column="auditor" property="auditor" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="fail_msg" property="failMsg" jdbcType="VARCHAR" />
+		<result column="introduction" property="introduction" jdbcType="VARCHAR" />
+		<result column="modify_times" property="modifyTimes" jdbcType="INTEGER" />
+		<result column="apply_times" property="applyTimes" jdbcType="INTEGER" />
+		<result column="record_id" property="recordId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="ownerId != null"> and owner_id= #{ownerId}</if>	
+		<if test="custId != null"> and cust_id= #{custId}</if>	
+		<if test="name != null and name !=''"> and name= #{name}</if>
+		<if test="idNumber != null and idNumber !=''"> and id_number= #{idNumber}</if>
+		<if test="idBackPath != null and idBackPath !=''"> and id_back_path= #{idBackPath}</if>
+		<if test="idFrontPath != null and idFrontPath !=''"> and id_front_path= #{idFrontPath}</if>
+		<if test="company != null and company !=''"> and company= #{company}</if>
+		<if test="bankSubbranch != null and bankSubbranch !=''"> and bank_subbranch= #{bankSubbranch}</if>
+		<if test="bankName != null and bankName !=''"> and bank_name= #{bankName}</if>
+		<if test="employeeCardPath != null and employeeCardPath !=''"> and employee_card_path= #{employeeCardPath}</if>
+		<if test="bankArea != null and bankArea !=''"> and bank_area= #{bankArea}</if>
+		<if test="bankCity != null and bankCity !=''"> and bank_city= #{bankCity}</if>
+		<if test="bankProvince != null and bankProvince !=''"> and bank_province= #{bankProvince}</if>
+		<if test="bankOwnerName != null and bankOwnerName !=''"> and bank_owner_name= #{bankOwnerName}</if>
+		<if test="bankCardNumber != null"> and bank_card_number= #{bankCardNumber}</if>	
+		<if test="phone != null and phone !=''"> and phone= #{phone}</if>
+		<if test="verificationCode != null and verificationCode !=''"> and verification_code= #{verificationCode}</if>
+		<if test="type != null"> and type= #{type}</if>	
+		<if test="introductionPicPath != null and introductionPicPath !=''"> and introduction_pic_path= #{introductionPicPath}</if>
+		<if test="companyName != null and companyName !=''"> and company_name= #{companyName}</if>
+		<if test="licenseNumber != null and licenseNumber !=''"> and license_number= #{licenseNumber}</if>
+		<if test="licensePicPath != null and licensePicPath !=''"> and license_pic_path= #{licensePicPath}</if>
+		<if test="createDate != null"> and create_date= #{createDate}</if>	
+		<if test="modifyDate != null"> and modify_date= #{modifyDate}</if>	
+		<if test="auditDate != null"> and audit_date= #{auditDate}</if>	
+		<if test="auditor != null and auditor !=''"> and auditor= #{auditor}</if>
+		<if test="status != null"> and status= #{status}</if>	
+		<if test="failMsg != null and failMsg !=''"> and fail_msg= #{failMsg}</if>
+		<if test="introduction != null and introduction !=''"> and introduction= #{introduction}</if>
+		<if test="modifyTimes != null"> and modify_times= #{modifyTimes}</if>	
+		<if test="applyTimes != null"> and apply_times= #{applyTimes}</if>	
+		<if test="recordId != null"> and record_id= #{recordId}</if>	
+	</sql>
+	<sql id="Base_Column_List">
+		owner_id ,
+		cust_id ,
+		name ,
+		id_number ,
+		id_back_path ,
+		id_front_path ,
+		company ,
+		bank_subbranch ,
+		bank_name ,
+		employee_card_path ,
+		bank_area ,
+		bank_city ,
+		bank_province ,
+		bank_owner_name ,
+		bank_card_number ,
+		phone ,
+		verification_code ,
+		type ,
+		introduction_pic_path ,
+		company_name ,
+		license_number ,
+		license_pic_path ,
+		create_date ,
+		modify_date ,
+		audit_date ,
+		auditor ,
+		status ,
+		fail_msg ,
+		introduction ,
+		modify_times,
+		apply_times,
+		record_id
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from channel_owner
+		where
+		owner_id = #{ownerId,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from channel_owner
+		where
+		owner_id = #{ownerId,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.ChannelOwner">
+		insert into channel_owner
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ownerId != null">owner_id,</if>	
+			<if test="custId != null">cust_id,</if>	
+			<if test="name != null and name !=''">name,</if>
+			<if test="idNumber != null and idNumber !=''">id_number,</if>
+			<if test="idBackPath != null and idBackPath !=''">id_back_path,</if>
+			<if test="idFrontPath != null and idFrontPath !=''">id_front_path,</if>
+			<if test="company != null and company !=''">company,</if>
+			<if test="bankSubbranch != null and bankSubbranch !=''">bank_subbranch,</if>
+			<if test="bankName != null and bankName !=''">bank_name,</if>
+			<if test="employeeCardPath != null and employeeCardPath !=''">employee_card_path,</if>
+			<if test="bankArea != null and bankArea !=''">bank_area,</if>
+			<if test="bankCity != null and bankCity !=''">bank_city,</if>
+			<if test="bankProvince != null and bankProvince !=''">bank_province,</if>
+			<if test="bankOwnerName != null and bankOwnerName !=''">bank_owner_name,</if>
+			<if test="bankCardNumber != null">bank_card_number,</if>	
+			<if test="phone != null and phone !=''">phone,</if>
+			<if test="verificationCode != null and verificationCode !=''">verification_code,</if>
+			<if test="type != null">type,</if>	
+			<if test="introductionPicPath != null and introductionPicPath !=''">introduction_pic_path,</if>
+			<if test="companyName != null and companyName !=''">company_name,</if>
+			<if test="licenseNumber != null and licenseNumber !=''">license_number,</if>
+			<if test="licensePicPath != null and licensePicPath !=''">license_pic_path,</if>
+			<if test="createDate != null">create_date,</if>	
+			<if test="modifyDate != null">modify_date,</if>	
+			<if test="auditDate != null">audit_date,</if>	
+			<if test="auditor != null and auditor !=''">auditor,</if>
+			<if test="status != null">status,</if>	
+			<if test="failMsg != null and failMsg !=''">fail_msg,</if>
+			<if test="introduction != null and introduction !=''">introduction,</if>
+			<if test="modifyTimes != null">modify_times,</if>	
+			<if test="applyTimes != null">apply_times,</if>	
+			<if test="recordId != null">record_id,</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ownerId != null">
+				#{ownerId,jdbcType=BIGINT},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=BIGINT},
+			</if>
+			<if test="name != null and name !=''">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="idNumber != null and idNumber !=''">
+				#{idNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="idBackPath != null and idBackPath !=''">
+				#{idBackPath,jdbcType=VARCHAR},
+			</if>
+			<if test="idFrontPath != null and idFrontPath !=''">
+				#{idFrontPath,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null and company !=''">
+				#{company,jdbcType=VARCHAR},
+			</if>
+			<if test="bankSubbranch != null and bankSubbranch !=''">
+				#{bankSubbranch,jdbcType=VARCHAR},
+			</if>
+			<if test="bankName != null and bankName !=''">
+				#{bankName,jdbcType=VARCHAR},
+			</if>
+			<if test="employeeCardPath != null and employeeCardPath !=''">
+				#{employeeCardPath,jdbcType=VARCHAR},
+			</if>
+			<if test="bankArea != null and bankArea !=''">
+				#{bankArea,jdbcType=VARCHAR},
+			</if>
+			<if test="bankCity != null and bankCity !=''">
+				#{bankCity,jdbcType=VARCHAR},
+			</if>
+			<if test="bankProvince != null and bankProvince !=''">
+				#{bankProvince,jdbcType=VARCHAR},
+			</if>
+			<if test="bankOwnerName != null and bankOwnerName !=''">
+				#{bankOwnerName,jdbcType=VARCHAR},
+			</if>
+			<if test="bankCardNumber != null">
+				#{bankCardNumber,jdbcType=BIGINT},
+			</if>
+			<if test="phone != null and phone !=''">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="verificationCode != null and verificationCode !=''">
+				#{verificationCode,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="introductionPicPath != null and introductionPicPath !=''">
+				#{introductionPicPath,jdbcType=VARCHAR},
+			</if>
+			<if test="companyName != null and companyName !=''">
+				#{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="licenseNumber != null and licenseNumber !=''">
+				#{licenseNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="licensePicPath != null and licensePicPath !=''">
+				#{licensePicPath,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyDate != null">
+				#{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditDate != null">
+				#{auditDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditor != null and auditor !=''">
+				#{auditor,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="failMsg != null and failMsg !=''">
+				#{failMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="introduction != null and introduction !=''">
+				#{introduction,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTimes != null">
+				#{modifyTimes,jdbcType=INTEGER},
+			</if>
+			<if test="applyTimes != null">
+				#{applyTimes,jdbcType=INTEGER},
+			</if>
+			<if test="recordId != null">
+				#{recordId,jdbcType=INTEGER},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ChannelOwner">
+		update channel_owner
+		<set>
+			<if test="custId != null">
+				cust_id= #{custId,jdbcType=BIGINT},
+			</if>
+			<if test="name != null and name !=''">
+				name= #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="idNumber != null and idNumber !=''">
+				id_number= #{idNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="idBackPath != null and idBackPath !=''">
+				id_back_path= #{idBackPath,jdbcType=VARCHAR},
+			</if>
+			<if test="idFrontPath != null and idFrontPath !=''">
+				id_front_path= #{idFrontPath,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null and company !=''">
+				company= #{company,jdbcType=VARCHAR},
+			</if>
+			<if test="bankSubbranch != null and bankSubbranch !=''">
+				bank_subbranch= #{bankSubbranch,jdbcType=VARCHAR},
+			</if>
+			<if test="bankName != null and bankName !=''">
+				bank_name= #{bankName,jdbcType=VARCHAR},
+			</if>
+			<if test="employeeCardPath != null and employeeCardPath !=''">
+				employee_card_path= #{employeeCardPath,jdbcType=VARCHAR},
+			</if>
+			<if test="bankArea != null and bankArea !=''">
+				bank_area= #{bankArea,jdbcType=VARCHAR},
+			</if>
+			<if test="bankCity != null and bankCity !=''">
+				bank_city= #{bankCity,jdbcType=VARCHAR},
+			</if>
+			<if test="bankProvince != null and bankProvince !=''">
+				bank_province= #{bankProvince,jdbcType=VARCHAR},
+			</if>
+			<if test="bankOwnerName != null and bankOwnerName !=''">
+				bank_owner_name= #{bankOwnerName,jdbcType=VARCHAR},
+			</if>
+			<if test="bankCardNumber != null">
+				bank_card_number= #{bankCardNumber,jdbcType=BIGINT},
+			</if>
+			<if test="phone != null and phone !=''">
+				phone= #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="verificationCode != null and verificationCode !=''">
+				verification_code= #{verificationCode,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type= #{type,jdbcType=INTEGER},
+			</if>
+			<if test="introductionPicPath != null and introductionPicPath !=''">
+				introduction_pic_path= #{introductionPicPath,jdbcType=VARCHAR},
+			</if>
+			<if test="companyName != null and companyName !=''">
+				company_name= #{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="licenseNumber != null and licenseNumber !=''">
+				license_number= #{licenseNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="licensePicPath != null and licensePicPath !=''">
+				license_pic_path= #{licensePicPath,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date= #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyDate != null">
+				modify_date= #{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditDate != null">
+				audit_date= #{auditDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditor != null and auditor !=''">
+				auditor= #{auditor,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status= #{status,jdbcType=INTEGER},
+			</if>
+			<if test="failMsg != null and failMsg !=''">
+				fail_msg= #{failMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="introduction != null and introduction !=''">
+				introduction= #{introduction,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTimes != null">
+				modify_times= #{modifyTimes,jdbcType=INTEGER}
+			</if>
+			<if test="applyTimes != null">
+				apply_times= #{applyTimes,jdbcType=INTEGER}
+			</if>
+			<if test="recordId != null">
+				record_id= #{recordId,jdbcType=INTEGER}
+			</if>
+		</set>
+		where
+		owner_id = #{ownerId,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from channel_owner where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from channel_owner where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from channel_owner where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from channel_owner where owner_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

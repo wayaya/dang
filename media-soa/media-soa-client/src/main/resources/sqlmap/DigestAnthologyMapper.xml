@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DigestAnthologyMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.DigestAnthology" >
+    <id column="anthology_digest_id" property="anthologyDigestId" jdbcType="BIGINT" />
+    <result column="digest_id" property="digestId" jdbcType="BIGINT" />
+    <result column="anthology_id" property="anthologyId" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="ResultMapAnthologyDetailDigestList" type="com.dangdang.digital.model.DigestAnthology" >
+  	<id column="id" property="id" jdbcType="BIGINT" />
+    <result column="card_remark" property="cardRemark" jdbcType="VARCHAR" />
+  	<result column="card_title" property="cardTitle" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="INTEGER" />
+    <result column="pic1_path" property="pic1Path" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Where" >
+    <if test="anthologyDigestId != null" > and anthology_digest_id=#{anthologyDigestId} </if>
+    <if test="digestId != null" > and digest_id=#{digestId} </if>
+    <if test="anthologyId != null" > and anthology_id=#{anthologyId} </if>
+    <if test="createDate != null" > and create_date=#{createDate} </if>
+    <if test="digestIds != null">
+    	and digest_id in 
+    	<foreach item="item" index="index" collection="digestIds" open="(" separator="," close=")">
+  			#{item}  
+  		</foreach>
+  		order by field(digest_id,  
+  		<foreach item="item" index="index" collection="digestIds" separator=",">
+  			#{item}  
+  		</foreach>
+  		)
+    </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    anthology_digest_id, digest_id, anthology_id, create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_digest_anthology
+    where anthology_digest_id = #{anthologyDigestId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_digest_anthology
+    where anthology_digest_id = #{anthologyDigestId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.DigestAnthology" >
+    insert into media_digest_anthology (anthology_digest_id, digest_id, anthology_id, 
+      create_date)
+    values (#{anthologyDigestId,jdbcType=BIGINT}, #{digestId,jdbcType=BIGINT}, #{anthologyId,jdbcType=BIGINT}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.DigestAnthology" >
+    insert into media_digest_anthology
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="anthologyDigestId != null" >
+        anthology_digest_id,
+      </if>
+      <if test="digestId != null" >
+        digest_id,
+      </if>
+      <if test="anthologyId != null" >
+        anthology_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="anthologyDigestId != null" >
+        #{anthologyDigestId,jdbcType=BIGINT},
+      </if>
+      <if test="digestId != null" >
+        #{digestId,jdbcType=BIGINT},
+      </if>
+      <if test="anthologyId != null" >
+        #{anthologyId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.DigestAnthology" >
+    update media_digest_anthology
+    <set >
+      <if test="digestId != null" >
+        digest_id = #{digestId,jdbcType=BIGINT},
+      </if>
+      <if test="anthologyId != null" >
+        anthology_id = #{anthologyId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where anthology_digest_id = #{anthologyDigestId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.DigestAnthology" >
+    update media_digest_anthology
+    set digest_id = #{digestId,jdbcType=BIGINT},
+      anthology_id = #{anthologyId,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where anthology_digest_id = #{anthologyDigestId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_digest_anthology where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_digest_anthology where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_digest_anthology where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="anthologyDigestId">
+  	<if test="records != null">
+  		insert into media_digest_anthology (digest_id, anthology_id,  create_date) values 
+		<foreach collection="records" item="item" index="index" separator="," >
+      		(#{item.digestId},#{item.anthologyId},#{item.createDate})  
+   		</foreach>
+  	</if>
+  </insert>
+  
+  <delete id="deleteByAnthologyId" parameterType="java.lang.Long" >
+    delete from media_digest_anthology where anthology_id = #{anthologyId,jdbcType=BIGINT} 
+  </delete>
+  
+  <delete id="deleteByDigestIdsAndAnthologyId" parameterType="map">
+  	delete from media_digest_anthology where anthology_id = #{anthologyId,jdbcType=BIGINT} 
+  	and digest_id in 
+  	<foreach collection="digestIds" item="item" index="index" open="(" separator="," close=")">
+  		#{item}
+  	</foreach>  	
+  </delete>
+  
+  <select id="queryDigestAnthologyByAnthologyIdAndDigestIds" parameterType="map" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from media_digest_anthology where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="queryDigestsByAnthologyId" resultMap="ResultMapAnthologyDetailDigestList" parameterType="map">
+  	select d.id, d.card_remark, d.card_title, d.card_type, d.pic1_path, mda.create_date from media_digest as d 
+  	left join media_digest_anthology as mda 
+  	on d.id = mda.digest_id 
+  	where mda.anthology_id = #{anthologyId} 
+  	and d.is_show = 1 
+  	<if test="lastDate != null and lastDate != ''">
+  		<![CDATA[
+  			and mda.create_date < #{lastDate} 
+  		]]>
+  	</if>
+  	order by mda.create_date desc 
+  	limit #{pageSize}
+  </select>
+  
+</mapper>

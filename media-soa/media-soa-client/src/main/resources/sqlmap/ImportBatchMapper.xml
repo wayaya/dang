@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dangdang.digital.mapper.ImportBatchMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.ImportBatch" >
+    <id column="batch_id" property="batchId" jdbcType="BIGINT" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="desc" property="desc" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="chapter_cnt" property="chapterCnt" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="batchId != null" > and batch_id=#{batchId} </if>
+    <if test="path != null" > and path=#{path} </if>
+    <if test="desc != null" > and desc=#{desc} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="chapterCnt != null" > and chapter_cnt=#{chapterCnt} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="mediaName != null" > and media_name=#{mediaName} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    batch_id, path, desc, creation_date, status, chapter_cnt, creator, media_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_import_batch
+    where batch_id = #{batchId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_import_batch
+    where batch_id = #{batchId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.ImportBatch" >
+    insert into media_import_batch (batch_id, path, desc, 
+      creation_date, status, chapter_cnt, 
+      creator, media_name)
+    values (#{batchId,jdbcType=BIGINT}, #{path,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{status,jdbcType=SMALLINT}, #{chapterCnt,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{mediaName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.ImportBatch" >
+    insert into media_import_batch
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="batchId != null" >
+        batch_id,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="desc != null" >
+        desc,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="chapterCnt != null" >
+        chapter_cnt,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="mediaName != null" >
+        media_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="batchId != null" >
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null" >
+        #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="chapterCnt != null" >
+        #{chapterCnt,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ImportBatch" >
+    update media_import_batch
+    <set >
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null" >
+        desc = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="chapterCnt != null" >
+        chapter_cnt = #{chapterCnt,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaName != null" >
+        media_name = #{mediaName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where batch_id = #{batchId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.ImportBatch" >
+    update media_import_batch
+    set path = #{path,jdbcType=VARCHAR},
+      desc = #{desc,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=SMALLINT},
+      chapter_cnt = #{chapterCnt,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      media_name = #{mediaName,jdbcType=VARCHAR}
+    where batch_id = #{batchId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_import_batch where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_import_batch where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_import_batch where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

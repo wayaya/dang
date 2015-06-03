@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ManagerOperateLogMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.ManagerOperateLog" >
+    <id column="manager_operate_log_id" property="managerOperateLogId" jdbcType="BIGINT" />
+    <result column="operate_type" property="operateType" jdbcType="SMALLINT" />
+    <result column="operate_result" property="operateResult" jdbcType="SMALLINT" />
+    <result column="operate_target_type" property="operateTargetType" jdbcType="VARCHAR" />
+    <result column="operate_target_id" property="operateTargetId" jdbcType="BIGINT" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="operate_description" property="operateDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="managerOperateLogId != null" > and manager_operate_log_id=#{managerOperateLogId} </if>
+    <if test="operateType != null" > and operate_type=#{operateType} </if>
+    <if test="operateResult != null" > and operate_result=#{operateResult} </if>
+    <if test="operateTargetType != null" > and operate_target_type=#{operateTargetType} </if>
+    <if test="operateTargetId != null" > and operate_target_id=#{operateTargetId} </if>
+    <if test="operator != null" > and operator=#{operator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="operateDescription != null" > and operate_description=#{operateDescription} </if>
+    <if test="start != null" ><![CDATA[ and creation_date > #{start}]]> </if>
+    <if test="end != null" ><![CDATA[ and creation_date < #{end}]]> </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    manager_operate_log_id, operate_type, operate_result, operate_target_type, operate_target_id, 
+    operator, creation_date, operate_description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_manager_operate_log
+    where manager_operate_log_id = #{managerOperateLogId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_manager_operate_log
+    where manager_operate_log_id = #{managerOperateLogId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.ManagerOperateLog" >
+    insert into media_manager_operate_log (manager_operate_log_id, operate_type, 
+      operate_result, operate_target_type, operate_target_id, 
+      operator, creation_date, operate_description
+      )
+    values (#{managerOperateLogId,jdbcType=BIGINT}, #{operateType,jdbcType=SMALLINT}, 
+      #{operateResult,jdbcType=SMALLINT}, #{operateTargetType,jdbcType=VARCHAR}, #{operateTargetId,jdbcType=BIGINT}, 
+      #{operator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{operateDescription,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.ManagerOperateLog" >
+    insert into media_manager_operate_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="managerOperateLogId != null" >
+        manager_operate_log_id,
+      </if>
+      <if test="operateType != null" >
+        operate_type,
+      </if>
+      <if test="operateResult != null" >
+        operate_result,
+      </if>
+      <if test="operateTargetType != null" >
+        operate_target_type,
+      </if>
+      <if test="operateTargetId != null" >
+        operate_target_id,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operateDescription != null" >
+        operate_description,
+      </if>
+      creation_date
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="managerOperateLogId != null" >
+        #{managerOperateLogId,jdbcType=BIGINT},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=SMALLINT},
+      </if>
+      <if test="operateResult != null" >
+        #{operateResult,jdbcType=SMALLINT},
+      </if>
+      <if test="operateTargetType != null" >
+        #{operateTargetType,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTargetId != null" >
+        #{operateTargetId,jdbcType=BIGINT},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateDescription != null" >
+        #{operateDescription,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ManagerOperateLog" >
+    update media_manager_operate_log
+    <set >
+      <if test="operateType != null" >
+        operate_type = #{operateType,jdbcType=SMALLINT},
+      </if>
+      <if test="operateResult != null" >
+        operate_result = #{operateResult,jdbcType=SMALLINT},
+      </if>
+      <if test="operateTargetType != null" >
+        operate_target_type = #{operateTargetType,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTargetId != null" >
+        operate_target_id = #{operateTargetId,jdbcType=BIGINT},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateDescription != null" >
+        operate_description = #{operateDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where manager_operate_log_id = #{managerOperateLogId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.ManagerOperateLog" >
+    update media_manager_operate_log
+    set operate_type = #{operateType,jdbcType=SMALLINT},
+      operate_result = #{operateResult,jdbcType=SMALLINT},
+      operate_target_type = #{operateTargetType,jdbcType=VARCHAR},
+      operate_target_id = #{operateTargetId,jdbcType=BIGINT},
+      operator = #{operator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      operate_description = #{operateDescription,jdbcType=VARCHAR}
+    where manager_operate_log_id = #{managerOperateLogId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_manager_operate_log where 1=1 <include refid="Base_Where" /> order by creation_date desc 
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_manager_operate_log where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_manager_operate_log where 1=1 <include refid="Base_Where" /> order by creation_date desc 
+  </select>
+</mapper>

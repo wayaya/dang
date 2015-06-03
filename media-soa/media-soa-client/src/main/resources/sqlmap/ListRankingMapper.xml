@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ListRankingMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.ListRanking" >
+    <id column="list_id" property="listId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="sale_id" property="saleId" jdbcType="BIGINT" />
+    <result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+    <result column="media_cover" property="mediaCover" jdbcType="VARCHAR" />
+    <result column="pen_name" property="penName" jdbcType="VARCHAR" />
+    <result column="media_introduce" property="mediaIntroduce" jdbcType="VARCHAR" />
+    <result column="media_paths" property="mediaPaths" jdbcType="VARCHAR" />
+    <result column="list_type" property="listType" jdbcType="VARCHAR" />
+    <result column="issue" property="issue" jdbcType="INTEGER" />
+    <result column="counts" property="counts" jdbcType="BIGINT" />
+    <result column="last_change_date" property="lastChangeDate" jdbcType="TIMESTAMP" />
+    <result column="rank_day" property="rankDay" jdbcType="TIMESTAMP" />
+    <result column="appoint_order" property="appointOrder" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="order_one" property="orderOne" jdbcType="REAL" />
+    <result column="shelf_status" property="shelfStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="listId != null" > and list_id=#{listId} </if>
+    <if test="saleId != null" > and media_list_ranking.sale_id=#{saleId} </if>
+    <if test="mediaCover != null" > and media_cover=#{mediaCover} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="mediaName != null and mediaName !=''" > and media_name like concat ('%',#{mediaName},'%') </if>
+    <if test="mediaPaths != null and mediaPaths !='' " > and media_paths like concat ('%',#{mediaPaths},'%') </if>
+    <if test="penName != null" > and pen_name=#{penName} </if>
+    <if test="mediaIntroduce != null" > and media_introduce=#{mediaIntroduce} </if>
+    <if test="listType != null and listType !=''" > and list_type=#{listType} </if>
+    <if test="issue != null" > and issue=#{issue} </if>
+    <if test="counts != null" > and counts=#{counts} </if>
+    <if test="orderOne != null" > and order_one=#{orderOne} </if>
+    <if test="lastChangeDate != null" > and last_change_date=#{lastChangeDate} </if>
+    <if test="appointOrder != null" > and appoint_order=#{appointOrder} </if>
+    <if test="operator != null" > and operator=#{operator} </if>
+    <if test="operateTime != null" > and operate_time=#{operateTime} </if>
+    <if test="status != null" > and status=#{status} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    list_id, sale_id,media_cover,media_id, media_name,media_paths, pen_name, media_introduce, 
+    list_type, issue, order_one,counts, last_change_date, appoint_order, operator, operate_time, 
+    status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_list_ranking
+    where list_id = #{listId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_list_ranking
+    where list_id = #{listId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.ListRanking" >
+    insert into media_list_ranking (list_id, media_id, 
+      media_name,
+       list_type, issue, 
+      counts,order_one, last_change_date, appoint_order, 
+      operator, operate_time, status
+      )
+    values (#{listId,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, 
+      #{mediaName,jdbcType=VARCHAR},
+      #{listType,jdbcType=VARCHAR}, #{issue,jdbcType=INTEGER}, 
+      #{counts,jdbcType=BIGINT},#{orderOne,jdbcType=REAL}, #{lastChangeDate,jdbcType=TIMESTAMP}, #{appointOrder,jdbcType=INTEGER}, 
+      #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+   <insert id="insertBatch" parameterType="java.util.List" >
+     insert into media_list_ranking (sale_id,media_id, 
+      media_name, media_paths,
+      list_type, issue, 
+      counts, last_change_date, appoint_order, 
+      operator, operate_time, status,
+      rank_day)
+      values 
+    <foreach collection="list" item="item" index="index" separator=",">
+    ( #{item.saleId}, #{item.mediaId}, 
+      #{item.mediaName},
+      #{item.mediaPaths},
+      #{item.listType}, #{item.issue}, 
+      #{item.counts}, #{item.lastChangeDate}, #{item.appointOrder}, 
+      #{item.operator}, #{item.operateTime}, #{item.status},now())
+      	</foreach>
+  </insert>
+   <insert id="insertBatchBySaleIds" parameterType="map">
+  	 insert into media_list_ranking 
+  	 (sale_id,media_id,media_name, media_cover,pen_name,media_introduce,list_type,issue,last_change_date,operator,operate_time,status)
+		select  ms.sale_id,media_id,ms.name as media_name,ms.cover_pic as media_cover,m.author_penname as pen_name,
+		 ms.description as media_introduce,'${list_type}' as list_type,${issue},now() as last_change_date, '${operator}' as operator ,now() as operate_time ,${status} as status
+		 from media m,media_sale ms 
+  		 where m.sale_id = ms.sale_id and ms.sale_id in(${sale_ids})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.ListRanking" >
+    insert into media_list_ranking
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="listId != null" >
+        list_id,
+      </if>
+      <if test="saleId != null" >
+        sale_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="mediaName != null" >
+        media_name,
+      </if>
+      <if test="mediaPaths != null" >
+        media_paths,
+      </if>
+      <if test="mediaCover != null" >
+        media_cover,
+      </if>
+      <if test="listType != null" >
+        list_type,
+      </if>
+      <if test="issue != null" >
+        issue,
+      </if>
+      <if test="orderOne != null" >
+        order_one,
+      </if>
+      <if test="counts != null" >
+        counts,
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date,
+      </if>
+      <if test="appointOrder != null" >
+        appoint_order,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="listId != null" >
+        #{listId,jdbcType=BIGINT},
+      </if>
+      <if test="saleId != null" >
+        #{saleId,jdbcType=INTEGER},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaPaths != null" >
+        #{mediaPaths,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaCover != null" >
+        #{mediaCover,jdbcType=VARCHAR},
+      </if>
+      <if test="listType != null" >
+        #{listType,jdbcType=VARCHAR},
+      </if>
+      <if test="issue != null" >
+        #{issue,jdbcType=INTEGER},
+      </if>
+      <if test="orderOne != null" >
+        #{orderOne,jdbcType=REAL},
+      </if>
+      <if test="counts != null" >
+        #{counts,jdbcType=BIGINT},
+      </if>
+      <if test="lastChangeDate != null" >
+        #{lastChangeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointOrder != null" >
+        #{appointOrder,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ListRanking" >
+    update media_list_ranking
+    <set >
+      <if test="saleId != null" >
+        sale_id = #{saleId,jdbcType=INTEGER},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        media_name = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaCover != null" >
+        media_cover = #{mediaCover,jdbcType=VARCHAR},
+      </if>
+      <if test="penName != null" >
+        pen_name = #{penName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaIntroduce != null" >
+        media_introduce = #{mediaIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="listType != null" >
+        list_type = #{listType,jdbcType=VARCHAR},
+      </if>
+      <if test="issue != null" >
+        issue = #{issue,jdbcType=INTEGER},
+      </if>
+      <if test="orderOne != null" >
+        order_one = #{orderOne,jdbcType=REAL},
+      </if>
+      <if test="counts != null" >
+        counts = #{counts,jdbcType=BIGINT},
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date = #{lastChangeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointOrder != null" >
+        appoint_order = #{appointOrder,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where list_id = #{listId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.ListRanking" >
+    update media_list_ranking
+    set sale_id = #{saleId,jdbcType=INTEGER},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      media_cover = #{mediaCover,jdbcType=VARCHAR},
+      pen_name = #{penName,jdbcType=VARCHAR},
+      media_introduce = #{mediaIntroduce,jdbcType=VARCHAR},
+      list_type = #{listType,jdbcType=VARCHAR},
+      issue = #{issue,jdbcType=INTEGER},
+      order_one = #{orderOne,jdbcType=REAL},
+      counts = #{counts,jdbcType=BIGINT},
+      last_change_date = #{lastChangeDate,jdbcType=TIMESTAMP},
+      appoint_order = #{appointOrder,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where list_id = #{listId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_list_ranking where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_list_ranking where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+   select  media_list_ranking.*,shelf_status from media_list_ranking ,media_list_category mlc,media_sale ms
+     	 where 
+     	 ( media_list_ranking.issue = mlc.last_list_issue or media_list_ranking.status in(0,1))
+		 and media_list_ranking.list_type = mlc.category_code
+     	 and  media_list_ranking.sale_id = ms.sale_id
+     	  <include refid="Base_Where" />
+   		 	 order by shelf_status desc ,
+			 status asc ,
+			IF(ISNULL(appoint_order),1,0) asc,appoint_order desc ,counts desc
+  </select>
+  
+   <select id="getListRanking" resultMap="BaseResultMap" parameterType="map" >
+   
+    select <include refid="Base_Column_List" /> from media_list_ranking
+     where 1=1 
+   		 order by issue desc ,counts desc
+    	 limit ${limit_offset},${limit_count}
+  </select>
+   <delete id="deleteByIds" parameterType="list" >
+    delete from media_list_ranking
+    where list_id in 
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  		#{item}  
+  	</foreach>
+  </delete>
+  <sql id="sale_query_where" >
+    <if test="mediaName != null" > and media.title like concat('%',#{mediaName},'%') </if>
+    <if test="mediaId != null" > and media.media_id=#{mediaId} </if>
+    <if test="saleId != null and saleId !='' " > and media_sale.sale_id=#{saleId} </if>
+    <if test="authorPenname != null and authorPenname !='' " > and author_penname like concat('%',#{authorPenname},'%') </if>
+    <if test="mediaCategoryIds !=null" > and media_catetory.catetory_id in (#{mediaCategoryIds}) </if>
+    <if test="path !=null and path !=''" > and media_catetory.path like '${path}%'  </if>
+  </sql>
+   <select id="getSingleSales" resultType="java.util.HashMap" parameterType="map" >
+		select DISTINCT media.sale_id,media.media_id,title as name,author_name,author_penname,media.is_full,is_vip,is_black,media_sale.shelf_status
+ 				from media_catetory 
+					left join media_book_catetory  on  media_catetory.catetory_id = media_book_catetory.catetory_id
+					left join media  on   media.media_id = media_book_catetory.media_id
+					left join media_sale  on   media.sale_id = media_sale.sale_id
+					left join media_list_ranking mlr on mlr.sale_id = media.sale_id and mlr.list_type =#{list_type,jdbcType=VARCHAR}
+					left join media_list_category mlc on mlc.category_code = mlr.list_type  
+					and (mlc.last_list_issue = mlr.issue or mlr.status in(0,1))
+					where 
+							  media_sale.shelf_status=1 
+							<include refid="sale_query_where" />
+							and mlr.sale_id is  null
+  </select>
+  
+  <select id="pageSingleSaleCount" resultType="java.lang.Integer" parameterType="map" >
+   select count(DISTINCT media_book_catetory.media_id) 
+ 				from media_catetory 
+					left join media_book_catetory  on  media_catetory.catetory_id = media_book_catetory.catetory_id
+					left join media  on   media.media_id = media_book_catetory.media_id
+					left join media_sale  on   media.sale_id = media_sale.sale_id
+					left join media_list_ranking mlr on mlr.sale_id = media.sale_id and mlr.list_type =#{list_type,jdbcType=VARCHAR}
+					left join media_list_category mlc on mlc.category_code = mlr.list_type  
+					and (mlc.last_list_issue = mlr.issue or mlr.status in(0,1))
+					where 
+						  media_sale.shelf_status=1 
+						<include refid="sale_query_where" />
+					    and mlr.sale_id is  null
+  </select>
+  
+  <delete id="deleteByMap" parameterType="map" >
+  	delete from media_list_ranking where 1=1 <include refid="Base_Where" />
+  </delete>
+  <!-- 查询当前最新榜单的在架销售主体 -->
+   <select id="getListRankingSaleIdList" resultType="java.lang.Long" parameterType="map" >
+    select  mlr.sale_id from media_list_ranking mlr,media_list_category mlc,media_sale ms
+     	 where 
+     	 list_type=#{list_type,jdbcType=VARCHAR}
+     	 and ( mlr.issue = mlc.last_list_issue  or mlr.status =1)
+		 and mlr.list_type = mlc.category_code
+     	 and  mlr.sale_id = ms.sale_id
+     	 and ms.shelf_status =1 
+     	 and mlr.status!=0
+   		 order by status asc,appoint_order desc ,counts desc
+    	 limit ${limit_offset},${limit_count}
+  </select>
+   <select id="getListRankingSaleCount" resultType="java.lang.Long" parameterType="map" >
+   <![CDATA[
+   select count(1) from media_list_ranking mlr,media_list_category mlc,media_sale ms
+     	 where 
+     	 list_type=#{list_type,jdbcType=VARCHAR}
+     	 and ( mlr.issue = mlc.last_list_issue  or mlr.status=1)
+		 and mlr.list_type = mlc.category_code
+     	 and  mlr.sale_id = ms.sale_id
+     	 and ms.shelf_status =1 
+     	 and mlr.status!=0
+    	 ]]>
+  </select>
+   <update id="updateListRankingStatus" parameterType="map" >
+   <![CDATA[
+    update media_list_ranking set  status = #{status,jdbcType=INTEGER},last_change_date=now(),operate_time=now(),operator=#{modifer,jdbcType=VARCHAR}  
+    		where status!=#{status,jdbcType=INTEGER} and  list_id in (${listIds})
+    	 ]]>
+  </update>
+  <!-- 查询当期的包含指定saleId的榜单信息 -->
+  <select id="getListRankingBySaleIds" resultMap="BaseResultMap"  parameterType="list">
+  		select mlr.* from media_list_ranking mlr ,media_list_category mlc
+   		          where mlr.issue = mlc.last_list_issue 
+					 and mlr.list_type = mlc.category_code
+   		       		 and  sale_id in 
+   				  <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			      #{item}  
+  		          </foreach>
+  				 group by mlr.list_type
+  </select>
+  
+  <select id="categoryListRankingCount" resultType="java.lang.Integer" parameterType="map">
+  		select count(1) from media_list_category mlc , media_list_ranking mlr
+  		where mlc.category_code = mlr.list_type and mlc.last_list_issue = mlr.issue 
+  	 <include refid="Base_Where" />
+  </select>
+  
+  <select id="categoryListRankingPage" resultMap="BaseResultMap" parameterType="map" >
+  		select mlr.*  from media_list_category mlc , media_list_ranking mlr
+  		where mlc.category_code = mlr.list_type and mlc.last_list_issue = mlr.issue 
+  	 <include refid="Base_Where" />
+  </select>
+  
+  
+  
+</mapper>

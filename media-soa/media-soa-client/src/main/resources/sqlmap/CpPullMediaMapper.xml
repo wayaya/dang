@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CpPullMediaMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.CpPullMedia" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="last_modify_date" property="lastModifyDate" jdbcType="TIMESTAMP" />
+    <result column="cp_media_id" property="cpMediaId" jdbcType="VARCHAR" />
+    <result column="dd_media_id" property="ddMediaId" jdbcType="BIGINT" />
+    <result column="is_full" property="isFull" jdbcType="INTEGER" />
+    <result column="cp_code" property="cpCode" jdbcType="VARCHAR" />
+    <result column="batch_id" property="batchId" jdbcType="BIGINT" />
+    <result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+     <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="id != null" > and id=#{id} </if>
+    <if test="lastModifyDate != null" > and last_modify_date=#{lastModifyDate} </if>
+    <if test="cpMediaId != null" > and cp_media_id=#{cpMediaId} </if>
+    <if test="ddMediaId != null" > and dd_media_id=#{ddMediaId} </if>
+    <if test="isFull != null" > and is_full=#{isFull} </if>
+    <if test="cpCode != null" > and cp_code=#{cpCode} </if>
+    <if test="batchId != null" > and batch_id=#{batchId} </if>
+    <if test="mediaName != null" > and media_name like CONCAT('%',#{mediaName} ,'%') </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="status != null" > and status=#{status} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, last_modify_date, cp_media_id, dd_media_id, is_full, cp_code, batch_id, media_name, 
+    creation_date, status,content
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_cp_pull_media
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_cp_pull_media
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.dangdang.digital.model.CpPullMedia" >
+    insert into media_cp_pull_media (id, last_modify_date, cp_media_id, 
+      dd_media_id, is_full, cp_code, 
+      batch_id, media_name, creation_date, 
+      status, content)
+    values (#{id,jdbcType=BIGINT}, #{lastModifyDate,jdbcType=TIMESTAMP}, #{cpMediaId,jdbcType=VARCHAR}, 
+      #{ddMediaId,jdbcType=BIGINT}, #{isFull,jdbcType=INTEGER}, #{cpCode,jdbcType=VARCHAR}, 
+      #{batchId,jdbcType=BIGINT}, #{mediaName,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id"  parameterType="com.dangdang.digital.model.CpPullMedia" >
+    insert into media_cp_pull_media
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="lastModifyDate != null" >
+        last_modify_date,
+      </if>
+      <if test="cpMediaId != null" >
+        cp_media_id,
+      </if>
+      <if test="ddMediaId != null" >
+        dd_media_id,
+      </if>
+      <if test="isFull != null" >
+        is_full,
+      </if>
+      <if test="cpCode != null" >
+        cp_code,
+      </if>
+      <if test="batchId != null" >
+        batch_id,
+      </if>
+      <if test="mediaName != null" >
+        media_name,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyDate != null" >
+        #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpMediaId != null" >
+        #{cpMediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="ddMediaId != null" >
+        #{ddMediaId,jdbcType=BIGINT},
+      </if>
+      <if test="isFull != null" >
+        #{isFull,jdbcType=INTEGER},
+      </if>
+      <if test="cpCode != null" >
+        #{cpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="batchId != null" >
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.CpPullMedia" >
+    update media_cp_pull_media
+    <set >
+      <if test="lastModifyDate != null" >
+        last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpMediaId != null" >
+        cp_media_id = #{cpMediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="ddMediaId != null" >
+        dd_media_id = #{ddMediaId,jdbcType=BIGINT},
+      </if>
+      <if test="isFull != null" >
+        is_full = #{isFull,jdbcType=INTEGER},
+      </if>
+      <if test="cpCode != null" >
+        cp_code = #{cpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="batchId != null" >
+        batch_id = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        media_name = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dangdang.digital.model.CpPullMedia" >
+    update media_cp_pull_media
+    set last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      cp_media_id = #{cpMediaId,jdbcType=VARCHAR},
+      dd_media_id = #{ddMediaId,jdbcType=BIGINT},
+      is_full = #{isFull,jdbcType=INTEGER},
+      cp_code = #{cpCode,jdbcType=VARCHAR},
+      batch_id = #{batchId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.CpPullMedia" >
+    update media_cp_pull_media
+    set last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+      cp_media_id = #{cpMediaId,jdbcType=VARCHAR},
+      dd_media_id = #{ddMediaId,jdbcType=BIGINT},
+      is_full = #{isFull,jdbcType=INTEGER},
+      cp_code = #{cpCode,jdbcType=VARCHAR},
+      batch_id = #{batchId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cp_pull_media where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_cp_pull_media where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cp_pull_media where 1=1 <include refid="Base_Where" />
+    order by last_modify_date desc,creation_date desc
+  </select>
+</mapper>

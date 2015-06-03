@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CustomerSubscriptionMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.CustomerSubscription" >
+    <id column="customer_subscription_id" property="customerSubscriptionId" jdbcType="BIGINT" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="subscribe_relation" property="subscribeRelation" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="customerSubscriptionId != null" > and customer_subscription_id=#{customerSubscriptionId} </if>
+    <if test="appId != null" > and app_id=#{appId} </if>
+    <if test="deviceNo != null" > and device_no=#{deviceNo} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="subscribeRelation != null" > and subscribe_relation=#{subscribeRelation} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    customer_subscription_id, app_id, device_no, cust_id, media_id, subscribe_relation, 
+    status, creation_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_customer_subscription
+    where customer_subscription_id = #{customerSubscriptionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_customer_subscription
+    where customer_subscription_id = #{customerSubscriptionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.CustomerSubscription"  useGeneratedKeys="true" keyProperty="customerSubscriptionId" >
+    insert into media_customer_subscription (customer_subscription_id, app_id, device_no, 
+      cust_id, media_id, subscribe_relation, 
+      status, creation_date)
+    values (#{customerSubscriptionId,jdbcType=BIGINT}, #{appId,jdbcType=INTEGER}, #{deviceNo,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, #{subscribeRelation,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{creationDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+  	 insert into media_customer_subscription ( app_id, device_no, 
+      cust_id, media_id, subscribe_relation, status, creation_date) values
+  	<foreach collection="list" item="item" index="index" separator=",">
+  		(#{item.appId}, #{item.deviceNo},#{item.custId}, #{item.mediaId},
+  		#{item.subscribeRelation}, #{item.status}, #{item.creationDate})
+  	</foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.CustomerSubscription"  useGeneratedKeys="true" keyProperty="customerSubscriptionId" >
+    insert into media_customer_subscription
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerSubscriptionId != null" >
+        customer_subscription_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="deviceNo != null" >
+        device_no,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="subscribeRelation != null" >
+        subscribe_relation,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerSubscriptionId != null" >
+        #{customerSubscriptionId,jdbcType=BIGINT},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceNo != null" >
+        #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="subscribeRelation != null" >
+        #{subscribeRelation,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.CustomerSubscription" >
+    update media_customer_subscription
+    <set >
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceNo != null" >
+        device_no = #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="subscribeRelation != null" >
+        subscribe_relation = #{subscribeRelation,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where customer_subscription_id = #{customerSubscriptionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.CustomerSubscription" >
+    update media_customer_subscription
+    set app_id = #{appId,jdbcType=INTEGER},
+      device_no = #{deviceNo,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=BIGINT},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      subscribe_relation = #{subscribeRelation,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where customer_subscription_id = #{customerSubscriptionId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateAnonymousRecords" parameterType="map" >
+  	update media_customer_subscription set cust_id=#{custId,jdbcType=BIGINT} where cust_id=-1 and device_no=#{deviceNo,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="clearCustomerSusbscription" parameterType="map" >
+  	update media_customer_subscription set status=0, creation_date = #{creationDate,jdbcType=TIMESTAMP} where app_id=#{appId,jdbcType=INTEGER} and device_no=#{deviceNo,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_subscription where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_customer_subscription where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_subscription where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

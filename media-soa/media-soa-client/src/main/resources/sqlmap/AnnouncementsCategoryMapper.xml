@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AnnouncementsCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.AnnouncementsCategory" >
+    <id column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="category_code" property="categoryCode" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+    <result column="isactiver_forever" property="isactiverForever" jdbcType="BIT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+    <result column="last_change_date" property="lastChangeDate" jdbcType="VARCHAR" />
+    <result column="modifer" property="modifer" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="categoryId != null" > and category_id=#{categoryId} </if>
+    <if test="parentId != null" > and parent_id=#{parentId} </if>
+    <if test="categoryName != null" > and category_name=#{categoryName} </if>
+    <if test="categoryCode != null" > and category_code=#{categoryCode} </if>
+    <if test="position != null" > and position=#{position} </if>
+    <if test="startDate != null" > and start_date=#{startDate} </if>
+    <if test="endDate != null" > and end_date=#{endDate} </if>
+    <if test="isactiverForever != null" > and isactiver_forever=#{isactiverForever} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="createDate != null" > and create_date=#{createDate} </if>
+    <if test="lastChangeDate != null" > and last_change_date=#{lastChangeDate} </if>
+    <if test="modifer != null" > and modifer=#{modifer} </if>
+    <if test="icon != null" > and icon=#{icon} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    category_id, parent_id, category_name, category_code, position, start_date, end_date, 
+    isactiver_forever, creator, create_date, last_change_date, modifer, icon
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from meida_announcements_category
+    where category_id = #{categoryId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from meida_announcements_category
+    where category_id = #{categoryId,jdbcType=BIGINT}
+  </delete>
+  
+   <delete id="deleteContent" parameterType="com.dangdang.digital.model.AnnouncementsCategory"  >
+    delete from meida_announcements_content
+    where  category_code=#{categoryCode}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.AnnouncementsCategory" >
+    insert into meida_announcements_category (category_id, parent_id, category_name, 
+      category_code, position, start_date, 
+      end_date, isactiver_forever, creator, 
+      create_date, last_change_date, modifer, 
+      icon)
+    values (#{categoryId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR}, 
+      #{categoryCode,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{startDate,jdbcType=VARCHAR}, 
+      #{endDate,jdbcType=VARCHAR}, #{isactiverForever,jdbcType=BIT}, #{creator,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{lastChangeDate,jdbcType=VARCHAR}, #{modifer,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.AnnouncementsCategory" >
+    insert into meida_announcements_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="categoryCode != null" >
+        category_code,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="isactiverForever != null" >
+        isactiver_forever,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date,
+      </if>
+      <if test="modifer != null" >
+        modifer,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryCode != null" >
+        #{categoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isactiverForever != null" >
+        #{isactiverForever,jdbcType=BIT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangeDate != null" >
+        #{lastChangeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="modifer != null" >
+        #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.AnnouncementsCategory" >
+    update meida_announcements_category
+    <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryCode != null" >
+        category_code = #{categoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isactiverForever != null" >
+        isactiver_forever = #{isactiverForever,jdbcType=BIT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date = #{lastChangeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="modifer != null" >
+        modifer = #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where category_id = #{categoryId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.AnnouncementsCategory" >
+    update meida_announcements_category
+    set parent_id = #{parentId,jdbcType=BIGINT},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      category_code = #{categoryCode,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=VARCHAR},
+      end_date = #{endDate,jdbcType=VARCHAR},
+      isactiver_forever = #{isactiverForever,jdbcType=BIT},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=VARCHAR},
+      last_change_date = #{lastChangeDate,jdbcType=VARCHAR},
+      modifer = #{modifer,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR}
+    where category_id = #{categoryId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from meida_announcements_category where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from meida_announcements_category where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from meida_announcements_category where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

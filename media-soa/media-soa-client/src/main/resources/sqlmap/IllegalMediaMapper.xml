@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="IllegalMediaMapper" >
+  <resultMap id="BaseResultMap" type="IllegalMedia" >
+    <id column="illegal_media_id" property="illegalMediaId" jdbcType="INTEGER" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="details" property="details" jdbcType="VARCHAR" />
+    <result column="author_id" property="authorId" jdbcType="INTEGER" />
+    <result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+    <result column="last_change_date" property="lastChangeDate" jdbcType="TIMESTAMP" />
+    <association property="media" javaType="com.dangdang.digital.model.Media">
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+		<result column="descs" property="descs" jdbcType="LONGVARCHAR" />
+		<result column="provide_id" property="provideId" jdbcType="INTEGER" />
+		<result column="key_words" property="keyWords" jdbcType="VARCHAR" />
+		<result column="hdfs_path" property="hdfsPath" jdbcType="VARCHAR" />
+		<result column="file_path" property="filePath" jdbcType="VARCHAR" />
+		<result column="uid" property="uid" jdbcType="VARCHAR" />
+		<result column="shelf_status" property="shelfStatus" jdbcType="TINYINT" />
+		<result column="product_id" property="productId" jdbcType="BIGINT" />
+		<result column="chapter_cnt" property="chapterCnt" jdbcType="INTEGER" />
+		<result column="has_new" property="hasNew" jdbcType="TINYINT" />
+		<result column="is_full" property="isFull" jdbcType="TINYINT" />
+		<result column="is_support_full_buy" property="isSupportFullBuy"
+			jdbcType="INTEGER" />
+	
+		<result column="last_modify_date" property="lastModifyDate"
+			jdbcType="TIMESTAMP" />
+		<result column="last_Pull_Chapter_Date" property="lastPullChapterDate"
+			jdbcType="TIMESTAMP" />
+		<result column="author_id" property="authorId" jdbcType="BIGINT" />
+		<result column="cp_resource_id" property="cpResourceId"
+			jdbcType="VARCHAR" />
+		<result column="encrypkey" property="encrypkey" jdbcType="VARCHAR" />
+		<result column="sign_ids" property="signIds" jdbcType="VARCHAR" />
+		<result column="sign_names" property="signNames" jdbcType="VARCHAR" />
+		<result column="role" property="role" jdbcType="VARCHAR" />
+		<result column="author_name" property="authorName" jdbcType="VARCHAR" />
+		<result column="author_penname" property="authorPenname"
+			jdbcType="VARCHAR" />
+		<result column="provider_name" property="providerName"
+			jdbcType="VARCHAR" />
+		<result column="is_show" property="isShow" jdbcType="INTEGER" />
+		<result column="sale_id" property="saleId" jdbcType="BIGINT" />
+		
+		<result column="price_unit" property="priceUnit" jdbcType="INTEGER" />
+		<result column="last_update_chapter" property="lastUpdateChapter" jdbcType="VARCHAR" />
+		<result column="last_index_order" property="lastIndexOrder" jdbcType="INTEGER" />
+		<result column="word_cnt" property="wordCnt" jdbcType="BIGINT" />
+		<result column="cp_code" property="cpCode" jdbcType="VARCHAR" />
+		<result column="cp_short_name" property="cpShortName" jdbcType="VARCHAR" />
+		<result column="zip_status" property="zipStatus" jdbcType="INTEGER" />
+		<result column="pic_cdn_status" property="picCdnStatus" jdbcType="INTEGER" />
+		<result column="is_black" property="isBlack" jdbcType="INTEGER" />
+		<result column="is_vip" property="isVip" jdbcType="INTEGER" />
+  </association>
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="illegalMediaId != null" > and illegal_media_id=#{illegalMediaId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="mediaName != null" > and media_name=#{mediaName} </if>
+    <if test="details != null" > and details=#{details} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="authorId != null" > and author_id=#{authorId} </if>
+    <if test="operatorId != null" > and operator_id=#{operatorId} </if>
+    <if test="lastChangeDate != null" > and last_change_date=#{lastChangeDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    illegal_media_id, media_id,media_name,details,creator, author_id, operator_id, last_change_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+     media.*,illegal_media_id,details  from media_illegal,media where media_illegal.media_id = media.media_id 
+    and illegal_media_id = #{illegalMediaId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_illegal
+    where illegal_media_id = #{illegalMediaId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="IllegalMedia" >
+    insert into media_illegal (media_id, media_name, author_id, 
+      operator_id, last_change_date,creator)
+    values (#{mediaId,jdbcType=BIGINT}, #{mediaName,jdbcType=VARCHAR}, #{authorId,jdbcType=INTEGER}, 
+      #{operatorId,jdbcType=BIGINT}, now(),#{creator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="IllegalMedia" >
+    insert into media_illegal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="mediaName != null" >
+        media_name,
+      </if>
+      <if test="details != null" >
+        details,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="authorId != null" >
+        author_id,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+        last_change_date,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=INTEGER},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null" >
+        #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+       now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="IllegalMedia" >
+    update media_illegal
+    <set >
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        media_name = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        details = #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null" >
+        author_id = #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date =now(),
+      </if>
+    </set>
+    where illegal_media_id = #{illegalMediaId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="IllegalMedia" >
+    update media_illegal
+    set media_name = #{mediaName,jdbcType=VARCHAR},
+    		details = #{details,jdbcType=VARCHAR},
+    	creator = #{creator,jdbcType=VARCHAR},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      author_id = #{authorId,jdbcType=INTEGER},
+      operator_id = #{operatorId,jdbcType=BIGINT},
+      last_change_date = now()
+    where illegal_media_id = #{illegalMediaId,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_illegal where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_illegal where 1=1 <include refid="Base_Where" />
+  </select>
+   <sql id="Query_Where" >
+   		<if test="mediaId != null"> and media.media_id=#{mediaId} </if>
+		<if test="mediaName != null"> and title like CONCAT('%',#{mediaName} ,'%')</if>
+		<if test="authorId != null"> and media.author_id=#{authorId} </if>
+   </sql>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select media.title,media.media_id,media.author_id,shelf_status,illegal_media_id,media_illegal.creator,last_change_date,details  from media_illegal,media where media_illegal.media_id = media.media_id 
+     	<include refid="Query_Where" />
+      order by last_change_date desc
+  </select>
+</mapper>

@@ -1,0 +1,959 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DigestMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Digest" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="media_chapter_id" property="mediaChapterId" jdbcType="BIGINT" />
+    <result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+    <result column="first_catetory_id" property="firstCatetoryId" jdbcType="INTEGER" />
+    <result column="first_catetory_name" property="firstCatetoryName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="column_id" property="columnId" jdbcType="BIGINT" />
+    <result column="column_name" property="columnName" jdbcType="VARCHAR" />
+    <result column="stars" property="stars" jdbcType="INTEGER" />
+    <result column="review_cnt" property="reviewCnt" jdbcType="INTEGER" />
+    <result column="collect_cnt" property="collectCnt" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="share_cnt" property="shareCnt" jdbcType="INTEGER" />
+    <result column="click_cnt" property="clickCnt" jdbcType="INTEGER" />
+    <result column="top_cnt" property="topCnt" jdbcType="INTEGER" />
+    <result column="card_title" property="cardTitle" jdbcType="VARCHAR" />
+    <result column="card_remark" property="cardRemark" jdbcType="VARCHAR" />
+    <result column="pic1_path" property="pic1Path" jdbcType="VARCHAR" />
+    <result column="small_pic1_path" property="smallPic1Path" jdbcType="VARCHAR" />
+    <result column="small_pic2_path" property="smallPic2Path" jdbcType="VARCHAR" />
+    <result column="small_pic3_path" property="smallPic3Path" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="INTEGER" />
+    <result column="show_start_date" property="showStartDate" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="INTEGER" />
+    <result column="sign_ids" property="signIds" jdbcType="VARCHAR" />
+    <result column="day_or_night" property="dayOrNight" jdbcType="INTEGER" />
+    <result column="mood" property="mood" jdbcType="INTEGER" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP"/>
+    <result column="weight" property="weight" jdbcType="INTEGER" />
+    <result column="sort_page" property="sortPage" jdbcType="BIGINT"/>
+    <result column="bar_id" property="barId" jdbcType="BIGINT" />
+    <result column="is_del" property="isDel" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dangdang.digital.model.Digest" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapContent" type="com.dangdang.digital.model.Digest" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+    
+  <sql id="Base_Where" >
+    <if test="id != null" > and id=#{id} </if>
+    <if test="author != null" > and author=#{author} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="mediaChapterId != null" > and media_chapter_id=#{mediaChapterId} </if>
+    <if test="mediaName != null" > and media_name=#{mediaName} </if>
+    <if test="firstCatetoryId != null" > and first_catetory_id=#{firstCatetoryId} </if>
+    <if test="firstCatetoryName != null" > and first_catetory_name=#{firstCatetoryName} </if>
+    <if test="type != null" > and type=#{type} </if>
+    <if test="columnId != null" > and column_id=#{columnId} </if>
+    <if test="columnName != null" > and column_name=#{columnName} </if>
+    <if test="stars != null" > and stars=#{stars} </if>
+    <if test="reviewCnt != null" > and review_cnt=#{reviewCnt} </if>
+    <if test="collectCnt != null" > and collect_cnt=#{collectCnt} </if>
+    <if test="operator != null" > and operator=#{operator} </if>
+    <if test="shareCnt != null" > and share_cnt=#{shareCnt} </if>
+    <if test="topCnt != null" > and top_cnt=#{topCnt} </if>
+    <if test="cardTitle != null" > and card_title=#{cardTitle} </if>
+    <if test="cardRemark != null" > and card_remark=#{cardRemark} </if>
+    <if test="pic1Path != null" > and pic1_path=#{pic1Path} </if>
+    <if test="cardType != null" > and card_type=#{cardType} </if>
+    <if test="showStartDate != null" > and show_start_date=#{showStartDate} </if>
+    <if test="createDate != null" > and create_date=#{createDate} </if>
+    <if test="title != null" > and title=#{title} </if>
+    <if test="isShow != null" > and is_show=#{isShow} </if>
+    <if test="signIds != null" > and sign_ids=#{signIds} </if>
+    <if test="dayOrNight != null" > and day_or_night=#{dayOrNight} </if>
+    <if test="mood != null" > and mood=#{mood} </if>
+    <if test="lastUpdateDate != null"> and last_update_date=#{lastUpdateDate} </if>
+    <if test="weight != null" > and weight=#{weight} </if>
+    <if test="showStartStartDate != null"><![CDATA[ and show_start_date >='${showStartStartDate}' ]]></if>
+    <if test="showStartEndDate != null"><![CDATA[ and show_start_date <='${showStartEndDate}' ]]></if>
+    <if test="sortPage != null"> and sort_page = #{sortPage} </if>
+    <if test="barId != null"> and bar_id = #{barId} </if>
+    <if test="isDel != null"> and is_del = #{isDel} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, author, media_id, media_chapter_id, media_name, first_catetory_id, 
+    first_catetory_name, type, column_id, column_name, stars, review_cnt, collect_cnt, 
+    operator, share_cnt, top_cnt, click_cnt,
+    card_title, card_remark, pic1_path, small_pic1_path, small_pic2_path, small_pic3_path, card_type, show_start_date, 
+    create_date, title, is_show, sign_ids, day_or_night, mood, last_update_date, weight, sort_page
+  </sql>
+  <sql id="Base_Column_List_d" >
+    d.id, d.author, d.media_id, d.media_chapter_id, d.media_name, d.first_catetory_id, 
+    d.first_catetory_name, d.type, d.column_id, d.column_name, d.stars, d.review_cnt, d.collect_cnt, 
+    d.operator, d.share_cnt, d.top_cnt, d.click_cnt,
+    d.card_title, d.card_remark, d.pic1_path,  d.small_pic1_path, d.small_pic2_path, d.small_pic3_path, d.card_type, d.show_start_date, 
+    d.create_date, d.title, d.is_show, d.sign_ids, d.day_or_night, d.mood, d.last_update_date, d.weight, d.sort_page
+  </sql>
+  
+  <!-- 标签列表页返回Column -->
+  <sql id="Base_Sign_Column_List">
+  	id, author, card_remark, card_type, card_title, pic1_path, small_pic1_path, small_pic2_path, small_pic3_path, create_date 
+  </sql>
+  
+  <!-- 心情列表页返回Column -->
+  <sql id="Base_Mood_Column_List">
+  	id, sign_ids, author, card_remark, card_type, card_title, pic1_path, small_pic1_path, small_pic2_path, small_pic3_path, create_date 
+  </sql>
+  
+  <!-- 作者列表页返回Column -->
+  <sql id="Base_Author_Column_List">
+  	id, sign_ids, card_remark, card_type, card_title, pic1_path, small_pic1_path, small_pic2_path, small_pic3_path, create_date 
+  </sql>
+  
+  <!-- 个人精品收藏列表页 -->
+  <sql id="Base_StoreUp_Column_List">
+  	id, card_remark, card_type, card_title, pic1_path 
+  </sql>
+  
+  <!-- 首页 -->
+  <sql id="Base_HomePage_Column_List">
+  	id, sign_ids, author, card_remark, card_type, card_title, pic1_path, small_pic1_path, small_pic2_path, small_pic3_path, create_date, show_start_date, sort_page, day_or_night 
+  </sql>
+  
+  <!-- 书吧帖子 -->
+  <sql id="Base_Bar_Column_List">
+  	d.id, d.sign_ids, d.author, d.card_remark, d.create_date, d.show_start_date, d.sort_page, d.title , d.content, d.last_update_date
+  </sql>
+  
+  <!-- 频道文章 -->
+  <sql id="Base_Channel_Column_List">
+  	id, sign_ids, author, card_remark, card_type, card_title, pic1_path, create_date, show_start_date, sort_page, last_update_date
+  </sql>
+  
+  <sql id="Blob_Column_List" >
+    content, card_type 
+  </sql>
+  <sql id="Content_List" >
+    content
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select <include refid="Base_Column_List" /> from media_digest 
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_digest
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.Digest" useGeneratedKeys="true" keyProperty="id" >
+    insert into media_digest (id, author, 
+      media_id, media_chapter_id, media_name, 
+      first_catetory_id, first_catetory_name, type, 
+      column_id, column_name, stars, 
+      review_cnt, collect_cnt, operator, 
+      share_cnt, 
+      top_cnt, card_title, 
+      card_remark, pic1_path, small_pic1_path, small_pic2_path, small_pic3_path,
+      card_type, show_start_date, 
+      create_date, title, is_show, 
+      sign_ids, day_or_night, 
+      mood, last_update_date, weight, content, sort_page
+      )
+    values (#{id,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, 
+      #{mediaId,jdbcType=BIGINT}, #{mediaChapterId,jdbcType=BIGINT}, #{mediaName,jdbcType=VARCHAR}, 
+      #{firstCatetoryId,jdbcType=INTEGER}, #{firstCatetoryName,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{columnId,jdbcType=BIGINT}, #{columnName,jdbcType=VARCHAR}, #{stars,jdbcType=INTEGER}, 
+      #{reviewCnt,jdbcType=INTEGER}, #{collectCnt,jdbcType=INTEGER}, #{operator,jdbcType=VARCHAR}, 
+      #{shareCnt,jdbcType=INTEGER}, 
+      #{topCnt,jdbcType=INTEGER}, #{cardTitle,jdbcType=VARCHAR}, 
+      #{cardRemark,jdbcType=VARCHAR}, #{pic1Path,jdbcType=VARCHAR}, 
+      #{smallPic1Path,jdbcType=VARCHAR},
+      #{smallPic2Path,jdbcType=VARCHAR},
+      #{smallPic3Path,jdbcType=VARCHAR},
+      #{cardType,jdbcType=INTEGER}, #{showStartDate,jdbcType=TIMESTAMP}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, #{isShow,jdbcType=INTEGER}, 
+      #{signIds,jdbcType=VARCHAR}, #{dayOrNight,jdbcType=INTEGER}, 
+      #{mood,jdbcType=INTEGER}, #{lastUpdateDate,jdbcType=TIMESTAMP}, #{weight,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}, #{sortPage,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Digest" useGeneratedKeys="true" keyProperty="id" >
+    insert into media_digest
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="mediaChapterId != null" >
+        media_chapter_id,
+      </if>
+      <if test="mediaName != null" >
+        media_name,
+      </if>
+      <if test="firstCatetoryId != null" >
+        first_catetory_id,
+      </if>
+      <if test="firstCatetoryName != null" >
+        first_catetory_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="columnId != null" >
+        column_id,
+      </if>
+      <if test="columnName != null" >
+        column_name,
+      </if>
+      <if test="stars != null" >
+        stars,
+      </if>
+      <if test="reviewCnt != null" >
+        review_cnt,
+      </if>
+      <if test="collectCnt != null" >
+        collect_cnt,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="shareCnt != null" >
+        share_cnt,
+      </if>
+      <if test="topCnt != null" >
+        top_cnt,
+      </if>
+      <if test="cardTitle != null" >
+        card_title,
+      </if>
+      <if test="cardRemark != null" >
+        card_remark,
+      </if>
+      <if test="pic1Path != null" >
+        pic1_path,
+      </if>
+      <if test="smallPic1Path != null" >
+        small_pic1_path,
+      </if>
+      <if test="smallPic2Path != null" >
+        small_pic2_path,
+      </if>
+      <if test="smallPic3Path != null" >
+        small_pic3_path,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="showStartDate != null" >
+        show_start_date,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="signIds != null" >
+        sign_ids,
+      </if>
+      <if test="dayOrNight != null" >
+        day_or_night,
+      </if>
+      <if test="mood != null" >
+        mood,
+      </if>
+      <if test="lastUpdateDate != null">
+      	last_update_date,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="sortPage != null" >
+        sort_page,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaChapterId != null" >
+        #{mediaChapterId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstCatetoryId != null" >
+        #{firstCatetoryId,jdbcType=INTEGER},
+      </if>
+      <if test="firstCatetoryName != null" >
+        #{firstCatetoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="columnId != null" >
+        #{columnId,jdbcType=BIGINT},
+      </if>
+      <if test="columnName != null" >
+        #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="stars != null" >
+        #{stars,jdbcType=INTEGER},
+      </if>
+      <if test="reviewCnt != null" >
+        #{reviewCnt,jdbcType=INTEGER},
+      </if>
+      <if test="collectCnt != null" >
+        #{collectCnt,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="shareCnt != null" >
+        #{shareCnt,jdbcType=INTEGER},
+      </if>
+      <if test="topCnt != null" >
+        #{topCnt,jdbcType=INTEGER},
+      </if>
+      <if test="cardTitle != null" >
+        #{cardTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cardRemark != null" >
+        #{cardRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="pic1Path != null" >
+        #{pic1Path,jdbcType=VARCHAR},
+      </if>
+      <if test="smallPic1Path != null" >
+        #{smallPic1Path,jdbcType=VARCHAR},
+      </if>
+      <if test="smallPic2Path != null" >
+        #{smallPic2Path,jdbcType=VARCHAR},
+      </if>
+      <if test="smallPic3Path != null" >
+        #{smallPic3Path,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=INTEGER},
+      </if>
+      <if test="showStartDate != null" >
+        #{showStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="signIds != null" >
+        #{signIds,jdbcType=VARCHAR},
+      </if>
+      <if test="dayOrNight != null" >
+        #{dayOrNight,jdbcType=INTEGER},
+      </if>
+      <if test="mood != null" >
+        #{mood,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateDate != null">
+      	#{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sortPage != null" >
+        #{sortPage,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Digest" >
+    update media_digest
+    <set >
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaChapterId != null" >
+        media_chapter_id = #{mediaChapterId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        media_name = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstCatetoryId != null" >
+        first_catetory_id = #{firstCatetoryId,jdbcType=INTEGER},
+      </if>
+      <if test="firstCatetoryName != null" >
+        first_catetory_name = #{firstCatetoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="columnId != null" >
+        column_id = #{columnId,jdbcType=BIGINT},
+      </if>
+      <if test="columnName != null" >
+        column_name = #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="stars != null" >
+        stars = #{stars,jdbcType=INTEGER},
+      </if>
+      <if test="reviewCnt != null" >
+        review_cnt = #{reviewCnt,jdbcType=INTEGER},
+      </if>
+      <if test="collectCnt != null" >
+        collect_cnt = #{collectCnt,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="shareCnt != null" >
+        share_cnt = #{shareCnt,jdbcType=INTEGER},
+      </if>
+      <if test="clickCnt != null" >
+        click_cnt = #{clickCnt,jdbcType=INTEGER},
+      </if>
+      <if test="topCnt != null" >
+        top_cnt = #{topCnt,jdbcType=INTEGER},
+      </if>
+      <if test="cardTitle != null" >
+        card_title = #{cardTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cardRemark != null" >
+        card_remark = #{cardRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="pic1Path != null" >
+        pic1_path = #{pic1Path,jdbcType=VARCHAR},
+      </if>
+      <if test="smallPic1Path != null" >
+        small_pic1_path = #{smallPic1Path,jdbcType=VARCHAR},
+      </if>
+      <if test="smallPic2Path != null" >
+        small_pic2_path = #{smallPic2Path,jdbcType=VARCHAR},
+      </if>
+      <if test="smallPic3Path != null" >
+        small_pic3_path = #{smallPic3Path,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=INTEGER},
+      </if>
+      <if test="showStartDate != null" >
+        show_start_date = #{showStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="signIds != null" >
+        sign_ids = #{signIds,jdbcType=VARCHAR},
+      </if>
+      <if test="dayOrNight != null" >
+        day_or_night = #{dayOrNight,jdbcType=INTEGER},
+      </if>
+      <if test="mood != null" >
+        mood = #{mood,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateDate != null">
+      	last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sortPage != null" >
+        sort_page = #{sortPage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dangdang.digital.model.Digest" >
+    update media_digest
+    set author = #{author,jdbcType=VARCHAR},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      media_chapter_id = #{mediaChapterId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      first_catetory_id = #{firstCatetoryId,jdbcType=INTEGER},
+      first_catetory_name = #{firstCatetoryName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      column_id = #{columnId,jdbcType=BIGINT},
+      column_name = #{columnName,jdbcType=VARCHAR},
+      stars = #{stars,jdbcType=INTEGER},
+      review_cnt = #{reviewCnt,jdbcType=INTEGER},
+      collect_cnt = #{collectCnt,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR},
+      share_cnt = #{shareCnt,jdbcType=INTEGER},
+      top_cnt = #{topCnt,jdbcType=INTEGER},
+      card_title = #{cardTitle,jdbcType=VARCHAR},
+      card_remark = #{cardRemark,jdbcType=VARCHAR},
+      pic1_path = #{pic1Path,jdbcType=VARCHAR},
+      small_pic1_path = #{smallPic1Path,jdbcType=VARCHAR},
+      small_pic2_path = #{smallPic2Path,jdbcType=VARCHAR},
+      small_pic3_path = #{smallPic3Path,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=INTEGER},
+      show_start_date = #{showStartDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=INTEGER},
+      sign_ids = #{signIds,jdbcType=VARCHAR},
+      day_or_night = #{dayOrNight,jdbcType=INTEGER},
+      mood = #{mood,jdbcType=INTEGER},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      weight = #{weight,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR},
+      sort_page = #{sortPage,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Digest" >
+    update media_digest
+    set author = #{author,jdbcType=VARCHAR},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      media_chapter_id = #{mediaChapterId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      first_catetory_id = #{firstCatetoryId,jdbcType=INTEGER},
+      first_catetory_name = #{firstCatetoryName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      column_id = #{columnId,jdbcType=BIGINT},
+      column_name = #{columnName,jdbcType=VARCHAR},
+      stars = #{stars,jdbcType=INTEGER},
+      review_cnt = #{reviewCnt,jdbcType=INTEGER},
+      collect_cnt = #{collectCnt,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR},
+      share_cnt = #{shareCnt,jdbcType=INTEGER},
+      click_cnt = #{clickCnt,jdbcType=INTEGER},
+      top_cnt = #{topCnt,jdbcType=INTEGER},
+      card_title = #{cardTitle,jdbcType=VARCHAR},
+      card_remark = #{cardRemark,jdbcType=VARCHAR},
+      pic1_path = #{pic1Path,jdbcType=VARCHAR},
+      small_pic1_path = #{smallPic1Path,jdbcType=VARCHAR},
+      small_pic2_path = #{smallPic2Path,jdbcType=VARCHAR},
+      small_pic3_path = #{smallPic3Path,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=INTEGER},
+      show_start_date = #{showStartDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=INTEGER},
+      sign_ids = #{signIds,jdbcType=VARCHAR},
+      day_or_night = #{dayOrNight,jdbcType=INTEGER},
+      mood = #{mood,jdbcType=INTEGER},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      weight = #{weight,jdbcType=INTEGER},
+      sort_page = #{sortPage,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_digest where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_digest where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_digest where 1=1 <include refid="Base_Where" />
+    order by create_date desc
+  </select>
+  
+  <select id="queryDigestsByIds" resultMap="BaseResultMap" parameterType="map">
+  	select <include refid="Base_Column_List" /> from media_digest 
+  	where is_show = 1 
+  	<![CDATA[
+		and create_date < #{now} 
+	]]>
+  	<if test="ids != null and ids != ''">
+  		and id in 
+  		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+  			#{item}  
+  		</foreach>
+  	</if>
+  	order by create_date desc 
+  	limit #{pageSize} 
+  </select>
+  
+  <select id="queryDigestsByChapterIds" resultMap="BaseResultMap" parameterType="map">
+  	select <include refid="Base_Column_List" /> from media_digest 
+  	where media_chapter_id in 	
+		<foreach item="item" index="index" collection="chapterIds" open="(" separator="," close=")">
+			#{item}  
+		</foreach>
+  </select>
+  
+  <select id="queryDigestsByIdsAndSortByIds" resultMap="BaseResultMap" parameterType="map">
+  	select <include refid="Base_Column_List" /> from media_digest 
+  	where is_show = 1 
+  	<if test="ids != null and ids != ''">
+  		and id in 
+  		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+  			#{item}  
+  		</foreach>
+  		order by field(id, 
+  		<foreach item="item" index="index" collection="ids" separator=",">
+  			#{item}  
+  		</foreach>
+  		)
+  	</if>
+  	limit #{offSet}, #{pageSize} 
+  </select>
+
+  <select id="queryDigestsByMood" resultMap="BaseResultMap" parameterType="map">
+  	select <include refid="Base_Mood_Column_List" /> from media_digest  
+  	where is_show = 1 
+  	<if test="now != null and now !=''">
+  		<![CDATA[
+  			and show_start_date <= #{now}
+  		]]>
+  	</if>
+  	<if test="lastDate != null and lastDate !=''">
+  		<![CDATA[
+			and create_date < #{lastDate} 
+		]]>
+  	</if>
+  	<if test="mood != null and mood != ''">
+  		and mood = #{mood} 
+  	</if>
+  	order by create_date desc 
+  	limit #{pageSize}
+  </select>
+
+  <select id="queryDigestsForHomePage" resultMap="BaseResultMap" parameterType="map">
+  	select <include refid="Base_Column_List" /> from media_digest 
+  	where is_show = 1 
+  	<if test="startDate != null and startDate != ''">
+  		<![CDATA[
+			and show_start_date >= #{startDate} 
+		]]>
+  	</if>
+  	<if test="endDate != null and endDate != ''">
+  		<![CDATA[
+			and show_start_date <= #{endDate} 
+		]]>
+  	</if>
+  	and day_or_night = #{dayOrNight} 
+  	<if test="types != null and types != ''">
+  		and type in 
+  		<foreach item="item" index="index" collection="types" open="(" separator="," close=")">
+  			#{item}  
+  		</foreach>
+  	</if>
+  	order by show_start_date desc, weight desc 
+  </select>
+  
+  <select id="getDigestByShowEndDateLimitOne" resultMap="BaseResultMap" parameterType="map">
+  	select <include refid="Base_Column_List" /> from media_digest 
+  	where is_show = 1 
+  	<if test="showEndDate != null and showEndDate != ''">
+  		<![CDATA[
+			and show_start_date < #{showEndDate} 
+		]]>
+  	</if>
+  	<if test="dayOrNight != null">
+  		and day_or_night = #{dayOrNight} 
+  	</if>
+  	<if test="types != null and types != ''">
+  		and type in 
+  		<foreach item="item" index="index" collection="types" open="(" separator="," close=")">
+  			#{item}  
+  		</foreach>
+  	</if>
+  	order by show_start_date desc 
+  	limit 1 
+  </select>
+  
+  <select id="getSign"  resultType="java.util.HashMap" >
+		select  sign_id, NAME from media_goodarticle_sign 
+  </select>
+  
+  <select id="getSignByDigestId"  resultType="java.util.HashMap" >
+		SELECT b.sign_id,b.name FROM media_digest_lable a ,media_goodarticle_sign b WHERE digest_id= #{id,jdbcType=BIGINT} AND a.sign_id = b.sign_id
+  </select>
+  
+  <select id="getDigestContentById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+  	select <include refid="Blob_Column_List" /> from media_digest 
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByIds" resultMap="BaseResultMap">  
+    select  
+    <include refid="Base_Column_List" />  
+    from media_digest where id in  
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+     	#{item}  
+    </foreach>  
+  </select>
+  
+  <select id="getContentByPrimaryKey" resultMap="ResultMapContent" parameterType="java.lang.Long" >
+   select 
+   <include refid="Base_Column_List" />
+   ,
+   <include refid="Content_List" />
+   from media_digest
+   where id = #{id,jdbcType=BIGINT}
+  </select>
+  	
+  <select id="queryDigestsBySignId" resultMap="BaseResultMap" parameterType="map">
+  	select md.<include refid="Base_Sign_Column_List" /> from media_digest as md 
+  	left join media_digest_lable as mdl 
+  	on md.id = mdl.digest_id 
+  	where mdl.sign_id = #{signId} 
+  	and md.is_show = 1 
+  	<if test="now != null and now != ''">
+  		<![CDATA[
+  			and md.show_start_date <= #{now}
+  		]]>
+  	</if>
+  	<if test="lasteDate != null and lasteDate !=''">
+  		<![CDATA[
+  			and md.create_date < #{lasteDate} 
+  		]]>
+  	</if> 
+   	order by md.create_date desc 
+   	limit #{pageSize}
+  </select>
+  
+  <select id="queryDigestsByAuthorId" resultMap="BaseResultMap" parameterType="map">
+  	select md.<include refid="Base_Author_Column_List" /> from media_digest as md 
+  	left join media_digest_author as mda 
+  	on md.id = mda.digest_id 
+  	where mda.author_id = #{authorId} 
+  	and md.is_show = 1 
+  	<if test="now != null and now != ''">
+  		<![CDATA[
+  			and md.show_start_date <= #{now}
+  		]]>
+  	</if>
+  	<if test="lasteDate != null and lasteDate != ''">
+  		<![CDATA[
+  			and md.create_date < #{lasteDate} 
+  		]]>
+  	</if>
+   	order by md.create_date desc 
+   	limit #{pageSize}
+  </select>
+	  
+  	<select id="findDigestByAuthorId" resultMap="BaseResultMap" parameterType="map" >
+		SELECT <include refid="Base_Column_List_d" />
+		FROM media_digest d, media_digest_author a
+		where d.id = a.digest_id
+		and a.author_id = #{authorId,jdbcType=BIGINT}
+		<if test="isShow != null">
+		and d.isshow = #{isShow,jdbcType=INTEGER}
+		</if>
+		order by d.create_date desc
+  	</select>
+  	
+  	<select id="countDigestByAuthorId" resultType="java.lang.Integer" parameterType="map" >
+		SELECT count(d.id)
+		FROM media_digest d, media_digest_author a
+		where d.id = a.digest_id
+		and a.author_id = #{authorId,jdbcType=BIGINT}
+		<if test="isShow != null">
+		and d.is_show = #{isShow,jdbcType=INTEGER}
+		</if>
+  	</select>
+  	
+  	<select id="findDigestBySignId" resultMap="BaseResultMap" parameterType="map" >
+		SELECT <include refid="Base_Column_List_d" />
+		FROM media_digest d, media_digest_lable a
+		where d.id = a.digest_id
+		and a.sign_id = #{signId,jdbcType=BIGINT}
+		<if test="isShow != null">
+		and d.is_show = #{isShow,jdbcType=INTEGER}
+		</if>
+		order by d.create_date desc
+  	</select>
+  	
+  	<select id="countDigestBySignId" resultType="java.lang.Integer" parameterType="map" >
+		SELECT count(d.id)
+		FROM media_digest d, media_digest_lable a
+		where d.id = a.digest_id
+		and a.sign_id = #{signId,jdbcType=BIGINT}
+		<if test="isShow != null">
+		and d.is_show = #{isShow,jdbcType=INTEGER}
+		</if>
+  	</select>
+  	
+  	<select id="queryDigestsHomePageNew" resultMap="BaseResultMap" parameterType="map">
+  		SELECT d.<include refid="Base_HomePage_Column_List" /> FROM media_digest as d where d.is_show = 1 
+  		<if test="dayOrNight != null">
+  			and d.day_or_night = #{dayOrNight} 
+  		</if>
+  		<if test="cmShowDate != null">
+  			<![CDATA[
+  				and d.show_start_date <= #{cmShowDate} 
+  			]]>
+  		</if>
+  		<if test="sortPage != null">
+  			<![CDATA[
+  				and d.sort_page > #{sortPage} 
+  			]]>
+  		</if>
+  		<if test="type != null">
+	  		<![CDATA[
+	  			and type = #{type} 
+	  		]]>
+	  	</if>
+  		order by d.sort_page desc 
+  		limit #{pageSize}
+  	</select>
+  	
+  	<select id="queryDigestsHomePageOld" resultMap="BaseResultMap" parameterType="map">
+  		SELECT d.<include refid="Base_HomePage_Column_List" /> FROM media_digest as d where d.is_show = 1 
+  		<if test="dayOrNight != null">
+  			and d.day_or_night = #{dayOrNight} 
+  		</if>
+  		<if test="cmShowDate != null">
+  			<![CDATA[
+  				and d.show_start_date <= #{cmShowDate} 
+  			]]>
+  		</if>
+  		<if test="sortPage != null">
+  			<![CDATA[
+  				and d.sort_page < #{sortPage} 
+  			]]>
+  		</if>
+  		<if test="type != null">
+	  		<![CDATA[
+	  			and type = #{type} 
+	  		]]>
+	  	</if>
+  		order by d.sort_page desc 
+  		limit #{pageSize}
+  	</select>
+  	
+  	<select id="queryBarDigests" resultMap="BaseResultMap" parameterType="map">
+  		SELECT <include refid="Base_Bar_Column_List" /> FROM media_digest d, media_digest_author a where d.id = a.digest_id 
+  		<if test="sortPage != null">
+  			<![CDATA[
+  				and d.sort_page 
+  			]]>
+  			<if test="sort != null">
+	  			<if test="sort == 'gt'">
+	  				<![CDATA[ 
+	  					> 
+	  				]]>
+	  			</if>
+	  			<if test="sort == 'lt'">
+	  				<![CDATA[ 
+	  					<
+	  				]]>
+	  			</if>
+	  		</if>
+	  		<if test="sort == null">
+	  			<![CDATA[ 
+	  					> 
+	  				]]>
+	  		</if>
+  			#{sortPage} 
+  		</if>
+  		<if test="barId != null">
+  			<![CDATA[
+  				and d.bar_id = #{barId} 
+  			]]>
+  		</if>
+  		<if test="authorId != null">
+  			<![CDATA[
+  				and a.author_id = #{authorId} 
+  			]]>
+  		</if>
+  		<if test="isShow != null">
+  			<![CDATA[
+  				and d.is_show = #{isShow} 
+  			]]>
+  		</if>
+  		<if test="isDel != null">
+  			<![CDATA[
+  				and d.is_del = #{isDel} 
+  			]]>
+  		</if>
+  		<if test="type != null">
+	  		<![CDATA[
+	  			and d.type = #{type} 
+	  		]]>
+	  	</if>
+  		order by d.last_update_date desc 
+  		limit #{pageSize}
+  	</select>
+  	
+  	<select id="queryChannelDigests" resultMap="BaseResultMap" parameterType="map">
+  		SELECT <include refid="Base_Channel_Column_List" /> FROM media_digest  where type = 3 
+  		<if test="isShow != null">
+  			<![CDATA[
+  				and is_show = #{isShow} 
+  			]]>
+  		</if>
+  		<if test="ids != null and ids != ''">
+	  		and id in 
+	  		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	  			#{item}  
+	  		</foreach>
+	  	</if>
+  		order by last_update_date desc 
+  	</select>
+  	
+  	<select id="queryDigestsByStoreUpAndCustId" resultMap="BaseResultMap" parameterType="map">
+  		SELECT md.<include refid="Base_StoreUp_Column_List" /> FROM media_digest as md 
+  		LEFT JOIN media_storeup as ms ON md.id = ms.target_id 
+  		where md.is_show = 1 
+  		<if test="custId != null and custId !=''">
+  			and ms.cust_id = #{custId} 
+  		</if>
+  		<if test="storeType != null and storeType !=''">
+  			and ms.type = #{storeType} 
+  		</if>
+  		<if test="platForm != null and platForm !=''">
+  			and ms.platform = #{platForm} 
+  		</if>
+  		ORDER BY ms.store_date DESC 
+  		limit #{offSet}, #{pageSize}
+  	</select>
+  	
+  	<select id="getDigestIdtWithOne" resultType="java.lang.Long" parameterType="map">
+  		SELECT d.id FROM media_digest as d where d.is_show = 1 
+  		<if test="dayOrNight != null">
+  			and d.day_or_night = #{dayOrNight} 
+  		</if>
+  		<if test="showStart != null">
+  			<![CDATA[
+  				and d.show_start_date >= #{showStart} 
+  			]]>
+  		</if>
+  		<if test="showEnd != null">
+  			<![CDATA[
+  				and d.show_start_date <= #{showEnd} 
+  			]]>
+  		</if>
+  		order by d.sort_page asc  
+  		limit 1 
+  	</select>
+  
+</mapper>

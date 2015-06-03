@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ConsumerConsumeMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.ConsumerConsume" >
+    <id column="consumer_consume_id" property="consumerConsumeId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="consume_tpye" property="consumeTpye" jdbcType="SMALLINT" />
+    <result column="is_final_estimate" property="isFinalEstimate" jdbcType="SMALLINT" />
+    <result column="total_price" property="totalPrice" jdbcType="INTEGER" />
+    <result column="pre_price" property="prePrice" jdbcType="INTEGER" />
+    <result column="main_gold_used" property="mainGoldUsed" jdbcType="INTEGER" />
+    <result column="sub_gold_used" property="subGoldUsed" jdbcType="INTEGER" />
+    <result column="active_id" property="activeId" jdbcType="VARCHAR" />
+    <result column="consume_serial_no" property="consumeSerialNo" jdbcType="VARCHAR" />
+    <result column="monthly_id" property="monthlyId" jdbcType="INTEGER" />
+    <result column="lucky_bag_id" property="luckyBagId" jdbcType="INTEGER" />
+    <result column="commodity_name" property="commodityName" jdbcType="VARCHAR" />
+    <result column="monthly_start_time" property="monthlyStartTime" jdbcType="TIMESTAMP" />
+    <result column="monthly_end_time" property="monthlyEndTime" jdbcType="TIMESTAMP" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="from_paltform" property="fromPaltform" jdbcType="VARCHAR" />
+	<result column="support_balance" property="supportBalance" jdbcType="SMALLINT" />
+  </resultMap>
+  
+  
+  <sql id="Base_Where" >
+	<if test="consumerConsumeId != null" > and consumer_consume_id=#{consumerConsumeId} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="userName != null" > and user_name=#{userName} </if>
+    <if test="creationDateStart != null" ><![CDATA[ and creation_date > #{creationDateStart}]]> </if>
+    <if test="creationDateEnd != null" ><![CDATA[ and creation_date < #{creationDateEnd}]]> </if>
+    <if test="consumeTpye != null" > and consume_tpye=#{consumeTpye} </if>
+    <if test="isFinalEstimate != null" > and is_final_estimate=#{isFinalEstimate} </if>
+    <if test="totalPrice != null" > and total_price=#{totalPrice} </if>
+    <if test="prePrice != null" > and pre_price=#{prePrice} </if>
+    <if test="mainGoldUsed != null" > and main_gold_used=#{mainGoldUsed} </if>
+    <if test="subGoldUsed != null" > and sub_gold_used=#{subGoldUsed} </if>
+    <if test="activeId != null" > and active_id=#{activeId} </if>
+    <if test="consumeSerialNo != null" > and consume_serial_no=#{consumeSerialNo} </if>
+    <if test="monthlyId != null" > and monthly_id=#{monthlyId} </if>
+    <if test="luckyBagId != null" > and lucky_bag_id=#{luckyBagId} </if>
+    <if test="commodityName != null" > and commodity_name=#{commodityName} </if>
+    <if test="monthlyStartTime != null" > and monthly_start_time=#{monthlyStartTime} </if>
+    <if test="monthlyEndTime != null" > and monthly_end_time=#{monthlyEndTime} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="payTime != null" > and pay_time=#{payTime} </if>
+    <if test="fromPaltform != null and fromPaltform !=''"> and from_paltform= #{fromPaltform}</if>
+	<if test="supportBalance != null"> and support_balance= #{supportBalance}</if>	
+  </sql>
+  <sql id="Base_Column_List" >
+    consumer_consume_id, cust_id, user_name, consume_tpye, is_final_estimate, total_price, 
+    pre_price, main_gold_used, sub_gold_used, active_id, consume_serial_no, monthly_id, 
+    lucky_bag_id, commodity_name, monthly_start_time, monthly_end_time, creation_date, 
+    pay_time ,from_paltform ,support_balance 
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_consumer_consume
+    where consumer_consume_id = #{consumerConsumeId,jdbcType=BIGINT}
+  </select>
+  
+  <!-- add by zhouweiyang 根据具用户id查询用户消费记录的书id【media_id】 -->
+  <select id="selectByConsumerConsumeId" resultType="java.lang.Long" parameterType="map" >
+    select distinct media_id  from media_consumer_consume c,media_consumer_consume_detail d where c.cust_id = #{custId,jdbcType=BIGINT} and c.consume_tpye = 4  and c.consumer_consume_id = d.consumer_consume_deatil_id and d.media_id is not null
+    order by consumer_consume_deatil_id desc limit #{start,jdbcType=INTEGER},#{count,jdbcType=INTEGER}
+  </select>
+  <select id="selectCountByConsumerConsumeId" resultType="java.lang.Integer" parameterType="map" >
+    select count(distinct media_id)total  from media_consumer_consume c,media_consumer_consume_detail d where c.cust_id = #{cust_id,jdbcType=BIGINT} and c.consume_tpye = 4  and c.consumer_consume_id = d.consumer_consume_deatil_id and d.media_id is not null
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_consumer_consume
+    where consumer_consume_id = #{consumerConsumeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.ConsumerConsume" >
+    insert into media_consumer_consume (consumer_consume_id, cust_id, user_name, 
+      consume_tpye, is_final_estimate, total_price, 
+      pre_price, main_gold_used, sub_gold_used, 
+      active_id, consume_serial_no, monthly_id, 
+      lucky_bag_id, commodity_name, monthly_start_time, 
+      monthly_end_time, creation_date, pay_time ,from_paltform ,support_balance 
+      )
+    values (#{consumerConsumeId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
+      #{consumeTpye,jdbcType=SMALLINT}, #{isFinalEstimate,jdbcType=SMALLINT}, #{totalPrice,jdbcType=INTEGER}, 
+      #{prePrice,jdbcType=INTEGER}, #{mainGoldUsed,jdbcType=INTEGER}, #{subGoldUsed,jdbcType=INTEGER}, 
+      #{activeId,jdbcType=VARCHAR}, #{consumeSerialNo,jdbcType=VARCHAR}, #{monthlyId,jdbcType=INTEGER}, 
+      #{luckyBagId,jdbcType=INTEGER}, #{commodityName,jdbcType=VARCHAR}, #{monthlyStartTime,jdbcType=TIMESTAMP}, 
+      #{monthlyEndTime,jdbcType=TIMESTAMP}, #{creationDate,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP},
+      #{fromPaltform,jdbcType=VARCHAR}, #{supportBalance,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.ConsumerConsume" useGeneratedKeys="true" keyProperty="consumerConsumeId">
+    insert into media_consumer_consume
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="consumerConsumeId != null" >
+        consumer_consume_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="consumeTpye != null" >
+        consume_tpye,
+      </if>
+      <if test="isFinalEstimate != null" >
+        is_final_estimate,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="prePrice != null" >
+        pre_price,
+      </if>
+      <if test="mainGoldUsed != null" >
+        main_gold_used,
+      </if>
+      <if test="subGoldUsed != null" >
+        sub_gold_used,
+      </if>
+      <if test="activeId != null" >
+        active_id,
+      </if>
+      <if test="consumeSerialNo != null" >
+        consume_serial_no,
+      </if>
+      <if test="monthlyId != null" >
+        monthly_id,
+      </if>
+      <if test="luckyBagId != null" >
+        lucky_bag_id,
+      </if>
+      <if test="commodityName != null" >
+        commodity_name,
+      </if>
+      <if test="monthlyStartTime != null" >
+        monthly_start_time,
+      </if>
+      <if test="monthlyEndTime != null" >
+        monthly_end_time,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="fromPaltform != null and fromPaltform !=''">from_paltform,</if>
+	  <if test="supportBalance != null">support_balance,</if>	
+      creation_date
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="consumerConsumeId != null" >
+        #{consumerConsumeId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeTpye != null" >
+        #{consumeTpye,jdbcType=SMALLINT},
+      </if>
+      <if test="isFinalEstimate != null" >
+        #{isFinalEstimate,jdbcType=SMALLINT},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="prePrice != null" >
+        #{prePrice,jdbcType=INTEGER},
+      </if>
+      <if test="mainGoldUsed != null" >
+        #{mainGoldUsed,jdbcType=INTEGER},
+      </if>
+      <if test="subGoldUsed != null" >
+        #{subGoldUsed,jdbcType=INTEGER},
+      </if>
+      <if test="activeId != null" >
+        #{activeId,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeSerialNo != null" >
+        #{consumeSerialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyId != null" >
+        #{monthlyId,jdbcType=INTEGER},
+      </if>
+      <if test="luckyBagId != null" >
+        #{luckyBagId,jdbcType=INTEGER},
+      </if>
+      <if test="commodityName != null" >
+        #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyStartTime != null" >
+        #{monthlyStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monthlyEndTime != null" >
+        #{monthlyEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fromPaltform != null and fromPaltform !=''">
+		#{fromPaltform,jdbcType=VARCHAR},
+	</if>
+	<if test="supportBalance != null">
+		#{supportBalance,jdbcType=SMALLINT},
+	</if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ConsumerConsume" >
+    update media_consumer_consume
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeTpye != null" >
+        consume_tpye = #{consumeTpye,jdbcType=SMALLINT},
+      </if>
+      <if test="isFinalEstimate != null" >
+        is_final_estimate = #{isFinalEstimate,jdbcType=SMALLINT},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="prePrice != null" >
+        pre_price = #{prePrice,jdbcType=INTEGER},
+      </if>
+      <if test="mainGoldUsed != null" >
+        main_gold_used = #{mainGoldUsed,jdbcType=INTEGER},
+      </if>
+      <if test="subGoldUsed != null" >
+        sub_gold_used = #{subGoldUsed,jdbcType=INTEGER},
+      </if>
+      <if test="activeId != null" >
+        active_id = #{activeId,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeSerialNo != null" >
+        consume_serial_no = #{consumeSerialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyId != null" >
+        monthly_id = #{monthlyId,jdbcType=INTEGER},
+      </if>
+      <if test="luckyBagId != null" >
+        lucky_bag_id = #{luckyBagId,jdbcType=INTEGER},
+      </if>
+      <if test="commodityName != null" >
+        commodity_name = #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyStartTime != null" >
+        monthly_start_time = #{monthlyStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monthlyEndTime != null" >
+        monthly_end_time = #{monthlyEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fromPaltform != null and fromPaltform !=''">
+		from_paltform = #{fromPaltform,jdbcType=VARCHAR},
+	</if>
+	<if test="supportBalance != null">
+		support_balance = #{supportBalance,jdbcType=SMALLINT}
+	</if>
+    </set>
+    where consumer_consume_id = #{consumerConsumeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.ConsumerConsume" >
+    update media_consumer_consume
+    set cust_id = #{custId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      consume_tpye = #{consumeTpye,jdbcType=SMALLINT},
+      is_final_estimate = #{isFinalEstimate,jdbcType=SMALLINT},
+      total_price = #{totalPrice,jdbcType=INTEGER},
+      pre_price = #{prePrice,jdbcType=INTEGER},
+      main_gold_used = #{mainGoldUsed,jdbcType=INTEGER},
+      sub_gold_used = #{subGoldUsed,jdbcType=INTEGER},
+      active_id = #{activeId,jdbcType=VARCHAR},
+      consume_serial_no = #{consumeSerialNo,jdbcType=VARCHAR},
+      monthly_id = #{monthlyId,jdbcType=INTEGER},
+      lucky_bag_id = #{luckyBagId,jdbcType=INTEGER},
+      commodity_name = #{commodityName,jdbcType=VARCHAR},
+      monthly_start_time = #{monthlyStartTime,jdbcType=TIMESTAMP},
+      monthly_end_time = #{monthlyEndTime,jdbcType=TIMESTAMP},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      from_paltform = #{fromPaltform,jdbcType=VARCHAR},
+      support_balance = #{supportBalance,jdbcType=SMALLINT}
+    where consumer_consume_id = #{consumerConsumeId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_consumer_consume where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_consumer_consume where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_consumer_consume where 1=1 <include refid="Base_Where" /> order by creation_date desc
+  </select>
+  <!-- 查询其它消费列表 -->
+  <select id="getOtherConsumeList" resultType="map" parameterType="java.lang.Long">
+  	SELECT consume_tpye,
+		CASE mcc.consume_tpye
+	WHEN 2 THEN
+		'购买道具'
+	WHEN 3 THEN
+		'购买包月'
+	WHEN 4 THEN
+		'打赏'
+	WHEN 5 THEN
+		'购买福袋'
+	WHEN 6 THEN
+		'塞红包'
+	END AS consumeType,
+	 CASE mcc.consume_tpye
+	WHEN 2 THEN
+		mccd.prop_name
+	WHEN 3 THEN
+		TIMESTAMPDIFF(
+			DAY,
+			monthly_start_time,
+			monthly_end_time
+		)
+	WHEN 4 THEN
+		mccd.media_name
+	WHEN 5 THEN
+		mcc.commodity_name
+	WHEN 6 THEN
+		'一个红包' 
+	END AS consumeContent,
+	mcc.creation_date consumeTime,
+	mcc.main_gold_used as mainPrice,
+	mcc.sub_gold_used as subPrice
+	FROM
+		media_consumer_consume mcc
+	left join
+			media_consumer_consume_detail mccd
+	on 
+		mcc.consumer_consume_id = mccd.consumer_consume_id
+	WHERE
+		mcc.cust_id = #{custId,jdbcType=BIGINT} 
+	order by mcc.creation_date desc
+  </select>
+  <!-- 购买包月人数 -->
+  <select id="selectUserCountBuyMonthly" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from (select distinct(cust_id) from media_consumer_consume where consume_tpye=3 and pay_time &gt;#{startDate,jdbcType=TIMESTAMP} and pay_time&lt;#{endDate,jdbcType=TIMESTAMP}) t
+  </select>
+  <!-- 购买包月次数 -->
+  <select id="selectTimesBuyMonthly" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from media_consumer_consume where consume_tpye=3 and pay_time &gt;#{startDate,jdbcType=TIMESTAMP} and pay_time&lt;#{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <!-- 送包月人数 -->
+  <select id="selectTotalBuyMonthly" resultType="java.lang.Long" parameterType="map">
+  	select sum(main_gold_used) from media_consumer_consume where consume_tpye=3 and pay_time &gt; #{startDate,jdbcType=TIMESTAMP} and pay_time &lt;#{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <select id="selectUserCountReward" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from (select distinct(cust_id) from media_consumer_consume where consume_tpye=4 and pay_time &gt; #{startDate,jdbcType=TIMESTAMP} and pay_time &lt;#{endDate,jdbcType=TIMESTAMP}) t
+  </select>
+  <select id="selectTimesReward" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from media_consumer_consume where consume_tpye=4 and pay_time &gt; #{startDate,jdbcType=TIMESTAMP} and pay_time &lt;#{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <select id="selectTotalReward" resultType="java.lang.Long" parameterType="map">
+  	select sum(main_gold_used) from media_consumer_consume where consume_tpye=4 and pay_time &gt; #{startDate,jdbcType=TIMESTAMP} and pay_time &lt;#{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <select id="selectUserCountBuyLuckyBag" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from (select distinct(cust_id) from media_consumer_consume where consume_tpye=5 and pay_time &gt; #{startDate,jdbcType=TIMESTAMP} and pay_time &lt;#{endDate,jdbcType=TIMESTAMP}) t
+  </select>
+  <select id="selectTimesBuyLuckyBag" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from media_consumer_consume where consume_tpye=5 and pay_time &gt; #{startDate,jdbcType=TIMESTAMP} and pay_time &lt;#{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <select id="selectTotalCoinBuyLuckyBag" resultType="java.lang.Long" parameterType="map">
+  	select sum(main_gold_used) from media_consumer_consume where consume_tpye=5 and pay_time &gt; #{startDate,jdbcType=TIMESTAMP} and pay_time &lt;#{endDate,jdbcType=TIMESTAMP}
+  </select>
+</mapper>

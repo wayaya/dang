@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PropMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Prop" >
+    <id column="prop_id" property="propId" jdbcType="INTEGER" />
+    <result column="prop_name" property="propName" jdbcType="VARCHAR" />
+    <result column="prop_main_gold_price" property="propMainGoldPrice" jdbcType="INTEGER" />
+    <result column="prop_sub_gold_price" property="propSubGoldPrice" jdbcType="INTEGER" />
+    <result column="prop_purpose_id" property="propPurposeId" jdbcType="INTEGER" />
+    <result column="prop_purpose_desc" property="propPurposeDesc" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="cover_pic" property="coverPic" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="propId != null" > and prop_id=#{propId} </if>
+    <if test="creationDateStart != null" ><![CDATA[ and creation_date > #{creationDateStart}]]> </if>
+    <if test="creationDateEnd != null" ><![CDATA[ and creation_date < #{creationDateEnd}]]> </if>
+    <if test="propName != null" > and prop_name=#{propName} </if>
+    <if test="propMainGoldPrice != null" > and prop_main_gold_price=#{propMainGoldPrice} </if>
+    <if test="propSubGoldPrice != null" > and prop_sub_gold_price=#{propSubGoldPrice} </if>
+    <if test="propPurposeId != null" > and prop_purpose_id=#{propPurposeId} </if>
+    <if test="propPurposeDesc != null" > and prop_purpose_desc=#{propPurposeDesc} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="lastModifiedDate != null" > and last_modified_date=#{lastModifiedDate} </if>
+    <if test="modifier != null" > and modifier=#{modifier} </if>
+    <if test="coverPic != null" > and cover_pic=#{coverPic} </if>
+    <if test="inPropPurposeId != null" > and prop_purpose_id in (${inPropPurposeId}) </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    prop_id, prop_name, prop_main_gold_price, prop_sub_gold_price, prop_purpose_id, prop_purpose_desc, 
+    creation_date, creator, last_modified_date, modifier, cover_pic
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_prop
+    where prop_id = #{propId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_prop
+    where prop_id = #{propId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.Prop" >
+    insert into media_prop (prop_id, prop_name, prop_main_gold_price, 
+      prop_sub_gold_price, prop_purpose_id, prop_purpose_desc, 
+      creation_date, creator, last_modified_date, 
+      modifier, cover_pic)
+    values (#{propId,jdbcType=INTEGER}, #{propName,jdbcType=VARCHAR}, #{propMainGoldPrice,jdbcType=INTEGER}, 
+      #{propSubGoldPrice,jdbcType=INTEGER}, #{propPurposeId,jdbcType=INTEGER}, #{propPurposeDesc,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{lastModifiedDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{coverPic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Prop" >
+    insert into media_prop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="propId != null" >
+        prop_id,
+      </if>
+      <if test="propName != null" >
+        prop_name,
+      </if>
+      <if test="propMainGoldPrice != null" >
+        prop_main_gold_price,
+      </if>
+      <if test="propSubGoldPrice != null" >
+        prop_sub_gold_price,
+      </if>
+      <if test="propPurposeId != null" >
+        prop_purpose_id,
+      </if>
+      <if test="propPurposeDesc != null" >
+        prop_purpose_desc,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="coverPic != null" >
+        cover_pic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="propId != null" >
+        #{propId,jdbcType=INTEGER},
+      </if>
+      <if test="propName != null" >
+        #{propName,jdbcType=VARCHAR},
+      </if>
+      <if test="propMainGoldPrice != null" >
+        #{propMainGoldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="propSubGoldPrice != null" >
+        #{propSubGoldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="propPurposeId != null" >
+        #{propPurposeId,jdbcType=INTEGER},
+      </if>
+      <if test="propPurposeDesc != null" >
+        #{propPurposeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifiedDate != null" >
+        #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="coverPic != null" >
+        #{coverPic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Prop" >
+    update media_prop
+    <set >
+      <if test="propName != null" >
+        prop_name = #{propName,jdbcType=VARCHAR},
+      </if>
+      <if test="propMainGoldPrice != null" >
+        prop_main_gold_price = #{propMainGoldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="propSubGoldPrice != null" >
+        prop_sub_gold_price = #{propSubGoldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="propPurposeId != null" >
+        prop_purpose_id = #{propPurposeId,jdbcType=INTEGER},
+      </if>
+      <if test="propPurposeDesc != null" >
+        prop_purpose_desc = #{propPurposeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="coverPic != null" >
+        cover_pic = #{coverPic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where prop_id = #{propId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Prop" >
+    update media_prop
+    set prop_name = #{propName,jdbcType=VARCHAR},
+      prop_main_gold_price = #{propMainGoldPrice,jdbcType=INTEGER},
+      prop_sub_gold_price = #{propSubGoldPrice,jdbcType=INTEGER},
+      prop_purpose_id = #{propPurposeId,jdbcType=INTEGER},
+      prop_purpose_desc = #{propPurposeDesc,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      cover_pic = #{coverPic,jdbcType=VARCHAR}
+    where prop_id = #{propId,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_prop where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_prop where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_prop where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="selectByIds" resultMap="BaseResultMap">  
+    select  
+    <include refid="Base_Column_List" />  
+    from media_prop where prop_id in  
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+     	#{item}  
+    </foreach>  
+  </select> 
+</mapper>

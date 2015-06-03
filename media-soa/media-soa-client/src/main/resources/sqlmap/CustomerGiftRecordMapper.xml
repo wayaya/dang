@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CustomerGiftRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.CustomerGiftRecord" >
+    <id column="customer_gift_record_id" property="customerGiftRecordId" jdbcType="BIGINT" />
+    <result column="platform_source" property="platformSource" jdbcType="VARCHAR" />
+    <result column="sender_cust_id" property="senderCustId" jdbcType="BIGINT" />
+    <result column="receiver_cust_id" property="receiverCustId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="ext_field1" property="extField1" jdbcType="VARCHAR" />
+    <result column="ext_field2" property="extField2" jdbcType="VARCHAR" />
+    <result column="ext_field3" property="extField3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="customerGiftRecordId != null" > and customer_gift_record_id=#{customerGiftRecordId} </if>
+    <if test="platformSource != null" > and platform_source=#{platformSource} </if>
+    <if test="senderCustId != null" > and sender_cust_id=#{senderCustId} </if>
+    <if test="receiverCustId != null" > and receiver_cust_id=#{receiverCustId} </if>
+    <if test="type != null" > and type=#{type} </if>
+    <if test="deviceType != null" > and device_type=#{deviceType} </if>
+    <if test="amount != null" > and amount=#{amount} </if>
+    <if test="content != null" > and content=#{content} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="extField1 != null" > and ext_field1=#{extField1} </if>
+    <if test="extField2 != null" > and ext_field2=#{extField2} </if>
+    <if test="extField3 != null" > and ext_field3=#{extField3} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    customer_gift_record_id, platform_source, sender_cust_id, receiver_cust_id, type, 
+    device_type, amount, content, status, last_changed_date, creation_date, ext_field1, 
+    ext_field2, ext_field3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_customer_gift_record
+    where customer_gift_record_id = #{customerGiftRecordId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_customer_gift_record
+    where customer_gift_record_id = #{customerGiftRecordId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.CustomerGiftRecord" useGeneratedKeys="true" keyProperty="customerGiftRecordId" >
+    insert into media_customer_gift_record (customer_gift_record_id, platform_source, 
+      sender_cust_id, receiver_cust_id, type, 
+      device_type, amount, content, 
+      status, last_changed_date, creation_date, 
+      ext_field1, ext_field2, ext_field3
+      )
+    values (#{customerGiftRecordId,jdbcType=BIGINT}, #{platformSource,jdbcType=VARCHAR}, 
+      #{senderCustId,jdbcType=BIGINT}, #{receiverCustId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{deviceType,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{lastChangedDate,jdbcType=TIMESTAMP}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{extField1,jdbcType=VARCHAR}, #{extField2,jdbcType=VARCHAR}, #{extField3,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.CustomerGiftRecord" useGeneratedKeys="true" keyProperty="customerGiftRecordId" >
+    insert into media_customer_gift_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerGiftRecordId != null" >
+        customer_gift_record_id,
+      </if>
+      <if test="platformSource != null" >
+        platform_source,
+      </if>
+      <if test="senderCustId != null" >
+        sender_cust_id,
+      </if>
+      <if test="receiverCustId != null" >
+        receiver_cust_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="extField1 != null" >
+        ext_field1,
+      </if>
+      <if test="extField2 != null" >
+        ext_field2,
+      </if>
+      <if test="extField3 != null" >
+        ext_field3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerGiftRecordId != null" >
+        #{customerGiftRecordId,jdbcType=BIGINT},
+      </if>
+      <if test="platformSource != null" >
+        #{platformSource,jdbcType=VARCHAR},
+      </if>
+      <if test="senderCustId != null" >
+        #{senderCustId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverCustId != null" >
+        #{receiverCustId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastChangedDate != null" >
+        #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extField1 != null" >
+        #{extField1,jdbcType=VARCHAR},
+      </if>
+      <if test="extField2 != null" >
+        #{extField2,jdbcType=VARCHAR},
+      </if>
+      <if test="extField3 != null" >
+        #{extField3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.CustomerGiftRecord" >
+    update media_customer_gift_record
+    <set >
+      <if test="platformSource != null" >
+        platform_source = #{platformSource,jdbcType=VARCHAR},
+      </if>
+      <if test="senderCustId != null" >
+        sender_cust_id = #{senderCustId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverCustId != null" >
+        receiver_cust_id = #{receiverCustId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extField1 != null" >
+        ext_field1 = #{extField1,jdbcType=VARCHAR},
+      </if>
+      <if test="extField2 != null" >
+        ext_field2 = #{extField2,jdbcType=VARCHAR},
+      </if>
+      <if test="extField3 != null" >
+        ext_field3 = #{extField3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where customer_gift_record_id = #{customerGiftRecordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.CustomerGiftRecord" >
+    update media_customer_gift_record
+    set platform_source = #{platformSource,jdbcType=VARCHAR},
+      sender_cust_id = #{senderCustId,jdbcType=BIGINT},
+      receiver_cust_id = #{receiverCustId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      ext_field1 = #{extField1,jdbcType=VARCHAR},
+      ext_field2 = #{extField2,jdbcType=VARCHAR},
+      ext_field3 = #{extField3,jdbcType=VARCHAR}
+    where customer_gift_record_id = #{customerGiftRecordId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_gift_record where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_customer_gift_record where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_gift_record where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	default-lazy-init="false" default-autowire="byName">
+
+	<description>Dubbo provider配置</description>
+
+	<dubbo:protocol name="dubbo" port="${server.dubbo.port}" dispather="all" threadpool="cached" threads="10000" />
+	<!-- 敏感词api -->
+	<dubbo:service interface="com.dangdang.digital.api.IIllegalWordApi" ref="illegalWordApi" owner="lvxiang" version="2.0" retries="3" timeout="10000" />
+	<!-- 消费api -->
+	<dubbo:service interface="com.dangdang.digital.api.IConsumeApi" ref="consumeApi" owner="zhangxianbin" version="2.0" retries="3" timeout="10000" />
+	<!-- 订单api -->
+	<dubbo:service interface="com.dangdang.digital.api.IOrderApi" ref="orderApi" owner="zhangxianbin" version="2.0" retries="3" timeout="10000" />
+	<!-- 充值api -->
+	<dubbo:service interface="com.dangdang.digital.api.IConsumerDepositApi" ref="consumerDepositApi" owner="zhangxianbin" version="2.0" retries="0" timeout="30000" />
+	<!-- 用户阅读权限api -->
+	<dubbo:service interface="com.dangdang.digital.api.IUserAuthorityApi" ref="userAuthorityApi" owner="zhangxianbin" version="2.0" retries="3" timeout="10000" />
+	<!-- 系统api -->
+	<dubbo:service interface="com.dangdang.digital.api.ISystemApi" ref="systemApi" owner="lvxiang" version="2.0" retries="3" timeout="10000" />
+	<!-- 缓存api -->
+	<dubbo:service interface="com.dangdang.digital.api.ICacheApi" ref="cacheApi" owner="xuwenxuan" version="2.0" retries="3" timeout="10000" />
+	<!-- 榜单api -->
+	<dubbo:service interface="com.dangdang.digital.api.IRankingListApi" ref="rankingListApi" version="2.0" retries="3" timeout="10000" />
+	<!-- 原创提供api -->
+	<dubbo:service interface="com.dangdang.digital.api.IMediaApi" ref="mediaApi" owner="xuwenxuan" version="2.0" retries="3" timeout="10000" />
+	<!-- 用户API -->
+	<dubbo:service interface="com.dangdang.digital.api.IUserApi" ref="userApi" owner="zhangxianbin" version="2.0" retries="3" timeout="10000" />
+	
+	<!-- 推送计划API -->
+	<dubbo:service interface="com.dangdang.digital.api.ICloudPushPlanApi" ref="cloudPushPlanApi" owner="yunan" version="2.0" retries="3" timeout="10000" />
+	<!-- 推送用户API -->
+	<dubbo:service interface="com.dangdang.digital.api.INotificationApi" ref="notificationApi" owner="yunan" version="2.0" retries="3" timeout="10000" />
+	<!-- 推送数据API -->
+	<dubbo:service interface="com.dangdang.digital.api.ICloudPushDataApi" ref="cloudPushDataApi" owner="yunan" version="2.0" retries="3" timeout="10000" />
+	<!-- 推送计划状态API -->
+	<dubbo:service interface="com.dangdang.digital.api.ICloudPushPlanStatusApi" ref="cloudPushPlanStatusApi" owner="yunan" version="2.0" retries="3" timeout="10000" />
+	<!-- 消息API -->
+	<dubbo:service interface="com.dangdang.digital.api.IMessageApi" ref="messageApi" owner="dongyiran" version="2.0" retries="3" timeout="10000" />
+	
+	<!-- 购物车API -->
+	<dubbo:service interface="com.dangdang.digital.api.ICartApi" ref="cartApi" owner="yunan" version="2.0" retries="3" timeout="10000" />
+	<dubbo:service interface="com.dangdang.digital.api.IUserDeviceApi" ref="userDeviceApi" owner="yunan" version="2.0" retries="3" timeout="10000" />
+	
+	<!-- 翻篇儿存储文章API -->
+	<dubbo:service interface="com.dangdang.digital.api.IDigestApi" ref="digestApi" owner="dongyiran" version="2.0" retries="3" timeout="10000" />
+</beans>

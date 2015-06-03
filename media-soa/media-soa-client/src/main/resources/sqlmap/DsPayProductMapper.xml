@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DsPayProductMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.DsPayProduct">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="product_id" property="productId" jdbcType="VARCHAR" />
+		<result column="money" property="money" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="id != null"> and id= #{id}</if>	
+		<if test="productId != null and productId !=''"> and product_id= #{productId}</if>
+		<if test="money != null"> and money= #{money}</if>	
+		<if test="status != null"> and status= #{status}</if>	
+	</sql>
+	<sql id="Base_Column_List">
+		id ,
+		product_id ,
+		money ,
+		status 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from ds_pay_product
+		where
+		id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from ds_pay_product
+		where
+		id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.DsPayProduct">
+		insert into ds_pay_product
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>	
+			<if test="productId != null and productId !=''">product_id,</if>
+			<if test="money != null">money,</if>	
+			<if test="status != null">status,</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="productId != null and productId !=''">
+				#{productId,jdbcType=VARCHAR},
+			</if>
+			<if test="money != null">
+				#{money,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.DsPayProduct">
+		update ds_pay_product
+		<set>
+			<if test="productId != null and productId !=''">
+				product_id = #{productId,jdbcType=VARCHAR},
+			</if>
+			<if test="money != null">
+				money = #{money,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER}
+			</if>
+		</set>
+		where
+		id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from ds_pay_product where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from ds_pay_product where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from ds_pay_product where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ds_pay_product where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="selectByMoneys" resultMap="BaseResultMap" parameterType="list">
+		select
+		<include refid="Base_Column_List" />
+		from ds_pay_product where money in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and status = 1
+	</select>
+	
+	<select id="getDepositRelationProduct" resultType="java.lang.String" parameterType="map">
+		select product_id from ds_pay_product where product_id
+		in (${productIds});
+	  </select>
+
+</mapper>

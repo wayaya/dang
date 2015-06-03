@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BookCityFragmentMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.BookCityFragment" >
+    <id column="bookcity_fragment_id" property="bookcityFragmentId" jdbcType="BIGINT" />
+    <result column="fragment_name" property="fragmentName" jdbcType="VARCHAR" />
+    <result column="fragment_type" property="fragmentType" jdbcType="BIGINT" />
+    <result column="fragment_subtype" property="fragmentSubtype" jdbcType="BIGINT" />
+    <result column="has_title" property="hasTitle" jdbcType="BIT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="has_more_text" property="hasMoreText" jdbcType="BIT" />
+    <result column="more_text" property="moreText" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+    <result column="fragment_html" property="fragmentHtml" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Where" >
+    <if test="bookcityFragmentId != null" > and bookcity_fragment_id=#{bookcityFragmentId} </if>
+    <if test="fragmentName != null" > and fragment_name=#{fragmentName} </if>
+    <if test="fragmentType != null" > and fragment_type=#{fragmentType} </if>
+    <if test="fragmentSubtype != null" > and fragment_subtype=#{fragmentSubtype} </if>
+    <if test="hasTitle != null" > and has_title=#{hasTitle} </if>
+    <if test="title != null" > and title=#{title} </if>
+    <if test="hasMoreText != null" > and has_more_text=#{hasMoreText} </if>
+    <if test="moreText != null" > and more_text=#{moreText} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="modifier != null" > and modifier=#{modifier} </if>
+    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    bookcity_fragment_id, fragment_name, fragment_type, fragment_subtype, has_title, 
+    title, has_more_text, more_text, status, creator, creation_date, modifier, last_changed_date, fragment_html
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_bookcity_fragment
+    where bookcity_fragment_id = #{bookcityFragmentId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_bookcity_fragment
+    where bookcity_fragment_id = #{bookcityFragmentId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.BookCityFragment"  useGeneratedKeys="true" keyProperty="bookcityFragmentId"  >
+    insert into media_bookcity_fragment (bookcity_fragment_id, fragment_name, 
+      fragment_type, fragment_subtype, has_title, 
+      title, has_more_text, more_text, 
+      status, creator, creation_date, 
+      modifier, last_changed_date, fragment_html
+      )
+    values (#{bookcityFragmentId,jdbcType=BIGINT}, #{fragmentName,jdbcType=VARCHAR}, 
+      #{fragmentType,jdbcType=BIGINT}, #{fragmentSubtype,jdbcType=BIGINT}, #{hasTitle,jdbcType=BIT}, 
+      #{title,jdbcType=VARCHAR}, #{hasMoreText,jdbcType=BIT}, #{moreText,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{lastChangedDate,jdbcType=TIMESTAMP}, #{fragmentHtml,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.BookCityFragment"  useGeneratedKeys="true" keyProperty="bookcityFragmentId"  >
+    insert into media_bookcity_fragment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookcityFragmentId != null" >
+        bookcity_fragment_id,
+      </if>
+      <if test="fragmentName != null" >
+        fragment_name,
+      </if>
+      <if test="fragmentType != null" >
+        fragment_type,
+      </if>
+      <if test="fragmentSubtype != null" >
+        fragment_subtype,
+      </if>
+      <if test="hasTitle != null" >
+        has_title,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="hasMoreText != null" >
+        has_more_text,
+      </if>
+      <if test="moreText != null" >
+        more_text,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date,
+      </if>
+      <if test="fragmentHtml != null" >
+        fragment_html,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookcityFragmentId != null" >
+        #{bookcityFragmentId,jdbcType=BIGINT},
+      </if>
+      <if test="fragmentName != null" >
+        #{fragmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="fragmentType != null" >
+        #{fragmentType,jdbcType=BIGINT},
+      </if>
+      <if test="fragmentSubtype != null" >
+        #{fragmentSubtype,jdbcType=BIGINT},
+      </if>
+      <if test="hasTitle != null" >
+        #{hasTitle,jdbcType=BIT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="hasMoreText != null" >
+        #{hasMoreText,jdbcType=BIT},
+      </if>
+      <if test="moreText != null" >
+        #{moreText,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fragmentHtml != null" >
+        #{fragmentHtml,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.BookCityFragment" >
+    update media_bookcity_fragment
+    <set >
+      <if test="fragmentName != null" >
+        fragment_name = #{fragmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="fragmentType != null" >
+        fragment_type = #{fragmentType,jdbcType=BIGINT},
+      </if>
+      <if test="fragmentSubtype != null" >
+        fragment_subtype = #{fragmentSubtype,jdbcType=BIGINT},
+      </if>
+      <if test="hasTitle != null" >
+        has_title = #{hasTitle,jdbcType=BIT},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="hasMoreText != null" >
+        has_more_text = #{hasMoreText,jdbcType=BIT},
+      </if>
+      <if test="moreText != null" >
+        more_text = #{moreText,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fragmentHtml != null" >
+        fragment_html = #{fragmentHtml,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where bookcity_fragment_id = #{bookcityFragmentId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.BookCityFragment" >
+    update media_bookcity_fragment
+    set fragment_name = #{fragmentName,jdbcType=VARCHAR},
+      fragment_type = #{fragmentType,jdbcType=BIGINT},
+      fragment_subtype = #{fragmentSubtype,jdbcType=BIGINT},
+      has_title = #{hasTitle,jdbcType=BIT},
+      title = #{title,jdbcType=VARCHAR},
+      has_more_text = #{hasMoreText,jdbcType=BIT},
+      more_text = #{moreText,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      fragment_html = #{fragmentHtml,jdbcType=LONGVARCHAR}
+    where bookcity_fragment_id = #{bookcityFragmentId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_bookcity_fragment where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_bookcity_fragment where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_bookcity_fragment where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

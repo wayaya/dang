@@ -1,0 +1,2399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MediaMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.Media">
+		<id column="media_id" property="mediaId" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+		<result column="descs" property="descs" jdbcType="LONGVARCHAR" />
+		<result column="recommand_words" property="recommandWords"
+			jdbcType="LONGVARCHAR" />
+		<result column="provide_id" property="provideId" jdbcType="INTEGER" />
+		<result column="key_words" property="keyWords" jdbcType="VARCHAR" />
+		<result column="cover_pic" property="coverPic" jdbcType="VARCHAR" />
+		<result column="hdfs_path" property="hdfsPath" jdbcType="VARCHAR" />
+		<result column="file_path" property="filePath" jdbcType="VARCHAR" />
+		<result column="uid" property="uid" jdbcType="VARCHAR" />
+		<result column="shelf_status" property="shelfStatus" jdbcType="TINYINT" />
+		<result column="product_id" property="productId" jdbcType="BIGINT" />
+		<result column="chapter_cnt" property="chapterCnt" jdbcType="INTEGER" />
+		<result column="has_new" property="hasNew" jdbcType="TINYINT" />
+		<result column="is_full" property="isFull" jdbcType="TINYINT" />
+		<result column="is_support_full_buy" property="isSupportFullBuy"
+			jdbcType="INTEGER" />
+		<result column="creation_date" property="creationDate"
+			jdbcType="TIMESTAMP" />
+		<result column="last_modify_date" property="lastModifyDate"
+			jdbcType="TIMESTAMP" />
+		<result column="last_Pull_Chapter_Date" property="lastPullChapterDate"
+			jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
+		<result column="author_id" property="authorId" jdbcType="BIGINT" />
+		<result column="cp_resource_id" property="cpResourceId"
+			jdbcType="VARCHAR" />
+		<result column="encrypkey" property="encrypkey" jdbcType="VARCHAR" />
+		<result column="sign_ids" property="signIds" jdbcType="VARCHAR" />
+		<result column="sign_names" property="signNames" jdbcType="VARCHAR" />
+		<result column="role" property="role" jdbcType="VARCHAR" />
+		<result column="author_name" property="authorName" jdbcType="VARCHAR" />
+		<result column="author_penname" property="authorPenname"
+			jdbcType="VARCHAR" />
+		<result column="provider_name" property="providerName"
+			jdbcType="VARCHAR" />
+		<result column="is_show" property="isShow" jdbcType="INTEGER" />
+		<result column="sale_id" property="saleId" jdbcType="BIGINT" />
+		
+		<result column="price_unit" property="priceUnit" jdbcType="INTEGER" />
+		<result column="last_update_chapter" property="lastUpdateChapter" jdbcType="VARCHAR" />
+		<result column="last_index_order" property="lastIndexOrder" jdbcType="INTEGER" />
+		<result column="word_cnt" property="wordCnt" jdbcType="BIGINT" />
+		<result column="cp_code" property="cpCode" jdbcType="VARCHAR" />
+		<result column="cp_short_name" property="cpShortName" jdbcType="VARCHAR" />
+		<result column="zip_status" property="zipStatus" jdbcType="INTEGER" />
+		<result column="pic_cdn_status" property="picCdnStatus" jdbcType="INTEGER" />
+		<result column="is_black" property="isBlack" jdbcType="INTEGER" />
+		<result column="is_vip" property="isVip" jdbcType="INTEGER" />
+		<result column="speaker" property="speaker" jdbcType="VARCHAR" />
+		<result column="week_heat" property="weekHeat" jdbcType="BIGINT" />
+		<result column="month_heat" property="monthHeat" jdbcType="BIGINT" />
+		<result column="heat" property="heat" jdbcType="BIGINT" />
+		
+		<result column="FREE_KEY" property="freeKey" jdbcType="VARCHAR" />
+    <result column="pdf_full_key" property="pdfFullKey" jdbcType="VARCHAR" />
+    <result column="pdf_free_key" property="pdfFreeKey" jdbcType="VARCHAR" />
+    <result column="intro_title" property="introTitle" jdbcType="VARCHAR" />
+    <result column="doc_type" property="docType" jdbcType="VARCHAR" />
+    <result column="series_book" property="seriesBook" jdbcType="VARCHAR" />
+    <result column="series_book_id" property="seriesBookId" jdbcType="BIGINT" />
+    <result column="paper_book_id" property="paperBookId" jdbcType="BIGINT" />
+    <result column="read_book_id" property="readBookId" jdbcType="BIGINT" />
+    <result column="is_bn" property="isBn" jdbcType="VARCHAR" />
+    <result column="edition" property="edition" jdbcType="INTEGER" />
+    <result column="print_no" property="printNo" jdbcType="INTEGER" />
+    <result column="page_num" property="pageNum" jdbcType="INTEGER" />
+    <result column="book_size" property="bookSize" jdbcType="CHAR" />
+    <result column="words_num" property="wordsNum" jdbcType="VARCHAR" />
+    <result column="print_num" property="printNum" jdbcType="VARCHAR" />
+    <result column="publisher" property="publisher" jdbcType="VARCHAR" />
+    <result column="publish_location" property="publishLocation" jdbcType="VARCHAR" />
+    <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP" />
+    <result column="paper_book_price" property="paperBookPrice" jdbcType="INTEGER" />
+    <result column="paper_book_oversea_price" property="paperBookOverseaPrice" jdbcType="INTEGER" />
+    <result column="paper_book_category" property="paperBookCategory" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="translator" property="translator" jdbcType="VARCHAR" />
+    <result column="metadatafile" property="metadatafile" jdbcType="VARCHAR" />
+    <result column="pdf_file" property="pdfFile" jdbcType="VARCHAR" />
+    <result column="src_file" property="srcFile" jdbcType="VARCHAR" />
+    <result column="paper_book_oversea_price_unit" property="paperBookOverseaPriceUnit" jdbcType="CHAR" />
+    <result column="copy_right_commpany" property="copyRightCommpany" jdbcType="VARCHAR" />
+    <result column="pdf_page_number" property="pdfPageNumber" jdbcType="INTEGER" />
+    <result column="probation_proportion" property="probationProportion" jdbcType="INTEGER" />
+    <result column="is_full_book" property="isFullBook" jdbcType="INTEGER" />
+    <result column="background_update" property="backgroundUpdate" jdbcType="INTEGER" />
+    <result column="read_shelf_status" property="readShelfStatus" jdbcType="INTEGER" />
+    <result column="swf_size" property="swfSize" jdbcType="VARCHAR" />
+    <result column="price_status" property="priceStatus" jdbcType="INTEGER" />
+    <result column="epub_file" property="epubFile" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="CHAR" />
+    <result column="task_name" property="taskName" jdbcType="VARCHAR" />
+    <result column="batch_id" property="batchId" jdbcType="BIGINT" />
+    <result column="other_paper_book_id" property="otherPaperBookId" jdbcType="VARCHAR" />
+    <result column="third_party_permission" property="thirdPartyPermission" jdbcType="INTEGER" />
+    <result column="vendor_id" property="vendorId" jdbcType="BIGINT" />
+    <result column="upload_date" property="uploadDate" jdbcType="TIMESTAMP" />
+    <result column="ios_price" property="iosPrice" jdbcType="INTEGER" />
+    <result column="catalog_level" property="catalogLevel" jdbcType="INTEGER" />
+    <result column="promotion_id" property="promotionId" jdbcType="BIGINT" />
+    <result column="iap_flag" property="iapFlag" jdbcType="INTEGER" />
+    <result column="iap_shelf_status" property="iapShelfStatus" jdbcType="INTEGER" />
+    <result column="iap_device_type" property="iapDeviceType" jdbcType="VARCHAR" />
+    <result column="rate_media_status" property="rateMediaStatus" jdbcType="INTEGER" />
+    <result column="can_use_points" property="canUsePoints" jdbcType="INTEGER" />
+    <result column="related_products" property="relatedProducts" jdbcType="VARCHAR" />
+    <result column="is_month" property="isMonth" jdbcType="VARCHAR" />
+    <result column="first_load_date" property="firstLoadDate" jdbcType="TIMESTAMP" />
+    <result column="promotion_language" property="promotionLanguage" jdbcType="VARCHAR" />
+    <result column="pim_state" property="pimState" jdbcType="INTEGER" />
+    <result column="borrow_duration" property="borrowDuration" jdbcType="INTEGER" />
+    <result column="authorize_start_date" property="authorizeStartDate" jdbcType="TIMESTAMP" />
+    <result column="authorize_end_date" property="authorizeEndDate" jdbcType="TIMESTAMP" />
+    <result column="other_paper_bookids" property="otherPaperBookids" jdbcType="VARCHAR" />
+    
+	</resultMap>
+	
+	<resultMap id="ResultMapWithBLOBs" type="com.dangdang.digital.model.Media"
+		extends="BaseResultMap">
+		<result column="catalog" property="catalog" jdbcType="LONGVARCHAR" />
+	    <result column="recommand_words" property="recommandWords" jdbcType="LONGVARCHAR" />
+	    <result column="author_introduce" property="authorIntroduce" jdbcType="LONGVARCHAR" />
+	    <result column="editor_recommend" property="editorRecommend" jdbcType="LONGVARCHAR" />
+	    <result column="mass_media_recommend" property="massMediaRecommend" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	<resultMap id="SimpleSearchReturn" type="com.dangdang.digital.vo.MediaSimpleSearchReturnVo">
+		<id column="media_id" property="mediaId" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Where">
+		<if test="mediaId != null"> and m.media_id=#{mediaId} </if>
+		<if test="title != null"> and m.title like CONCAT('%',#{title} ,'%')</if>
+		<if test="subTitle != null"> and m.sub_title like
+			CONCAT('%',#{subTitle} ,'%') </if>
+		<if test="descs != null"> and m.descs=#{descs} </if>
+		<if test="provideId != null"> and m.provide_id=#{provideId} </if>
+		<if test="keyWords != null"> and m.key_words like
+			CONCAT('%',#{keyWords} ,'%')</if>
+		<if test="coverPic != null"> and m.cover_pic=#{coverPic} </if>
+		<if test="zipStatus != null"> and m.zip_status=#{zipStatus} </if>
+		<if test="isSupportFullBuy != null"> and m.is_Support_Full_Buy=#{isSupportFullBuy} </if>
+		<if test="hdfsPath != null "> and m.hdfs_path=#{hdfsPath} </if>
+		<if test="filePath != null "> and m.file_path=#{filePath} </if>
+		<if test="uid != null"> and m.uid like CONCAT('%',#{uid} ,'%') </if>
+		<if test="shelfStatus != null"> and m.shelf_status=#{shelfStatus} </if>
+		<if test="productId != null"> and m.product_id=#{productId} </if>
+		<if test="chapterCnt != null"> and m.chapter_cnt=#{chapterCnt} </if>
+		<if test="hasNew != null"> and m.has_new=#{hasNew} </if>
+		<if test="isFull != null"> and m.is_full=#{isFull} </if>
+		<if test="creationDateStart != null"> and
+			m.creation_date>='${creationDateStart}' </if>
+		<if test="creationDateEnd != null"><![CDATA[ and m.creation_date<='${creationDateEnd}' ]]></if>
+		<if test="lastModifyDateStart != null"> and
+			m.last_modify_date>='${lastModifyDateStart}' </if>
+		<if test="lastModifyDateEnd != null"><![CDATA[ and m.last_modify_date<='${lastModifyDateEnd}' ]]></if>
+		<if test="creator != null "> and m.creator=#{creator} </if>
+		<if test="modifier != null"> and m.modifier=#{modifier} </if>
+		<if test="authorId != null"> and m.author_id=#{authorId} </if>
+		<if test="cpResourceId != null"> and m.cp_resource_id=#{cpResourceId} </if>
+		<if test="encrypkey != null"> and m.encrypkey=#{encrypkey} </if>
+		<if test="signIds != null"> and m.sign_ids=#{signIds} </if>
+		<if test="signNames != null"> and m.sign_names=#{signNames} </if>
+		<if test="role != null"> and m.role like CONCAT('%',#{role},'%')</if>
+		<if test="authorName != null"> and m.author_name like
+			CONCAT('%',#{authorName},'%')</if>
+		<if test="authorPenname != null"> and m.author_penname like
+			CONCAT('%',#{authorPenname},'%')</if>
+		<if test="providerName != null"> and m.provider_name like
+			CONCAT('%',#{providerName},'%')</if>
+		<if test="isShow != null"> and m.is_show=#{isShow} </if>
+		<if test="saleId != null"> and m.sale_id=#{saleId} </if>
+		<if test=" picCdnStatus != null"> and m.pic_cdn_status=#{picCdnStatus} </if>
+		<if test=" isBlack != null"> and m.is_black=#{isBlack} </if>
+		<if test=" isVip != null"> and m.is_vip=#{isVip} </if>
+		<if test=" cpCode != null"> and m.cp_code=#{cpCode} </if>
+		<if test="speaker != null"> and m.speaker like
+			CONCAT('%',#{speaker},'%')</if>
+		<if test=" weekHeat != null"> and m.week_heat=#{weekHeat} </if>
+		<if test=" monthHeat != null"> and m.month_heat=#{monthHeat} </if>
+		<if test=" heat != null"> and m.heat=#{heat} </if>
+		
+		 <if test="pimState != null" > and m.pim_state=#{pimState} </if>
+	     <if test="authorizeStartDate != null" > and m.authorize_start_date=#{authorizeStartDate} </if>
+	     <if test="authorizeEndDate != null" > and m.authorize_end_date=#{authorizeEndDate} </if>
+    
+	</sql>
+	<sql id="Base_Column_List">
+		m.media_id, m.title, m.sub_title, m.descs, m.provide_id, m.key_words, m.cover_pic, m.hdfs_path,
+		m.file_path,
+		m.uid, m.shelf_status, m.product_id, m.chapter_cnt, m.has_new, m.is_full,
+		m.creation_date, m.last_modify_date,
+		m.creator, m.modifier, m.author_id, m.cp_resource_id, m.encrypkey, m.sign_ids, m.sign_names,
+		m.role,
+		m.author_name, m.author_penname, m.provider_name, m.is_show,recommand_words,m.is_support_full_buy,
+		m.last_Pull_Chapter_Date,m.sale_id,m.price_unit,m.last_index_order,m.last_update_chapter,
+		m.word_cnt,m.cp_code,m.cp_short_name,m.zip_status,m.pic_cdn_status,m.is_black,m.is_vip,m.speaker,
+		m.week_heat,m.month_heat,m.heat,
+		m.FREE_KEY, m.pdf_full_key, m.pdf_free_key, m.intro_title, m.doc_type, m.series_book, 
+    m.series_book_id, m.paper_book_id, m.read_book_id, m.is_bn, m.edition, m.print_no, m.page_num, 
+    m.book_size, m.words_num, m.print_num, m.publisher, m.publish_location, m.publish_date,m.paper_book_price, 
+    m.paper_book_oversea_price, m.paper_book_category, m.language, m.translator, m.metadatafile, 
+    m.pdf_file, m.src_file, m.paper_book_oversea_price_unit, m.copy_right_commpany, m.pdf_page_number, 
+    m.probation_proportion, m.is_full_book, m.background_update, m.read_shelf_status, m.swf_size, 
+    m.price_status, m.epub_file, m.category, m.task_name, m.batch_id, m.other_paper_book_id, m.third_party_permission, 
+    m.vendor_id, m.upload_date, m.ios_price, m.catalog_level, m.promotion_id, m.iap_flag, iap_shelf_status, 
+    m.iap_device_type, m.rate_media_status, m.can_use_points, m.related_products, m.is_month, m.first_load_date, 
+    m.promotion_language, m.pim_state, m.borrow_duration, m.authorize_start_date, m.authorize_end_date, 
+    m.other_paper_bookids
+	</sql>
+	<sql id="Blob_Column_List">
+		m.catalog
+	</sql>
+
+	<insert id="saveCatetorys">
+		insert into media_book_catetory(catetory_id,media_id)
+		values(#{catetoryId,jdbcType=INTEGER},#{mediaId,jdbcType=BIGINT})
+	</insert>
+	
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from media m
+		where m.media_id = #{mediaId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="findSimpleSearchReturnByIds" resultMap="SimpleSearchReturn"  parameterType="list">  
+	  select  
+	  	media_id, title, sub_title  
+	  from media where media_id in 
+	  <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	   	${item}
+	  </foreach>  
+	</select> 
+	
+	<select id="selectByIds" resultMap="BaseResultMap">  
+	    select  
+	    <include refid="Base_Column_List" />  
+	    from media m where m.media_id in  
+	    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	     	#{item}  
+	    </foreach>  
+	</select>  
+  
+  
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from media
+		where media_id = #{mediaId,jdbcType=BIGINT}
+	</delete>
+	
+	<update id="toShelf" parameterType="java.util.Map">
+		update Media set shelf_status=#{shelfStatus,jdbcType=TINYINT}
+		where media_id in (${ids})
+	</update>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="mediaId" parameterType="com.dangdang.digital.model.Media">
+		insert into media (media_id, title, sub_title,
+		descs, provide_id, key_words,
+		cover_pic, hdfs_path, file_path,
+		uid, shelf_status, product_id,
+		chapter_cnt, has_new, is_full,
+		creation_date, last_modify_date, creator,
+		modifier, author_id, cp_resource_id,
+		encrypkey, sign_ids, sign_names,
+		role, author_name, author_penname,
+		provider_name, is_show, recommand_words,is_support_full_buy,last_Pull_Chapter_Date,sale_id
+		,price_unit,last_index_order,last_update_chapter,word_cnt,cp_code,cp_short_name,zip_status,pic_cdn_status,
+		is_black,is_vip,speaker,week_heat,month_heat,heat,
+		FREE_KEY, pdf_full_key, pdf_free_key, 
+      intro_title, doc_type, series_book, 
+      series_book_id, paper_book_id, read_book_id, 
+      is_bn, edition, print_no, 
+      page_num, book_size, words_num, 
+      print_num, publisher, publish_location, 
+      publish_date, paper_book_price, paper_book_oversea_price, 
+      paper_book_category, language, translator, 
+      metadatafile, pdf_file, src_file, 
+      paper_book_oversea_price_unit, copy_right_commpany, 
+      pdf_page_number, probation_proportion, is_full_book, 
+      background_update, read_shelf_status, swf_size, 
+      price_status, epub_file, category, 
+      task_name, batch_id, other_paper_book_id, 
+      third_party_permission, vendor_id, upload_date, 
+      ios_price, catalog_level, promotion_id, 
+      iap_flag, iap_shelf_status, iap_device_type, 
+      rate_media_status, can_use_points, related_products, 
+      is_month, first_load_date, promotion_language, 
+      pim_state, borrow_duration, authorize_start_date, 
+      authorize_end_date, other_paper_bookids, 
+      catalog, recommand_words, 
+      author_introduce, editor_recommend, 
+      mass_media_recommend
+		)
+		values (#{mediaId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},
+		#{subTitle,jdbcType=VARCHAR},
+		#{descs,jdbcType=VARCHAR}, #{provideId,jdbcType=INTEGER}, #{keyWords,jdbcType=VARCHAR},
+		#{coverPic,jdbcType=VARCHAR}, #{hdfsPath,jdbcType=VARCHAR},
+		#{filePath,jdbcType=VARCHAR},
+		#{uid,jdbcType=VARCHAR}, #{shelfStatus,jdbcType=TINYINT}, #{productId,jdbcType=BIGINT},
+		#{chapterCnt,jdbcType=INTEGER}, #{hasNew,jdbcType=TINYINT},
+		#{isFull,jdbcType=TINYINT},
+		#{creationDate,jdbcType=TIMESTAMP}, #{lastModifyDate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR},
+		#{modifier,jdbcType=VARCHAR}, #{authorId,jdbcType=BIGINT},
+		#{cpResourceId,jdbcType=VARCHAR},
+		#{encrypkey,jdbcType=VARCHAR}, #{signIds,jdbcType=VARCHAR}, #{signNames,jdbcType=VARCHAR},
+		#{role,jdbcType=VARCHAR}, #{authorName,jdbcType=VARCHAR},
+		#{authorPenname,jdbcType=VARCHAR},
+		#{providerName,jdbcType=VARCHAR}, #{isShow,jdbcType=INTEGER}
+		, #{recommandWords,jdbcType=LONGVARCHAR}, #{isSupportFullBuy,jdbcType=INTEGER}
+		, #{lastPullChapterDate,jdbcType=TIMESTAMP}, #{saleId,jdbcType=BIGINT}
+		,#{priceUnit,jdbcType=INTEGER},#{lastIndexOrder,jdbcType=INTEGER},
+		#{lastUpdateChapter,jdbcType=VARCHAR},
+		#{wordCnt,jdbcType=BIGINT},
+		#{cpCode,jdbcType=VARCHAR},
+		#{cpShortName,jdbcType=VARCHAR},
+		#{zipStatus,jdbcType=INTEGER},#{picCdnStatus,jdbcType=INTEGER},
+
+		#{isBlack,jdbcType=INTEGER},#{isVip,jdbcType=INTEGER},#{speaker,jdbcType=VARCHAR},
+		#{weekHeat,jdbcType=BIGINT},#{monthHeat,jdbcType=BIGINT},#{heat,jdbcType=BIGINT},
+		#{freeKey,jdbcType=VARCHAR}, #{pdfFullKey,jdbcType=VARCHAR}, #{pdfFreeKey,jdbcType=VARCHAR}, 
+      #{introTitle,jdbcType=VARCHAR}, #{docType,jdbcType=VARCHAR}, #{seriesBook,jdbcType=VARCHAR}, 
+      #{seriesBookId,jdbcType=BIGINT}, #{paperBookId,jdbcType=BIGINT}, #{readBookId,jdbcType=BIGINT}, 
+      #{isBn,jdbcType=VARCHAR}, #{edition,jdbcType=INTEGER}, #{printNo,jdbcType=INTEGER}, 
+      #{pageNum,jdbcType=INTEGER}, #{bookSize,jdbcType=CHAR}, #{wordsNum,jdbcType=VARCHAR}, 
+      #{printNum,jdbcType=VARCHAR}, #{publisher,jdbcType=VARCHAR}, #{publishLocation,jdbcType=VARCHAR}, 
+      #{publishDate,jdbcType=TIMESTAMP}, #{paperBookPrice,jdbcType=INTEGER}, #{paperBookOverseaPrice,jdbcType=INTEGER}, 
+      #{paperBookCategory,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{translator,jdbcType=VARCHAR}, 
+      #{metadatafile,jdbcType=VARCHAR}, #{pdfFile,jdbcType=VARCHAR}, #{srcFile,jdbcType=VARCHAR}, 
+      #{paperBookOverseaPriceUnit,jdbcType=CHAR}, #{copyRightCommpany,jdbcType=VARCHAR}, 
+      #{pdfPageNumber,jdbcType=INTEGER}, #{probationProportion,jdbcType=INTEGER}, #{isFullBook,jdbcType=INTEGER}, 
+      #{backgroundUpdate,jdbcType=INTEGER}, #{readShelfStatus,jdbcType=INTEGER}, #{swfSize,jdbcType=VARCHAR}, 
+      #{priceStatus,jdbcType=INTEGER}, #{epubFile,jdbcType=VARCHAR}, #{category,jdbcType=CHAR}, 
+      #{taskName,jdbcType=VARCHAR}, #{batchId,jdbcType=BIGINT}, #{otherPaperBookId,jdbcType=VARCHAR}, 
+      #{thirdPartyPermission,jdbcType=INTEGER}, #{vendorId,jdbcType=BIGINT}, #{uploadDate,jdbcType=TIMESTAMP}, 
+      #{iosPrice,jdbcType=INTEGER}, #{catalogLevel,jdbcType=INTEGER}, #{promotionId,jdbcType=BIGINT}, 
+      #{iapFlag,jdbcType=INTEGER}, #{iapShelfStatus,jdbcType=INTEGER}, #{iapDeviceType,jdbcType=VARCHAR}, 
+      #{rateMediaStatus,jdbcType=INTEGER}, #{canUsePoints,jdbcType=INTEGER}, #{relatedProducts,jdbcType=VARCHAR}, 
+      #{isMonth,jdbcType=VARCHAR}, #{firstLoadDate,jdbcType=TIMESTAMP}, #{promotionLanguage,jdbcType=VARCHAR}, 
+      #{pimState,jdbcType=INTEGER}, #{borrowDuration,jdbcType=INTEGER}, #{authorizeStartDate,jdbcType=TIMESTAMP}, 
+      #{authorizeEndDate,jdbcType=TIMESTAMP}, #{otherPaperBookids,jdbcType=VARCHAR}, 
+      #{catalog,jdbcType=LONGVARCHAR}, #{recommandWords,jdbcType=LONGVARCHAR}, 
+      #{authorIntroduce,jdbcType=LONGVARCHAR}, #{editorRecommend,jdbcType=LONGVARCHAR}, 
+      #{massMediaRecommend,jdbcType=LONGVARCHAR}
+
+		)
+	</insert>
+	<insert id="insertSelective"  useGeneratedKeys="true" keyProperty="mediaId"  parameterType="com.dangdang.digital.model.Media">
+		insert into media
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mediaId != null">
+				media_id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="subTitle != null">
+				sub_title,
+			</if>
+			<if test="descs != null">
+				descs,
+			</if>
+			<if test="provideId != null">
+				provide_id,
+			</if>
+			<if test="keyWords != null">
+				key_words,
+			</if>
+			<if test="coverPic != null">
+				cover_pic,
+			</if>
+			<if test="hdfsPath != null">
+				hdfs_path,
+			</if>
+			<if test="filePath != null">
+				file_path,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="shelfStatus != null">
+				shelf_status,
+			</if>
+			<if test="productId != null">
+				product_id,
+			</if>
+			<if test="chapterCnt != null">
+				chapter_cnt,
+			</if>
+			<if test="hasNew != null">
+				has_new,
+			</if>
+			<if test="isFull != null">
+				is_full,
+			</if>
+			<if test="creationDate != null">
+				creation_date,
+			</if>
+			<if test="lastModifyDate != null">
+				last_modify_date,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="authorId != null">
+				author_id,
+			</if>
+			<if test="cpResourceId != null">
+				cp_resource_id,
+			</if>
+			<if test="encrypkey != null">
+				encrypkey,
+			</if>
+			<if test="signIds != null">
+				sign_ids,
+			</if>
+			<if test="signNames != null">
+				sign_names,
+			</if>
+			<if test="role != null">
+				role,
+			</if>
+			<if test="authorName != null">
+				author_name,
+			</if>
+			<if test="authorPenname != null">
+				author_penname,
+			</if>
+			<if test="providerName != null">
+				provider_name,
+			</if>
+			<if test="isShow != null">
+				is_show,
+			</if>
+			<if test="catalog != null">
+				catalog,
+			</if>
+			<if test="isSupportFullBuy != null">
+				is_support_full_buy,
+			</if>
+			<if test="lastPullChapterDate != null">
+				last_Pull_Chapter_Date,
+			</if>
+			<if test="saleId != null">
+				sale_id,
+			</if>
+			<if test="priceUnit != null">
+				price_unit,
+			</if>
+			<if test="lastIndexOrder != null">
+				last_index_order,
+			</if>
+			<if test="lastUpdateChapter != null">
+				last_Update_Chapter,
+			</if>
+			<if test="lastUpdateChapter != null">
+				last_Update_Chapter,
+			</if>
+			<if test="wordCnt != null">
+				word_cnt,
+			</if>
+			<if test="cpCode != null">
+				cp_code,
+			</if>
+			<if test="cpShortName != null">
+				cp_short_name,
+			</if>
+			<if test="zipStatus != null">
+				zip_status,
+			</if>
+			<if test="picCdnStatus != null">
+				pic_cdn_status,
+			</if>
+			<if test="isBlack != null">
+				is_black,
+			</if>
+			<if test="isVip != null">
+				is_vip,
+			</if>
+
+			<if test="speaker != null">
+				speaker,
+			</if>
+			<if test="weekHeat != null">
+				week_heat,
+			</if>
+			<if test="monthHeat != null">
+				month_heat,
+			</if>
+			<if test="heat != null">
+				heat,
+			</if>
+			<if test="freeKey != null" >
+        FREE_KEY,
+      </if>
+      <if test="pdfFullKey != null" >
+        pdf_full_key,
+      </if>
+      <if test="pdfFreeKey != null" >
+        pdf_free_key,
+      </if>
+      <if test="introTitle != null" >
+        intro_title,
+      </if>
+      <if test="docType != null" >
+        doc_type,
+      </if>
+      <if test="seriesBook != null" >
+        series_book,
+      </if>
+      <if test="seriesBookId != null" >
+        series_book_id,
+      </if>
+      <if test="paperBookId != null" >
+        paper_book_id,
+      </if>
+      <if test="readBookId != null" >
+        read_book_id,
+      </if>
+      <if test="isBn != null" >
+        is_bn,
+      </if>
+      <if test="edition != null" >
+        edition,
+      </if>
+      <if test="printNo != null" >
+        print_no,
+      </if>
+      <if test="pageNum != null" >
+        page_num,
+      </if>
+      <if test="bookSize != null" >
+        book_size,
+      </if>
+      <if test="wordsNum != null" >
+        words_num,
+      </if>
+      <if test="printNum != null" >
+        print_num,
+      </if>
+      <if test="publisher != null" >
+        publisher,
+      </if>
+      <if test="publishLocation != null" >
+        publish_location,
+      </if>
+      <if test="publishDate != null" >
+        publish_date,
+      </if>
+      <if test="paperBookPrice != null" >
+        paper_book_price,
+      </if>
+      <if test="paperBookOverseaPrice != null" >
+        paper_book_oversea_price,
+      </if>
+      <if test="paperBookCategory != null" >
+        paper_book_category,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="translator != null" >
+        translator,
+      </if>
+      <if test="metadatafile != null" >
+        metadatafile,
+      </if>
+      <if test="pdfFile != null" >
+        pdf_file,
+      </if>
+      <if test="srcFile != null" >
+        src_file,
+      </if>
+      <if test="paperBookOverseaPriceUnit != null" >
+        paper_book_oversea_price_unit,
+      </if>
+      <if test="copyRightCommpany != null" >
+        copy_right_commpany,
+      </if>
+      <if test="pdfPageNumber != null" >
+        pdf_page_number,
+      </if>
+      <if test="probationProportion != null" >
+        probation_proportion,
+      </if>
+      <if test="isFullBook != null" >
+        is_full_book,
+      </if>
+      <if test="backgroundUpdate != null" >
+        background_update,
+      </if>
+      <if test="readShelfStatus != null" >
+        read_shelf_status,
+      </if>
+      <if test="swfSize != null" >
+        swf_size,
+      </if>
+      <if test="priceStatus != null" >
+        price_status,
+      </if>
+      <if test="epubFile != null" >
+        epub_file,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="taskName != null" >
+        task_name,
+      </if>
+      <if test="batchId != null" >
+        batch_id,
+      </if>
+      <if test="otherPaperBookId != null" >
+        other_paper_book_id,
+      </if>
+      <if test="thirdPartyPermission != null" >
+        third_party_permission,
+      </if>
+      <if test="vendorId != null" >
+        vendor_id,
+      </if>
+      <if test="uploadDate != null" >
+        upload_date,
+      </if>
+      <if test="iosPrice != null" >
+        ios_price,
+      </if>
+      <if test="catalogLevel != null" >
+        catalog_level,
+      </if>
+      <if test="promotionId != null" >
+        promotion_id,
+      </if>
+      <if test="iapFlag != null" >
+        iap_flag,
+      </if>
+      <if test="iapShelfStatus != null" >
+        iap_shelf_status,
+      </if>
+      <if test="iapDeviceType != null" >
+        iap_device_type,
+      </if>
+      <if test="rateMediaStatus != null" >
+        rate_media_status,
+      </if>
+      <if test="canUsePoints != null" >
+        can_use_points,
+      </if>
+      <if test="relatedProducts != null" >
+        related_products,
+      </if>
+      <if test="isMonth != null" >
+        is_month,
+      </if>
+      <if test="firstLoadDate != null" >
+        first_load_date,
+      </if>
+      <if test="promotionLanguage != null" >
+        promotion_language,
+      </if>
+      <if test="pimState != null" >
+        pim_state,
+      </if>
+      <if test="borrowDuration != null" >
+        borrow_duration,
+      </if>
+      <if test="authorizeStartDate != null" >
+        authorize_start_date,
+      </if>
+      <if test="authorizeEndDate != null" >
+        authorize_end_date,
+      </if>
+      <if test="otherPaperBookids != null" >
+        other_paper_bookids,
+      </if>
+     
+      <if test="recommandWords != null" >
+        recommand_words,
+      </if>
+      <if test="authorIntroduce != null" >
+        author_introduce,
+      </if>
+      <if test="editorRecommend != null" >
+        editor_recommend,
+      </if>
+      <if test="massMediaRecommend != null" >
+        mass_media_recommend,
+      </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mediaId != null">
+				#{mediaId,jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="subTitle != null">
+				#{subTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="descs != null">
+				#{descs,jdbcType=VARCHAR},
+			</if>
+			<if test="provideId != null">
+				#{provideId,jdbcType=INTEGER},
+			</if>
+			<if test="keyWords != null">
+				#{keyWords,jdbcType=VARCHAR},
+			</if>
+			<if test="coverPic != null">
+				#{coverPic,jdbcType=VARCHAR},
+			</if>
+			<if test="hdfsPath != null">
+				#{hdfsPath,jdbcType=VARCHAR},
+			</if>
+			<if test="filePath != null">
+				#{filePath,jdbcType=VARCHAR},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="shelfStatus != null">
+				#{shelfStatus,jdbcType=TINYINT},
+			</if>
+			<if test="productId != null">
+				#{productId,jdbcType=BIGINT},
+			</if>
+			<if test="chapterCnt != null">
+				#{chapterCnt,jdbcType=INTEGER},
+			</if>
+			<if test="hasNew != null">
+				#{hasNew,jdbcType=TINYINT},
+			</if>
+			<if test="isFull != null">
+				#{isFull,jdbcType=TINYINT},
+			</if>
+			<if test="creationDate != null">
+				#{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifyDate != null">
+				#{lastModifyDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="authorId != null">
+				#{authorId,jdbcType=BIGINT},
+			</if>
+			<if test="cpResourceId != null">
+				#{cpResourceId,jdbcType=VARCHAR},
+			</if>
+			<if test="encrypkey != null">
+				#{encrypkey,jdbcType=VARCHAR},
+			</if>
+			<if test="signIds != null">
+				#{signIds,jdbcType=VARCHAR},
+			</if>
+			<if test="signNames != null">
+				#{signNames,jdbcType=VARCHAR},
+			</if>
+			<if test="role != null">
+				#{role,jdbcType=VARCHAR},
+			</if>
+			<if test="authorName != null">
+				#{authorName,jdbcType=VARCHAR},
+			</if>
+			<if test="authorPenname != null">
+				#{authorPenname,jdbcType=VARCHAR},
+			</if>
+			<if test="providerName != null">
+				#{providerName,jdbcType=VARCHAR},
+			</if>
+			<if test="isShow != null">
+				#{isShow,jdbcType=INTEGER},
+			</if>
+			<if test="catalog != null">
+				#{catalog,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="isSupportFullBuy != null">
+				#{isSupportFullBuy,jdbcType=INTEGER},
+			</if>
+			<if test="lastPullChapterDate != null">
+				#{lastPullChapterDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="saleId != null">
+				#{saleId,jdbcType=BIGINT},
+			</if>
+			<if test="priceUnit != null">
+				#{priceUnit,jdbcType=INTEGER},
+			</if>
+			<if test="lastIndexOrder != null">
+				#{lastIndexOrder,jdbcType=INTEGER},
+			</if>
+			<if test="lastUpdateChapter != null">
+				#{lastUpdateChapter,jdbcType=VARCHAR},
+			</if>
+			<if test="wordCnt != null">
+				#{wordCnt,jdbcType=BIGINT},
+			</if>
+			<if test="cpCode != null">
+				#{cpCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cpShortName != null">
+				#{cpShortName,jdbcType=VARCHAR},
+			</if>
+			<if test="zipStatus != null">
+				#{zipStatus,jdbcType=INTEGER},
+			</if>
+			<if test="picCdnStatus != null">
+				#{picCdnStatus,jdbcType=INTEGER},
+			</if>
+			<if test="isBlack != null">
+				#{isBlack,jdbcType=INTEGER},
+			</if>
+			<if test="isVip != null">
+				#{isVip,jdbcType=INTEGER},
+			</if>
+			<if test="speaker != null">
+				#{speaker,jdbcType=VARCHAR},
+			</if>
+			<if test="weekHeat != null">
+				#{weekHeat,jdbcType=BIGINT},
+			</if>
+			<if test="monthHeat != null">
+				#{monthHeat,jdbcType=BIGINT},
+			</if>
+			<if test="heat != null">
+				#{heat,jdbcType=BIGINT},
+			</if>
+			<if test="freeKey != null" >
+        #{freeKey,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfFullKey != null" >
+        #{pdfFullKey,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfFreeKey != null" >
+        #{pdfFreeKey,jdbcType=VARCHAR},
+      </if>
+      <if test="introTitle != null" >
+        #{introTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="docType != null" >
+        #{docType,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesBook != null" >
+        #{seriesBook,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesBookId != null" >
+        #{seriesBookId,jdbcType=BIGINT},
+      </if>
+      <if test="paperBookId != null" >
+        #{paperBookId,jdbcType=BIGINT},
+      </if>
+      <if test="readBookId != null" >
+        #{readBookId,jdbcType=BIGINT},
+      </if>
+      <if test="isBn != null" >
+        #{isBn,jdbcType=VARCHAR},
+      </if>
+      <if test="edition != null" >
+        #{edition,jdbcType=INTEGER},
+      </if>
+      <if test="printNo != null" >
+        #{printNo,jdbcType=INTEGER},
+      </if>
+      <if test="pageNum != null" >
+        #{pageNum,jdbcType=INTEGER},
+      </if>
+      <if test="bookSize != null" >
+        #{bookSize,jdbcType=CHAR},
+      </if>
+      <if test="wordsNum != null" >
+        #{wordsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="printNum != null" >
+        #{printNum,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="publishLocation != null" >
+        #{publishLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null" >
+        #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paperBookPrice != null" >
+        #{paperBookPrice,jdbcType=INTEGER},
+      </if>
+      <if test="paperBookOverseaPrice != null" >
+        #{paperBookOverseaPrice,jdbcType=INTEGER},
+      </if>
+      <if test="paperBookCategory != null" >
+        #{paperBookCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="translator != null" >
+        #{translator,jdbcType=VARCHAR},
+      </if>
+      <if test="metadatafile != null" >
+        #{metadatafile,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfFile != null" >
+        #{pdfFile,jdbcType=VARCHAR},
+      </if>
+      <if test="srcFile != null" >
+        #{srcFile,jdbcType=VARCHAR},
+      </if>
+      <if test="paperBookOverseaPriceUnit != null" >
+        #{paperBookOverseaPriceUnit,jdbcType=CHAR},
+      </if>
+      <if test="copyRightCommpany != null" >
+        #{copyRightCommpany,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfPageNumber != null" >
+        #{pdfPageNumber,jdbcType=INTEGER},
+      </if>
+      <if test="probationProportion != null" >
+        #{probationProportion,jdbcType=INTEGER},
+      </if>
+      <if test="isFullBook != null" >
+        #{isFullBook,jdbcType=INTEGER},
+      </if>
+      <if test="backgroundUpdate != null" >
+        #{backgroundUpdate,jdbcType=INTEGER},
+      </if>
+      <if test="readShelfStatus != null" >
+        #{readShelfStatus,jdbcType=INTEGER},
+      </if>
+      <if test="swfSize != null" >
+        #{swfSize,jdbcType=VARCHAR},
+      </if>
+      <if test="priceStatus != null" >
+        #{priceStatus,jdbcType=INTEGER},
+      </if>
+      <if test="epubFile != null" >
+        #{epubFile,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=CHAR},
+      </if>
+      <if test="taskName != null" >
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="batchId != null" >
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="otherPaperBookId != null" >
+        #{otherPaperBookId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPartyPermission != null" >
+        #{thirdPartyPermission,jdbcType=INTEGER},
+      </if>
+      <if test="vendorId != null" >
+        #{vendorId,jdbcType=BIGINT},
+      </if>
+      <if test="uploadDate != null" >
+        #{uploadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iosPrice != null" >
+        #{iosPrice,jdbcType=INTEGER},
+      </if>
+      <if test="catalogLevel != null" >
+        #{catalogLevel,jdbcType=INTEGER},
+      </if>
+      <if test="promotionId != null" >
+        #{promotionId,jdbcType=BIGINT},
+      </if>
+      <if test="iapFlag != null" >
+        #{iapFlag,jdbcType=INTEGER},
+      </if>
+      <if test="iapShelfStatus != null" >
+        #{iapShelfStatus,jdbcType=INTEGER},
+      </if>
+      <if test="iapDeviceType != null" >
+        #{iapDeviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="rateMediaStatus != null" >
+        #{rateMediaStatus,jdbcType=INTEGER},
+      </if>
+      <if test="canUsePoints != null" >
+        #{canUsePoints,jdbcType=INTEGER},
+      </if>
+      <if test="relatedProducts != null" >
+        #{relatedProducts,jdbcType=VARCHAR},
+      </if>
+      <if test="isMonth != null" >
+        #{isMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="firstLoadDate != null" >
+        #{firstLoadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionLanguage != null" >
+        #{promotionLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="pimState != null" >
+        #{pimState,jdbcType=INTEGER},
+      </if>
+      <if test="borrowDuration != null" >
+        #{borrowDuration,jdbcType=INTEGER},
+      </if>
+      <if test="authorizeStartDate != null" >
+        #{authorizeStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorizeEndDate != null" >
+        #{authorizeEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="otherPaperBookids != null" >
+        #{otherPaperBookids,jdbcType=VARCHAR},
+      </if>
+      
+     
+      <if test="recommandWords != null" >
+        #{recommandWords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="authorIntroduce != null" >
+        #{authorIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="editorRecommend != null" >
+        #{editorRecommend,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="massMediaRecommend != null" >
+        #{massMediaRecommend,jdbcType=LONGVARCHAR},
+      </if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Media">
+		update media
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="subTitle != null">
+				sub_title = #{subTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="descs != null">
+				descs = #{descs,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="recommandWords != null">
+				recommand_words = #{recommandWords,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="provideId != null">
+				provide_id = #{provideId,jdbcType=INTEGER},
+			</if>
+			<if test="keyWords != null">
+				key_words = #{keyWords,jdbcType=VARCHAR},
+			</if>
+			<if test="coverPic != null">
+				cover_pic = #{coverPic,jdbcType=VARCHAR},
+			</if>
+			<if test="hdfsPath != null">
+				hdfs_path = #{hdfsPath,jdbcType=VARCHAR},
+			</if>
+			<if test="filePath != null">
+				file_path = #{filePath,jdbcType=VARCHAR},
+			</if>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="shelfStatus != null">
+				shelf_status = #{shelfStatus,jdbcType=TINYINT},
+			</if>
+			<if test="productId != null">
+				product_id = #{productId,jdbcType=BIGINT},
+			</if>
+			<if test="chapterCnt != null">
+				chapter_cnt = #{chapterCnt,jdbcType=INTEGER},
+			</if>
+			<if test="hasNew != null">
+				has_new = #{hasNew,jdbcType=TINYINT},
+			</if>
+			<if test="isFull != null">
+				is_full = #{isFull,jdbcType=TINYINT},
+			</if>
+			<if test="creationDate != null">
+				creation_date = #{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifyDate != null">
+				last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="authorId != null">
+				author_id = #{authorId,jdbcType=BIGINT},
+			</if>
+			<if test="cpResourceId != null">
+				cp_resource_id = #{cpResourceId,jdbcType=VARCHAR},
+			</if>
+			<if test="encrypkey != null">
+				encrypkey = #{encrypkey,jdbcType=VARCHAR},
+			</if>
+			<if test="signIds != null">
+				sign_ids = #{signIds,jdbcType=VARCHAR},
+			</if>
+			<if test="signNames != null">
+				sign_names = #{signNames,jdbcType=VARCHAR},
+			</if>
+			<if test="role != null">
+				role = #{role,jdbcType=VARCHAR},
+			</if>
+			<if test="authorName != null">
+				author_name = #{authorName,jdbcType=VARCHAR},
+			</if>
+			<if test="authorPenname != null">
+				author_penname = #{authorPenname,jdbcType=VARCHAR},
+			</if>
+			<if test="providerName != null">
+				provider_name = #{providerName,jdbcType=VARCHAR},
+			</if>
+			<if test="isShow != null">
+				is_show = #{isShow,jdbcType=INTEGER},
+			</if>
+			<if test="catalog != null">
+				catalog = #{catalog,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="isSupportFullBuy != null">
+				is_support_full_buy = #{isSupportFullBuy,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="lastPullChapterDate != null">
+				last_Pull_Chapter_Date =#{lastPullChapterDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="saleId != null">
+				sale_id = #{saleId,jdbcType=BIGINT},
+			</if>
+			<if test="priceUnit != null">
+				price_unit = #{priceUnit,jdbcType=INTEGER},
+			</if>
+			<if test="lastIndexOrder != null">
+				last_index_order = #{lastIndexOrder,jdbcType=INTEGER},
+			</if>
+			<if test="lastUpdateChapter != null">
+				last_update_chapter = #{lastUpdateChapter,jdbcType=VARCHAR},
+			</if>
+			<if test="wordCnt != null">
+				word_Cnt = #{wordCnt,jdbcType=BIGINT},
+			</if>
+			<if test="cpCode != null">
+				cp_code = #{cpCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cpShortName != null">
+				cp_short_name = #{cpShortName,jdbcType=VARCHAR},
+			</if>
+			<if test="zipStatus != null">
+				zip_status = #{zipStatus,jdbcType=INTEGER},
+			</if>
+			<if test="picCdnStatus != null">
+				pic_cdn_status = #{picCdnStatus,jdbcType=INTEGER},
+			</if>
+			<if test="isBlack != null">
+				is_black = #{isBlack,jdbcType=INTEGER},
+			</if>
+			<if test="isVip != null">
+				is_vip = #{isVip,jdbcType=INTEGER},
+			</if>
+			
+			<if test="speaker != null">
+				speaker = #{speaker,jdbcType=VARCHAR},
+			</if>
+			<if test="weekHeat != null">
+				week_heat = #{weekHeat,jdbcType=BIGINT},
+			</if>
+			<if test="monthHeat != null">
+				month_heat = #{monthHeat,jdbcType=BIGINT},
+			</if>
+			<if test="heat != null">
+				heat = #{heat,jdbcType=BIGINT},
+			</if>
+			<if test="freeKey != null" >
+        FREE_KEY = #{freeKey,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfFullKey != null" >
+        pdf_full_key = #{pdfFullKey,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfFreeKey != null" >
+        pdf_free_key = #{pdfFreeKey,jdbcType=VARCHAR},
+      </if>
+      <if test="introTitle != null" >
+        intro_title = #{introTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="docType != null" >
+        doc_type = #{docType,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesBook != null" >
+        series_book = #{seriesBook,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesBookId != null" >
+        series_book_id = #{seriesBookId,jdbcType=BIGINT},
+      </if>
+      <if test="paperBookId != null" >
+        paper_book_id = #{paperBookId,jdbcType=BIGINT},
+      </if>
+      <if test="readBookId != null" >
+        read_book_id = #{readBookId,jdbcType=BIGINT},
+      </if>
+      <if test="isBn != null" >
+        is_bn = #{isBn,jdbcType=VARCHAR},
+      </if>
+      <if test="edition != null" >
+        edition = #{edition,jdbcType=INTEGER},
+      </if>
+      <if test="printNo != null" >
+        print_no = #{printNo,jdbcType=INTEGER},
+      </if>
+      <if test="pageNum != null" >
+        page_num = #{pageNum,jdbcType=INTEGER},
+      </if>
+      <if test="bookSize != null" >
+        book_size = #{bookSize,jdbcType=CHAR},
+      </if>
+      <if test="wordsNum != null" >
+        words_num = #{wordsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="printNum != null" >
+        print_num = #{printNum,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        publisher = #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="publishLocation != null" >
+        publish_location = #{publishLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null" >
+        publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paperBookPrice != null" >
+        paper_book_price = #{paperBookPrice,jdbcType=INTEGER},
+      </if>
+      <if test="paperBookOverseaPrice != null" >
+        paper_book_oversea_price = #{paperBookOverseaPrice,jdbcType=INTEGER},
+      </if>
+      <if test="paperBookCategory != null" >
+        paper_book_category = #{paperBookCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="translator != null" >
+        translator = #{translator,jdbcType=VARCHAR},
+      </if>
+      <if test="metadatafile != null" >
+        metadatafile = #{metadatafile,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfFile != null" >
+        pdf_file = #{pdfFile,jdbcType=VARCHAR},
+      </if>
+      <if test="srcFile != null" >
+        src_file = #{srcFile,jdbcType=VARCHAR},
+      </if>
+      <if test="paperBookOverseaPriceUnit != null" >
+        paper_book_oversea_price_unit = #{paperBookOverseaPriceUnit,jdbcType=CHAR},
+      </if>
+      <if test="copyRightCommpany != null" >
+        copy_right_commpany = #{copyRightCommpany,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfPageNumber != null" >
+        pdf_page_number = #{pdfPageNumber,jdbcType=INTEGER},
+      </if>
+      <if test="probationProportion != null" >
+        probation_proportion = #{probationProportion,jdbcType=INTEGER},
+      </if>
+      <if test="isFullBook != null" >
+        is_full_book = #{isFullBook,jdbcType=INTEGER},
+      </if>
+      <if test="backgroundUpdate != null" >
+        background_update = #{backgroundUpdate,jdbcType=INTEGER},
+      </if>
+      <if test="readShelfStatus != null" >
+        read_shelf_status = #{readShelfStatus,jdbcType=INTEGER},
+      </if>
+      <if test="swfSize != null" >
+        swf_size = #{swfSize,jdbcType=VARCHAR},
+      </if>
+      <if test="priceStatus != null" >
+        price_status = #{priceStatus,jdbcType=INTEGER},
+      </if>
+      <if test="epubFile != null" >
+        epub_file = #{epubFile,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="taskName != null" >
+        task_name = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="batchId != null" >
+        batch_id = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="otherPaperBookId != null" >
+        other_paper_book_id = #{otherPaperBookId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPartyPermission != null" >
+        third_party_permission = #{thirdPartyPermission,jdbcType=INTEGER},
+      </if>
+      <if test="vendorId != null" >
+        vendor_id = #{vendorId,jdbcType=BIGINT},
+      </if>
+      <if test="uploadDate != null" >
+        upload_date = #{uploadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iosPrice != null" >
+        ios_price = #{iosPrice,jdbcType=INTEGER},
+      </if>
+      <if test="catalogLevel != null" >
+        catalog_level = #{catalogLevel,jdbcType=INTEGER},
+      </if>
+      <if test="promotionId != null" >
+        promotion_id = #{promotionId,jdbcType=BIGINT},
+      </if>
+      <if test="iapFlag != null" >
+        iap_flag = #{iapFlag,jdbcType=INTEGER},
+      </if>
+      <if test="iapShelfStatus != null" >
+        iap_shelf_status = #{iapShelfStatus,jdbcType=INTEGER},
+      </if>
+      <if test="iapDeviceType != null" >
+        iap_device_type = #{iapDeviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="rateMediaStatus != null" >
+        rate_media_status = #{rateMediaStatus,jdbcType=INTEGER},
+      </if>
+      <if test="canUsePoints != null" >
+        can_use_points = #{canUsePoints,jdbcType=INTEGER},
+      </if>
+      <if test="relatedProducts != null" >
+        related_products = #{relatedProducts,jdbcType=VARCHAR},
+      </if>
+      <if test="isMonth != null" >
+        is_month = #{isMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="firstLoadDate != null" >
+        first_load_date = #{firstLoadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionLanguage != null" >
+        promotion_language = #{promotionLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="pimState != null" >
+        pim_state = #{pimState,jdbcType=INTEGER},
+      </if>
+      <if test="borrowDuration != null" >
+        borrow_duration = #{borrowDuration,jdbcType=INTEGER},
+      </if>
+      <if test="authorizeStartDate != null" >
+        authorize_start_date = #{authorizeStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorizeEndDate != null" >
+        authorize_end_date = #{authorizeEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="otherPaperBookids != null" >
+        other_paper_bookids = #{otherPaperBookids,jdbcType=VARCHAR},
+      </if>
+     
+      <if test="catalog != null" >
+        catalog = #{catalog,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="recommandWords != null" >
+        recommand_words = #{recommandWords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="authorIntroduce != null" >
+        author_introduce = #{authorIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="editorRecommend != null" >
+        editor_recommend = #{editorRecommend,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="massMediaRecommend != null" >
+        mass_media_recommend = #{massMediaRecommend,jdbcType=LONGVARCHAR},
+      </if>
+		</set>
+		where media_id = #{mediaId,jdbcType=BIGINT}
+	</update>
+
+	<update id="setIsFull" parameterType="com.dangdang.digital.model.Media">
+		update media set is_support_full_buy = #{isSupportFullBuy,jdbcType=INTEGER} where sale_id=#{saleId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dangdang.digital.model.Media">
+		update media
+		set title = #{title,jdbcType=VARCHAR},
+		sub_title = #{subTitle,jdbcType=VARCHAR},
+		descs = #{descs,jdbcType=VARCHAR},
+		provide_id = #{provideId,jdbcType=INTEGER},
+		key_words = #{keyWords,jdbcType=VARCHAR},
+		cover_pic = #{coverPic,jdbcType=VARCHAR},
+		hdfs_path = #{hdfsPath,jdbcType=VARCHAR},
+		file_path = #{filePath,jdbcType=VARCHAR},
+		uid = #{uid,jdbcType=VARCHAR},
+		shelf_status = #{shelfStatus,jdbcType=TINYINT},
+		product_id = #{productId,jdbcType=BIGINT},
+		chapter_cnt = #{chapterCnt,jdbcType=INTEGER},
+		has_new = #{hasNew,jdbcType=TINYINT},
+		is_full = #{isFull,jdbcType=TINYINT},
+		creation_date = #{creationDate,jdbcType=TIMESTAMP},
+		last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+		creator = #{creator,jdbcType=VARCHAR},
+		modifier = #{modifier,jdbcType=VARCHAR},
+		author_id = #{authorId,jdbcType=BIGINT},
+		cp_resource_id = #{cpResourceId,jdbcType=VARCHAR},
+		encrypkey = #{encrypkey,jdbcType=VARCHAR},
+		sign_ids = #{signIds,jdbcType=VARCHAR},
+		sign_names = #{signNames,jdbcType=VARCHAR},
+		role = #{role,jdbcType=VARCHAR},
+		author_name = #{authorName,jdbcType=VARCHAR},
+		author_penname = #{authorPenname,jdbcType=VARCHAR},
+		provider_name = #{providerName,jdbcType=VARCHAR},
+		is_show = #{isShow,jdbcType=INTEGER},
+		
+		last_Pull_Chapter_Date =#{lastPullChapterDate,jdbcType=TIMESTAMP},
+		sale_id =#{saleId,jdbcType=BIGINT},
+		price_unit = #{priceUnit,jdbcType=INTEGER},
+		last_index_order =#{lastIndexOrder,jdbcType=INTEGER},
+		last_update_chapter=#{lastUpdateChapter,jdbcType=VARCHAR},
+		word_cnt=#{wordCnt,jdbcType=BIGINT},
+		cp_code=#{cpCode,jdbcType=VARCHAR},
+		cp_short_name=#{cpShortName,jdbcType=VARCHAR},
+		pic_cdn_status = #{picCdnStatus,jdbcType=INTEGER},
+		zip_status=#{zipStatus,jdbcType=VARCHAR},
+		is_black=#{isBlack,jdbcType=INTEGER},
+		is_vip=#{isVip,jdbcType=INTEGER},
+		speaker=#{speaker,jdbcType=VARCHAR},
+		week_heat=#{weekHeat,jdbcType=BIGINT},
+		month_heat=#{monthHeat,jdbcType=BIGINT},
+		heat=#{heat,jdbcType=BIGINT},
+      FREE_KEY = #{freeKey,jdbcType=VARCHAR},
+      pdf_full_key = #{pdfFullKey,jdbcType=VARCHAR},
+      pdf_free_key = #{pdfFreeKey,jdbcType=VARCHAR},
+      intro_title = #{introTitle,jdbcType=VARCHAR},
+      doc_type = #{docType,jdbcType=VARCHAR},
+      series_book = #{seriesBook,jdbcType=VARCHAR},
+      series_book_id = #{seriesBookId,jdbcType=BIGINT},
+      paper_book_id = #{paperBookId,jdbcType=BIGINT},
+      read_book_id = #{readBookId,jdbcType=BIGINT},
+      is_bn = #{isBn,jdbcType=VARCHAR},
+      edition = #{edition,jdbcType=INTEGER},
+      print_no = #{printNo,jdbcType=INTEGER},
+      page_num = #{pageNum,jdbcType=INTEGER},
+      book_size = #{bookSize,jdbcType=CHAR},
+      words_num = #{wordsNum,jdbcType=VARCHAR},
+      print_num = #{printNum,jdbcType=VARCHAR},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      publish_location = #{publishLocation,jdbcType=VARCHAR},
+      publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      paper_book_price = #{paperBookPrice,jdbcType=INTEGER},
+      paper_book_oversea_price = #{paperBookOverseaPrice,jdbcType=INTEGER},
+      paper_book_category = #{paperBookCategory,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      translator = #{translator,jdbcType=VARCHAR},
+      metadatafile = #{metadatafile,jdbcType=VARCHAR},
+      pdf_file = #{pdfFile,jdbcType=VARCHAR},
+      src_file = #{srcFile,jdbcType=VARCHAR},
+      paper_book_oversea_price_unit = #{paperBookOverseaPriceUnit,jdbcType=CHAR},
+      copy_right_commpany = #{copyRightCommpany,jdbcType=VARCHAR},
+      pdf_page_number = #{pdfPageNumber,jdbcType=INTEGER},
+      probation_proportion = #{probationProportion,jdbcType=INTEGER},
+      is_full_book = #{isFullBook,jdbcType=INTEGER},
+      background_update = #{backgroundUpdate,jdbcType=INTEGER},
+      read_shelf_status = #{readShelfStatus,jdbcType=INTEGER},
+      swf_size = #{swfSize,jdbcType=VARCHAR},
+      price_status = #{priceStatus,jdbcType=INTEGER},
+      epub_file = #{epubFile,jdbcType=VARCHAR},
+      category = #{category,jdbcType=CHAR},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      batch_id = #{batchId,jdbcType=BIGINT},
+      other_paper_book_id = #{otherPaperBookId,jdbcType=VARCHAR},
+      third_party_permission = #{thirdPartyPermission,jdbcType=INTEGER},
+      vendor_id = #{vendorId,jdbcType=BIGINT},
+      upload_date = #{uploadDate,jdbcType=TIMESTAMP},
+      ios_price = #{iosPrice,jdbcType=INTEGER},
+      catalog_level = #{catalogLevel,jdbcType=INTEGER},
+      promotion_id = #{promotionId,jdbcType=BIGINT},
+      iap_flag = #{iapFlag,jdbcType=INTEGER},
+      iap_shelf_status = #{iapShelfStatus,jdbcType=INTEGER},
+      iap_device_type = #{iapDeviceType,jdbcType=VARCHAR},
+      rate_media_status = #{rateMediaStatus,jdbcType=INTEGER},
+      can_use_points = #{canUsePoints,jdbcType=INTEGER},
+      related_products = #{relatedProducts,jdbcType=VARCHAR},
+      is_month = #{isMonth,jdbcType=VARCHAR},
+      first_load_date = #{firstLoadDate,jdbcType=TIMESTAMP},
+      promotion_language = #{promotionLanguage,jdbcType=VARCHAR},
+      pim_state = #{pimState,jdbcType=INTEGER},
+      borrow_duration = #{borrowDuration,jdbcType=INTEGER},
+      authorize_start_date = #{authorizeStartDate,jdbcType=TIMESTAMP},
+      authorize_end_date = #{authorizeEndDate,jdbcType=TIMESTAMP},
+      other_paper_bookids = #{otherPaperBookids,jdbcType=VARCHAR},
+      catalog = #{catalog,jdbcType=LONGVARCHAR},
+      recommand_words = #{recommandWords,jdbcType=LONGVARCHAR},
+      author_introduce = #{authorIntroduce,jdbcType=LONGVARCHAR},
+      editor_recommend = #{editorRecommend,jdbcType=LONGVARCHAR},
+      mass_media_recommend = #{massMediaRecommend,jdbcType=LONGVARCHAR}
+		where media_id = #{mediaId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Media">
+		update media
+		set title = #{title,jdbcType=VARCHAR},
+		sub_title = #{subTitle,jdbcType=VARCHAR},
+		descs = #{descs,jdbcType=VARCHAR},
+		provide_id = #{provideId,jdbcType=INTEGER},
+		key_words = #{keyWords,jdbcType=VARCHAR},
+		cover_pic = #{coverPic,jdbcType=VARCHAR},
+		hdfs_path = #{hdfsPath,jdbcType=VARCHAR},
+		file_path = #{filePath,jdbcType=VARCHAR},
+		uid = #{uid,jdbcType=VARCHAR},
+		shelf_status = #{shelfStatus,jdbcType=TINYINT},
+		product_id = #{productId,jdbcType=BIGINT},
+		chapter_cnt = #{chapterCnt,jdbcType=INTEGER},
+		has_new = #{hasNew,jdbcType=TINYINT},
+		is_full = #{isFull,jdbcType=TINYINT},
+		creation_date = #{creationDate,jdbcType=TIMESTAMP},
+		last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+		creator = #{creator,jdbcType=VARCHAR},
+		modifier = #{modifier,jdbcType=VARCHAR},
+		author_id = #{authorId,jdbcType=BIGINT},
+		cp_resource_id = #{cpResourceId,jdbcType=VARCHAR},
+		encrypkey = #{encrypkey,jdbcType=VARCHAR},
+		sign_ids = #{signIds,jdbcType=VARCHAR},
+		sign_names = #{signNames,jdbcType=VARCHAR},
+		role = #{role,jdbcType=VARCHAR},
+		author_name = #{authorName,jdbcType=VARCHAR},
+		author_penname = #{authorPenname,jdbcType=VARCHAR},
+		provider_name = #{providerName,jdbcType=VARCHAR},
+		is_show = #{isShow,jdbcType=INTEGER}
+		is_support_full_buy = #{isSupportFullBuy,jdbcType=INTEGER}
+		,last_Pull_Chapter_Date =#{lastPullChapterDate,jdbcType=TIMESTAMP}
+		,sale_id =#{saleId,jdbcType=BIGINT},
+		price_unit = #{priceUnit,jdbcType=INTEGER},
+		last_index_order =#{lastIndexOrder,jdbcType=INTEGER},
+		last_update_chapter=#{lastUpdateChapter,jdbcType=VARCHAR},
+		word_cnt=#{wordCnt,jdbcType=BIGINT},
+		cp_code=#{cpCode,jdbcType=VARCHAR},
+		cp_short_name=#{cpShortName,jdbcType=VARCHAR},
+		pic_cdn_status = #{picCdnStatus,jdbcType=INTEGER},
+		zip_status=#{zipStatus,jdbcType=VARCHAR},
+		is_black=#{isBlack,jdbcType=INTEGER},
+		is_vip=#{isVip,jdbcType=INTEGER},
+		speaker=#{speaker,jdbcType=VARCHAR},
+		week_heat=#{weekHeat,jdbcType=BIGINT},
+		month_heat=#{monthHeat,jdbcType=BIGINT},
+		heat=#{heat,jdbcType=BIGINT},
+      FREE_KEY = #{freeKey,jdbcType=VARCHAR},
+      pdf_full_key = #{pdfFullKey,jdbcType=VARCHAR},
+      pdf_free_key = #{pdfFreeKey,jdbcType=VARCHAR},
+      intro_title = #{introTitle,jdbcType=VARCHAR},
+      doc_type = #{docType,jdbcType=VARCHAR},
+      series_book = #{seriesBook,jdbcType=VARCHAR},
+      series_book_id = #{seriesBookId,jdbcType=BIGINT},
+      paper_book_id = #{paperBookId,jdbcType=BIGINT},
+      read_book_id = #{readBookId,jdbcType=BIGINT},
+      is_bn = #{isBn,jdbcType=VARCHAR},
+      edition = #{edition,jdbcType=INTEGER},
+      print_no = #{printNo,jdbcType=INTEGER},
+      page_num = #{pageNum,jdbcType=INTEGER},
+      book_size = #{bookSize,jdbcType=CHAR},
+      words_num = #{wordsNum,jdbcType=VARCHAR},
+      print_num = #{printNum,jdbcType=VARCHAR},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      publish_location = #{publishLocation,jdbcType=VARCHAR},
+      publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      paper_book_price = #{paperBookPrice,jdbcType=INTEGER},
+      paper_book_oversea_price = #{paperBookOverseaPrice,jdbcType=INTEGER},
+      paper_book_category = #{paperBookCategory,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      translator = #{translator,jdbcType=VARCHAR},
+      metadatafile = #{metadatafile,jdbcType=VARCHAR},
+      pdf_file = #{pdfFile,jdbcType=VARCHAR},
+      src_file = #{srcFile,jdbcType=VARCHAR},
+      paper_book_oversea_price_unit = #{paperBookOverseaPriceUnit,jdbcType=CHAR},
+      copy_right_commpany = #{copyRightCommpany,jdbcType=VARCHAR},
+      pdf_page_number = #{pdfPageNumber,jdbcType=INTEGER},
+      probation_proportion = #{probationProportion,jdbcType=INTEGER},
+      is_full_book = #{isFullBook,jdbcType=INTEGER},
+      background_update = #{backgroundUpdate,jdbcType=INTEGER},
+      read_shelf_status = #{readShelfStatus,jdbcType=INTEGER},
+      swf_size = #{swfSize,jdbcType=VARCHAR},
+      price_status = #{priceStatus,jdbcType=INTEGER},
+      epub_file = #{epubFile,jdbcType=VARCHAR},
+      category = #{category,jdbcType=CHAR},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      batch_id = #{batchId,jdbcType=BIGINT},
+      other_paper_book_id = #{otherPaperBookId,jdbcType=VARCHAR},
+      third_party_permission = #{thirdPartyPermission,jdbcType=INTEGER},
+      vendor_id = #{vendorId,jdbcType=BIGINT},
+      upload_date = #{uploadDate,jdbcType=TIMESTAMP},
+      ios_price = #{iosPrice,jdbcType=INTEGER},
+      catalog_level = #{catalogLevel,jdbcType=INTEGER},
+      promotion_id = #{promotionId,jdbcType=BIGINT},
+      iap_flag = #{iapFlag,jdbcType=INTEGER},
+      iap_shelf_status = #{iapShelfStatus,jdbcType=INTEGER},
+      iap_device_type = #{iapDeviceType,jdbcType=VARCHAR},
+      rate_media_status = #{rateMediaStatus,jdbcType=INTEGER},
+      can_use_points = #{canUsePoints,jdbcType=INTEGER},
+      related_products = #{relatedProducts,jdbcType=VARCHAR},
+      is_month = #{isMonth,jdbcType=VARCHAR},
+      first_load_date = #{firstLoadDate,jdbcType=TIMESTAMP},
+      promotion_language = #{promotionLanguage,jdbcType=VARCHAR},
+      pim_state = #{pimState,jdbcType=INTEGER},
+      borrow_duration = #{borrowDuration,jdbcType=INTEGER},
+      authorize_start_date = #{authorizeStartDate,jdbcType=TIMESTAMP},
+      authorize_end_date = #{authorizeEndDate,jdbcType=TIMESTAMP},
+      other_paper_bookids = #{otherPaperBookids,jdbcType=VARCHAR},
+      descs = #{descs,jdbcType=LONGVARCHAR},
+      catalog = #{catalog,jdbcType=LONGVARCHAR},
+      recommand_words = #{recommandWords,jdbcType=LONGVARCHAR},
+      author_introduce = #{authorIntroduce,jdbcType=LONGVARCHAR},
+      editor_recommend = #{editorRecommend,jdbcType=LONGVARCHAR},
+      mass_media_recommend = #{massMediaRecommend,jdbcType=LONGVARCHAR}
+		where media_id = #{mediaId,jdbcType=BIGINT}
+	</update>
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media m where 1=1
+		<include refid="Base_Where" />
+		
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(1) from media m
+		<if test="catetoryIds != null">
+			left join media_book_catetory b on m.media_id = b.media_id 
+		</if>
+		 where 1=1
+		<include refid="Base_Where" />
+		<if test="catetoryIds != null">
+			and b.catetory_id in (${catetoryIds}) and b.catetory_id is not null
+		</if>
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media m 
+		<if test="catetoryIds != null">
+			left join media_book_catetory b on m.media_id = b.media_id 
+		</if>
+		where 1=1
+		<include refid="Base_Where" />
+		<if test="catetoryIds != null">
+			and b.catetory_id in (${catetoryIds}) and b.catetory_id is not null
+		</if>
+		order by m.creation_date desc,
+		m.last_modify_date desc
+	</select>
+	
+	<!-- 榜单需要的media 列信息  吕翔 -->
+	<sql id="rank_list_column">
+	m.media_id,title,author_penname
+	</sql>
+	<!--  查询销售主体为上架的记录总数  排出media_id和sal_id为null的情况 -->
+	<select id="getTotalCount" resultType="java.lang.Integer">
+		select count(1) from media m, media_sale ms 
+					where m.sale_id = ms.sale_id
+					and  ms.shelf_status =1 and media_id is not null  and  ms.sale_id is not null
+	</select>
+	
+	<!--  查询指定记录的主键  -->
+	<select id="getPKList" resultType="java.lang.Long"  parameterType="map">
+	select media_id from media m, media_sale ms 
+					where m.sale_id = ms.sale_id
+					and  ms.shelf_status =1 and media_id is not null  and  ms.sale_id is not null limit #{limit_offset},#{limit_count}
+	</select>
+	
+	<!-- 每天将media表指定字段时步到media_statistics中  没有分类的书不导入 media_statistics,上下架的数据都统计(上下架是随时的)-->
+	<insert id="insertMediaRecord"  parameterType="list">
+	 	insert into media_statistics(media_id,media_title,media_cover,media_category_ids,sale_id,sale_count,statistics_day,media_creation_date,media_chapter_change_date) 
+	    select m.media_id,title,cover_pic, group_concat(DISTINCT path)  as media_category_ids,m.sale_id,0 as sale_count,
+	    		CURDATE() as statistics_day,creation_date,last_pull_chapter_date
+					from media_book_catetory mbc,media_catetory mc,media m
+					where 
+					m.media_id in
+					 <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	     					#{item}  
+	  			     </foreach>  
+					and mbc.catetory_id =  mc.catetory_id	
+					and m.media_id= mbc.media_id
+					group by mbc.media_id
+	</insert>
+	
+	<!-- 将指定周期的销售数据统计到 media_statistics对应的记录中-->
+	<update id="updateMediaSaleStatistics"   parameterType="list">
+	update media_statistics ms 
+	INNER JOIN ( select media_id,count(DISTINCT mom.order_no)  as sale_count  from   media_order_main mom  
+									left join media_order_detail modd on  mom.order_no = modd.order_no
+									left join media  on  media.sale_id = modd.sale_info_id
+									where mom.order_type =1
+									and mom.creation_date BETWEEN  timestamp(adddate(CURDATE(),-1)) and timestamp(CURDATE())
+									and media_id in
+								<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	     							#{item}  
+	  	   						 </foreach>  
+					 group by media_id )as temp
+					 on ms.media_id=temp.media_id
+					 set ms.sale_count = temp.sale_count 
+					where statistics_day = CURDATE()
+	</update>
+	
+	<update id="updateMediaDownloadStatistics"   parameterType="list">
+		UPDATE media_statistics ms
+			INNER JOIN (
+				SELECT
+					mediaId,
+					sum(mub.times) AS download_count
+				FROM
+					media_user_behavior mub
+				WHERE
+					mub.behavior_type = 'download'
+				AND mub.create_time BETWEEN timestamp(adddate(CURDATE(),-1)) and timestamp(CURDATE())
+				AND mub.mediaId IN 
+					<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+		     			#{item}
+		  	   		</foreach>
+				GROUP BY
+					mub.mediaId
+			) AS temp ON ms.media_id = temp.mediaId
+			SET ms.download_count = temp.download_count
+			WHERE
+				statistics_day = CURDATE()
+	</update>
+	
+	<update id="updateMediaSearchStatistics"   parameterType="list">
+		UPDATE media_statistics ms
+			INNER JOIN (
+				SELECT
+					mediaId,
+					sum(mub.times) AS search_count
+				FROM
+					media_user_behavior mub
+				WHERE
+					mub.behavior_type = 'search'
+				AND mub.create_time BETWEEN timestamp(adddate(CURDATE(),-1)) and timestamp(CURDATE())
+				AND mub.mediaId IN 
+					<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+		     			#{item}
+		  	   		</foreach>
+				GROUP BY
+					mub.mediaId
+			) AS temp ON ms.media_id = temp.mediaId
+			SET ms.search_count = temp.search_count
+			WHERE
+				statistics_day = CURDATE()
+	</update>
+	
+	<update id="updateMediaPlayStatistics"   parameterType="list">
+		UPDATE media_statistics ms
+			INNER JOIN (
+				SELECT
+					mediaId,
+					sum(mub.times) AS play_count
+				FROM
+					media_user_behavior mub
+				WHERE
+					mub.behavior_type = 'play'
+				AND mub.create_time BETWEEN timestamp(adddate(CURDATE(),-1)) and timestamp(CURDATE())
+				AND mub.mediaId IN 
+					<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+		     			#{item}
+		  	   		</foreach>
+				GROUP BY
+					mub.mediaId
+			) AS temp ON ms.media_id = temp.mediaId
+			SET ms.play_count = temp.play_count
+			WHERE
+				statistics_day = CURDATE()
+	</update>
+			
+	<!-- 将指定周期的打赏数据统计到 media_statistics对应的记录中,打赏只针对media 打赏类型标识为4,统计2天内的-->
+	<update id="updateMediaRewardsStatistics" parameterType="list">
+	 update media_statistics ms 
+	  INNER JOIN ( select media_id,sum(main_gold_used) as reward_gold ,mcc.creation_date 
+					from media_consumer_consume mcc,media_consumer_consume_detail mccd
+					 where mcc.consume_tpye =4 
+					  and  mcc.creation_date BETWEEN  timestamp(adddate(CURDATE(),-2)) and timestamp(CURDATE())
+					  and media_id in
+					 <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	     					#{item}  
+	  	   			  </foreach> 	
+					  and media_id is not NULL
+					  and mcc.consumer_consume_id = mccd.consumer_consume_id
+				group by media_id) as temp
+			on ms.media_id=temp.media_id
+			set ms.rewards_count = temp.reward_gold 
+     	    where  ms.statistics_day=CURDATE()
+	</update>
+  
+  <!-- 查询每天段内销售数据,按每本书统计  销售榜-->
+ <select id="getMediaCategoryTopnSaleStatistics" resultType="HashMap" parameterType="map" >
+  	select  m.media_id,count(m.media_id) as sale_count from media_order_main om, media_order_detail_chapter od,media m
+  			where om.creation_date BETWEEN  timestamp(adddate(CURDATE(),-1)) and timestamp(CURDATE())
+			and om.order_no=od.order_no
+  			and od.media_id = m.media_id
+  			group by m.media_id
+  			order by sale_count asc
+  </select>
+  <!-- 更新没有统计数据的记录 -->
+  <update id="updateZeroRecords"  parameterType="map">
+  update media_statistics  
+			set sale_count= ((CASE sale_count > 0 WHEN TRUE THEN ${total} + sale_count  ELSE RAND()*${total} END)),
+				rewards_count= ((CASE rewards_count > 0 WHEN TRUE THEN ${total} + rewards_count  ELSE RAND()*${total} END)),
+				search_count= ((CASE search_count > 0 WHEN TRUE THEN ${total} + search_count  ELSE RAND()*${total} END)),
+				download_count= ((CASE download_count > 0 WHEN TRUE THEN ${total} + download_count  ELSE RAND()*${total} END)),
+				play_count= ((CASE play_count > 0 WHEN TRUE THEN ${total} + play_count  ELSE RAND()*${total} END))
+				where statistics_day=CURDATE()
+  </update>
+   <!-- 通过sale获取sale下的media列表-->
+  <select id="getMediaListBySaleId" resultType="java.lang.Long" parameterType="java.lang.Long">
+		select 
+		distinct(media_id)
+		from media_relation 
+		where sale_id = #{saleId,jdbcType=BIGINT}
+	</select>
+	
+  <select id="getSearchIndexInfo" resultType="java.util.Map" parameterType="map">
+		SELECT
+			ms.sale_id,
+			m.media_id,
+			m.author_penname,
+			m.title,
+			m.descs,
+			m.cover_pic,
+			GROUP_CONCAT(DISTINCT mc. NAME) catetory_name,
+			m.is_full
+		FROM
+			media m,
+			media_sale ms,
+			media_catetory mc,
+			media_book_catetory mbc
+		WHERE
+			ms.type = 0
+		AND m.sale_id = ms.sale_id
+		AND m.shelf_status=1
+		AND ms.shelf_status=1
+		AND mc.path like 'YC%'
+		AND mbc.media_id = m.media_id
+		AND mbc.catetory_id = mc.catetory_id
+		GROUP BY
+			m.media_id
+  </select>
+  
+  <select id="getSearchIndexInfoForListen" resultType="java.util.Map" parameterType="map">
+		SELECT
+			ms.sale_id,
+			m.media_id,
+			m.author_penname,
+			m.title,
+			m.descs,
+			m.cover_pic,
+			GROUP_CONCAT(DISTINCT mc. NAME) catetory_name,
+			m.is_full,
+			m.speaker,
+			m.chapter_cnt
+		FROM
+			media m,
+			media_sale ms,
+			media_catetory mc,
+			media_book_catetory mbc
+		WHERE
+			ms.type = 0
+		AND m.sale_id = ms.sale_id
+		AND m.shelf_status=1
+		AND ms.shelf_status=1
+		AND mc.path like 'TINGSHU%'
+		AND mbc.media_id = m.media_id
+		AND mbc.catetory_id = mc.catetory_id
+		GROUP BY
+			m.media_id
+  </select>
+  
+  <!-- 宝贝听书生成索引 -->
+  <select id="getSearchIndexInfoForBbts" resultType="java.util.Map" parameterType="map">
+		SELECT
+			ms.sale_id,
+			m.media_id,
+			m.author_penname,
+			m.title,
+			m.descs,
+			m.cover_pic,
+			GROUP_CONCAT(DISTINCT mc. NAME) catetory_name,
+			m.is_full,
+			m.speaker,
+			m.chapter_cnt
+		FROM
+			media m,
+			media_sale ms,
+			media_catetory mc,
+			media_book_catetory mbc
+		WHERE
+			ms.type = 0
+		AND m.sale_id = ms.sale_id
+		AND m.shelf_status=1
+		AND ms.shelf_status=1
+		AND mc.path like 'BBTS%'
+		AND mbc.media_id = m.media_id
+		AND mbc.catetory_id = mc.catetory_id
+		GROUP BY
+			m.media_id
+  </select>
+
+	<!-- 获取作者所有书籍按照销量排序-->
+  	<select id="getAllMediasByAuthor" resultType="java.lang.Long" parameterType="map">
+		SELECT
+			distinct(m.media_id)
+		FROM
+			media m,
+			media_statistics ms
+		WHERE
+			m.media_id = ms.media_id
+		AND DATE_FORMAT(ms.statistics_day, "%Y-%m-%d")= #{statisticsDay}
+		<if test="authorId != null"> and m.author_id = #{authorId} </if>
+		<if test="mediaId != null"> and m.media_id != #{mediaId} </if>
+		<if test="channelType != null and channelType != ''"> and media_category_ids like CONCAT('%',#{channelType} ,'%') </if>	
+		ORDER BY
+			ms.sale_count DESC
+	</select>
+	
+	<!-- 获取作者说有书的数量-->
+  	<select id="getMediasCountByAuthor" resultType="java.lang.Long" parameterType="map">
+		SELECT
+			count(0)
+		FROM
+			media m,
+			media_statistics ms
+		WHERE
+			m.media_id = ms.media_id
+		AND DATE_FORMAT(ms.statistics_day, "%Y-%m-%d")= #{statisticsDay}
+		<if test="authorId != null"> and m.author_id = #{authorId} </if>
+		<if test="channelType != null and channelType != ''"> and media_category_ids like CONCAT(#{channelType} ,'%') </if>	
+	</select>
+	
+	<select id="getCategorysByMediaId" resultType="map" parameterType="list">
+		SELECT
+			mbc.media_id mediaId,
+			GROUP_CONCAT(mc.`name` SEPARATOR ',') AS categorys,
+			GROUP_CONCAT(mc.`code` SEPARATOR ',') AS categoryIds
+		FROM
+			media_book_catetory mbc,
+			media_catetory mc
+		WHERE
+			mbc.catetory_id = mc.catetory_id
+		AND mbc.media_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	   		${item}
+	  	</foreach>  
+		GROUP BY
+			mbc.media_id
+	</select>
+	
+	<select id="getEpubProductIdList" resultType="java.lang.Long" >
+		select media_id from media	
+		where <![CDATA[media_id < 1910000000]]>
+	</select>
+	
+	<select id="getEpubProductIdCount" resultType="int" parameterType="map">
+		select count(1) from media	
+		where <![CDATA[media_id < 1910000000]]>
+	</select>
+	
+	<select id="queryEpubMedia" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media m 
+		<if test="catetoryIds != null">
+			left join media_book_catetory b on m.media_id = b.media_id 
+		</if>
+		where 1=1
+		<include refid="Base_Where" />
+		<if test="catetoryIds != null">
+			and b.catetory_id in (${catetoryIds}) and b.catetory_id is not null
+		</if>
+		<if test="orderby != null">
+			order by ${orderby}
+		</if>
+	</select>
+	
+	<select id="statisticsBySaleIds" resultType="map" parameterType="map">
+		SELECT
+			distinct(media.media_id),
+			media.sale_id,
+			media.title,
+			(
+				SELECT
+					count(0)
+				FROM
+					media_storeup ms
+				WHERE
+					ms.target_id = media.sale_id
+					and store_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) store_count,
+			(
+				SELECT
+					count(0)
+				FROM
+					media_ebook_cons_record r
+				WHERE
+					r.media_id = media.media_id
+					and creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) reward_count,
+			(
+				SELECT
+					count(DISTINCT(r.cust_id))
+				FROM
+					media_ebook_cons_record r
+				WHERE
+					r.media_id = media.media_id
+					and creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) reward_persons,
+			(
+				SELECT
+					SUM(r.cons)
+				FROM
+					media_ebook_cons_record r
+				WHERE
+					r.media_id = media.media_id
+					and creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) reward_sum,
+			(
+				SELECT
+					count(0)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 1
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) whole_sale_count,
+			(
+				SELECT
+					count(DISTINCT(om.cust_id))
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 1
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) whole_sale_persons,
+		
+		(
+				SELECT
+					sum(om.pay_main_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 1
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) whole_sale_main_money,
+		
+		(
+				SELECT
+					sum(om.pay_sub_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 1
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) whole_sale_sub_money,
+		
+			(
+				SELECT
+					count(0)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 0
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) chapter_sale_count,
+			(
+				SELECT
+					count(DISTINCT(om.cust_id))
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 0
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) chapter_sale_persons,
+			(
+				SELECT
+					count(0)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 0
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) chapter_sale_chapter_count,
+		(
+				SELECT
+					sum(om.pay_main_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 0
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) chapter_sale_main_money,
+		
+		(
+				SELECT
+					sum(om.pay_sub_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 0
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) chapter_sale_sub_money,
+		
+		
+		(
+				SELECT
+					sum(om.pay_main_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) all_sale_main_money,
+		
+		(
+				SELECT
+					sum(om.pay_sub_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) all_sale_sub_money,
+		
+		(
+				SELECT
+					sum(om.pay_sub_price+om.pay_main_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) all_sale_all_money,
+			author_name,author_penname,word_cnt,GROUP_CONCAT(DISTINCT mc. NAME) catetory_name,GROUP_CONCAT(DISTINCT mc.path) catetory_paths
+		FROM
+			media
+		INNER JOIN media_book_catetory mbc ON media.media_id = mbc.media_id
+		INNER JOIN media_catetory mc ON mbc.catetory_id = mc.catetory_id
+		WHERE
+			mc.path LIKE 'YC%' and
+			media.sale_id IN 
+		<foreach item="item" index="index" collection="saleIds" open="(" separator="," close=")">  
+	   		${item}
+	  	</foreach>
+	  	GROUP BY media_id
+	  </select>  
+	  
+	  <select id="statisticsByMediaIds" resultType="map" parameterType="map">
+		SELECT
+			distinct(media.media_id),
+			media.sale_id,
+			media.title,
+			(
+				SELECT
+					count(0)
+				FROM
+					media_storeup ms
+				WHERE
+					ms.target_id = media.sale_id
+					and store_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) store_count,
+			(
+				SELECT
+					count(0)
+				FROM
+					media_ebook_cons_record r
+				WHERE
+					r.media_id = media.media_id
+				   and creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+					
+			) reward_count,
+			(
+				SELECT
+					count(DISTINCT(r.cust_id))
+				FROM
+					media_ebook_cons_record r
+				WHERE
+					r.media_id = media.media_id
+					and creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) reward_persons,
+			(
+				SELECT
+					SUM(r.cons)
+				FROM
+					media_ebook_cons_record r
+				WHERE
+					r.media_id = media.media_id
+					and creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			) reward_sum,
+			(
+				SELECT
+					count(0)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 1
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) whole_sale_count,
+			(
+				SELECT
+					count(DISTINCT(om.cust_id))
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 1
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) whole_sale_persons,
+		
+		(
+				SELECT
+					sum(om.pay_main_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 1
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) whole_sale_main_money,
+		
+		(
+				SELECT
+					sum(om.pay_sub_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 1
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) whole_sale_sub_money,
+		
+			(
+				SELECT
+					count(0)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 0
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) chapter_sale_count,
+			(
+				SELECT
+					count(DISTINCT(om.cust_id))
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 0
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) chapter_sale_persons,
+			(
+				SELECT
+					count(0)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 0
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) chapter_sale_chapter_count,
+		(
+				SELECT
+					sum(om.pay_main_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 0
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) chapter_sale_main_money,
+		
+		(
+				SELECT
+					sum(om.pay_sub_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND om.whole_flag = 0
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) chapter_sale_sub_money,
+		
+		
+		(
+				SELECT
+					sum(om.pay_main_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) all_sale_main_money,
+		
+		(
+				SELECT
+					sum(om.pay_sub_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) all_sale_sub_money,
+		
+		(
+				SELECT
+					sum(om.pay_sub_price+om.pay_main_price)
+				FROM
+					media_order_main om,
+					media_order_detail od
+				WHERE
+					om.order_no = od.order_no
+				AND od.sale_info_id = media.sale_id
+				and om.creation_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}  
+			) all_sale_all_money,
+			author_name,author_penname,word_cnt,GROUP_CONCAT(DISTINCT mc. NAME) catetory_name,GROUP_CONCAT(DISTINCT mc.path) catetory_paths
+		FROM
+			media
+		INNER JOIN media_book_catetory mbc ON media.media_id = mbc.media_id
+		INNER JOIN media_catetory mc ON mbc.catetory_id = mc.catetory_id
+		WHERE
+			mc.path LIKE 'YC%' and
+			media.media_id IN 
+		<foreach item="item" index="index" collection="mediaIds" open="(" separator="," close=")">  
+	   		${item}
+	  	</foreach>
+	  	group by media_id
+	  </select> 
+	
+</mapper>

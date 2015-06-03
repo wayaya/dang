@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ActivityUserMapper" >
+  <resultMap id="BaseResultMap" type="ActivityUser" >
+    <id column="media_activity_user_id" property="mediaActivityUserId" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="lot_times" property="lotTimes" jdbcType="INTEGER" />
+    <result column="lotted_times" property="lottedTimes" jdbcType="INTEGER" />
+    <result column="share_times" property="shareTimes" jdbcType="INTEGER" />
+    <result column="worshiped_times" property="worshipedTimes" jdbcType="BIGINT" />
+    <result column="worship_times" property="worshipTimes" jdbcType="BIGINT" />
+    <result column="day_top_rank" property="dayTopRank" jdbcType="INTEGER" />
+    <result column="week_top_rank" property="weekTopRank" jdbcType="INTEGER" />
+    <result column="mouth_top_rank" property="mouthTopRank" jdbcType="INTEGER" />
+    <result column="total_top_rank" property="totalTopRank" jdbcType="INTEGER" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+    <result column="reward_cons" property="rewardCons" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="mediaActivityUserId != null" > and media_activity_user_id=#{mediaActivityUserId} </if>
+    <if test="username != null" > and username like CONCAT('%',#{username} ,'%') </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="lotTimes != null" > and lot_times=#{lotTimes} </if>
+    <if test="lottedTimes != null" > and lotted_times=#{lottedTimes} </if>
+    <if test="shareTimes != null" > and share_times=#{shareTimes} </if>
+    <if test="worshipedTimes != null" > and worshiped_times=#{worshipedTimes} </if>
+    <if test="worshipTimes != null" > and worship_times=#{worshipTimes} </if>
+    <if test="dayTopRank != null" > and day_top_rank=#{dayTopRank} </if>
+    <if test="weekTopRank != null" > and week_top_rank=#{weekTopRank} </if>
+    <if test="mouthTopRank != null" > and mouth_top_rank=#{mouthTopRank} </if>
+    <if test="totalTopRank != null" > and total_top_rank=#{totalTopRank} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="lastModifiedDate != null" > and last_modified_date=#{lastModifiedDate} </if>
+    <if test="rewardCons != null" > and reward_cons=#{rewardCons} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    media_activity_user_id, username, cust_id, lot_times, lotted_times, share_times, worshiped_times, 
+    worship_times, day_top_rank, week_top_rank, mouth_top_rank, total_top_rank, creation_date, 
+    last_modified_date, reward_cons
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_activity_user
+    where media_activity_user_id = #{mediaActivityUserId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByCustId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_activity_user
+    where cust_id = #{custId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectRewardRank" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_activity_user where reward_cons>=1 order by reward_cons desc limit #{amount,jdbcType=BIGINT}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_activity_user
+    where media_activity_user_id = #{mediaActivityUserId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="ActivityUser" >
+    insert into media_activity_user (media_activity_user_id, username, cust_id, 
+      lot_times, lotted_times, share_times, 
+      worshiped_times, worship_times, day_top_rank, 
+      week_top_rank, mouth_top_rank, total_top_rank, 
+      creation_date, last_modified_date, reward_cons)
+    values (#{mediaActivityUserId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{custId,jdbcType=BIGINT}, 
+      #{lotTimes,jdbcType=INTEGER}, #{lottedTimes,jdbcType=INTEGER}, #{shareTimes,jdbcType=INTEGER}, 
+      #{worshipedTimes,jdbcType=BIGINT}, #{worshipTimes,jdbcType=BIGINT}, #{dayTopRank,jdbcType=INTEGER}, 
+      #{weekTopRank,jdbcType=INTEGER}, #{mouthTopRank,jdbcType=INTEGER}, #{totalTopRank,jdbcType=INTEGER}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{lastModifiedDate,jdbcType=TIMESTAMP}, #{rewardCons,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="ActivityUser" >
+    insert into media_activity_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaActivityUserId != null" >
+        media_activity_user_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="lotTimes != null" >
+        lot_times,
+      </if>
+      <if test="lottedTimes != null" >
+        lotted_times,
+      </if>
+      <if test="shareTimes != null" >
+        share_times,
+      </if>
+      <if test="worshipedTimes != null" >
+        worshiped_times,
+      </if>
+      <if test="worshipTimes != null" >
+        worship_times,
+      </if>
+      <if test="dayTopRank != null" >
+        day_top_rank,
+      </if>
+      <if test="weekTopRank != null" >
+        week_top_rank,
+      </if>
+      <if test="mouthTopRank != null" >
+        mouth_top_rank,
+      </if>
+      <if test="totalTopRank != null" >
+        total_top_rank,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date,
+      </if>
+       <if test="rewardCons != null" >
+        reward_cons,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaActivityUserId != null" >
+        #{mediaActivityUserId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="lotTimes != null" >
+        #{lotTimes,jdbcType=INTEGER},
+      </if>
+      <if test="lottedTimes != null" >
+        #{lottedTimes,jdbcType=INTEGER},
+      </if>
+      <if test="shareTimes != null" >
+        #{shareTimes,jdbcType=INTEGER},
+      </if>
+      <if test="worshipedTimes != null" >
+        #{worshipedTimes,jdbcType=BIGINT},
+      </if>
+      <if test="worshipTimes != null" >
+        #{worshipTimes,jdbcType=BIGINT},
+      </if>
+      <if test="dayTopRank != null" >
+        #{dayTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="weekTopRank != null" >
+        #{weekTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="mouthTopRank != null" >
+        #{mouthTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="totalTopRank != null" >
+        #{totalTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedDate != null" >
+        #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="rewardCons != null" >
+        #{rewardCons,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="ActivityUser" >
+    update media_activity_user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="lotTimes != null" >
+        lot_times = #{lotTimes,jdbcType=INTEGER},
+      </if>
+      <if test="lottedTimes != null" >
+        lotted_times = #{lottedTimes,jdbcType=INTEGER},
+      </if>
+      <if test="shareTimes != null" >
+        share_times = #{shareTimes,jdbcType=INTEGER},
+      </if>
+      <if test="worshipedTimes != null" >
+        worshiped_times = #{worshipedTimes,jdbcType=BIGINT},
+      </if>
+      <if test="worshipTimes != null" >
+        worship_times = #{worshipTimes,jdbcType=BIGINT},
+      </if>
+      <if test="dayTopRank != null" >
+        day_top_rank = #{dayTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="weekTopRank != null" >
+        week_top_rank = #{weekTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="mouthTopRank != null" >
+        mouth_top_rank = #{mouthTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="totalTopRank != null" >
+        total_top_rank = #{totalTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="rewardCons != null" >
+        reward_cons = #{rewardCons,jdbcType=BIGINT},
+      </if>
+    </set>
+    where media_activity_user_id = #{mediaActivityUserId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ActivityUser" >
+    update media_activity_user
+    set username = #{username,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=BIGINT},
+      lot_times = #{lotTimes,jdbcType=INTEGER},
+      lotted_times = #{lottedTimes,jdbcType=INTEGER},
+      share_times = #{shareTimes,jdbcType=INTEGER},
+      worshiped_times = #{worshipedTimes,jdbcType=BIGINT},
+      worship_times = #{worshipTimes,jdbcType=BIGINT},
+      day_top_rank = #{dayTopRank,jdbcType=INTEGER},
+      week_top_rank = #{weekTopRank,jdbcType=INTEGER},
+      mouth_top_rank = #{mouthTopRank,jdbcType=INTEGER},
+      total_top_rank = #{totalTopRank,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      reward_cons = #{rewardCons,jdbcType=BIGINT}
+    where media_activity_user_id = #{mediaActivityUserId,jdbcType=BIGINT}
+  </update>
+  
+   <update id="updateByCustIdSelective" parameterType="ActivityUser" >
+    update media_activity_user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="lotTimes != null" >
+        lot_times = #{lotTimes,jdbcType=INTEGER},
+      </if>
+      <if test="lottedTimes != null" >
+        lotted_times = #{lottedTimes,jdbcType=INTEGER},
+      </if>
+      <if test="shareTimes != null" >
+        share_times = #{shareTimes,jdbcType=INTEGER},
+      </if>
+      <if test="worshipedTimes != null" >
+        worshiped_times = #{worshipedTimes,jdbcType=BIGINT},
+      </if>
+      <if test="worshipTimes != null" >
+        worship_times = #{worshipTimes,jdbcType=BIGINT},
+      </if>
+      <if test="dayTopRank != null" >
+        day_top_rank = #{dayTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="weekTopRank != null" >
+        week_top_rank = #{weekTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="mouthTopRank != null" >
+        mouth_top_rank = #{mouthTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="totalTopRank != null" >
+        total_top_rank = #{totalTopRank,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="rewardCons != null" >
+        reward_cons = #{rewardCons,jdbcType=BIGINT},
+      </if>
+    </set>
+    where  cust_id = #{custId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="addOneShareTimeByCustId" parameterType="java.lang.Long" >
+    update media_activity_user
+    set share_times = share_times+1
+       where cust_id = #{custId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="addOneWorshipTimeByCustId" parameterType="java.lang.Long" >
+    update media_activity_user
+    set worship_times = worship_times+1
+       where cust_id = #{custId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="addLotTimeByCustId" parameterType="map" >
+    update media_activity_user
+    set lot_times = lot_times+#{lotTimes,jdbcType=INTEGER},
+    	lotted_times = lotted_times+#{lottedTimes,jdbcType=INTEGER}
+       where cust_id = #{custId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <update id="addRewardCoinsByCustId" parameterType="map" >
+    update media_activity_user
+    set reward_cons = reward_cons+#{coins,jdbcType=INTEGER}
+       where cust_id = #{custId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="addOneWorshipedTimeByCustId" parameterType="java.lang.Long" >
+    update media_activity_user
+    set worshiped_times = worshiped_times+1
+       where cust_id = #{cust_id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_activity_user where 1=1
+    <include refid="Base_Where" /> order by media_activity_user_id desc
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_activity_user where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_activity_user where 1=1 
+    <include refid="Base_Where" /> order by media_activity_user_id desc
+  </select>
+</mapper>

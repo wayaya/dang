@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ContentProviderMapper" >
+  <resultMap id="BaseResultMap" type="ContentProvider" >
+    <id column="cp_id" property="cpId" jdbcType="INTEGER" />
+    <result column="cn_name" property="cnName" jdbcType="VARCHAR" />
+    <result column="organization_code" property="organizationCode" jdbcType="VARCHAR" />
+    <result column="has_branch" property="hasBranch" jdbcType="BIT" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="legal_person" property="legalPerson" jdbcType="VARCHAR" />
+    <result column="legal_person_card_no" property="legalPersonCardNo" jdbcType="VARCHAR" />
+    <result column="legal_person_card_type" property="legalPersonCardType" jdbcType="INTEGER" />
+    <result column="registered_money_type" property="registeredMoneyType" jdbcType="INTEGER" />
+    <result column="registered_money" property="registeredMoney" jdbcType="REAL" />
+    <result column="registered_other_type" property="registeredOtherType" jdbcType="INTEGER" />
+    <result column="foreign_capital_ratio" property="foreignCapitalRatio" jdbcType="REAL" />
+    <result column="company_type" property="companyType" jdbcType="INTEGER" />
+    <result column="listed_type" property="listedType" jdbcType="INTEGER" />
+    <result column="company_introduction" property="companyIntroduction" jdbcType="VARCHAR" />
+    <result column="organization_code_attach" property="organizationCodeAttach" jdbcType="VARCHAR" />
+    <result column="constitution_attach" property="constitutionAttach" jdbcType="VARCHAR" />
+    <result column="bank_no" property="bankNo" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="contractor" property="contractor" jdbcType="VARCHAR" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+    <result column="mobilephone" property="mobilephone" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="login_code" property="loginCode" jdbcType="VARCHAR" />
+    <result column="login_account" property="loginAccount" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="last_change_date" property="lastChangeDate" jdbcType="TIMESTAMP" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="short_name" property="shortName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="cpId != null" > and cp_id=#{cpId} </if>
+    <if test="cnName != null" > and cn_name=#{cnName} </if>
+    <if test="organizationCode != null" > and organization_code=#{organizationCode} </if>
+    <if test="hasBranch != null" > and has_branch=#{hasBranch} </if>
+    <if test="company != null" > and company=#{company} </if>
+    <if test="legalPerson != null" > and legal_person=#{legalPerson} </if>
+    <if test="legalPersonCardNo != null" > and legal_person_card_no=#{legalPersonCardNo} </if>
+    <if test="legalPersonCardType != null" > and legal_person_card_type=#{legalPersonCardType} </if>
+    <if test="registeredMoneyType != null" > and registered_money_type=#{registeredMoneyType} </if>
+    <if test="registeredMoney != null" > and registered_money=#{registeredMoney} </if>
+    <if test="registeredOtherType != null" > and registered_other_type=#{registeredOtherType} </if>
+    <if test="foreignCapitalRatio != null" > and foreign_capital_ratio=#{foreignCapitalRatio} </if>
+    <if test="companyType != null" > and company_type=#{companyType} </if>
+    <if test="listedType != null" > and listed_type=#{listedType} </if>
+    <if test="companyIntroduction != null" > and company_introduction=#{companyIntroduction} </if>
+    <if test="organizationCodeAttach != null" > and organization_code_attach=#{organizationCodeAttach} </if>
+    <if test="constitutionAttach != null" > and constitution_attach=#{constitutionAttach} </if>
+    <if test="bankNo != null" > and bank_no=#{bankNo} </if>
+    <if test="bankName != null" > and bank_name=#{bankName} </if>
+    <if test="contractor != null" > and contractor=#{contractor} </if>
+    <if test="telphone != null" > and telphone=#{telphone} </if>
+    <if test="mobilephone != null" > and mobilephone=#{mobilephone} </if>
+    <if test="level != null" > and level=#{level} </if>
+    <if test="loginCode != null" > and login_code=#{loginCode} </if>
+    <if test="loginAccount != null" > and login_account=#{loginAccount} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="modifier != null" > and modifier=#{modifier} </if>
+    <if test="lastChangeDate != null" > and last_change_date=#{lastChangeDate} </if>
+    <if test="address != null" > and address=#{address} </if>
+    <if test="type != null" > and type=#{type} </if>
+    <if test="code != null" > and code=#{code} </if>
+    <if test="shortName != null" > and short_name = #{shortName} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    cp_id, cn_name, organization_code, has_branch, company, legal_person, legal_person_card_no, 
+    legal_person_card_type, registered_money_type, registered_money, registered_other_type, 
+    foreign_capital_ratio, company_type, listed_type, company_introduction, organization_code_attach, 
+    constitution_attach, bank_no, bank_name, contractor, telphone, mobilephone, level, 
+    login_code, login_account, creator, creation_date, modifier, last_change_date, address, 
+    type,code,short_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_content_provider
+    where cp_id = #{cpId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_content_provider
+    where cp_id = #{cpId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="ContentProvider" >
+    insert into media_content_provider (cp_id, cn_name, organization_code, 
+      has_branch, company, legal_person, 
+      legal_person_card_no, legal_person_card_type, 
+      registered_money_type, registered_money, registered_other_type, 
+      foreign_capital_ratio, company_type, listed_type, 
+      company_introduction, organization_code_attach, 
+      constitution_attach, bank_no, bank_name, 
+      contractor, telphone, mobilephone, 
+      level, login_code, login_account, 
+      creator, creation_date, modifier, 
+      last_change_date, address, type,code,short_name
+      )
+    values (#{cpId,jdbcType=INTEGER}, #{cnName,jdbcType=VARCHAR}, #{organizationCode,jdbcType=VARCHAR}, 
+      #{hasBranch,jdbcType=BIT}, #{company,jdbcType=VARCHAR}, #{legalPerson,jdbcType=VARCHAR}, 
+      #{legalPersonCardNo,jdbcType=VARCHAR}, #{legalPersonCardType,jdbcType=INTEGER}, 
+      #{registeredMoneyType,jdbcType=INTEGER}, #{registeredMoney,jdbcType=REAL}, #{registeredOtherType,jdbcType=INTEGER}, 
+      #{foreignCapitalRatio,jdbcType=REAL}, #{companyType,jdbcType=INTEGER}, #{listedType,jdbcType=INTEGER}, 
+      #{companyIntroduction,jdbcType=VARCHAR}, #{organizationCodeAttach,jdbcType=VARCHAR}, 
+      #{constitutionAttach,jdbcType=VARCHAR}, #{bankNo,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, 
+      #{contractor,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR}, #{mobilephone,jdbcType=VARCHAR}, 
+      #{level,jdbcType=INTEGER}, #{loginCode,jdbcType=VARCHAR}, #{loginAccount,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{lastChangeDate,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
+      , #{code,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="ContentProvider" >
+    insert into media_content_provider
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cpId != null" >
+        cp_id,
+      </if>
+      <if test="cnName != null" >
+        cn_name,
+      </if>
+      <if test="organizationCode != null" >
+        organization_code,
+      </if>
+      <if test="hasBranch != null" >
+        has_branch,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="legalPerson != null" >
+        legal_person,
+      </if>
+      <if test="legalPersonCardNo != null" >
+        legal_person_card_no,
+      </if>
+      <if test="legalPersonCardType != null" >
+        legal_person_card_type,
+      </if>
+      <if test="registeredMoneyType != null" >
+        registered_money_type,
+      </if>
+      <if test="registeredMoney != null" >
+        registered_money,
+      </if>
+      <if test="registeredOtherType != null" >
+        registered_other_type,
+      </if>
+      <if test="foreignCapitalRatio != null" >
+        foreign_capital_ratio,
+      </if>
+      <if test="companyType != null" >
+        company_type,
+      </if>
+      <if test="listedType != null" >
+        listed_type,
+      </if>
+      <if test="companyIntroduction != null" >
+        company_introduction,
+      </if>
+      <if test="organizationCodeAttach != null" >
+        organization_code_attach,
+      </if>
+      <if test="constitutionAttach != null" >
+        constitution_attach,
+      </if>
+      <if test="bankNo != null" >
+        bank_no,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="contractor != null" >
+        contractor,
+      </if>
+      <if test="telphone != null" >
+        telphone,
+      </if>
+      <if test="mobilephone != null" >
+        mobilephone,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="loginCode != null" >
+        login_code,
+      </if>
+      <if test="loginAccount != null" >
+        login_account,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="shortName != null" >
+        short_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cpId != null" >
+        #{cpId,jdbcType=INTEGER},
+      </if>
+      <if test="cnName != null" >
+        #{cnName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationCode != null" >
+        #{organizationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hasBranch != null" >
+        #{hasBranch,jdbcType=BIT},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardNo != null" >
+        #{legalPersonCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardType != null" >
+        #{legalPersonCardType,jdbcType=INTEGER},
+      </if>
+      <if test="registeredMoneyType != null" >
+        #{registeredMoneyType,jdbcType=INTEGER},
+      </if>
+      <if test="registeredMoney != null" >
+        #{registeredMoney,jdbcType=REAL},
+      </if>
+      <if test="registeredOtherType != null" >
+        #{registeredOtherType,jdbcType=INTEGER},
+      </if>
+      <if test="foreignCapitalRatio != null" >
+        #{foreignCapitalRatio,jdbcType=REAL},
+      </if>
+      <if test="companyType != null" >
+        #{companyType,jdbcType=INTEGER},
+      </if>
+      <if test="listedType != null" >
+        #{listedType,jdbcType=INTEGER},
+      </if>
+      <if test="companyIntroduction != null" >
+        #{companyIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationCodeAttach != null" >
+        #{organizationCodeAttach,jdbcType=VARCHAR},
+      </if>
+      <if test="constitutionAttach != null" >
+        #{constitutionAttach,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null" >
+        #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractor != null" >
+        #{contractor,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilephone != null" >
+        #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="loginCode != null" >
+        #{loginCode,jdbcType=VARCHAR},
+      </if>
+      <if test="loginAccount != null" >
+        #{loginAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangeDate != null" >
+        #{lastChangeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null" >
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="ContentProvider" >
+    update media_content_provider
+    <set >
+      <if test="cnName != null" >
+        cn_name = #{cnName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationCode != null" >
+        organization_code = #{organizationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hasBranch != null" >
+        has_branch = #{hasBranch,jdbcType=BIT},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        legal_person = #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardNo != null" >
+        legal_person_card_no = #{legalPersonCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonCardType != null" >
+        legal_person_card_type = #{legalPersonCardType,jdbcType=INTEGER},
+      </if>
+      <if test="registeredMoneyType != null" >
+        registered_money_type = #{registeredMoneyType,jdbcType=INTEGER},
+      </if>
+      <if test="registeredMoney != null" >
+        registered_money = #{registeredMoney,jdbcType=REAL},
+      </if>
+      <if test="registeredOtherType != null" >
+        registered_other_type = #{registeredOtherType,jdbcType=INTEGER},
+      </if>
+      <if test="foreignCapitalRatio != null" >
+        foreign_capital_ratio = #{foreignCapitalRatio,jdbcType=REAL},
+      </if>
+      <if test="companyType != null" >
+        company_type = #{companyType,jdbcType=INTEGER},
+      </if>
+      <if test="listedType != null" >
+        listed_type = #{listedType,jdbcType=INTEGER},
+      </if>
+      <if test="companyIntroduction != null" >
+        company_introduction = #{companyIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationCodeAttach != null" >
+        organization_code_attach = #{organizationCodeAttach,jdbcType=VARCHAR},
+      </if>
+      <if test="constitutionAttach != null" >
+        constitution_attach = #{constitutionAttach,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null" >
+        bank_no = #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractor != null" >
+        contractor = #{contractor,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        telphone = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilephone != null" >
+        mobilephone = #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="loginCode != null" >
+        login_code = #{loginCode,jdbcType=VARCHAR},
+      </if>
+      <if test="loginAccount != null" >
+        login_account = #{loginAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date = #{lastChangeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null" >
+        shortName = #{shortName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cp_id = #{cpId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ContentProvider" >
+    update media_content_provider
+    set cn_name = #{cnName,jdbcType=VARCHAR},
+      organization_code = #{organizationCode,jdbcType=VARCHAR},
+      has_branch = #{hasBranch,jdbcType=BIT},
+      company = #{company,jdbcType=VARCHAR},
+      legal_person = #{legalPerson,jdbcType=VARCHAR},
+      legal_person_card_no = #{legalPersonCardNo,jdbcType=VARCHAR},
+      legal_person_card_type = #{legalPersonCardType,jdbcType=INTEGER},
+      registered_money_type = #{registeredMoneyType,jdbcType=INTEGER},
+      registered_money = #{registeredMoney,jdbcType=REAL},
+      registered_other_type = #{registeredOtherType,jdbcType=INTEGER},
+      foreign_capital_ratio = #{foreignCapitalRatio,jdbcType=REAL},
+      company_type = #{companyType,jdbcType=INTEGER},
+      listed_type = #{listedType,jdbcType=INTEGER},
+      company_introduction = #{companyIntroduction,jdbcType=VARCHAR},
+      organization_code_attach = #{organizationCodeAttach,jdbcType=VARCHAR},
+      constitution_attach = #{constitutionAttach,jdbcType=VARCHAR},
+      bank_no = #{bankNo,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      contractor = #{contractor,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      mobilephone = #{mobilephone,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      login_code = #{loginCode,jdbcType=VARCHAR},
+      login_account = #{loginAccount,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      last_change_date = #{lastChangeDate,jdbcType=TIMESTAMP},
+      address = #{address,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      shortName = #{shortName,jdbcType=VARCHAR}
+    where cp_id = #{cpId,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_content_provider where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_content_provider where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_content_provider where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

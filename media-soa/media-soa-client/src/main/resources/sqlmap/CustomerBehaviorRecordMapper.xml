@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CustomerBehaviorRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.CustomerBehaviorRecord" >
+    <id column="customer_behavior_record_id" property="customerBehaviorRecordId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="behavior_type" property="behaviorType" jdbcType="TINYINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="cust_behavior_data" property="custBehaviorData" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="customerBehaviorRecordId != null" > and customer_behavior_record_id=#{customerBehaviorRecordId} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="behaviorType != null" > and behavior_type=#{behaviorType} </if>
+    <if test="createDate != null" > and create_date=#{createDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    customer_behavior_record_id, cust_id, behavior_type, create_date, cust_behavior_data
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_customer_behavior_record
+    where customer_behavior_record_id = #{customerBehaviorRecordId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_customer_behavior_record
+    where customer_behavior_record_id = #{customerBehaviorRecordId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.CustomerBehaviorRecord" useGeneratedKeys="true" keyProperty="customerBehaviorRecordId" >
+    insert into media_customer_behavior_record (customer_behavior_record_id, cust_id, behavior_type, 
+      create_date, cust_behavior_data)
+    values (#{customerBehaviorRecordId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{behaviorType,jdbcType=TINYINT}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{custBehaviorData,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.CustomerBehaviorRecord" useGeneratedKeys="true" keyProperty="customerBehaviorRecordId" >
+    insert into media_customer_behavior_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerBehaviorRecordId != null" >
+        customer_behavior_record_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="behaviorType != null" >
+        behavior_type,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="custBehaviorData != null" >
+        cust_behavior_data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerBehaviorRecordId != null" >
+        #{customerBehaviorRecordId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="behaviorType != null" >
+        #{behaviorType,jdbcType=TINYINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="custBehaviorData != null" >
+        #{custBehaviorData,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.CustomerBehaviorRecord" >
+    update media_customer_behavior_record
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="behaviorType != null" >
+        behavior_type = #{behaviorType,jdbcType=TINYINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="custBehaviorData != null" >
+        cust_behavior_data = #{custBehaviorData,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where customer_behavior_record_id = #{customerBehaviorRecordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.CustomerBehaviorRecord" >
+    update media_customer_behavior_record
+    set cust_id = #{custId,jdbcType=BIGINT},
+      behavior_type = #{behaviorType,jdbcType=TINYINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      cust_behavior_data = #{custBehaviorData,jdbcType=LONGVARCHAR}
+    where customer_behavior_record_id = #{customerBehaviorRecordId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_behavior_record where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_customer_behavior_record where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_behavior_record where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

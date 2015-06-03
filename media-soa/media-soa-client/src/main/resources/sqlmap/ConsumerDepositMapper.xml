@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ConsumerDepositMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.ConsumerDeposit" >
+    <id column="consumer_deposit_id" property="consumerDepositId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="deposit_no" property="depositNo" jdbcType="VARCHAR" />
+    <result column="deposit_order_no" property="depositOrderNo" jdbcType="VARCHAR" />
+    <result column="is_paid" property="isPaid" jdbcType="SMALLINT" />
+    <result column="payment" property="payment" jdbcType="VARCHAR" />
+    <result column="relation_product_id" property="relationProductId" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="INTEGER" />
+    <result column="main_gold" property="mainGold" jdbcType="INTEGER" />
+    <result column="give_main_gold" property="giveMainGold" jdbcType="INTEGER" />
+    <result column="sub_gold" property="subGold" jdbcType="INTEGER" />
+    <result column="active_id" property="activeId" jdbcType="VARCHAR" />
+    <result column="active_name" property="activeName" jdbcType="VARCHAR" />
+    <result column="exchange_ratio" property="exchangeRatio" jdbcType="INTEGER" />
+    <result column="deposit_serial_no" property="depositSerialNo" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+    <result column="from_paltform" property="fromPaltform" jdbcType="VARCHAR" />
+    <result column="product_count" property="productCount" jdbcType="INTEGER" />
+    <result column="is_sandbox" property="isSandbox" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="consumerDepositId != null" > and consumer_deposit_id=#{consumerDepositId} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="userName != null" > and user_name=#{userName} </if>
+    <if test="depositNo != null" > and deposit_no=#{depositNo} </if>
+    <if test="depositOrderNo != null" > and deposit_order_no=#{depositOrderNo} </if>
+    <if test="isPaid != null" > and is_paid=#{isPaid} </if>
+    <if test="payment != null" > and payment=#{payment} </if>
+    <if test="relationProductId != null" > and relation_product_id=#{relationProductId} </if>
+    <if test="money != null" > and money=#{money} </if>
+    <if test="mainGold != null" > and main_gold=#{mainGold} </if>
+    <if test="giveMainGold != null" > and give_main_gold=#{giveMainGold} </if>
+    <if test="subGold != null" > and sub_gold=#{subGold} </if>
+    <if test="activeId != null" > and active_id=#{activeId} </if>
+    <if test="activeName != null" > and active_name=#{activeName} </if>
+    <if test="exchangeRatio != null" > and exchange_ratio=#{exchangeRatio} </if>
+    <if test="depositSerialNo != null" > and deposit_serial_no=#{depositSerialNo} </if>
+    <if test="deviceType != null" > and device_type=#{deviceType} </if>
+    <if test="payTime != null" > and pay_time=#{payTime} </if>
+    <if test="payTimeStart != null" ><![CDATA[ and pay_time > #{payTimeStart}]]> </if>
+    <if test="payTimeEnd != null" ><![CDATA[ and pay_time < #{payTimeEnd}]]> </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="creationDateStart != null" ><![CDATA[ and creation_date > #{creationDateStart}]]> </if>
+    <if test="creationDateEnd != null" ><![CDATA[ and creation_date < #{creationDateEnd}]]> </if>
+    <if test="lastModifiedDate != null" > and last_modified_date=#{lastModifiedDate} </if>
+    <if test="fromPaltform != null and fromPaltform != '' and fromPaltform != 'yc_android' "> and from_paltform=#{fromPaltform} </if>
+	<if test="fromPaltform != null and fromPaltform != '' and fromPaltform == 'yc_android' "> and (from_paltform=#{fromPaltform} or from_paltform is null) </if>
+  	<if test="isSandbox != null" > and is_sandbox=#{isSandbox} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    consumer_deposit_id, cust_id, user_name, deposit_no, deposit_order_no, is_paid, payment, 
+    relation_product_id, money, main_gold, sub_gold, active_id, active_name, exchange_ratio, 
+    deposit_serial_no, device_type, pay_time, creation_date, last_modified_date,from_paltform,product_count,give_main_gold,is_sandbox
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_consumer_deposit
+    where consumer_deposit_id = #{consumerDepositId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_consumer_deposit
+    where consumer_deposit_id = #{consumerDepositId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.ConsumerDeposit" >
+    insert into media_consumer_deposit (consumer_deposit_id, cust_id, user_name, 
+      deposit_no, deposit_order_no, is_paid, 
+      payment, relation_product_id, money, 
+      main_gold, sub_gold, active_id, 
+      active_name, exchange_ratio, deposit_serial_no, 
+      device_type, pay_time, creation_date, 
+      last_modified_date,from_paltform,product_count,give_main_gold,is_sandbox)
+    values (#{consumerDepositId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
+      #{depositNo,jdbcType=VARCHAR}, #{depositOrderNo,jdbcType=VARCHAR}, #{isPaid,jdbcType=SMALLINT}, 
+      #{payment,jdbcType=VARCHAR}, #{relationProductId,jdbcType=VARCHAR}, #{money,jdbcType=INTEGER}, 
+      #{mainGold,jdbcType=INTEGER}, #{subGold,jdbcType=INTEGER}, #{activeId,jdbcType=VARCHAR}, 
+      #{activeName,jdbcType=VARCHAR}, #{exchangeRatio,jdbcType=INTEGER}, #{depositSerialNo,jdbcType=VARCHAR}, 
+      #{deviceType,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{lastModifiedDate,jdbcType=TIMESTAMP},#{fromPaltform,jdbcType=VARCHAR},#{productCount,jdbcType=INTEGER},#{giveMainGold,jdbcType=INTEGER}, #{isSandbox,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.ConsumerDeposit" useGeneratedKeys="true" keyProperty="consumerDepositId">
+    insert into media_consumer_deposit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="consumerDepositId != null" >
+        consumer_deposit_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="depositNo != null" >
+        deposit_no,
+      </if>
+      <if test="depositOrderNo != null" >
+        deposit_order_no,
+      </if>
+      <if test="isPaid != null" >
+        is_paid,
+      </if>
+      <if test="payment != null" >
+        payment,
+      </if>
+      <if test="relationProductId != null" >
+        relation_product_id,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="mainGold != null" >
+        main_gold,
+      </if>
+      <if test="giveMainGold != null" >
+        give_main_gold,
+      </if>
+      <if test="subGold != null" >
+        sub_gold,
+      </if>
+      <if test="activeId != null" >
+        active_id,
+      </if>
+      <if test="activeName != null" >
+        active_name,
+      </if>
+      <if test="exchangeRatio != null" >
+        exchange_ratio,
+      </if>
+      <if test="depositSerialNo != null" >
+        deposit_serial_no,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="fromPaltform != null and fromPaltform != '' "> from_paltform, </if>
+      <if test="productCount != null" >
+        product_count,
+      </if>
+      <if test="isSandbox != null" >
+        is_sandbox,
+      </if>
+      creation_date,last_modified_date
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="consumerDepositId != null" >
+        #{consumerDepositId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="depositNo != null" >
+        #{depositNo,jdbcType=VARCHAR},
+      </if>
+      <if test="depositOrderNo != null" >
+        #{depositOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isPaid != null" >
+        #{isPaid,jdbcType=SMALLINT},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=VARCHAR},
+      </if>
+      <if test="relationProductId != null" >
+        #{relationProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=INTEGER},
+      </if>
+      <if test="mainGold != null" >
+        #{mainGold,jdbcType=INTEGER},
+      </if>
+      <if test="giveMainGold != null" >
+        #{giveMainGold,jdbcType=INTEGER},
+      </if>
+      <if test="subGold != null" >
+        #{subGold,jdbcType=INTEGER},
+      </if>
+      <if test="activeId != null" >
+        #{activeId,jdbcType=VARCHAR},
+      </if>
+      <if test="activeName != null" >
+        #{activeName,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeRatio != null" >
+        #{exchangeRatio,jdbcType=INTEGER},
+      </if>
+      <if test="depositSerialNo != null" >
+        #{depositSerialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fromPaltform != null and fromPaltform != '' "> #{fromPaltform,jdbcType=VARCHAR}, </if>
+      <if test="productCount != null" >
+        #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="isSandbox != null" >
+        #{isSandbox,jdbcType=SMALLINT},
+      </if>
+      now(),now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ConsumerDeposit" >
+    update media_consumer_deposit
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="depositNo != null" >
+        deposit_no = #{depositNo,jdbcType=VARCHAR},
+      </if>
+      <if test="depositOrderNo != null" >
+        deposit_order_no = #{depositOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isPaid != null" >
+        is_paid = #{isPaid,jdbcType=SMALLINT},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment,jdbcType=VARCHAR},
+      </if>
+      <if test="relationProductId != null" >
+        relation_product_id = #{relationProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=INTEGER},
+      </if>
+      <if test="mainGold != null" >
+        main_gold = #{mainGold,jdbcType=INTEGER},
+      </if>
+      <if test="giveMainGold != null" >
+        give_main_gold = #{giveMainGold,jdbcType=INTEGER},
+      </if>
+      <if test="subGold != null" >
+        sub_gold = #{subGold,jdbcType=INTEGER},
+      </if>
+      <if test="activeId != null" >
+        active_id = #{activeId,jdbcType=VARCHAR},
+      </if>
+      <if test="activeName != null" >
+        active_name = #{activeName,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeRatio != null" >
+        exchange_ratio = #{exchangeRatio,jdbcType=INTEGER},
+      </if>
+      <if test="depositSerialNo != null" >
+        deposit_serial_no = #{depositSerialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fromPaltform != null and fromPaltform != '' "> from_paltform = #{fromPaltform,jdbcType=VARCHAR}, </if>
+      <if test="productCount != null" >
+        product_count = #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="isSandbox != null" >
+        is_sandbox = #{isSandbox,jdbcType=SMALLINT},
+      </if>
+      last_modified_date = now()
+    </set>
+    where consumer_deposit_id = #{consumerDepositId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.ConsumerDeposit" >
+    update media_consumer_deposit
+    set cust_id = #{custId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      deposit_no = #{depositNo,jdbcType=VARCHAR},
+      deposit_order_no = #{depositOrderNo,jdbcType=VARCHAR},
+      is_paid = #{isPaid,jdbcType=SMALLINT},
+      payment = #{payment,jdbcType=VARCHAR},
+      relation_product_id = #{relationProductId,jdbcType=VARCHAR},
+      money = #{money,jdbcType=INTEGER},
+      main_gold = #{mainGold,jdbcType=INTEGER},
+      give_main_gold = #{giveMainGold,jdbcType=INTEGER},
+      sub_gold = #{subGold,jdbcType=INTEGER},
+      active_id = #{activeId,jdbcType=VARCHAR},
+      active_name = #{activeName,jdbcType=VARCHAR},
+      exchange_ratio = #{exchangeRatio,jdbcType=INTEGER},
+      deposit_serial_no = #{depositSerialNo,jdbcType=VARCHAR},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      from_paltform = #{fromPaltform,jdbcType=VARCHAR},
+      product_count = #{productCount,jdbcType=INTEGER},
+      is_sandbox = #{isSandbox,jdbcType=SMALLINT}
+    where consumer_deposit_id = #{consumerDepositId,jdbcType=BIGINT}
+  </update>
+    <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_consumer_deposit where 1=1 <include refid="Base_Where" /> order by creation_date desc
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_consumer_deposit where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_consumer_deposit where 1=1 <include refid="Base_Where" /> order by creation_date desc
+  </select>
+  <select id="getTopN" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+	select count(1) from media_consumer_deposit where <![CDATA[pay_time >= date_format(now(),'%y-%m-%d')]]> limit #{previousNumber,jdbcType=INTEGER}
+  </select>	
+  <select id="getFirst" resultType="java.lang.Integer" parameterType="java.lang.Long">
+	select count(1) from media_consumer_deposit where cust_id=#{custId} limit 1
+  </select>	
+  <select id="findLastTimePayment" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_consumer_deposit  where 1=1 <include refid="Base_Where" /> order by pay_time desc limit 1
+  </select>
+  <select id="queryAbnormalDeposit" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from media_consumer_deposit where <![CDATA[last_modified_date<DATE_SUB(NOW(),INTERVAL 20 MINUTE) and last_modified_date>DATE_SUB(NOW(),INTERVAL 7 DAY)]]> and is_paid=3
+  </select>
+  
+  <select id="queryNotCheckDeposit" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from media_consumer_deposit where <![CDATA[last_modified_date<DATE_SUB(NOW(),INTERVAL 20 MINUTE) and last_modified_date>DATE_SUB(NOW(),INTERVAL 7 DAY)]]> and is_paid=1 and payment!='1014' and payment!='1015' and payment!='1019'
+  </select>
+  <select id="getPageList" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_consumer_deposit where 1=1 <include refid="Base_Where" /> order by creation_date desc 
+    <if test="start != null and count != null" >
+        limit #{start} , #{count}
+    </if>
+  </select>
+  
+  <select id="selectUserCountDeposit" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from (select distinct(cust_id) from media_consumer_deposit where is_paid in (1, 2) and (from_paltform IS NULL or from_paltform='yc_android' or from_paltform='yc_ios')  and pay_time &gt; #{startDate,jdbcType=TIMESTAMP} and pay_time &lt;#{endDate,jdbcType=TIMESTAMP}) t
+  </select>
+  <select id="selectTimesDeposit" resultType="java.lang.Long" parameterType="map">
+  	select count(1) from media_consumer_deposit where is_paid in (1, 2) and (from_paltform IS NULL or from_paltform='yc_android' or from_paltform='yc_ios') and pay_time &gt; #{startDate,jdbcType=TIMESTAMP} and pay_time &lt;#{endDate,jdbcType=TIMESTAMP}
+  </select>
+  <select id="selectTotalDeposit" resultType="java.lang.Long" parameterType="map">
+  	select sum(main_gold) from media_consumer_deposit where is_paid in (1, 2) and (from_paltform IS NULL or from_paltform='yc_android' or from_paltform='yc_ios') and pay_time &gt; #{startDate,jdbcType=TIMESTAMP} and pay_time &lt;#{endDate,jdbcType=TIMESTAMP}
+  </select>
+  
+  <update id="mergeUserDeposit"  parameterType="map" >
+    update media_consumer_deposit
+    set cust_id = #{newCustId,jdbcType=BIGINT}
+    where cust_id = #{oldCustId,jdbcType=BIGINT} and consumer_deposit_id in (${ids})
+  </update>
+  
+</mapper>

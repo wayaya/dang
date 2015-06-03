@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BoughtMapper">
+	
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.Bought">
+		<id column="bought_id" property="boughtId" jdbcType="BIGINT" />
+		<result column="media_id" property="mediaId" jdbcType="BIGINT" />
+		<result column="sale_id" property="saleId" jdbcType="BIGINT" />
+		<result column="media_title" property="mediaTitle" jdbcType="VARCHAR" />
+		<result column="author_pen_name" property="authorPenName" jdbcType="VARCHAR" />
+		<result column="pay_main_price" property="payMainPrice" jdbcType="INTEGER" />
+		<result column="pay_sub_price" property="paySubPrice" jdbcType="INTEGER" />
+		<result column="cust_id" property="custId" jdbcType="BIGINT" />
+		<result column="whole_flag" property="wholeFlag" jdbcType="SMALLINT" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="from_paltform" property="fromPaltform" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Where">
+		<if test="boughtId != null "> and bought_id=#{boughtId} </if>
+		<if test="mediaId != null "> and media_id=#{mediaId} </if>
+		<if test="saleId != null "> and sale_id=#{saleId} </if>
+		<if test="mediaTitle != null and mediaTitle != '' "> and media_title=#{mediaTitle} </if>
+		<if test="authorPenName != null and authorPenName != '' "> and author_pen_name=#{authorPenName} </if>
+		<if test="payMainPrice != null "> and pay_main_price=#{payMainPrice} </if>
+		<if test="paySubPrice != null "> and pay_sub_price=#{paySubPrice} </if>
+		<if test="custId != null "> and cust_id=#{custId} </if>
+		<if test="wholeFlag != null "> and whole_flag=#{wholeFlag} </if>
+		<if test="updateTime != null "> and update_time=#{updateTime} </if>
+		<if test="fromPaltform != null and fromPaltform != '' and fromPaltform != 'yc' "> and from_paltform=#{fromPaltform} </if>
+		<if test="fromPaltform != null and fromPaltform != '' and fromPaltform == 'yc' "> and (from_paltform=#{fromPaltform} or from_paltform is null) </if>
+	</sql>
+	
+	<sql id="Base_Column_List">
+		bought_id, media_id, sale_id, media_title, author_pen_name, pay_main_price, pay_sub_price, cust_id, whole_flag, update_time,from_paltform
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from media_bought
+		where bought_id = #{boughtId,jdbcType=BIGINT}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from media_bought
+		where bought_id = #{boughtId,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" useGeneratedKeys="true" parameterType="com.dangdang.digital.model.Bought" keyProperty="boughtId">
+		insert into media_bought (bought_id, media_id, sale_id, media_title, author_pen_name, pay_main_price, pay_sub_price, cust_id,
+		whole_flag, update_time,from_paltform)
+		values (#{boughtId,jdbcType=BIGINT},#{mediaId,jdbcType=BIGINT},#{saleId,jdbcType=BIGINT},#{mediaTitle,jdbcType=VARCHAR},
+		#{authorPenName,jdbcType=VARCHAR},#{payMainPrice,jdbcType=INTEGER},#{paySubPrice,jdbcType=INTEGER},#{custId,jdbcType=BIGINT},#{wholeFlag,jdbcType=SMALLINT},#{updateTime,jdbcType=TIMESTAMP},#{fromPaltform,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="insertSelective" useGeneratedKeys="true" parameterType="com.dangdang.digital.model.Bought" keyProperty="boughtId">
+		insert into media_bought
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="boughtId != null "> bought_id, </if>
+			<if test="mediaId != null "> media_id, </if>
+			<if test="saleId != null "> sale_id, </if>
+			<if test="mediaTitle != null and mediaTitle != '' "> media_title, </if>
+			<if test="authorPenName != null and authorPenName != '' "> author_pen_name, </if>
+			<if test="payMainPrice != null "> pay_main_price, </if>
+			<if test="paySubPrice != null "> pay_sub_price, </if>
+			<if test="custId != null "> cust_id, </if>
+			<if test="wholeFlag != null "> whole_flag, </if>
+			<if test="updateTime != null ">update_time, </if>
+			<if test="fromPaltform != null and fromPaltform != '' "> from_paltform, </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="boughtId != null "> #{boughtId,jdbcType=BIGINT}, </if>
+			<if test="mediaId != null "> #{mediaId,jdbcType=BIGINT}, </if>
+			<if test="saleId != null "> #{saleId,jdbcType=BIGINT}, </if>
+			<if test="mediaTitle != null and mediaTitle != '' "> #{mediaTitle,jdbcType=VARCHAR}, </if>
+			<if test="authorPenName != null and authorPenName != '' "> #{authorPenName,jdbcType=VARCHAR}, </if>
+			<if test="payMainPrice != null "> #{payMainPrice,jdbcType=INTEGER}, </if>
+			<if test="paySubPrice != null "> #{paySubPrice,jdbcType=INTEGER}, </if>
+			<if test="custId != null "> #{custId,jdbcType=BIGINT}, </if>
+			<if test="wholeFlag != null "> #{wholeFlag,jdbcType=SMALLINT}, </if>
+			<if test="updateTime != null ">#{updateTime,jdbcType=TIMESTAMP}, </if>
+			<if test="fromPaltform != null and fromPaltform != '' "> #{fromPaltform,jdbcType=VARCHAR}, </if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Bought">
+		update media_bought
+		<set>
+			<if test="boughtId != null "> bought_id = #{boughtId,jdbcType=BIGINT}, </if>
+			<if test="mediaId != null "> media_id = #{mediaId,jdbcType=BIGINT}, </if>
+			<if test="saleId != null "> sale_id = #{saleId,jdbcType=BIGINT}, </if>
+			<if test="mediaTitle != null and mediaTitle != '' "> media_title = #{mediaTitle,jdbcType=VARCHAR}, </if>
+			<if test="authorPenName != null and authorPenName != '' "> author_pen_anme = #{authorPenName,jdbcType=VARCHAR}, </if>
+			<if test="payMainPrice != null "> pay_main_price = #{payMainPrice,jdbcType=INTEGER}, </if>
+			<if test="paySubPrice != null "> pay_sub_price = #{paySubPrice,jdbcType=INTEGER}, </if>
+			<if test="custId != null "> cust_id = #{custId,jdbcType=BIGINT}, </if>
+			<if test="wholeFlag != null "> whole_flag = #{wholeFlag,jdbcType=SMALLINT}, </if>
+			<if test="updateTime != null "> update_time = #{updateTime,jdbcType=TIMESTAMP}, </if>
+			<if test="fromPaltform != null and fromPaltform != '' "> from_paltform = #{fromPaltform,jdbcType=VARCHAR}, </if>
+		</set>
+		where bought_id = #{boughtId,jdbcType=BIGINT}
+	</update>
+	
+	<!-- 增量更新已购信息 -->
+	<update id="updateIncremental" parameterType="com.dangdang.digital.model.Bought">
+		update media_bought
+		<set>
+			<if test="payMainPrice != null "> pay_main_price = pay_main_price + #{payMainPrice,jdbcType=INTEGER}, </if>
+			<if test="paySubPrice != null "> pay_sub_price = pay_sub_price + #{paySubPrice,jdbcType=INTEGER}, </if>
+			<if test="updateTime != null "> update_time = #{updateTime,jdbcType=TIMESTAMP}, </if>
+		</set>
+		where bought_id = #{boughtId,jdbcType=BIGINT}
+	</update>
+	
+	
+	<update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Bought">
+		update media_bought
+		set 
+			bought_id = #{boughtId,jdbcType=BIGINT}, 
+			media_id = #{mediaId,jdbcType=BIGINT}, 
+			sale_id = #{saleId,jdbcType=BIGINT}, 
+			media_title = #{mediaTitle,jdbcType=VARCHAR}, 
+			author_pen_anme = #{authorPenName,jdbcType=VARCHAR},
+			pay_main_price = #{payMainPrice,jdbcType=INTEGER}, 
+			pay_sub_price = #{paySubPrice,jdbcType=INTEGER}, 
+			cust_id = #{custId,jdbcType=BIGINT}, 
+			whole_flag = #{wholeFlag,jdbcType=SMALLINT}, 
+			update_time = #{updateTime,jdbcType=TIMESTAMP}, 
+			from_paltform = #{fromPaltform,jdbcType=VARCHAR}
+		where bought_id = #{boughtId,jdbcType=BIGINT}
+	</update>
+	
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_bought where 1=1
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="getAllOrderByUpdateTime" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_bought where 1=1
+		<include refid="Base_Where" />
+		order by update_time desc
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from media_bought where 1=1
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_bought where 1=1
+		<include refid="Base_Where" />
+		order by index_order
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from media_bought where bought_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="getMyBoughtWholeMediaIds" resultType="java.lang.Long" parameterType="map">
+		select
+			media_id
+		from media_bought 
+		where 
+			cust_id=#{custId} 
+			and whole_flag=1
+			<if test="updateTime != null "> and update_time>#{updateTime} </if>
+			<if test="fromPaltform != null and fromPaltform != '' and fromPaltform != 'yc' "> and from_paltform=#{fromPaltform} </if>
+			<if test="fromPaltform != null and fromPaltform != '' and fromPaltform == 'yc' "> and (from_paltform=#{fromPaltform} or from_paltform is null) </if>
+	</select>
+	
+	<update id="mergeUserBought"  parameterType="map" >
+    update media_bought
+    set cust_id = #{newCustId,jdbcType=BIGINT}
+    where cust_id = #{oldCustId,jdbcType=BIGINT} and bought_id in (${ids})
+  </update>
+  
+</mapper>

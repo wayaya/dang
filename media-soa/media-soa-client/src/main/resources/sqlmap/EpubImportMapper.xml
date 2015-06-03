@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="EpubImportMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.EpubImport" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="ebook_id" property="ebookId" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="error" property="error" jdbcType="VARCHAR" />
+    <result column="batch_id" property="batchId" jdbcType="VARCHAR" />
+    <result column="import_time" property="importTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="id != null" > and id=#{id} </if>
+    <if test="title != null" > and title like concat('%',#{title},'%') </if>
+    <if test="ebookId != null" > and ebook_id=#{ebookId} </if>
+    <if test="productId != null" > and product_id=#{productId} </if>
+    <if test="uid != null" > and uid=#{uid} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="error != null" > and error=#{error} </if>
+    <if test="batchId != null" > and batch_id=#{batchId} </if>
+    <if test="importTime != null" > and import_time=#{importTime} </if>
+    <if test="createTime != null" > and create_time=#{createTime} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, ebook_id, product_id, uid, status, error, batch_id, import_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_epub_import
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_epub_import
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.EpubImport" >
+    insert into media_epub_import (id, title, ebook_id, 
+      product_id, uid, status, 
+      error, batch_id, import_time, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{ebookId,jdbcType=BIGINT}, 
+      #{productId,jdbcType=BIGINT}, #{uid,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{error,jdbcType=VARCHAR}, #{batchId,jdbcType=VARCHAR}, #{importTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.EpubImport" >
+    insert into media_epub_import
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="ebookId != null" >
+        ebook_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="error != null" >
+        error,
+      </if>
+      <if test="batchId != null" >
+        batch_id,
+      </if>
+      <if test="importTime != null" >
+        import_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="ebookId != null" >
+        #{ebookId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="error != null" >
+        #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="batchId != null" >
+        #{batchId,jdbcType=VARCHAR},
+      </if>
+      <if test="importTime != null" >
+        #{importTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.EpubImport" >
+    update media_epub_import
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="ebookId != null" >
+        ebook_id = #{ebookId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="error != null" >
+        error = #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="batchId != null" >
+        batch_id = #{batchId,jdbcType=VARCHAR},
+      </if>
+      <if test="importTime != null" >
+        import_time = #{importTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.EpubImport" >
+    update media_epub_import
+    set title = #{title,jdbcType=VARCHAR},
+      ebook_id = #{ebookId,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT},
+      uid = #{uid,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      error = #{error,jdbcType=VARCHAR},
+      batch_id = #{batchId,jdbcType=VARCHAR},
+      import_time = #{importTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_epub_import where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_epub_import where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_epub_import where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

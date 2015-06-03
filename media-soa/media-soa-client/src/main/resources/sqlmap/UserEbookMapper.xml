@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserEbookMapper" >
+    <resultMap id="BaseResultMap" type="com.dangdang.digital.model.UserEbook">
+        <id property="id" column="ID"/>
+        <result property="username" column="USERNAME"/>
+        <!-- <result property="ebook" column="EBOOK_ID" select="Ebook.getById"/> -->
+        <result property="ebookId" column="EBOOK_ID"/>
+        <result property="created" column="CREATED"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="type" column="TYPE"/>
+        <result property="state" column="STATE"/>
+        <result property="start" column="START"/>
+        <result property="end" column="END"/>
+        <result property="custId" column="CUST_ID"/>
+        <result property="readingCardId" column="READING_CARD_ID"/>
+        <result property="uid" column="UID"/>
+        <result property="productId" column="PRODUCTID"/>
+        <result property="orderId" column="ORDER_ID"/>
+        <result property="orderItemId" column="ORDER_ITEM_ID"/>
+        <result property="promotionId" column="PROMOTION_ID"/>
+        <result property="relationType" column="relation_type"/>
+        <result property="isReturnBook" column="is_return_book"/>
+        <result property="deadline" column="deadline"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+  <sql id="Base_Column_List" >
+    ID , USERNAME , EBOOK_ID , CREATED , CREATOR , TYPE , STATE , START , END , CUST_ID ,
+    READING_CARD_ID , UID , PRODUCTID , ORDER_ID , ORDER_ITEM_ID , PROMOTION_ID, deadline, is_return_book, relation_type
+  </sql>
+  
+   <sql id="Base_Where" >
+    <if test="id != null" > and ID = #{id} </if>
+    <if test="relationType != null" > and relation_type in ('1001','1002') </if>
+    <if test="maxUserEbookId != null" > and ID > #{maxUserEbookId} </if>
+    <if test="username != null" > and USERNAME = #{username}  </if>
+    <if test="ebookId != null" > and EBOOK_ID = #{ebookId}  </if>
+    <if test="created != null" > and  CREATED = #{created} </if>
+    <if test="creator != null" > and   CREATOR = #{creator} </if>
+    <if test="type != null" > and   TYPE = #{type} </if>
+    <if test="state != null" > and   STATE = #{state} </if>   
+    <if test="start != null" > and  START = #{start} </if> 
+    <if test="end != null" > and  END = #{end} </if> 
+    <if test="custId != null" > and  CUST_ID = #{custId} </if>  
+    <if test="readingCardId != null" > and  READING_CARD_ID = #{readingCardId} </if>
+    <if test="uid != null" > and  UID = #{uid} </if>
+    <if test="productId != null" > and  PRODUCTID = #{productId} </if>
+    <if test="orderId != null" > and  ORDER_ID = #{orderId} </if>
+    <if test="orderItemId != null" > and  ORDER_ITEM_ID = #{orderItemId} </if>
+    <if test="restypes != null" > and  substring(UID,1,2) in (${restypes}) </if>
+    
+    <if test="promotionId != null" > and  PROMOTION_ID = #{promotionId} </if>
+    <if test="ids != null" > and  ID in (${ids}) </if>
+    <if test="filterDevice != null" > 
+    and  EBOOK_ID in (select er.ebook_id from ebook_resfile er inner join ebook e on er.ebook_id = e.id where	1 = 1    
+    	 <if test="resFileType != null" > and  er.resfile_type = #{resFileType} </if>    
+		 <if test="title != null" > and  e.title like '%${title}%' </if>  		
+		 <if test="deviceType != null" > and  er.device_type_code = #{deviceType} </if>   
+	     <if test="category != null" > and  e.category = #{category} </if>       
+		 <if test="notIncategory != null" > and  e.category = #{notIncategory} </if>      
+		)	
+    </if>
+    <if test="filterPdf != null" > 
+    and EBOOK_ID in (select e.id from ebook e  where 1 = 1    
+    	<if test="resFileType != null" > and  er.resfile_type = #{resFileType} </if>        
+		<if test="title != null" > and  e.title like '%${title}%' </if>  			
+		<if test="deviceType != null" > and  er.device_type_code = #{deviceType} </if>  
+		<if test="category != null" > and  e.category = #{category} </if>      	   
+		<if test="notIncategory != null" > and  e.category = #{notIncategory} </if>   	    
+		)	
+    </if>
+    <if test="orderDate != null" > and  created >= #{orderDate} </if>
+    <if test="lendingRelationType != null" > and  relation_type = #{lendingRelationType} </if>
+    <if test="deadLine != null" > and  deadLine >= #deadLine# </if>
+     <if test="xjDeadLine != null" > and  deadLine > #xjDeadLine# </if>
+     <if test="nowTime != null" > and  deadLine > #{nowTime} </if>
+     <if test="productIds != null" > and  PRODUCTID in  (${productIds}) </if>
+     <if test="isReturnBook != null" > and  is_return_book = #{isReturnBook} </if>
+   </sql>
+	
+	<insert id="insert" parameterType="com.dangdang.digital.model.UserEbook" useGeneratedKeys="true" keyProperty="ID"  >
+		<selectKey resultType="long" order="AFTER" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+        INSERT INTO user_ebook (
+        	ID , USERNAME , EBOOK_ID , CREATED , CREATOR , TYPE , STATE , START , END , CUST_ID , READING_CARD_ID ,
+        	UID , PRODUCTID , ORDER_ID , ORDER_ITEM_ID , PROMOTION_ID, is_return_book, deadline, relation_type
+        ) VALUES (
+        	#{id}, #{username}, #{ebookId}, #{created},#{creator}, #{type}, #{state}, #{start},
+        	#{end}, #{custId}, #{readingCardId}, #{uid},#{productId}, #{orderId}, #{orderItemId}, #{promotionId},
+        	#{isReturnBook}, #{deadline}, #{relationType}
+        )
+    </insert>
+    
+    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="ID"  >
+		<selectKey resultType="long" order="AFTER" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+        INSERT INTO user_ebook (
+        	ID , USERNAME , EBOOK_ID , CREATED , CREATOR , TYPE , STATE , START , END , CUST_ID , READING_CARD_ID ,
+        	UID , PRODUCTID , ORDER_ID , ORDER_ITEM_ID , PROMOTION_ID, is_return_book, deadline, relation_type
+        ) VALUES 
+		<foreach collection="list" item="item" index="index" separator=",">
+        	(#{item.id}, #{item.username}, #{item.ebookId}, #{item.created},
+			#{item.creator}, #{item.type}, #{item.state}, #{item.start},
+        	#{item.end}, #{item.custId}, #{item.readingCardId}, #{item.uid},
+        	#{item.productId}, #{item.orderId}, #{item.orderItemId}, #{item.promotionId},
+        	#{item.isReturnBook}, #{item.deadline}, #{item.relationType})
+         </foreach>
+    </insert>
+
+	<update id="update" parameterType="com.dangdang.digital.model.UserEbook" >
+        update user_ebook  <set >
+         <if test="username != null" >
+        	USERNAME = #{username},
+      	</if>	
+	    <if test="ebookId != null" >
+        	EBOOK_ID = #{ebookId},
+      	</if>
+	     <if test="created != null" >
+        	CREATED = #{created},
+      	</if>
+	    <if test="creator != null" >
+        	CREATOR = #{creator},
+      	</if>  
+	     <if test="type != null" >
+        	TYPE = #{type},
+      	</if>   	 
+	    <if test="state != null" >
+        	STATE = #{state},
+      	</if>  
+      	 <if test="start != null" >
+        	START = #{start},
+      	</if>  
+      	 <if test="end != null" >
+        	END = #{end},
+      	</if>  
+ 		<if test="custId != null" >
+        	CUST_ID = #{custId},
+      	</if>     	
+	     <if test="readingCardId != null" >
+        	READING_CARD_ID = #{readingCardId},
+      	</if>  
+	    <if test="uid != null" >
+        	UID = #{uid},
+      	</if>
+	    <if test="productId != null" >
+        	PRODUCTID = #{productId},
+      	</if>   	
+	    <if test="orderId != null" >
+        	ORDER_ID = #{orderId},
+      	</if>  
+      	<if test="orderItemId != null" >
+        	ORDER_ITEM_ID = #{orderItemId},
+      	</if>  
+      	<if test="promotionId != null" >
+        	PROMOTION_ID = #{promotionId},
+      	</if>  
+      	</set>
+      	 ID = #{id}
+        WHERE 
+	        ID = #{id}
+    </update>
+    
+     <delete id="delete" parameterType="map" >
+      delete from user_ebook where 1=1 <include refid="Base_Where" />
+     </delete>
+    
+     <select id="getById" resultMap="BaseResultMap">
+	    select <include refid="Base_Column_List" />
+	        from user_ebook 
+	        where 
+		        ID = #id# 
+    </select>
+	 
+
+    
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from user_ebook where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Long" parameterType="map" >
+     select count(1) from user_ebook where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from user_ebook where 1=1 <include refid="Base_Where" />
+  </select>
+    
+    <select id="getProductIds" resultMap="BaseResultMap">
+    	select productId from user_ebook 
+			where 1=1 <include refid="Base_Where" />
+			 <if test="sortColumns != null" >
+       			order by ${sortColumns}
+         	</if>
+    </select>
+    
+     <!-- 根据订单号获取订单信息 -->
+	<select id="obtainUserEbookByOrderId" resultMap="BaseResultMap" parameterType="map">
+		select * from user_ebook where order_id=  #{orderId}
+	</select>
+</mapper>

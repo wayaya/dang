@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BookshelfCategoryMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.BookshelfCategory">
+		<id column="c_id" property="cid" jdbcType="BIGINT" />
+		<result column="cust_id" property="custId" jdbcType="BIGINT" />
+		<result column="last_changed_date" property="lastChangedDate" jdbcType="BIGINT" />
+		<result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="cid != null"> and c_id= #{cid}</if>	
+		<if test="custId != null"> and cust_id= #{custId}</if>	
+		<if test="lastChangedDate != null"> and last_changed_date= #{lastChangedDate}</if>	
+		<if test="categoryName != null and categoryName !=''"> and category_name= #{categoryName}</if>
+	</sql>
+	<sql id="Base_Column_List">
+		c_id ,
+		cust_id ,
+		last_changed_date ,
+		category_name 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from bookshelf_category
+		where
+		c_id = #{cid,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from bookshelf_category
+		where
+		c_id = #{cid,jdbcType=BIGINT}
+	</delete>
+	
+	<delete id="deleteByCustId" parameterType="java.lang.String">
+		delete from bookshelf_category
+		where
+		cust_id = #{custId,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.BookshelfCategory" useGeneratedKeys="true" keyProperty="cid">
+		insert into bookshelf_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">c_id,</if>	
+			<if test="custId != null">cust_id,</if>	
+			<if test="lastChangedDate != null">last_changed_date,</if>	
+			<if test="categoryName != null and categoryName !=''">category_name,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=BIGINT},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=BIGINT},
+			</if>
+			<if test="lastChangedDate != null">
+				#{lastChangedDate,jdbcType=BIGINT},
+			</if>
+			<if test="categoryName != null and categoryName !=''">
+				#{categoryName,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+	
+	<insert id="insertBatch">
+	    insert into bookshelf_category ( 
+				c_id,
+				cust_id,
+				last_changed_date,
+				category_name
+		) 
+	    values 
+	    <foreach collection="list" item="item" index="index" separator=",">
+	        (
+				#{cid,jdbcType=BIGINT},
+				#{custId,jdbcType=BIGINT},
+				#{lastChangedDate,jdbcType=BIGINT},
+				#{categoryName,jdbcType=VARCHAR}
+			)
+	    </foreach>
+	</insert> 
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.BookshelfCategory">
+		update bookshelf_category
+		<set>
+			<if test="custId != null">
+				cust_id= #{custId,jdbcType=BIGINT},
+			</if>
+			<if test="lastChangedDate != null">
+				last_changed_date= #{lastChangedDate,jdbcType=BIGINT},
+			</if>
+			<if test="categoryName != null and categoryName !=''">
+				category_name= #{categoryName,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		c_id = #{cid,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from bookshelf_category where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from bookshelf_category where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from bookshelf_category where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from bookshelf_category where c_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

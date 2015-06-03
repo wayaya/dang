@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BlockGroupMapper" >
+  <resultMap id="BaseResultMap" type="BlockGroup" >
+    <id column="media_block_group_id" property="mediaBlockGroupId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="descn" property="descn" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="mediaBlockGroupId != null" > and media_block_group_id=#{mediaBlockGroupId} </if>
+    <if test="name != null" > and name=#{name} </if>
+    <if test="descn != null" > and descn=#{descn} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="parentId != null" > and parent_id=#{parentId} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    media_block_group_id, name, descn, status, parent_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_block_group
+    where media_block_group_id = #{mediaBlockGroupId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="getTreeByParentId" resultMap="BaseResultMap" parameterType="Catetory">
+		select
+		<include refid="Base_Column_List" />
+		from media_block_group
+		where 1=1
+		<if test="mediaBlockGroupId != null">
+			AND parent_id = #{mediaBlockGroupId,jdbcType=INTEGER}
+		</if>
+		<if test="mediaBlockGroupId == null">
+			AND parent_id =0
+		</if>
+	</select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_block_group
+    where media_block_group_id = #{mediaBlockGroupId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="BlockGroup" >
+    insert into media_block_group (media_block_group_id, name, descn, 
+      status, parent_id)
+    values (#{mediaBlockGroupId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{descn,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{parentId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="BlockGroup" >
+    insert into media_block_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaBlockGroupId != null" >
+        media_block_group_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="descn != null" >
+        descn,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaBlockGroupId != null" >
+        #{mediaBlockGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descn != null" >
+        #{descn,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="BlockGroup" >
+    update media_block_group
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descn != null" >
+        descn = #{descn,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where media_block_group_id = #{mediaBlockGroupId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="BlockGroup" >
+    update media_block_group
+    set name = #{name,jdbcType=VARCHAR},
+      descn = #{descn,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=BIGINT}
+    where media_block_group_id = #{mediaBlockGroupId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_block_group where 1=1 
+    <include refid="Base_Where" /> order by media_block_group_id desc
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_block_group where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_block_group where 1=1 
+    <include refid="Base_Where" /> order by media_block_group_id desc
+  </select>
+</mapper>

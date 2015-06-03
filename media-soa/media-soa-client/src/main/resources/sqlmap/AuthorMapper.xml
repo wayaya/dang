@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AuthorMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Author" >
+    <id column="author_id" property="authorId" jdbcType="BIGINT" />
+    <result column="pseudonym" property="pseudonym" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="SMALLINT" />
+    <result column="birth" property="birth" jdbcType="DATE" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="cp_type" property="cpType" jdbcType="VARCHAR" />
+    <result column="cp_author_id" property="cpAuthorId" jdbcType="VARCHAR" />
+    <result column="head_pic" property="headPic" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dangdang.digital.model.Author" extends="BaseResultMap" >
+    <result column="introduction" property="introduction" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="authorId != null" > and author_id=#{authorId} </if>
+    <if test="pseudonym != null" > and pseudonym like concat('%',#{pseudonym},'%')</if>
+    <if test="sex != null" > and sex=#{sex} </if>
+    <if test="birth != null" > and birth=#{birth} </if>
+    <if test="sign != null" > and sign=#{sign} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="modifier != null" > and modifier=#{modifier} </if>
+    <if test="lastModifiedDate != null" > and last_modified_date=#{lastModifiedDate} </if>
+    <if test="name != null" > and name = #{name} </if>
+    <if test="cpType != null" > and cp_type=#{cpType} </if>
+    <if test="cpAuthorId != null" > and cp_author_id=#{cpAuthorId} </if>
+    <if test="headPic != null" > and head_pic=#{headPic} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    author_id, pseudonym, sex, birth, sign, creator, creation_date, modifier, last_modified_date, 
+    name, cp_type, cp_author_id,head_pic
+  </sql>
+  <sql id="Blob_Column_List" >
+    introduction
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from media_author
+    where author_id = #{authorId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_author
+    where author_id = #{authorId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="authorId" parameterType="com.dangdang.digital.model.Author" >
+    insert into media_author (author_id, pseudonym, sex, 
+      birth, sign, creator, 
+      creation_date, modifier, last_modified_date, 
+      name, cp_type, cp_author_id, 
+      introduction,head_pic)
+    values (#{authorId,jdbcType=BIGINT}, #{pseudonym,jdbcType=VARCHAR}, #{sex,jdbcType=SMALLINT}, 
+      #{birth,jdbcType=DATE}, #{sign,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lastModifiedDate,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{cpType,jdbcType=VARCHAR}, #{cpAuthorId,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=LONGVARCHAR}, #{headPic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="authorId" parameterType="com.dangdang.digital.model.Author" >
+    insert into media_author
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="authorId != null" >
+        author_id,
+      </if>
+      <if test="pseudonym != null" >
+        pseudonym,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birth != null" >
+        birth,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="cpType != null" >
+        cp_type,
+      </if>
+      <if test="cpAuthorId != null" >
+        cp_author_id,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+      <if test="headPic != null" >
+        head_pic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="authorId != null" >
+        #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="pseudonym != null" >
+        #{pseudonym,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="birth != null" >
+        #{birth,jdbcType=DATE},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifiedDate != null" >
+        #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cpType != null" >
+        #{cpType,jdbcType=VARCHAR},
+      </if>
+      <if test="cpAuthorId != null" >
+        #{cpAuthorId,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="headPic != null" >
+        #{headPic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Author" >
+    update media_author
+    <set >
+      <if test="pseudonym != null" >
+        pseudonym = #{pseudonym,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="birth != null" >
+        birth = #{birth,jdbcType=DATE},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cpType != null" >
+        cp_type = #{cpType,jdbcType=VARCHAR},
+      </if>
+      <if test="cpAuthorId != null" >
+        cp_author_id = #{cpAuthorId,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="headPic != null" >
+        head_pic = #{headPic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where author_id = #{authorId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dangdang.digital.model.Author" >
+    update media_author
+    set pseudonym = #{pseudonym,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      birth = #{birth,jdbcType=DATE},
+      sign = #{sign,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      cp_type = #{cpType,jdbcType=VARCHAR},
+      cp_author_id = #{cpAuthorId,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=LONGVARCHAR},
+      head_pic = #{headPic,jdbcType=VARCHAR}
+    where author_id = #{authorId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Author" >
+    update media_author
+    set pseudonym = #{pseudonym,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      birth = #{birth,jdbcType=DATE},
+      sign = #{sign,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      cp_type = #{cpType,jdbcType=VARCHAR},
+      cp_author_id = #{cpAuthorId,jdbcType=VARCHAR},
+      head_Pic = #{headPic,jdbcType=VARCHAR}
+    where author_id = #{authorId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_author where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_author where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_author where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="selectByAuthorName" resultMap="BaseResultMap" parameterType="com.dangdang.digital.model.Author" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_author
+    where pseudonym = #{pseudonym,jdbcType=VARCHAR}
+  </select>
+</mapper>

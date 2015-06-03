@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MediaResfileMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.MediaResfile" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="MEDIA_ID" property="mediaId" jdbcType="BIGINT" />
+    <result column="RESFILE_ID" property="resfileId" jdbcType="BIGINT" />
+    <result column="RESFILE_TYPE" property="resfileType" jdbcType="VARCHAR" />
+    <result column="RESFILE_PATH" property="resfilePath" jdbcType="VARCHAR" />
+    <result column="RESFILE_SIZE" property="resfileSize" jdbcType="INTEGER" />
+    <result column="DEVICE_TYPE_ID" property="deviceTypeId" jdbcType="BIGINT" />
+    <result column="DEVICE_TYPE_CODE" property="deviceTypeCode" jdbcType="VARCHAR" />
+    <result column="DEVICE_TYPE_NAME" property="deviceTypeName" jdbcType="VARCHAR" />
+    <result column="CREATED" property="created" jdbcType="DATE" />
+    <result column="RESFILE_WIDTH" property="resfileWidth" jdbcType="INTEGER" />
+    <result column="RESFILE_HEIGHT" property="resfileHeight" jdbcType="INTEGER" />
+    <result column="RESFILE_PAGE_NUM" property="resfilePageNum" jdbcType="INTEGER" />
+    <result column="RESFILE_PIC_NUM" property="resfilePicNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="id != null" > and ID=#{id} </if>
+    <if test="mediaId != null" > and MEDIA_ID=#{mediaId} </if>
+    <if test="resfileId != null" > and RESFILE_ID=#{resfileId} </if>
+    <if test="resfileType != null" > and RESFILE_TYPE=#{resfileType} </if>
+    <if test="resfilePath != null" > and RESFILE_PATH=#{resfilePath} </if>
+    <if test="resfileSize != null" > and RESFILE_SIZE=#{resfileSize} </if>
+    <if test="deviceTypeId != null" > and DEVICE_TYPE_ID=#{deviceTypeId} </if>
+    <if test="deviceTypeCode != null" > and DEVICE_TYPE_CODE=#{deviceTypeCode} </if>
+    <if test="deviceTypeName != null" > and DEVICE_TYPE_NAME=#{deviceTypeName} </if>
+    <if test="created != null" > and CREATED=#{created} </if>
+    <if test="resfileWidth != null" > and RESFILE_WIDTH=#{resfileWidth} </if>
+    <if test="resfileHeight != null" > and RESFILE_HEIGHT=#{resfileHeight} </if>
+    <if test="resfilePageNum != null" > and RESFILE_PAGE_NUM=#{resfilePageNum} </if>
+    <if test="resfilePicNum != null" > and RESFILE_PIC_NUM=#{resfilePicNum} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, MEDIA_ID, RESFILE_ID, RESFILE_TYPE, RESFILE_PATH, RESFILE_SIZE, DEVICE_TYPE_ID, 
+    DEVICE_TYPE_CODE, DEVICE_TYPE_NAME, CREATED, RESFILE_WIDTH, RESFILE_HEIGHT, RESFILE_PAGE_NUM, 
+    RESFILE_PIC_NUM
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_resfile
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_resfile
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.MediaResfile" >
+    insert into media_resfile (ID, MEDIA_ID, RESFILE_ID, 
+      RESFILE_TYPE, RESFILE_PATH, RESFILE_SIZE, 
+      DEVICE_TYPE_ID, DEVICE_TYPE_CODE, DEVICE_TYPE_NAME, 
+      CREATED, RESFILE_WIDTH, RESFILE_HEIGHT, 
+      RESFILE_PAGE_NUM, RESFILE_PIC_NUM)
+    values (#{id,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, #{resfileId,jdbcType=BIGINT}, 
+      #{resfileType,jdbcType=VARCHAR}, #{resfilePath,jdbcType=VARCHAR}, #{resfileSize,jdbcType=INTEGER}, 
+      #{deviceTypeId,jdbcType=BIGINT}, #{deviceTypeCode,jdbcType=VARCHAR}, #{deviceTypeName,jdbcType=VARCHAR}, 
+      #{created,jdbcType=DATE}, #{resfileWidth,jdbcType=INTEGER}, #{resfileHeight,jdbcType=INTEGER}, 
+      #{resfilePageNum,jdbcType=INTEGER}, #{resfilePicNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.MediaResfile" >
+    insert into media_resfile
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="mediaId != null" >
+        MEDIA_ID,
+      </if>
+      <if test="resfileId != null" >
+        RESFILE_ID,
+      </if>
+      <if test="resfileType != null" >
+        RESFILE_TYPE,
+      </if>
+      <if test="resfilePath != null" >
+        RESFILE_PATH,
+      </if>
+      <if test="resfileSize != null" >
+        RESFILE_SIZE,
+      </if>
+      <if test="deviceTypeId != null" >
+        DEVICE_TYPE_ID,
+      </if>
+      <if test="deviceTypeCode != null" >
+        DEVICE_TYPE_CODE,
+      </if>
+      <if test="deviceTypeName != null" >
+        DEVICE_TYPE_NAME,
+      </if>
+      <if test="created != null" >
+        CREATED,
+      </if>
+      <if test="resfileWidth != null" >
+        RESFILE_WIDTH,
+      </if>
+      <if test="resfileHeight != null" >
+        RESFILE_HEIGHT,
+      </if>
+      <if test="resfilePageNum != null" >
+        RESFILE_PAGE_NUM,
+      </if>
+      <if test="resfilePicNum != null" >
+        RESFILE_PIC_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="resfileId != null" >
+        #{resfileId,jdbcType=BIGINT},
+      </if>
+      <if test="resfileType != null" >
+        #{resfileType,jdbcType=VARCHAR},
+      </if>
+      <if test="resfilePath != null" >
+        #{resfilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="resfileSize != null" >
+        #{resfileSize,jdbcType=INTEGER},
+      </if>
+      <if test="deviceTypeId != null" >
+        #{deviceTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceTypeCode != null" >
+        #{deviceTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceTypeName != null" >
+        #{deviceTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=DATE},
+      </if>
+      <if test="resfileWidth != null" >
+        #{resfileWidth,jdbcType=INTEGER},
+      </if>
+      <if test="resfileHeight != null" >
+        #{resfileHeight,jdbcType=INTEGER},
+      </if>
+      <if test="resfilePageNum != null" >
+        #{resfilePageNum,jdbcType=INTEGER},
+      </if>
+      <if test="resfilePicNum != null" >
+        #{resfilePicNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.MediaResfile" >
+    update media_resfile
+    <set >
+      <if test="mediaId != null" >
+        MEDIA_ID = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="resfileId != null" >
+        RESFILE_ID = #{resfileId,jdbcType=BIGINT},
+      </if>
+      <if test="resfileType != null" >
+        RESFILE_TYPE = #{resfileType,jdbcType=VARCHAR},
+      </if>
+      <if test="resfilePath != null" >
+        RESFILE_PATH = #{resfilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="resfileSize != null" >
+        RESFILE_SIZE = #{resfileSize,jdbcType=INTEGER},
+      </if>
+      <if test="deviceTypeId != null" >
+        DEVICE_TYPE_ID = #{deviceTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceTypeCode != null" >
+        DEVICE_TYPE_CODE = #{deviceTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceTypeName != null" >
+        DEVICE_TYPE_NAME = #{deviceTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        CREATED = #{created,jdbcType=DATE},
+      </if>
+      <if test="resfileWidth != null" >
+        RESFILE_WIDTH = #{resfileWidth,jdbcType=INTEGER},
+      </if>
+      <if test="resfileHeight != null" >
+        RESFILE_HEIGHT = #{resfileHeight,jdbcType=INTEGER},
+      </if>
+      <if test="resfilePageNum != null" >
+        RESFILE_PAGE_NUM = #{resfilePageNum,jdbcType=INTEGER},
+      </if>
+      <if test="resfilePicNum != null" >
+        RESFILE_PIC_NUM = #{resfilePicNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.MediaResfile" >
+    update media_resfile
+    set MEDIA_ID = #{mediaId,jdbcType=BIGINT},
+      RESFILE_ID = #{resfileId,jdbcType=BIGINT},
+      RESFILE_TYPE = #{resfileType,jdbcType=VARCHAR},
+      RESFILE_PATH = #{resfilePath,jdbcType=VARCHAR},
+      RESFILE_SIZE = #{resfileSize,jdbcType=INTEGER},
+      DEVICE_TYPE_ID = #{deviceTypeId,jdbcType=BIGINT},
+      DEVICE_TYPE_CODE = #{deviceTypeCode,jdbcType=VARCHAR},
+      DEVICE_TYPE_NAME = #{deviceTypeName,jdbcType=VARCHAR},
+      CREATED = #{created,jdbcType=DATE},
+      RESFILE_WIDTH = #{resfileWidth,jdbcType=INTEGER},
+      RESFILE_HEIGHT = #{resfileHeight,jdbcType=INTEGER},
+      RESFILE_PAGE_NUM = #{resfilePageNum,jdbcType=INTEGER},
+      RESFILE_PIC_NUM = #{resfilePicNum,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_resfile where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_resfile where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_resfile where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

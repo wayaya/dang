@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ChapterMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Chapter" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+    <result column="index_order" property="index" jdbcType="INTEGER" />
+    <result column="descs" property="desc" jdbcType="VARCHAR" />
+    <result column="word_cnt" property="wordCnt" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="ios_price" property="iosPrice" jdbcType="INTEGER" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="last_modifyed_date" property="lastModifyedDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="is_free" property="isFree" jdbcType="VARCHAR" />
+    <result column="sign_ids" property="signIds" jdbcType="VARCHAR" />
+    <result column="sign_names" property="signNames" jdbcType="VARCHAR" />
+    <result column="recommand_words" property="recommandWords" jdbcType="VARCHAR" />
+    <result column="volume_id" property="volumeId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="is_show" property="isShow" jdbcType="INTEGER" />
+    <result column="file_path" property="filePath" jdbcType="VARCHAR" />
+    <result column="encrypt_Version" property="encryptVersion" jdbcType="VARCHAR" />
+    <result column="volume_name" property="volumeName" jdbcType="VARCHAR" />
+    <result column="up_ration" property="upRation" jdbcType="INTEGER" />
+    <result column="down_ration" property="downRation" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="id != null" > and id=#{id} </if>
+    <if test="title != null" > and title=#{title} </if>
+    <if test="subTitle != null" > and sub_title=#{subTitle} </if>
+    <if test="index != null" > and index_order=#{index} </if>
+    <if test="desc != null" > and descs=#{desc} </if>
+    <if test="wordCnt != null" > and word_cnt=#{wordCnt} </if>
+    <if test="price != null" > and price=#{price} </if>
+    <if test="iosPrice != null" > and ios_price=#{iosPrice} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="lastModifyedDate != null" > and last_modifyed_date=#{lastModifyedDate} </if>
+    <if test="modifier != null " > and modifier=#{modifier} </if>
+    <if test="isFree != null" > and is_free=#{isFree} </if>
+    <if test="signIds != null " > and sign_ids=#{signIds} </if>
+    <if test="signNames != null " > and sign_names=#{signNames} </if>
+    <if test="recommandWords != null " > and recommand_words=#{recommandWords} </if>
+    <if test="volumeId != null" > and volume_id=#{volumeId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="isShow != null" > and is_show=#{isShow} </if>
+    <if test="encryptVersion != null" > and encrypt_Version=#{encryptVersion} </if>
+    <if test="volumeName != null" > and volume_name=#{volumeName} </if>
+    <if test="duration != null" > and duration=#{duration} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, sub_title, index_order, descs, word_cnt, price, ios_price, creation_date, creator, 
+    last_modifyed_date, modifier, is_free, sign_ids, sign_names, recommand_words, volume_id, 
+    media_id, is_show,file_path,encrypt_Version,volume_name,duration,up_ration,down_ration
+  </sql>
+  <update id="chgOrder" parameterType="com.dangdang.digital.model.Chapter">
+  		update media_chapter set 
+  		<if test="order == 1">
+  			index_order = 1
+  		</if>
+  		<if test="order != 1">
+  			index_order = #{order,jdbcType=INTEGER}
+  		</if>
+  		where id = #{id,jdbcType=BIGINT}
+  		<if test="volumeId != null">
+  			and volume_id=#{volumeId} 
+  		</if>
+  		<if test="mediaId != null" > and media_id=#{mediaId} </if>
+  </update>
+  <update id="chgOrderPrev" parameterType="com.dangdang.digital.model.Chapter">
+  		<if test="order &lt;= index">
+  			<![CDATA[
+  			update media_chapter set index_order = index_order+1 where 
+  			id != #{id,jdbcType=BIGINT} and index_order < #{index,jdbcType=INTEGER}
+  			and index_order >= #{order,jdbcType=INTEGER}
+  			]]>
+  		</if>
+  		<if test="order &gt;= index">
+  			<![CDATA[
+  			update media_chapter set index_order = index_order-1 where 
+  			id != #{id,jdbcType=BIGINT} and index_order > #{index,jdbcType=INTEGER}
+  			and index_order <= #{order,jdbcType=INTEGER}
+  			]]>
+  		</if>
+  		<if test="volumeId != null">and volume_id=#{volumeId}</if>
+  		<if test="mediaId != null" > and media_id=#{mediaId} </if>
+  </update>
+  <select id="getContent" resultType="string"  parameterType="java.lang.Long" >
+  		select chapter_content from media_chapter_content where chapter_id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_chapter
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_chapter
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.dangdang.digital.model.Chapter" >
+    insert into media_chapter (id, title, sub_title, 
+      index_order, descs, word_cnt, 
+      price, ios_price, creation_date, 
+      creator, last_modifyed_date, modifier, 
+      is_free, sign_ids, sign_names, 
+      recommand_words, volume_id, media_id, 
+      is_show,file_path,encrypt_Version,volume_name,duration,up_ration,down_ration)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, 
+      #{index,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR}, #{wordCnt,jdbcType=BIGINT}, 
+      #{price,jdbcType=INTEGER}, #{iosPrice,jdbcType=INTEGER}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{lastModifyedDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{isFree,jdbcType=VARCHAR}, #{signIds,jdbcType=VARCHAR}, #{signNames,jdbcType=VARCHAR}, 
+      #{recommandWords,jdbcType=VARCHAR}, #{volumeId,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, 
+      #{isShow,jdbcType=INTEGER},#{filePath,jdbcType=VARCHAR},#{encryptVersion,jdbcType=VARCHAR}
+      ,#{volumeName,jdbcType=VARCHAR},#{duration,jdbcType=INTEGER},#{upRation,jdbcType=INTEGER},#{downRation,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.dangdang.digital.model.Chapter" >
+    insert into media_chapter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subTitle != null" >
+        sub_title,
+      </if>
+      <if test="index != null" >
+        index_order,
+      </if>
+      <if test="desc != null" >
+        descs,
+      </if>
+      <if test="wordCnt != null" >
+        word_cnt,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="iosPrice != null" >
+        ios_price,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="lastModifyedDate != null" >
+        last_modifyed_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="isFree != null" >
+        is_free,
+      </if>
+      <if test="signIds != null" >
+        sign_ids,
+      </if>
+      <if test="signNames != null" >
+        sign_names,
+      </if>
+      <if test="recommandWords != null" >
+        recommand_words,
+      </if>
+      <if test="volumeId != null" >
+        volume_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="filePath != null" >
+        file_path,
+      </if>
+      <if test="encryptVersion != null" >
+        encrypt_Version,
+      </if>
+      <if test="volumeName != null" >
+        volume_name,
+      </if>
+      <if test="duration != null" >
+        duration,
+      </if>
+       <if test="upRation != null" >
+        up_ration,
+      </if>
+       <if test="downRation != null" >
+        down_Ration,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="index != null" >
+        #{index,jdbcType=INTEGER},
+      </if>
+      <if test="desc != null" >
+        #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="wordCnt != null" >
+        #{wordCnt,jdbcType=BIGINT},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="iosPrice != null" >
+        #{iosPrice,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyedDate != null" >
+        #{lastModifyedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="isFree != null" >
+        #{isFree,jdbcType=VARCHAR},
+      </if>
+      <if test="signIds != null" >
+        #{signIds,jdbcType=VARCHAR},
+      </if>
+      <if test="signNames != null" >
+        #{signNames,jdbcType=VARCHAR},
+      </if>
+      <if test="recommandWords != null" >
+        #{recommandWords,jdbcType=VARCHAR},
+      </if>
+      <if test="volumeId != null" >
+        #{volumeId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null" >
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="encryptVersion != null" >
+        #{encryptVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="volumeName != null" >
+        #{volumeName,jdbcType=VARCHAR},
+      </if>
+      <if test="duration != null" >
+        #{duration,jdbcType=INTEGER},
+      </if>
+       <if test="upRation != null" >
+         #{upRation,jdbcType=INTEGER},
+      </if>
+       <if test="downRation != null" >
+         #{downRation,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Chapter" >
+    update media_chapter
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        sub_title = #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="index != null" >
+        index_order = #{index,jdbcType=INTEGER},
+      </if>
+      <if test="desc != null" >
+        descs = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="wordCnt != null" >
+        word_cnt = #{wordCnt,jdbcType=BIGINT},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="iosPrice != null" >
+        ios_price = #{iosPrice,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyedDate != null" >
+        last_modifyed_date = #{lastModifyedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="isFree != null" >
+        is_free = #{isFree,jdbcType=VARCHAR},
+      </if>
+      <if test="signIds != null" >
+        sign_ids = #{signIds,jdbcType=VARCHAR},
+      </if>
+      <if test="signNames != null" >
+        sign_names = #{signNames,jdbcType=VARCHAR},
+      </if>
+      <if test="recommandWords != null" >
+        recommand_words = #{recommandWords,jdbcType=VARCHAR},
+      </if>
+      <if test="volumeId != null" >
+        volume_id = #{volumeId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null" >
+        file_path = #{filePath,jdbcType=INTEGER},
+      </if>
+      <if test="encryptVersion != null" >
+        encrypt_Version = #{encryptVersion,jdbcType=INTEGER},
+      </if>
+      <if test="volumeName != null" >
+        volume_name = #{volumeName,jdbcType=VARCHAR},
+      </if>
+      <if test="duration != null" >
+        duration = #{duration,jdbcType=INTEGER},
+      </if>
+       <if test="upRation != null" >
+         up_ration=#{upRation,jdbcType=INTEGER},
+      </if>
+       <if test="downRation != null" >
+         down_ration=#{downRation,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Chapter" >
+    update media_chapter
+    set title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      index_order = #{index,jdbcType=INTEGER},
+      descs = #{desc,jdbcType=VARCHAR},
+      word_cnt = #{wordCnt,jdbcType=BIGINT},
+      price = #{price,jdbcType=INTEGER},
+      ios_price = #{iosPrice,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      last_modifyed_date = #{lastModifyedDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      is_free = #{isFree,jdbcType=VARCHAR},
+      sign_ids = #{signIds,jdbcType=VARCHAR},
+      sign_names = #{signNames,jdbcType=VARCHAR},
+      recommand_words = #{recommandWords,jdbcType=VARCHAR},
+      volume_id = #{volumeId,jdbcType=BIGINT},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      is_show = #{isShow,jdbcType=INTEGER},
+      file_path = #{filePath,jdbcType=VARCHAR},
+      encrypt_Version = #{encryptVersion,jdbcType=VARCHAR},
+      volume_name = #{volumeName,jdbcType=VARCHAR},
+       up_ration=#{upRation,jdbcType=INTEGER},
+       down_ration=#{downRation,jdbcType=INTEGER},
+      duration = #{duration,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_chapter where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_chapter where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_chapter where 1=1 <include refid="Base_Where" />
+    order by  index_order,id desc
+  </select>
+  
+  <select id="getMaxIndexOrderByMediaId" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select mc.index_order from  media_chapter mc where mc.media_id = #{mediaId,jdbcType=INTEGER} order by mc.index_order desc limit 1
+  </select>
+
+  <select id="getChaptersByMediaId" resultMap="BaseResultMap" parameterType="map">
+	select
+	<include refid="Base_Column_List" />
+	from media_chapter where media_id=#{mediaId}  and is_show=1 order by index_order asc
+  </select>
+  
+  <select id="getWordsbyMediaId" resultType="java.lang.Long" parameterType="map">
+  	select sum(word_cnt) from media_chapter where media_id = #{mediaId}
+  </select>
+  <select id="getChapterIdsByMediaId" resultType="java.lang.Long" parameterType="map">
+	select
+	id
+	from media_chapter where media_id=#{mediaId} and is_show=1 order by index_order asc
+  </select>
+  
+  <select id="selectByIds" resultMap="BaseResultMap">  
+    select  
+    <include refid="Base_Column_List" />  
+    from media_chapter where id in  
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+     	#{item}  
+    </foreach>  
+  </select>
+  
+  <select id="getMaxIndexOrderByMediaIds" resultType="map" parameterType="map">  
+    SELECT
+		media.media_id as mediaId,
+		max(index_order) AS lastUpdateChapter,
+		is_full as isFull
+	FROM
+		media_chapter,
+		media
+	WHERE
+	media.media_id = media_chapter.media_id
+	AND media.media_id IN 
+    <foreach item="item" index="index" collection="mediaIds" open="(" separator="," close=")">  
+     	#{item}  
+    </foreach>  
+   	GROUP BY
+		media.media_id
+  </select> 
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+		<!-- insert into media_chapter (media_id,index_order,title,word_cnt) values  
+	    <foreach collection="list" item="item" index="index" separator=",">  
+	        (#{item.mediaId},#{item.index},#{item.title},#{item.wordCnt})  
+	    </foreach> -->
+	    INSERT INTO media_chapter (media_id,index_order,title,word_cnt) 
+		<foreach collection="list" item="item" index="index" open="(" close=")" separator="union all">
+			SELECT #{item.mediaId} as a, #{item.index},#{item.title},#{item.wordCnt}
+		</foreach>
+	</insert>
+	
+	<!-- <update id="updateBatch"  parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="begin" close="end;" separator=";">
+			update media_chapter 
+			<set>
+				<if test="filePath != null" >
+					<![CDATA[file_path = #{item.filePath,jdbcType=VARCHAR},]]>
+				</if>
+				<if test="wordCnt != null" >
+					<![CDATA[word_cnt = #{item.wordCnt,jdbcType=BIGINT},]]>
+				</if>
+				<if test="lastModifyedDate != null" >
+					<![CDATA[last_modifyed_date = #{item.lastModifyedDate,jdbcType=TIMESTAMP},]]>
+				</if>
+			</set>
+			where id = #{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update> -->
+	<update id="updateBatch" parameterType="java.util.List">
+		update media_chapter
+		<trim prefix="set" suffixOverrides=",">
+			<trim prefix="file_path =case" suffix="end,">
+				<foreach collection="list" item="i" index="index">
+					<if test="i.filePath!=null">
+						when id=#{i.id} then #{i.filePath}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="word_cnt =case" suffix="end,">
+				<foreach collection="list" item="i" index="index">
+					<if test="i.wordCnt!=null">
+						when id=#{i.id} then #{i.wordCnt}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="last_modifyed_date =case" suffix="end," >
+				<foreach collection="list" item="i" index="index">
+					<if test="i.lastModifyedDate!=null">
+						when id=#{i.id} then #{i.lastModifyedDate}
+					</if>
+				</foreach>
+			</trim>
+		</trim>
+		where
+		<foreach collection="list" separator="or" item="i" index="index" >
+			id=#{i.id}
+		</foreach>
+	</update>
+	
+	<delete id="delChapterByMediaId" parameterType="java.lang.Long">
+  		delete from media_chapter where media_id = #{mediaId,jdbcType=BIGINT}
+	</delete>
+</mapper>

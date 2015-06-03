@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ChannelAuditRecordMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.ChannelAuditRecord">
+		<id column="record_id" property="recordId" jdbcType="BIGINT" />
+		<result column="channel_id" property="channelId" jdbcType="BIGINT" />
+		<result column="channel_title" property="channelTitle" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="fail_msg" property="failMsg" jdbcType="VARCHAR" />
+		<result column="auditor" property="auditor" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="recordId != null"> and record_id= #{recordId}</if>	
+		<if test="channelId != null"> and channel_id= #{channelId}</if>	
+		<if test="channelTitle != null and channelTitle !=''"> and channel_title= #{channelTitle}</if>
+		<if test="createDate != null"> and create_date= #{createDate}</if>	
+		<if test="auditDate != null"> and audit_date= #{auditDate}</if>	
+		<if test="status != null"> and status= #{status}</if>	
+		<if test="failMsg != null and failMsg !=''"> and fail_msg= #{failMsg}</if>
+		<if test="auditor != null and auditor !=''"> and auditor= #{auditor}</if>
+	</sql>
+	<sql id="Base_Column_List">
+		record_id ,
+		channel_id ,
+		channel_title ,
+		create_date ,
+		audit_date ,
+		status ,
+		fail_msg ,
+		auditor 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from channel_audit_record
+		where
+		record_id = #{recordId,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from channel_audit_record
+		where
+		record_id = #{recordId,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.ChannelAuditRecord">
+		insert into channel_audit_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="recordId != null">record_id,</if>	
+			<if test="channelId != null">channel_id,</if>	
+			<if test="channelTitle != null and channelTitle !=''">channel_title,</if>
+			<if test="createDate != null">create_date,</if>	
+			<if test="auditDate != null">audit_date,</if>	
+			<if test="status != null">status,</if>	
+			<if test="failMsg != null and failMsg !=''">fail_msg,</if>
+			<if test="auditor != null and auditor !=''">auditor,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="recordId != null">
+				#{recordId,jdbcType=BIGINT},
+			</if>
+			<if test="channelId != null">
+				#{channelId,jdbcType=BIGINT},
+			</if>
+			<if test="channelTitle != null and channelTitle !=''">
+				#{channelTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditDate != null">
+				#{auditDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="failMsg != null and failMsg !=''">
+				#{failMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="auditor != null and auditor !=''">
+				#{auditor,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ChannelAuditRecord">
+		update channel_audit_record
+		<set>
+			<if test="channelId != null">
+				channel_id= #{channelId,jdbcType=BIGINT},
+			</if>
+			<if test="channelTitle != null and channelTitle !=''">
+				channel_title= #{channelTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date= #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditDate != null">
+				audit_date= #{auditDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status= #{status,jdbcType=INTEGER},
+			</if>
+			<if test="failMsg != null and failMsg !=''">
+				fail_msg= #{failMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="auditor != null and auditor !=''">
+				auditor= #{auditor,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		record_id = #{recordId,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from channel_audit_record where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from channel_audit_record where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from channel_audit_record where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from channel_audit_record where record_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

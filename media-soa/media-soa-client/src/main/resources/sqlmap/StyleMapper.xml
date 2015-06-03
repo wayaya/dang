@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="StyleMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Style" >
+    <id column="style_id" property="styleId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="descs" property="desc" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="DATE" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="styleId != null" > and style_id=#{styleId} </if>
+    <if test="name != null" > and name like CONCAT('%',#{name},'%')</if>
+    <if test="code != null" > and code like CONCAT('%',#{code},'%') </if>
+    <if test="descs != null" > and desc=#{desc} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="price != null" > and price=#{price} </if>
+    <if test="status != null" > and status=#{status} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    style_id, name, code, descs, creation_date, price, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_style
+    where style_id = #{styleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_style
+    where style_id = #{styleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.Style" >
+    insert into media_style (style_id, name, code, 
+      descs, creation_date, price, 
+      status)
+    values (#{styleId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{desc,jdbcType=VARCHAR}, #{creationDate,jdbcType=DATE}, #{price,jdbcType=INTEGER}, 
+      #{status,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Style" >
+    insert into media_style
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="styleId != null" >
+        style_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="desc != null" >
+        descs,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="styleId != null" >
+        #{styleId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null" >
+        #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Style" >
+    update media_style
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null" >
+        descs = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where style_id = #{styleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Style" >
+    update media_style
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      descs = #{desc,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=DATE},
+      price = #{price,jdbcType=INTEGER},
+      status = #{status,jdbcType=SMALLINT}
+    where style_id = #{styleId,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_style where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_style where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_style where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

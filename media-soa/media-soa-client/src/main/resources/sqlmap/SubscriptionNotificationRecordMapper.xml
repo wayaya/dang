@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SubscriptionNotificationRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.SubscriptionNotificationRecord" >
+    <id column="customer_subscription_notification_record_id" property="customerSubscriptionNotificationRecordId" jdbcType="BIGINT" />
+    <result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="last_pull_chapter_date" property="lastPullChapterDate" jdbcType="TIMESTAMP" />
+    <result column="device_type" property="deviceType" jdbcType="INTEGER" />
+    <result column="ext_user_id" property="extUserId" jdbcType="VARCHAR" />
+    <result column="ext_channel_id" property="extChannelId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="customerSubscriptionNotificationRecordId != null" > and customer_subscription_notification_record_id=#{customerSubscriptionNotificationRecordId} </if>
+    <if test="deviceNo != null" > and device_no=#{deviceNo} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="title != null" > and title=#{title} </if>
+    <if test="lastPullChapterDate != null" > and last_pull_chapter_date=#{lastPullChapterDate} </if>
+    <if test="deviceType != null" > and device_type=#{deviceType} </if>
+    <if test="extUserId != null" > and ext_user_id=#{extUserId} </if>
+    <if test="extChannelId != null" > and ext_channel_id=#{extChannelId} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    customer_subscription_notification_record_id, device_no, cust_id, creation_date, 
+    media_id, title, last_pull_chapter_date, device_type, ext_user_id, ext_channel_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_customer_subscription_notification_record
+    where customer_subscription_notification_record_id = #{customerSubscriptionNotificationRecordId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_customer_subscription_notification_record
+    where customer_subscription_notification_record_id = #{customerSubscriptionNotificationRecordId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.SubscriptionNotificationRecord" >
+    insert into media_customer_subscription_notification_record (customer_subscription_notification_record_id, device_no, 
+      cust_id, creation_date, media_id, 
+      title, last_pull_chapter_date, device_type, 
+      ext_user_id, ext_channel_id)
+    values (#{customerSubscriptionNotificationRecordId,jdbcType=BIGINT}, #{deviceNo,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=BIGINT}, #{creationDate,jdbcType=TIMESTAMP}, #{mediaId,jdbcType=BIGINT}, 
+      #{title,jdbcType=VARCHAR}, #{lastPullChapterDate,jdbcType=TIMESTAMP}, #{deviceType,jdbcType=INTEGER}, 
+      #{extUserId,jdbcType=VARCHAR}, #{extChannelId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.SubscriptionNotificationRecord" >
+    insert into media_customer_subscription_notification_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerSubscriptionNotificationRecordId != null" >
+        customer_subscription_notification_record_id,
+      </if>
+      <if test="deviceNo != null" >
+        device_no,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="lastPullChapterDate != null" >
+        last_pull_chapter_date,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="extUserId != null" >
+        ext_user_id,
+      </if>
+      <if test="extChannelId != null" >
+        ext_channel_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerSubscriptionNotificationRecordId != null" >
+        #{customerSubscriptionNotificationRecordId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceNo != null" >
+        #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="lastPullChapterDate != null" >
+        #{lastPullChapterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=INTEGER},
+      </if>
+      <if test="extUserId != null" >
+        #{extUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="extChannelId != null" >
+        #{extChannelId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.SubscriptionNotificationRecord" >
+    update media_customer_subscription_notification_record
+    <set >
+      <if test="deviceNo != null" >
+        device_no = #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="lastPullChapterDate != null" >
+        last_pull_chapter_date = #{lastPullChapterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=INTEGER},
+      </if>
+      <if test="extUserId != null" >
+        ext_user_id = #{extUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="extChannelId != null" >
+        ext_channel_id = #{extChannelId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where customer_subscription_notification_record_id = #{customerSubscriptionNotificationRecordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.SubscriptionNotificationRecord" >
+    update media_customer_subscription_notification_record
+    set device_no = #{deviceNo,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=BIGINT},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      last_pull_chapter_date = #{lastPullChapterDate,jdbcType=TIMESTAMP},
+      device_type = #{deviceType,jdbcType=INTEGER},
+      ext_user_id = #{extUserId,jdbcType=VARCHAR},
+      ext_channel_id = #{extChannelId,jdbcType=VARCHAR}
+    where customer_subscription_notification_record_id = #{customerSubscriptionNotificationRecordId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="truncateTable" >
+    truncate table media_customer_subscription_notification_record
+  </update>
+  
+  <insert id="prepareData" parameterType="map" >
+	insert into media_customer_subscription_notification_record
+	(device_no, cust_id, creation_date, media_id, title, last_pull_chapter_date, device_type, ext_user_id, ext_channel_id) 
+		select c.*, d.device_type, d.ext_user_id, d.ext_channel_id from
+		(select a.device_no, a.cust_id, a.creation_date, b.media_id, b.title, b.last_pull_chapter_date from media_customer_subscription a inner join media b 
+				on a.status=1 and b.last_pull_chapter_date&gt;=#{from,jdbcType=TIMESTAMP} and b.last_pull_chapter_date&lt;#{to,jdbcType=TIMESTAMP} and a.media_id=b.media_id 
+			) c inner join media_notification d on c.device_no = d.device_no and d.status=1
+  </insert>
+  
+  <select id="pageDistinctCount" resultType="java.lang.Integer" >
+  	select count(1) from (select distinct device_no from media_customer_subscription_notification_record) r
+  </select>
+  
+  <select id="pageDistinctData" resultType="java.lang.String" >
+  	select distinct device_no from media_customer_subscription_notification_record r order by r.creation_date desc
+  </select>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_subscription_notification_record where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_customer_subscription_notification_record where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_subscription_notification_record where 1=1 <include refid="Base_Where" /> order by creation_date desc
+  </select>
+</mapper>

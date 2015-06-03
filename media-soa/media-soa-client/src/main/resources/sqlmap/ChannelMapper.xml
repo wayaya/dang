@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ChannelMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.Channel">
+		<id column="channel_id" property="channelId" jdbcType="BIGINT" />
+		<result column="owner_id" property="ownerId" jdbcType="BIGINT" />
+		<result column="cust_id" property="custId" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="sub_number" property="subNumber" jdbcType="BIGINT" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+		<result column="is_completed" property="isCompleted" jdbcType="INTEGER" />
+		<result column="modify_times" property="modifyTimes" jdbcType="INTEGER" />
+		<result column="shelf_status" property="shelfStatus" jdbcType="INTEGER" />
+		
+		<association property="channelOwner" javaType="com.dangdang.digital.model.ChannelOwner">
+             <id property="ownerId" column="owner_id"/>
+             <result property="type" column="type"/>
+         </association>
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="channelId != null"> and channel_id= #{channelId}</if>	
+		<if test="ownerId != null"> and channel.owner_id= #{ownerId}</if>	
+		<if test="custId != null"> and cust_id= #{custId}</if>	
+		<if test="title != null and title !=''"> and title= #{title}</if>
+		<if test="icon != null and icon !=''"> and icon= #{icon}</if>
+		<if test="description != null and description !=''"> and description= #{description}</if>
+		<if test="subNumber != null"> and sub_number= #{subNumber}</if>	
+		<if test="status != null"> and status= #{status}</if>	
+		<if test="createDate != null"> and create_date= #{createDate}</if>	
+		<if test="modifyDate != null"> and modify_date= #{modifyDate}</if>	
+		<if test="isCompleted != null"> and is_completed= #{isCompleted}</if>	
+		<if test="modifyTimes != null"> and modify_times= #{modifyTimes}</if>	
+		<if test="shelfStatus != null"> and shelf_status= #{shelfStatus}</if>	
+	</sql>
+	<sql id="Base_Column_List">
+		channel.*,
+		channel_owner.type
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from channel  left join channel_owner on channel.owner_id = channel_owner.owner_id
+		where
+		channel_id = #{channelId,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from channel
+		where
+		channel_id = #{channelId,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.Channel">
+		insert into channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="channelId != null">channel_id,</if>	
+			<if test="ownerId != null">owner_id,</if>	
+			<if test="custId != null">cust_id,</if>	
+			<if test="title != null and title !=''">title,</if>
+			<if test="icon != null and icon !=''">icon,</if>
+			<if test="description != null and description !=''">description,</if>
+			<if test="subNumber != null">sub_number,</if>	
+			<if test="status != null">status,</if>	
+			<if test="createDate != null">create_date,</if>	
+			<if test="modifyDate != null">modify_date,</if>	
+			<if test="isCompleted != null">is_completed,</if>	
+			<if test="modifyTimes != null">modify_times,</if>	
+			<if test="shelfStatus != null">shelf_status,</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="channelId != null">
+				#{channelId,jdbcType=BIGINT},
+			</if>
+			<if test="ownerId != null">
+				#{ownerId,jdbcType=BIGINT},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=BIGINT},
+			</if>
+			<if test="title != null and title !=''">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null and icon !=''">
+				#{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null and description !=''">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="subNumber != null">
+				#{subNumber,jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyDate != null">
+				#{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isCompleted != null">
+				#{isCompleted,jdbcType=INTEGER},
+			</if>
+			<if test="modifyTimes != null">
+				#{modifyTimes,jdbcType=INTEGER},
+			</if>
+			<if test="shelfStatus != null">
+				#{shelfStatus,jdbcType=INTEGER},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Channel">
+		update channel
+		<set>
+			<if test="ownerId != null">
+				owner_id= #{ownerId,jdbcType=BIGINT},
+			</if>
+			<if test="custId != null">
+				cust_id= #{custId,jdbcType=BIGINT},
+			</if>
+			<if test="title != null and title !=''">
+				title= #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null and icon !=''">
+				icon= #{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null and description !=''">
+				description= #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="subNumber != null">
+				sub_number= #{subNumber,jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				status= #{status,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				create_date= #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyDate != null">
+				modify_date= #{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isCompleted != null">
+				is_completed= #{isCompleted,jdbcType=INTEGER},
+			</if>
+			<if test="modifyTimes != null">
+				modify_times= #{modifyTimes,jdbcType=INTEGER},
+			</if>
+			<if test="shelfStatus != null">
+				shelf_status= #{shelfStatus,jdbcType=INTEGER}
+			</if>
+		</set>
+		where
+		channel_id = #{channelId,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from channel left join channel_owner on channel.owner_id = channel_owner.owner_id where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from channel where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from channel left join channel_owner on channel.owner_id = channel_owner.owner_id
+		where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from channel where channel_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

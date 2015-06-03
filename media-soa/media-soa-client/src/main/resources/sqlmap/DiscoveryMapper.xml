@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DiscoveryMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Discovery" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+    <result column="first_catetory_id" property="firstCatetoryId" jdbcType="INTEGER" />
+    <result column="first_catetory_name" property="firstCatetoryName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="column_id" property="columnId" jdbcType="BIGINT" />
+    <result column="column_name" property="columnName" jdbcType="VARCHAR" />
+    <result column="stars" property="stars" jdbcType="INTEGER" />
+    <result column="review_cnt" property="reviewCnt" jdbcType="INTEGER" />
+    <result column="collect_cnt" property="collectCnt" jdbcType="INTEGER" />
+    <result column="top_order" property="topOrder" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="share_cnt" property="shareCnt" jdbcType="INTEGER" />
+    <result column="sign_name" property="signName" jdbcType="VARCHAR" />
+    <result column="second_catetory_id" property="secondCatetoryId" jdbcType="INTEGER" />
+    <result column="second_catetory_name" property="secondCatetoryName" jdbcType="VARCHAR" />
+    <result column="top_cnt" property="topCnt" jdbcType="INTEGER" />
+    <result column="discard_cnt" property="discardCnt" jdbcType="INTEGER" />
+    <result column="card_title" property="cardTitle" jdbcType="VARCHAR" />
+    <result column="card_remark" property="cardRemark" jdbcType="VARCHAR" />
+    <result column="pic1_path" property="pic1Path" jdbcType="VARCHAR" />
+    <result column="pic2_path" property="pic2Path" jdbcType="VARCHAR" />
+    <result column="pic3_path" property="pic3Path" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="INTEGER" />
+    <result column="show_start_date" property="showStartDate" jdbcType="TIMESTAMP" />
+    <result column="show_end_date" property="showEndDate" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="INTEGER" />
+    <result column="sign_id" property="signId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dangdang.digital.model.Discovery" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="id != null" > and d.id=#{id} </if>
+    <if test="author != null" > and d.author=#{author} </if>
+    <if test="mediaId != null" > and d.media_id=#{mediaId} </if>
+    <if test="mediaName != null" > and d.media_name=#{mediaName} </if>
+    <if test="firstCatetoryId != null" > and d.first_catetory_id=#{firstCatetoryId} </if>
+    <if test="firstCatetoryName != null" > and d.first_catetory_name=#{firstCatetoryName} </if>
+    <if test="type != null" > and d.type=#{type} </if>
+    <if test="columnId != null" > and d.column_id=#{columnId} </if>
+    <if test="columnName != null" > and d.column_name=#{columnName} </if>
+    <if test="stars != null" > and d.stars=#{stars} </if>
+    <if test="reviewCnt != null" > and d.review_cnt=#{reviewCnt} </if>
+    <if test="collectCnt != null" > and d.collect_cnt=#{collectCnt} </if>
+    <if test="topOrder != null" > and d.top_order=#{topOrder} </if>
+    <if test="operator != null" > and d.operator=#{operator} </if>
+    <if test="shareCnt != null" > and d.share_cnt=#{shareCnt} </if>
+    <if test="signName != null" > and d.sign_name=#{signName} </if>
+    <if test="secondCatetoryId != null" > and d.second_catetory_id=#{secondCatetoryId} </if>
+    <if test="secondCatetoryName != null" > and d.second_catetory_name=#{secondCatetoryName} </if>
+    <if test="topCnt != null" > and d.top_cnt=#{topCnt} </if>
+    <if test="discardCnt != null" > and d.discard_cnt=#{discardCnt} </if>
+    <if test="cardTitle != null" > and d.card_title=#{cardTitle} </if>
+    <if test="cardRemark != null" > and d.card_remark=#{cardRemark} </if>
+    <if test="pic1Path != null" > and d.pic1_path=#{pic1Path} </if>
+    <if test="pic2Path != null" > and d.pic2_path=#{pic2Path} </if>
+    <if test="pic3Path != null" > and d.pic3_path=#{pic3Path} </if>
+    <if test="cardType != null" > and d.card_type=#{cardType} </if>
+    <if test="isShow != null" > and d.is_show=#{isShow} </if>
+    <if test="state == 0" > 
+    	<![CDATA[	and (d.show_start_date > SYSDATE() or d.show_start_date is null)]]>
+     </if>
+     <if test="state == 1" > 
+    	<![CDATA[ and d.show_start_date < SYSDATE()]]>
+     </if>
+    <if test="showStartStartDate != null" > 
+    <![CDATA[  and d.show_start_date >=#{showStartStartDate}]]>
+    </if>
+    <if test="showStartEndDate != null" > 
+    <![CDATA[  and d.show_start_date <=#{showStartEndDate}]]>
+    </if>
+    <if test="showEndStartDate != null" >
+    	<![CDATA[ and d.show_end_date >= #{showEndStartDate} ]]>
+    </if>
+    <if test="showEndEndDate != null" >
+    	<![CDATA[ and d.show_end_date <= #{showEndEndDate} ]]>
+    </if>
+    <if test="title != null" > and title like concat('%',#{title},'%') </if>
+     
+  </sql>
+  <sql id="Base_Column_List" >
+    d.id, d.author, d.media_id, d.media_name, d.first_catetory_id, d.first_catetory_name, d.type, d.column_id, 
+    d.column_name, d.stars, d.review_cnt, d.collect_cnt, d.top_order, d.operator, d.share_cnt, d.sign_name, d.second_catetory_id, 
+    d.second_catetory_name, d.top_cnt, d.discard_cnt, d.card_title, d.card_remark, d.pic1_path, d.pic2_path, 
+    d.pic3_path, d.card_type, d.show_start_date, d.show_end_date, d.title,d.is_show,sign_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from media_discovery d
+    where d.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_discovery
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.Discovery" >
+    insert into media_discovery (id, author, media_id, 
+      media_name, first_catetory_id, first_catetory_name, 
+      type, column_id, column_name, 
+      stars, review_cnt, collect_cnt, 
+      operator, share_cnt, sign_name, 
+      second_catetory_id, second_catetory_name, top_cnt, 
+      discard_cnt, card_title, card_remark, 
+      pic1_path, pic2_path, pic3_path, 
+      card_type, show_start_date, show_end_date, 
+      title, content,is_show,sign_id)
+    values (#{id,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, #{mediaId,jdbcType=BIGINT}, 
+      #{mediaName,jdbcType=VARCHAR}, #{firstCatetoryId,jdbcType=INTEGER}, #{firstCatetoryName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{columnId,jdbcType=BIGINT}, #{columnName,jdbcType=VARCHAR}, 
+      #{stars,jdbcType=INTEGER}, #{reviewCnt,jdbcType=INTEGER}, #{collectCnt,jdbcType=INTEGER}, 
+      #{operator,jdbcType=VARCHAR}, #{shareCnt,jdbcType=INTEGER}, #{signName,jdbcType=VARCHAR}, 
+      #{secondCatetoryId,jdbcType=INTEGER}, #{secondCatetoryName,jdbcType=VARCHAR}, #{topCnt,jdbcType=INTEGER}, 
+      #{discardCnt,jdbcType=INTEGER}, #{cardTitle,jdbcType=VARCHAR}, #{cardRemark,jdbcType=VARCHAR}, 
+      #{pic1Path,jdbcType=VARCHAR}, #{pic2Path,jdbcType=VARCHAR}, #{pic3Path,jdbcType=VARCHAR}, 
+      #{cardType,jdbcType=INTEGER}, #{showStartDate,jdbcType=TIMESTAMP}, #{showEndDate,jdbcType=TIMESTAMP}, 
+      #{title,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{isShow,jdbcType=INTEGER}
+      , #{signId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Discovery" >
+    insert into media_discovery
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="mediaName != null" >
+        media_name,
+      </if>
+      <if test="firstCatetoryId != null" >
+        first_catetory_id,
+      </if>
+      <if test="firstCatetoryName != null" >
+        first_catetory_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="columnId != null" >
+        column_id,
+      </if>
+      <if test="columnName != null" >
+        column_name,
+      </if>
+      <if test="stars != null" >
+        stars,
+      </if>
+      <if test="reviewCnt != null" >
+        review_cnt,
+      </if>
+      <if test="collectCnt != null" >
+        collect_cnt,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="shareCnt != null" >
+        share_cnt,
+      </if>
+      <if test="signName != null" >
+        sign_name,
+      </if>
+      <if test="secondCatetoryId != null" >
+        second_catetory_id,
+      </if>
+      <if test="secondCatetoryName != null" >
+        second_catetory_name,
+      </if>
+      <if test="topCnt != null" >
+        top_cnt,
+      </if>
+      <if test="discardCnt != null" >
+        discard_cnt,
+      </if>
+      <if test="cardTitle != null" >
+        card_title,
+      </if>
+      <if test="cardRemark != null" >
+        card_remark,
+      </if>
+      <if test="pic1Path != null" >
+        pic1_path,
+      </if>
+      <if test="pic2Path != null" >
+        pic2_path,
+      </if>
+      <if test="pic3Path != null" >
+        pic3_path,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="showStartDate != null" >
+        show_start_date,
+      </if>
+      <if test="showEndDate != null" >
+        show_end_date,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="signId != null" >
+        sign_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstCatetoryId != null" >
+        #{firstCatetoryId,jdbcType=INTEGER},
+      </if>
+      <if test="firstCatetoryName != null" >
+        #{firstCatetoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="columnId != null" >
+        #{columnId,jdbcType=BIGINT},
+      </if>
+      <if test="columnName != null" >
+        #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="stars != null" >
+        #{stars,jdbcType=INTEGER},
+      </if>
+      <if test="reviewCnt != null" >
+        #{reviewCnt,jdbcType=INTEGER},
+      </if>
+      <if test="collectCnt != null" >
+        #{collectCnt,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="shareCnt != null" >
+        #{shareCnt,jdbcType=INTEGER},
+      </if>
+      <if test="signName != null" >
+        #{signName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondCatetoryId != null" >
+        #{secondCatetoryId,jdbcType=INTEGER},
+      </if>
+      <if test="secondCatetoryName != null" >
+        #{secondCatetoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="topCnt != null" >
+        #{topCnt,jdbcType=INTEGER},
+      </if>
+      <if test="discardCnt != null" >
+        #{discardCnt,jdbcType=INTEGER},
+      </if>
+      <if test="cardTitle != null" >
+        #{cardTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cardRemark != null" >
+        #{cardRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="pic1Path != null" >
+        #{pic1Path,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2Path != null" >
+        #{pic2Path,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3Path != null" >
+        #{pic3Path,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=INTEGER},
+      </if>
+      <if test="showStartDate != null" >
+        #{showStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="showEndDate != null" >
+        #{showEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="signId != null" >
+        #{signId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Discovery" >
+    update media_discovery
+    <set >
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        media_name = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstCatetoryId != null" >
+        first_catetory_id = #{firstCatetoryId,jdbcType=INTEGER},
+      </if>
+      <if test="firstCatetoryName != null" >
+        first_catetory_name = #{firstCatetoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="columnId != null" >
+        column_id = #{columnId,jdbcType=BIGINT},
+      </if>
+      <if test="columnName != null" >
+        column_name = #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="stars != null" >
+        stars = #{stars,jdbcType=INTEGER},
+      </if>
+      <if test="reviewCnt != null" >
+        review_cnt = #{reviewCnt,jdbcType=INTEGER},
+      </if>
+      <if test="collectCnt != null" >
+        collect_cnt = #{collectCnt,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="shareCnt != null" >
+        share_cnt = #{shareCnt,jdbcType=INTEGER},
+      </if>
+      <if test="signName != null" >
+        sign_name = #{signName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondCatetoryId != null" >
+        second_catetory_id = #{secondCatetoryId,jdbcType=INTEGER},
+      </if>
+      <if test="secondCatetoryName != null" >
+        second_catetory_name = #{secondCatetoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="topCnt != null" >
+        top_cnt = #{topCnt,jdbcType=INTEGER},
+      </if>
+      <if test="discardCnt != null" >
+        discard_cnt = #{discardCnt,jdbcType=INTEGER},
+      </if>
+      <if test="cardTitle != null" >
+        card_title = #{cardTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cardRemark != null and cardType !=2" >
+        card_remark = #{cardRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType == 2" >
+        card_remark = null,
+      </if>
+      <if test="pic1Path != null and cardType == 1" >
+        pic1_path = #{pic1Path,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType == 0" >
+        pic1_path = null,
+      </if>
+      <if test="pic2Path != null and cardType == 2 and type !=2" >
+        pic2_path = #{pic2Path,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != 2 or type == 2" >
+        pic2_path = null,pic3_path = null,
+      </if>
+      <if test="pic3Path != null and cardType == 2 and type !=2" >
+        pic3_path = #{pic3Path,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=INTEGER},
+      </if>
+      <if test="showStartDate != null" >
+        show_start_date = #{showStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="showEndDate != null" >
+        show_end_date = #{showEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="signId != null" >
+        sign_id = #{signId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dangdang.digital.model.Discovery" >
+    update media_discovery
+    set author = #{author,jdbcType=VARCHAR},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      first_catetory_id = #{firstCatetoryId,jdbcType=INTEGER},
+      first_catetory_name = #{firstCatetoryName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      column_id = #{columnId,jdbcType=BIGINT},
+      column_name = #{columnName,jdbcType=VARCHAR},
+      stars = #{stars,jdbcType=INTEGER},
+      review_cnt = #{reviewCnt,jdbcType=INTEGER},
+      collect_cnt = #{collectCnt,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR},
+      share_cnt = #{shareCnt,jdbcType=INTEGER},
+      sign_name = #{signName,jdbcType=VARCHAR},
+      second_catetory_id = #{secondCatetoryId,jdbcType=INTEGER},
+      second_catetory_name = #{secondCatetoryName,jdbcType=VARCHAR},
+      top_cnt = #{topCnt,jdbcType=INTEGER},
+      discard_cnt = #{discardCnt,jdbcType=INTEGER},
+      card_title = #{cardTitle,jdbcType=VARCHAR},
+      card_remark = #{cardRemark,jdbcType=VARCHAR},
+      pic1_path = #{pic1Path,jdbcType=VARCHAR},
+      pic2_path = #{pic2Path,jdbcType=VARCHAR},
+      pic3_path = #{pic3Path,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=INTEGER},
+      show_start_date = #{showStartDate,jdbcType=TIMESTAMP},
+      show_end_date = #{showEndDate,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=INTEGER},
+      sign_id = #{signId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Discovery" >
+    update media_discovery
+    set author = #{author,jdbcType=VARCHAR},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      first_catetory_id = #{firstCatetoryId,jdbcType=INTEGER},
+      first_catetory_name = #{firstCatetoryName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      column_id = #{columnId,jdbcType=BIGINT},
+      column_name = #{columnName,jdbcType=VARCHAR},
+      stars = #{stars,jdbcType=INTEGER},
+      review_cnt = #{reviewCnt,jdbcType=INTEGER},
+      collect_cnt = #{collectCnt,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR},
+      share_cnt = #{shareCnt,jdbcType=INTEGER},
+      sign_name = #{signName,jdbcType=VARCHAR},
+      second_catetory_id = #{secondCatetoryId,jdbcType=INTEGER},
+      second_catetory_name = #{secondCatetoryName,jdbcType=VARCHAR},
+      top_cnt = #{topCnt,jdbcType=INTEGER},
+      discard_cnt = #{discardCnt,jdbcType=INTEGER},
+      card_title = #{cardTitle,jdbcType=VARCHAR},
+      card_remark = #{cardRemark,jdbcType=VARCHAR},
+      pic1_path = #{pic1Path,jdbcType=VARCHAR},
+      pic2_path = #{pic2Path,jdbcType=VARCHAR},
+      pic3_path = #{pic3Path,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=INTEGER},
+      show_start_date = #{showStartDate,jdbcType=TIMESTAMP},
+      show_end_date = #{showEndDate,jdbcType=TIMESTAMP},
+      is_show = #{isShow,jdbcType=INTEGER},
+      sign_id = #{signId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_discovery d where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_discovery d
+    <if test="custId != null and type == 1" >
+    	inner join media_storeup s on d.id = s.target_id
+     </if>
+     where 1=1 <include refid="Base_Where" />
+      <if test="custId != null and type == 1" >
+      	AND s.type='discover' and s.cust_id=#{custId} and s.platform=#{platForm}
+      </if>
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_discovery d
+    <if test="custId != null and type == 1" >
+    	inner join media_storeup s on d.id = s.target_id
+     </if>
+     where 1=1 <include refid="Base_Where" />
+      <if test="custId != null and type == 1" >
+      	AND s.type='discover' and s.cust_id=#{custId} and s.platform=#{platForm}
+      </if>
+      <if test="custId != null and type == 1" >
+      		order by s.store_date desc
+      </if>
+      <if test="custId == null" >
+      	 order by d.top_order desc, d.show_start_date desc
+      </if>
+  </select>
+  <select id="selectByIds" resultMap="BaseResultMap">  
+	    select  
+	    <include refid="Base_Column_List" />  
+	    from media_discovery d where d.id in  
+	    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	     	#{item}  
+	    </foreach>  
+	</select>  
+  
+</mapper>

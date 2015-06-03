@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MediaCatalogMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.MediaCatalog" >
+    <id column="mc_id" property="mcId" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="catalog_name" property="catalogName" jdbcType="VARCHAR" />
+    <result column="catalog_content" property="catalogContent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="mcId != null" > and mc_id=#{mcId} </if>
+    <if test="productId != null" > and product_id=#{productId} </if>
+    <if test="catalogName != null" > and catalog_name=#{catalogName} </if>
+    <if test="catalogContent != null" > and catalog_content=#{catalogContent} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    mc_id, product_id, catalog_name, catalog_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_catalog
+    where mc_id = #{mcId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_catalog
+    where mc_id = #{mcId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.MediaCatalog" >
+    insert into media_catalog (mc_id, product_id, catalog_name, 
+      catalog_content)
+    values (#{mcId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{catalogName,jdbcType=VARCHAR}, 
+      #{catalogContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.MediaCatalog" >
+    insert into media_catalog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mcId != null" >
+        mc_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="catalogName != null" >
+        catalog_name,
+      </if>
+      <if test="catalogContent != null" >
+        catalog_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mcId != null" >
+        #{mcId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="catalogName != null" >
+        #{catalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogContent != null" >
+        #{catalogContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.MediaCatalog" >
+    update media_catalog
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="catalogName != null" >
+        catalog_name = #{catalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogContent != null" >
+        catalog_content = #{catalogContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mc_id = #{mcId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.MediaCatalog" >
+    update media_catalog
+    set product_id = #{productId,jdbcType=BIGINT},
+      catalog_name = #{catalogName,jdbcType=VARCHAR},
+      catalog_content = #{catalogContent,jdbcType=VARCHAR}
+    where mc_id = #{mcId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_catalog where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_catalog where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_catalog where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

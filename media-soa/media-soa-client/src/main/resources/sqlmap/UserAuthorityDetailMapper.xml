@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserAuthorityDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.UserAuthorityDetail" >
+    <id column="user_authority_detail_id" property="userAuthorityDetailId" jdbcType="BIGINT" />
+    <result column="user_authority_id" property="userAuthorityId" jdbcType="BIGINT" />
+    <result column="media_chapter_id" property="mediaChapterId" jdbcType="BIGINT" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="userAuthorityDetailId != null" > and user_authority_detail_id=#{userAuthorityDetailId} </if>
+    <if test="userAuthorityId != null" > and user_authority_id=#{userAuthorityId} </if>
+    <if test="mediaChapterId != null" > and media_chapter_id=#{mediaChapterId} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="mediaChapterIds != null" > and media_chapter_id in (${mediaChapterIds}) </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_authority_detail_id, user_authority_id, media_chapter_id, creation_date, media_id, 
+    cust_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_user_authority_detail
+    where user_authority_detail_id = #{userAuthorityDetailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_user_authority_detail
+    where user_authority_detail_id = #{userAuthorityDetailId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.UserAuthorityDetail" >
+    insert into media_user_authority_detail (user_authority_detail_id, user_authority_id, 
+      media_chapter_id, creation_date, media_id, 
+      cust_id)
+    values (#{userAuthorityDetailId,jdbcType=BIGINT}, #{userAuthorityId,jdbcType=BIGINT}, 
+      #{mediaChapterId,jdbcType=BIGINT}, #{creationDate,jdbcType=TIMESTAMP}, #{mediaId,jdbcType=BIGINT}, 
+      #{custId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.UserAuthorityDetail" >
+    insert into media_user_authority_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userAuthorityDetailId != null" >
+        user_authority_detail_id,
+      </if>
+      <if test="userAuthorityId != null" >
+        user_authority_id,
+      </if>
+      <if test="mediaChapterId != null" >
+        media_chapter_id,
+      </if>
+        creation_date
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      creation_date
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userAuthorityDetailId != null" >
+        #{userAuthorityDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="userAuthorityId != null" >
+        #{userAuthorityId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaChapterId != null" >
+        #{mediaChapterId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.UserAuthorityDetail" >
+    update media_user_authority_detail
+    <set >
+      <if test="userAuthorityId != null" >
+        user_authority_id = #{userAuthorityId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaChapterId != null" >
+        media_chapter_id = #{mediaChapterId,jdbcType=BIGINT},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where user_authority_detail_id = #{userAuthorityDetailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.UserAuthorityDetail" >
+    update media_user_authority_detail
+    set user_authority_id = #{userAuthorityId,jdbcType=BIGINT},
+      media_chapter_id = #{mediaChapterId,jdbcType=BIGINT},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      cust_id = #{custId,jdbcType=BIGINT}
+    where user_authority_detail_id = #{userAuthorityDetailId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_user_authority_detail where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_user_authority_detail where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="getMasterCountByCustIdAndChapterIds" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_user_authority_detail where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_user_authority_detail where 1=1 <include refid="Base_Where" />
+  </select>
+    <insert id="batchInsert" parameterType="java.util.List">  
+    insert into media_user_authority_detail (
+    user_authority_id, media_chapter_id, creation_date, media_id,cust_id
+      ) values  
+    <foreach collection="list" item="item" index="index"  
+        separator=",">  
+        (#{item.userAuthorityId,jdbcType=BIGINT}, #{item.mediaChapterId,jdbcType=BIGINT}, 
+      now(), #{item.mediaId,jdbcType=BIGINT}, #{item.custId,jdbcType=BIGINT})  
+    </foreach>  
+  </insert>  
+</mapper>

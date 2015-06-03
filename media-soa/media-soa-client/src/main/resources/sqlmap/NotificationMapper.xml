@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="NotificationMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Notification" >
+    <id column="notification_id" property="notificationId" jdbcType="BIGINT" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="app_client_version" property="appClientVersion" jdbcType="VARCHAR" />
+    <result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="ext_user_id" property="extUserId" jdbcType="VARCHAR" />
+    <result column="ext_channel_id" property="extChannelId" jdbcType="VARCHAR" />
+    <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="notificationId != null" > and notification_id=#{notificationId} </if>
+    <if test="appId != null" > and app_id=#{appId} </if>
+    <if test="appClientVersion != null" > and app_client_version=#{appClientVersion} </if>
+    <if test="deviceNo != null" > and device_no=#{deviceNo} </if>
+    <if test="deviceType != null" > and device_type=#{deviceType} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="extUserId != null" > and ext_user_id=#{extUserId} </if>
+    <if test="extChannelId != null" > and ext_channel_id=#{extChannelId} </if>
+    <if test="channelId != null" > and channel_id=#{channelId} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    notification_id, app_id, app_client_version, device_no, device_type, cust_id, ext_user_id, 
+    ext_channel_id, channel_id, status, creation_date, last_changed_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_notification
+    where notification_id = #{notificationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_notification
+    where notification_id = #{notificationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.Notification" >
+    insert into media_notification (notification_id, app_id, app_client_version, 
+      device_no, device_type, cust_id, 
+      ext_user_id, ext_channel_id, channel_id, status, 
+      creation_date, last_changed_date)
+    values (#{notificationId,jdbcType=BIGINT}, #{appId,jdbcType=INTEGER}, #{appClientVersion,jdbcType=VARCHAR}, 
+      #{deviceNo,jdbcType=VARCHAR}, #{deviceType,jdbcType=VARCHAR}, #{custId,jdbcType=BIGINT}, 
+      #{extUserId,jdbcType=VARCHAR}, #{extChannelId,jdbcType=VARCHAR}, #{channelId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{creationDate,jdbcType=TIMESTAMP}, #{lastChangedDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Notification" >
+    insert into media_notification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="notificationId != null" >
+        notification_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="appClientVersion != null" >
+        app_client_version,
+      </if>
+      <if test="deviceNo != null" >
+        device_no,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="extUserId != null" >
+        ext_user_id,
+      </if>
+      <if test="extChannelId != null" >
+        ext_channel_id,
+      </if>
+      <if test="channelId != null" >
+        channel_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="notificationId != null" >
+        #{notificationId,jdbcType=BIGINT},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="appClientVersion != null" >
+        #{appClientVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNo != null" >
+        #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="extUserId != null" >
+        #{extUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="extChannelId != null" >
+        #{extChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null" >
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastChangedDate != null" >
+        #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Notification" >
+    update media_notification
+    <set >
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="appClientVersion != null" >
+        app_client_version = #{appClientVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNo != null" >
+        device_no = #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="extUserId != null" >
+        ext_user_id = #{extUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="extChannelId != null" >
+        ext_channel_id = #{extChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null" >
+        channel_id = #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where notification_id = #{notificationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Notification" >
+    update media_notification
+    set app_id = #{appId,jdbcType=INTEGER},
+      app_client_version = #{appClientVersion,jdbcType=VARCHAR},
+      device_no = #{deviceNo,jdbcType=VARCHAR},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=BIGINT},
+      ext_user_id = #{extUserId,jdbcType=VARCHAR},
+      ext_channel_id = #{extChannelId,jdbcType=VARCHAR},
+      channel_id = #{channelId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP}
+    where notification_id = #{notificationId,jdbcType=BIGINT}
+  </update>
+  <select id="getByCustIdsAndDeviceType" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from media_notification where app_id=#{appId,jdbcType=INTEGER} and status=1 and cust_id in 
+	  	<foreach collection="custIds" item="custId"
+	        index="index" open="(" close=")" separator=",">
+	        #{custId}
+	    </foreach>
+	    and device_type in 
+	    <foreach collection="deviceTypes" item="deviceType"
+	        index="index" open="(" close=")" separator=",">
+	        #{deviceType}
+	    </foreach>
+  </select>
+  
+  <select id="getByChannelIds" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from media_notification where app_id=#{appId,jdbcType=INTEGER} and status=1 and channel_id in 
+	  	<foreach collection="channelIds" item="itemChannelId"
+	        index="index" open="(" close=")" separator=",">
+	        #{itemChannelId}
+	    </foreach>
+  </select>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_notification where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_notification where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_notification where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="pageCountByMutliChannel" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_notification where status=1
+    	<if test="appId != null" >
+    		and app_id=#{appId}
+	    </if>
+   	 	<if test="channelIds != null" >
+    		and channel_id in 
+	  		<foreach collection="channelIds" item="itemChannelId"
+	        	index="index" open="(" close=")" separator=",">
+	        	#{itemChannelId}
+	    	</foreach>
+	    </if>
+	    <if test="deviceTypes != null" >
+	    	and device_type in 
+	    	<foreach collection="deviceTypes" item="itemDeviceType"
+	        	index="index" open="(" close=")" separator=",">
+	        	#{itemDeviceType}
+	    	</foreach>
+		</if>
+  </select>
+  <select id="pageDataByMutliChannel" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_notification where 
+    	status=1
+    	<if test="appId != null" >
+    		and app_id=#{appId}
+	    </if>
+    	<if test="channelIds != null" >
+    		and channel_id in 
+	  		<foreach collection="channelIds" item="itemChannelId"
+	        	index="index" open="(" close=")" separator=",">
+	        	${itemChannelId}
+	    	</foreach>
+	    </if>
+	    <if test="deviceTypes != null" >
+	    	and device_type in 
+	    	<foreach collection="deviceTypes" item="itemDeviceType"
+	        	index="index" open="(" close=")" separator=",">
+	        	${itemDeviceType}
+	    	</foreach>
+		</if>
+  </select>
+</mapper>

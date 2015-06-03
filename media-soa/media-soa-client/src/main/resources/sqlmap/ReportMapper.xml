@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ReportMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.Report">
+		<id column="ID" property="id" jdbcType="BIGINT" />
+		<result column="CUST_ID" property="custId" jdbcType="BIGINT" />
+		<result column="MEDIA_ID" property="mediaId" jdbcType="BIGINT" />
+		<result column="CHAPTER_ID" property="chapterId" jdbcType="BIGINT" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="REPORT_TYPE" property="reportType" jdbcType="VARCHAR" />
+		<result column="REPORT_CONTENT" property="reportContent" jdbcType="VARCHAR" />
+		<result column="CONTACT_INFO" property="contactInfo" jdbcType="VARCHAR" />
+		<result column="PLATFORM" property="platform" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="id != null"> and ID= #{id}</if>
+		<if test="custId != null"> and CUST_ID= #{custId}</if>
+		<if test="mediaId != null"> and MEDIA_ID= #{mediaId}</if>
+		<if test="chapterId != null"> and CHAPTER_ID= #{chapterId}</if>
+		<if test="createTime != null"> and CREATE_TIME= #{createTime}</if>
+		<if test="createTimeStart != null"> and CREATE_TIME &gt;= #{createTimeStart}</if>
+		<if test="createTimeEnd != null"> and CREATE_TIME &lt;= #{createTimeEnd}</if>
+		<if test="reportType != null"> and REPORT_TYPE= #{reportType}</if>
+		<if test="reportContent != null"> and REPORT_CONTENT= #{reportContent}</if>
+		<if test="contactInfo != null"> and CONTACT_INFO= #{contactInfo}</if>
+		<if test="platform != null"> and PLATFORM= #{platform}</if>
+	</sql>
+	<sql id="Base_Column_List">
+		ID ,
+		CUST_ID ,
+		MEDIA_ID ,
+		CHAPTER_ID ,
+		CREATE_TIME ,
+		REPORT_TYPE ,
+		REPORT_CONTENT ,
+		CONTACT_INFO ,
+		PLATFORM
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from media_report
+		where
+		ID = #{id,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from media_report
+		where
+		ID = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insert" parameterType="com.dangdang.digital.model.Report">
+		insert into media_report (
+		ID ,
+		CUST_ID ,
+		MEDIA_ID ,
+		CHAPTER_ID ,
+		CREATE_TIME ,
+		REPORT_TYPE ,
+		REPORT_CONTENT ,
+		CONTACT_INFO ,
+		PLATFORM
+		)
+		values (
+		#{id,jdbcType=BIGINT},
+		#{custId,jdbcType=BIGINT},
+		#{mediaId,jdbcType=BIGINT},
+		#{chapterId,jdbcType=BIGINT},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{reportType,jdbcType=VARCHAR},
+		#{reportContent,jdbcType=VARCHAR},
+		#{contactInfo,jdbcType=VARCHAR},
+		#{platform,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.Report">
+		insert into media_report
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">ID,</if>
+			<if test="custId != null">CUST_ID,</if>
+			<if test="mediaId != null">MEDIA_ID,</if>
+			<if test="chapterId != null">CHAPTER_ID,</if>
+			<if test="createTime != null">CREATE_TIME,</if>
+			<if test="reportType != null">REPORT_TYPE,</if>
+			<if test="reportContent != null">REPORT_CONTENT,</if>
+			<if test="contactInfo != null">CONTACT_INFO,</if>
+			<if test="platform != null">PLATFORM,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{ID,jdbcType=BIGINT},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=BIGINT},
+			</if>
+			<if test="mediaId != null">
+				#{mediaId,jdbcType=BIGINT},
+			</if>
+			<if test="chapterId != null">
+				#{chapterId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reportType != null">
+				#{reportType,jdbcType=VARCHAR},
+			</if>
+			<if test="reportContent != null">
+				#{reportContent,jdbcType=VARCHAR},
+			</if>
+			<if test="contactInfo != null">
+				#{contactInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="platform != null">
+				#{platform,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Report">
+		update media_report
+		<set>
+			<if test="custId != null">
+				#{CUST_ID,jdbcType=BIGINT},
+			</if>
+			<if test="mediaId != null">
+				#{MEDIA_ID,jdbcType=BIGINT},
+			</if>
+			<if test="chapterId != null">
+				#{CHAPTER_ID,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{CREATE_TIME,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reportType != null">
+				#{REPORT_TYPE,jdbcType=VARCHAR},
+			</if>
+			<if test="reportContent != null">
+				#{REPORT_CONTENT,jdbcType=VARCHAR},
+			</if>
+			<if test="contactInfo != null">
+				#{CONTACT_INFO,jdbcType=VARCHAR},
+			</if>
+			<if test="platform != null">
+				#{PLATFORM,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		ID = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Report">
+		update media_report
+		set
+		CUST_ID= #{custId,jdbcType=BIGINT},
+		MEDIA_ID= #{mediaId,jdbcType=BIGINT},
+		CHAPTER_ID= #{chapterId,jdbcType=BIGINT},
+		CREATE_TIME= #{createTime,jdbcType=TIMESTAMP},
+		REPORT_TYPE= #{reportType,jdbcType=VARCHAR},
+		REPORT_CONTENT= #{reportContent,jdbcType=VARCHAR},
+		CONTACT_INFO= #{contactInfo,jdbcType=VARCHAR},
+		PLATFORM= #{platform,jdbcType=VARCHAR},
+		where
+		ID = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_report where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from media_report where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_report where 1=1
+		<include refid="Base_Where" />
+		order by CREATE_TIME desc
+	</select>
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from media_report where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

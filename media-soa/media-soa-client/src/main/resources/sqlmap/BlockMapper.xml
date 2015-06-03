@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BlockMapper">
+	<resultMap id="BaseResultMap" type="Block">
+		<id column="media_block_id" property="mediaBlockId" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="group_id" property="groupId" jdbcType="BIGINT" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="target_url" property="targetUrl" jdbcType="VARCHAR" />
+		<result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+		<result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+		<result column="relation_column_id" property="relationColumnId" jdbcType="INTEGER" />
+		<result column="relation_column_code" property="relationColumnCode" jdbcType="VARCHAR" />
+		<result column="access_count" property="accessCount" jdbcType="INTEGER" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
+		<result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+		<result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="Block"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="mediaBlockId != null"> and media_block_id=#{mediaBlockId} </if>
+		<if test="name != null"> and name=#{name} </if>
+		<if test="code != null"> and code=#{code} </if>
+		<if test="picPath != null"> and pic_path=#{picPath} </if>
+		<if test="status != null"> and status=#{status} </if>
+		<if test="groupId != null"> and group_id=#{groupId} </if>
+		<if test="type != null"> and type=#{type} </if>
+		<if test="targetUrl != null"> and target_url=#{targetUrl} </if>
+		<if test="startDate != null"> and start_date=#{startDate} </if>
+		<if test="endDate != null"> and end_date=#{endDate} </if>
+		<if test="relationColumnId != null"> and relation_column_id=#{relationColumnId} </if>
+		<if test="relationColumnCode != null"> and relation_column_code=#{relationColumnCode} </if>
+		<if test="accessCount != null"> and access_count=#{accessCount} </if>
+		<if test="creator != null"> and creator=#{creator} </if>
+		<if test="modifier != null"> and modifier=#{modifier} </if>
+		<if test="creationDate != null"> and creation_date=#{creationDate} </if>
+		<if test="lastModifiedDate != null"> and last_modified_date=#{lastModifiedDate} </if>
+	</sql>
+	
+	<sql id="Base_Column_List">
+		media_block_id, name, code, pic_path, status, group_id, type, target_url, start_date,
+		end_date, relation_column_id, relation_column_code, access_count,
+		creator, modifier,content,
+		creation_date, last_modified_date
+	</sql>
+	
+	<sql id="Blob_Column_List">
+		content,pic_path
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from media_block
+		where media_block_id = #{mediaBlockId,jdbcType=BIGINT}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from media_block
+		where media_block_id = #{mediaBlockId,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" parameterType="Block">
+		insert into media_block (media_block_id, name, code,
+		pic_path, status, group_id,
+		type, target_url, start_date,
+		end_date, relation_column_id, relation_column_code,
+		access_count, creator, modifier,
+		creation_date, last_modified_date, content
+		)
+		values (#{mediaBlockId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR},
+		#{picPath,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{groupId,jdbcType=BIGINT},
+		#{type,jdbcType=INTEGER}, #{targetUrl,jdbcType=VARCHAR},
+		#{startDate,jdbcType=TIMESTAMP},
+		#{endDate,jdbcType=TIMESTAMP}, #{relationColumnId,jdbcType=INTEGER},
+		#{relationColumnCode,jdbcType=VARCHAR},
+		#{accessCount,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR},
+		#{modifier,jdbcType=VARCHAR},
+		#{creationDate,jdbcType=TIMESTAMP}, #{lastModifiedDate,jdbcType=TIMESTAMP},
+		#{content,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	
+	<insert id="insertSelective" parameterType="Block">
+		insert into media_block
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mediaBlockId != null">
+				media_block_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="picPath != null">
+				pic_path,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="groupId != null">
+				group_id,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="targetUrl != null">
+				target_url,
+			</if>
+			<if test="startDate != null">
+				start_date,
+			</if>
+			<if test="endDate != null">
+				end_date,
+			</if>
+			<if test="relationColumnId != null">
+				relation_column_id,
+			</if>
+			<if test="relationColumnCode != null">
+				relation_column_code,
+			</if>
+			<if test="accessCount != null">
+				access_count,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="creationDate != null">
+				creation_date,
+			</if>
+			<if test="lastModifiedDate != null">
+				last_modified_date,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mediaBlockId != null">
+				#{mediaBlockId,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="picPath != null">
+				#{picPath,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="groupId != null">
+				#{groupId,jdbcType=BIGINT},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="targetUrl != null">
+				#{targetUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="startDate != null">
+				#{startDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endDate != null">
+				#{endDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="relationColumnId != null">
+				#{relationColumnId,jdbcType=INTEGER},
+			</if>
+			<if test="relationColumnCode != null">
+				#{relationColumnCode,jdbcType=VARCHAR},
+			</if>
+			<if test="accessCount != null">
+				#{accessCount,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="creationDate != null">
+				#{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifiedDate != null">
+				#{lastModifiedDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="Block">
+		update media_block
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="picPath != null">
+				pic_path = #{picPath,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="groupId != null">
+				group_id = #{groupId,jdbcType=BIGINT},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="targetUrl != null">
+				target_url = #{targetUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="startDate != null">
+				start_date = #{startDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endDate != null">
+				end_date = #{endDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="relationColumnId != 0">
+				relation_column_id = #{relationColumnId,jdbcType=INTEGER},
+			</if>
+			<if test="relationColumnCode != null">
+				relation_column_code = #{relationColumnCode,jdbcType=VARCHAR},
+			</if>
+			<if test="accessCount != null">
+				access_count = #{accessCount,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="creationDate != null">
+				creation_date = #{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifiedDate != null">
+				last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where media_block_id = #{mediaBlockId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="Block">
+		update media_block
+		set name = #{name,jdbcType=VARCHAR},
+		code = #{code,jdbcType=VARCHAR},
+		pic_path = #{picPath,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		group_id = #{groupId,jdbcType=BIGINT},
+		type = #{type,jdbcType=INTEGER},
+		target_url = #{targetUrl,jdbcType=VARCHAR},
+		start_date = #{startDate,jdbcType=TIMESTAMP},
+		end_date = #{endDate,jdbcType=TIMESTAMP},
+		relation_column_id = #{relationColumnId,jdbcType=INTEGER},
+		relation_column_code = #{relationColumnCode,jdbcType=VARCHAR},
+		access_count = #{accessCount,jdbcType=INTEGER},
+		creator = #{creator,jdbcType=VARCHAR},
+		modifier = #{modifier,jdbcType=VARCHAR},
+		creation_date = #{creationDate,jdbcType=TIMESTAMP},
+		last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where media_block_id = #{mediaBlockId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="Block">
+		update media_block
+		set name = #{name,jdbcType=VARCHAR},
+		code = #{code,jdbcType=VARCHAR},
+		pic_path = #{picPath,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		group_id = #{groupId,jdbcType=BIGINT},
+		type = #{type,jdbcType=INTEGER},
+		target_url = #{targetUrl,jdbcType=VARCHAR},
+		start_date = #{startDate,jdbcType=TIMESTAMP},
+		end_date = #{endDate,jdbcType=TIMESTAMP},
+		relation_column_id = #{relationColumnId,jdbcType=INTEGER},
+		relation_column_code = #{relationColumnCode,jdbcType=VARCHAR},
+		access_count = #{accessCount,jdbcType=INTEGER},
+		creator = #{creator,jdbcType=VARCHAR},
+		modifier = #{modifier,jdbcType=VARCHAR},
+		creation_date = #{creationDate,jdbcType=TIMESTAMP},
+		last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP}
+		where media_block_id = #{mediaBlockId,jdbcType=BIGINT}
+	</update>
+	
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_block where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="pageCount" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(1) from media_block where 1=1
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_block where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<delete id="deleteByIds" parameterType="list">
+		delete from media_block
+		where media_block_id in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<select id="selectContentByCode" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Blob_Column_List" />
+		from media_block
+		where code = #{code,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="obtainBlockListByCodes" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		<![CDATA[
+		from media_block
+		where status=1 and code in (${codes});
+		]]>
+	</select>
+</mapper>

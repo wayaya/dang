@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="RecommendRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.RecommendRelation" >
+    <id column="recommend_relation_id" property="recommendRelationId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="related_media_id" property="relatedMediaId" jdbcType="BIGINT" />
+    <result column="relation_type" property="relationType" jdbcType="TINYINT" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="recommendRelationId != null" > and recommend_relation_id=#{recommendRelationId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="relatedMediaId != null" > and related_media_id=#{relatedMediaId} </if>
+    <if test="relationType != null" > and relation_type=#{relationType} </if>
+    <if test="score != null" > and score=#{score} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    recommend_relation_id, media_id, related_media_id, relation_type, score, creation_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_recommend_relation
+    where recommend_relation_id = #{recommendRelationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_recommend_relation
+    where recommend_relation_id = #{recommendRelationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.RecommendRelation" useGeneratedKeys="true" keyProperty="recommendRelationId" >
+    insert into media_recommend_relation (recommend_relation_id, media_id, related_media_id, 
+      relation_type, score, creation_date)
+    values (#{recommendRelationId,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, #{relatedMediaId,jdbcType=BIGINT}, 
+      #{relationType,jdbcType=TINYINT}, #{score,jdbcType=DOUBLE}, #{creationDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+  	 insert into media_recommend_relation (recommend_relation_id, media_id, related_media_id, 
+      relation_type, score, creation_date) values
+  	<foreach collection="list" item="item" index="index" separator=",">
+  		(#{item.recommendRelationId}, #{item.mediaId},#{item.relatedMediaId}, #{item.relationType},
+  		#{item.score}, #{item.creationDate})
+  	</foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.RecommendRelation" useGeneratedKeys="true" keyProperty="recommendRelationId" >
+    insert into media_recommend_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recommendRelationId != null" >
+        recommend_relation_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="relatedMediaId != null" >
+        related_media_id,
+      </if>
+      <if test="relationType != null" >
+        relation_type,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recommendRelationId != null" >
+        #{recommendRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="relatedMediaId != null" >
+        #{relatedMediaId,jdbcType=BIGINT},
+      </if>
+      <if test="relationType != null" >
+        #{relationType,jdbcType=TINYINT},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.RecommendRelation" >
+    update media_recommend_relation
+    <set >
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="relatedMediaId != null" >
+        related_media_id = #{relatedMediaId,jdbcType=BIGINT},
+      </if>
+      <if test="relationType != null" >
+        relation_type = #{relationType,jdbcType=TINYINT},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where recommend_relation_id = #{recommendRelationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.RecommendRelation" >
+    update media_recommend_relation
+    set media_id = #{mediaId,jdbcType=BIGINT},
+      related_media_id = #{relatedMediaId,jdbcType=BIGINT},
+      relation_type = #{relationType,jdbcType=TINYINT},
+      score = #{score,jdbcType=DOUBLE},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where recommend_relation_id = #{recommendRelationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateScore">
+   		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+   			  update media_recommend_relation set score=score+#{item.score} 
+   			  	where media_id=#{item.mediaId} and related_media_id=#{item.relatedMediaId} 
+   			  	and relation_type=#{item.relationType} and creation_date=#{item.creationDate}
+        </foreach>
+  </update> 
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_recommend_relation where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_recommend_relation where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_recommend_relation where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="getMediaList" resultType="java.lang.Long" parameterType="map" >
+  	select distinct media_id from media_recommend_relation t where 1=1 <include refid="Base_Where" /> order by t.recommend_relation_id asc
+  </select>
+  
+  <select id="getRelatedMediaList" resultType="java.lang.Long" parameterType="map" >
+  	select distinct related_media_id from media_recommend_relation t where 1=1 <include refid="Base_Where" /> order by t.score desc, related_media_id desc 
+  </select>
+  
+</mapper>

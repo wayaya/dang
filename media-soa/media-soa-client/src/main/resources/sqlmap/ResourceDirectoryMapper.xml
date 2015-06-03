@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ResourceDirectoryMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.ResourceDirectory" >
+    <id column="dir_id" property="dirId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="is_cdn" property="isCdn" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="dirId != null" > and dir_id=#{dirId} </if>
+    <if test="name != null" > and name=#{name} </if>
+    <if test="parentId != null" > and parent_id=#{parentId} </if>
+    <if test="code != null" > and code=#{code} </if>
+    <if test="path != null" > and path=#{path} </if>
+    <if test="isCdn != null" > and is_cdn=#{isCdn} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    dir_id, name, parent_id, code, path,is_cdn
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_resource_directory
+    where dir_id = #{dirId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPath" parameterType="map" >
+    delete from media_resource_directory
+    where path like concat('${path}','%')
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_resource_directory
+    where dir_id = #{dirId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.ResourceDirectory" >
+    insert into media_resource_directory (dir_id, name, parent_id, 
+      code, path,is_cdn)
+    values (#{dirId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{code,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{isCdn,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.ResourceDirectory" >
+    insert into media_resource_directory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dirId != null" >
+        dir_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="isCdn != null" >
+        is_cdn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dirId != null" >
+        #{dirId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="isCdn != null" >
+        #{isCdn,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="getTreeByParentId" resultMap="BaseResultMap" parameterType="com.dangdang.digital.model.ResourceDirectory">
+		select
+		<include refid="Base_Column_List" />
+		from media_resource_directory
+		where is_cdn=#{isCdn,jdbcType=INTEGER}
+		<if test="dirId != null">
+			AND parent_id = #{dirId,jdbcType=INTEGER}
+		</if>
+		<if test="dirId == null">
+			AND parent_id is null
+		</if>
+	</select>
+	
+	
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ResourceDirectory" >
+    update media_resource_directory
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="isCdn != null" >
+        is_cdn = #{isCdn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dir_id = #{dirId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.ResourceDirectory" >
+    update media_resource_directory
+    set name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      is_cdn = #{isCdn,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR}
+    where dir_id = #{dirId,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_resource_directory where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_resource_directory where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_resource_directory where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

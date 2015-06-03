@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ActivityInfoMapper">
+	  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.ActivityInfo" >
+	    <id column="activity_id" property="activityId" jdbcType="INTEGER" />
+	    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+	    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+	    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+	    <result column="activity_type_id" property="activityTypeId" jdbcType="INTEGER" />
+	    <result column="activity_type_code" property="activityTypeCode" jdbcType="VARCHAR" />
+	    <result column="is_first_deposit" property="isFirstDeposit" jdbcType="INTEGER" />
+	    <result column="is_previous_number" property="isPreviousNumber" jdbcType="INTEGER" />
+	    <result column="give_scale" property="giveScale" jdbcType="INTEGER" />
+	    <result column="consume_satisfy" property="consumeSatisfy" jdbcType="INTEGER" />
+	    <result column="original_level" property="originalLevel" jdbcType="VARCHAR" />
+	    <result column="new_level" property="newLevel" jdbcType="VARCHAR" />
+	    <result column="give_gold_piece" property="giveGoldPiece" jdbcType="INTEGER" />
+	    <result column="day_worship_limit" property="dayWorshipLimit" jdbcType="INTEGER" />
+	    <result column="lowest_gold_piece" property="lowestGoldPiece" jdbcType="INTEGER" />
+	    <result column="highest_gold_piece" property="highestGoldPiece" jdbcType="INTEGER" />
+	    <result column="is_whole_media" property="isWholeMedia" jdbcType="INTEGER" />
+	    <result column="consume_chapter" property="consumeChapter" jdbcType="INTEGER" />
+	    <result column="discount" property="discount" jdbcType="INTEGER" />
+	    <result column="is_monthly_payment" property="isMonthlyPayment" jdbcType="INTEGER" />
+	    <result column="monthly_payment_type" property="monthlyPaymentType" jdbcType="VARCHAR" />
+	    <result column="monthly_buy_or_give" property="monthlyBuyOrGive" jdbcType="INTEGER" />
+	    <result column="monthly_payment_original_price" property="monthlyPaymentOriginalPrice" jdbcType="INTEGER" />
+	    <result column="monthly_payment_price" property="monthlyPaymentPrice" jdbcType="INTEGER" />
+	    <result column="monthly_payment_discount" property="monthlyPaymentDiscount" jdbcType="INTEGER" />
+	    <result column="monthly_payment_relation" property="monthlyPaymentRelation" jdbcType="VARCHAR" />
+	    <result column="monthly_buy_days" property="monthlyBuyDays" jdbcType="INTEGER" />
+	    <result column="monthly_give_days" property="monthlyGiveDays" jdbcType="INTEGER" />
+	    <result column="is_fixed_price" property="isFixedPrice" jdbcType="INTEGER" />
+	    <result column="fixed_price" property="fixedPrice" jdbcType="INTEGER" />
+	    <result column="prize_quantity" property="prizeQuantity" jdbcType="INTEGER" />
+	    <result column="prize_price" property="prizePrice" jdbcType="INTEGER" />
+	    <result column="deposit_money" property="depositMoney" jdbcType="INTEGER" />
+	    <result column="deposit_read_price" property="depositReadPrice" jdbcType="INTEGER" />
+	    <result column="deposit_gift_read_price" property="depositGiftReadPrice" jdbcType="INTEGER" />
+	    <result column="deposit_gift_gold_price" property="depositGiftGoldPrice" jdbcType="INTEGER" />
+	    <result column="relation_product_id" property="relationProductId" jdbcType="VARCHAR" />
+	    <result column="creator" property="creator" jdbcType="VARCHAR" />
+	    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+	    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+	    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="from_paltform" property="fromPaltform" jdbcType="VARCHAR" />
+	    <result column="deposit_code" property="depositCode" jdbcType="VARCHAR" />
+	  </resultMap>
+	  
+	  <sql id="Base_Where" >
+	    <if test="activityId != null" > and activity_id=#{activityId} </if>
+	    <if test="activityName != null" > and activity_name=#{activityName} </if>
+	    <if test="startTime != null" > and start_time=#{startTime} </if>
+	    <if test="endTime != null" > and end_time=#{endTime} </if>
+	    <if test="activityTypeId != null" > and activity_type_id=#{activityTypeId} </if>
+	    <if test="activityTypeCode != null" > and activity_type_code=#{activityTypeCode} </if>
+	    <if test="isFirstDeposit != null" > and is_first_deposit=#{isFirstDeposit} </if>
+	    <if test="isPreviousNumber != null" > and is_previous_number=#{isPreviousNumber} </if>
+	    <if test="giveScale != null" > and give_scale=#{giveScale} </if>
+	    <if test="consumeSatisfy != null" > and consume_satisfy=#{consumeSatisfy} </if>
+	    <if test="originalLevel != null" > and original_level=#{originalLevel} </if>
+	    <if test="newLevel != null" > and new_level=#{newLevel} </if>
+	    <if test="giveGoldPiece != null" > and give_gold_piece=#{giveGoldPiece} </if>
+	    <if test="dayWorshipLimit != null" > and day_worship_limit=#{dayWorshipLimit} </if>
+	    <if test="lowestGoldPiece != null" > and lowest_gold_piece=#{lowestGoldPiece} </if>
+	    <if test="highestGoldPiece != null" > and highest_gold_piece=#{highestGoldPiece} </if>
+	    <if test="isWholeMedia != null" > and is_whole_media=#{isWholeMedia} </if>
+	    <if test="consumeChapter != null" > and consume_chapter=#{consumeChapter} </if>
+	    <if test="discount != null" > and discount=#{discount} </if>
+	    <if test="isMonthlyPayment != null" > and is_monthly_payment=#{isMonthlyPayment} </if>
+	    <if test="monthlyPaymentType != null" > and monthly_payment_type=#{monthlyPaymentType} </if>
+	    <if test="monthlyBuyOrGive != null" > and monthly_buy_or_give=#{monthlyBuyOrGive} </if>
+	    <if test="monthlyPaymentOriginalPrice != null" > and monthly_payment_original_price=#{monthlyPaymentOriginalPrice} </if>
+	    <if test="monthlyPaymentPrice != null" > and monthly_payment_price=#{monthlyPaymentPrice} </if>
+	    <if test="monthlyPaymentDiscount != null" > and monthly_payment_discount=#{monthlyPaymentDiscount} </if>
+	    <if test="monthlyPaymentRelation != null" > and monthly_payment_relation=#{monthlyPaymentRelation} </if>
+	    <if test="monthlyBuyDays != null" > and monthly_buy_days=#{monthlyBuyDays} </if>
+	    <if test="monthlyGiveDays != null" > and monthly_give_days=#{monthlyGiveDays} </if>
+	    <if test="isFixedPrice != null" > and is_fixed_price=#{isFixedPrice} </if>
+	    <if test="fixedPrice != null" > and fixed_price=#{fixedPrice} </if>
+	    <if test="prizeQuantity != null" > and prize_quantity=#{prizeQuantity} </if>
+	    <if test="prizePrice != null" > and prize_price=#{prizePrice} </if>
+	    <if test="depositMoney != null" > and deposit_money=#{depositMoney} </if>
+	    <if test="depositReadPrice != null" > and deposit_read_price=#{depositReadPrice} </if>
+	    <if test="depositGiftReadPrice != null" > and deposit_gift_read_price=#{depositGiftReadPrice} </if>
+	    <if test="depositGiftGoldPrice != null" > and deposit_gift_gold_price=#{depositGiftGoldPrice} </if>
+	    <if test="relationProductId != null" > and relation_product_id=#{relationProductId} </if>
+	    <if test="creator != null" > and creator=#{creator} </if>
+	    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+	    <if test="modifier != null" > and modifier=#{modifier} </if>
+	    <if test="depositCode != null" > and deposit_code=#{depositCode} </if>
+	    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+	    <if test="status != null" > and status=#{status} </if>
+	    <if test="withinPeriodValidity != null" > <![CDATA[ and now()>start_time and now()<end_time]]> </if>
+	    <if test="fromPaltform != null and fromPaltform != '' and fromPaltform != 'yc_android' "> and from_paltform=#{fromPaltform} </if>
+		<if test="fromPaltform != null and fromPaltform != '' and fromPaltform == 'yc_android' "> and (from_paltform=#{fromPaltform} or from_paltform is null) </if>
+	  </sql>
+	  
+	  <sql id="Base_Column_List" >
+	    activity_id, activity_name, start_time, end_time, activity_type_id, activity_type_code, 
+	    is_first_deposit, is_previous_number, give_scale, consume_satisfy, original_level, 
+	    new_level, give_gold_piece, day_worship_limit, lowest_gold_piece, highest_gold_piece, 
+	    is_whole_media, consume_chapter, discount, is_monthly_payment, monthly_payment_type, 
+	    monthly_buy_or_give, monthly_payment_original_price, monthly_payment_price, monthly_payment_discount, 
+	    monthly_payment_relation, monthly_buy_days, monthly_give_days, is_fixed_price, fixed_price, 
+	    prize_quantity, prize_price, deposit_money, deposit_read_price, deposit_gift_read_price, 
+	    relation_product_id, creator, creation_date, modifier, last_changed_date, status,from_paltform,deposit_gift_gold_price,deposit_code
+	  </sql>
+	  
+	  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from media_activity_info
+	    where activity_id = #{activityId,jdbcType=INTEGER}
+	  </select>
+	  
+	  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	    delete from media_activity_info
+	    where activity_id = #{activityId,jdbcType=INTEGER}
+	  </delete>
+	  
+	  <insert id="insert" parameterType="com.dangdang.digital.model.ActivityInfo" useGeneratedKeys="true" keyProperty="activityId">
+	    insert into media_activity_info (activity_id, activity_name, start_time, 
+	      end_time, activity_type_id, activity_type_code, 
+	      is_first_deposit, is_previous_number, give_scale, 
+	      consume_satisfy, original_level, new_level, 
+	      give_gold_piece, day_worship_limit, lowest_gold_piece, 
+	      highest_gold_piece, is_whole_media, consume_chapter, 
+	      discount, is_monthly_payment, monthly_payment_type, 
+	      monthly_buy_or_give, monthly_payment_original_price, 
+	      monthly_payment_price, monthly_payment_discount, 
+	      monthly_payment_relation, monthly_buy_days, 
+	      monthly_give_days, is_fixed_price, fixed_price, 
+	      prize_quantity, prize_price, deposit_money, 
+	      deposit_read_price, deposit_gift_read_price, 
+	      relation_product_id, creator, creation_date, 
+	      modifier, last_changed_date, status,from_paltform,deposit_gift_gold_price,deposit_code
+	      )
+	    values (#{activityId,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+	      #{endTime,jdbcType=TIMESTAMP}, #{activityTypeId,jdbcType=INTEGER}, #{activityTypeCode,jdbcType=VARCHAR}, 
+	      #{isFirstDeposit,jdbcType=INTEGER}, #{isPreviousNumber,jdbcType=INTEGER}, #{giveScale,jdbcType=INTEGER}, 
+	      #{consumeSatisfy,jdbcType=INTEGER}, #{originalLevel,jdbcType=VARCHAR}, #{newLevel,jdbcType=VARCHAR}, 
+	      #{giveGoldPiece,jdbcType=INTEGER}, #{dayWorshipLimit,jdbcType=INTEGER}, #{lowestGoldPiece,jdbcType=INTEGER}, 
+	      #{highestGoldPiece,jdbcType=INTEGER}, #{isWholeMedia,jdbcType=INTEGER}, #{consumeChapter,jdbcType=INTEGER}, 
+	      #{discount,jdbcType=INTEGER}, #{isMonthlyPayment,jdbcType=INTEGER}, #{monthlyPaymentType,jdbcType=VARCHAR}, 
+	      #{monthlyBuyOrGive,jdbcType=INTEGER}, #{monthlyPaymentOriginalPrice,jdbcType=INTEGER}, 
+	      #{monthlyPaymentPrice,jdbcType=INTEGER}, #{monthlyPaymentDiscount,jdbcType=INTEGER}, 
+	      #{monthlyPaymentRelation,jdbcType=VARCHAR}, #{monthlyBuyDays,jdbcType=INTEGER}, 
+	      #{monthlyGiveDays,jdbcType=INTEGER}, #{isFixedPrice,jdbcType=INTEGER}, #{fixedPrice,jdbcType=INTEGER}, 
+	      #{prizeQuantity,jdbcType=INTEGER}, #{prizePrice,jdbcType=INTEGER}, #{depositMoney,jdbcType=INTEGER}, 
+	      #{depositReadPrice,jdbcType=INTEGER}, #{depositGiftReadPrice,jdbcType=INTEGER}, 
+	      #{relationProductId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+	      #{modifier,jdbcType=VARCHAR}, #{lastChangedDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},#{fromPaltform,jdbcType=VARCHAR}, #{depositGiftGoldPrice,jdbcType=INTEGER},#{depositCode,jdbcType=VARCHAR}
+	      )
+	  </insert>
+	  
+	  <insert id="insertSelective" parameterType="com.dangdang.digital.model.ActivityInfo" useGeneratedKeys="true" keyProperty="activityId">
+	    insert into media_activity_info
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="activityId != null" >
+	        activity_id,
+	      </if>
+	      <if test="activityName != null" >
+	        activity_name,
+	      </if>
+	      <if test="startTime != null" >
+	        start_time,
+	      </if>
+	      <if test="endTime != null" >
+	        end_time,
+	      </if>
+	      <if test="activityTypeId != null" >
+	        activity_type_id,
+	      </if>
+	      <if test="activityTypeCode != null" >
+	        activity_type_code,
+	      </if>
+	      <if test="isFirstDeposit != null" >
+	        is_first_deposit,
+	      </if>
+	      <if test="isPreviousNumber != null" >
+	        is_previous_number,
+	      </if>
+	      <if test="giveScale != null" >
+	        give_scale,
+	      </if>
+	      <if test="consumeSatisfy != null" >
+	        consume_satisfy,
+	      </if>
+	      <if test="originalLevel != null" >
+	        original_level,
+	      </if>
+	      <if test="newLevel != null" >
+	        new_level,
+	      </if>
+	      <if test="giveGoldPiece != null" >
+	        give_gold_piece,
+	      </if>
+	      <if test="dayWorshipLimit != null" >
+	        day_worship_limit,
+	      </if>
+	      <if test="lowestGoldPiece != null" >
+	        lowest_gold_piece,
+	      </if>
+	      <if test="highestGoldPiece != null" >
+	        highest_gold_piece,
+	      </if>
+	      <if test="isWholeMedia != null" >
+	        is_whole_media,
+	      </if>
+	      <if test="consumeChapter != null" >
+	        consume_chapter,
+	      </if>
+	      <if test="discount != null" >
+	        discount,
+	      </if>
+	      <if test="isMonthlyPayment != null" >
+	        is_monthly_payment,
+	      </if>
+	      <if test="monthlyPaymentType != null" >
+	        monthly_payment_type,
+	      </if>
+	      <if test="monthlyBuyOrGive != null" >
+	        monthly_buy_or_give,
+	      </if>
+	      <if test="monthlyPaymentOriginalPrice != null" >
+	        monthly_payment_original_price,
+	      </if>
+	      <if test="monthlyPaymentPrice != null" >
+	        monthly_payment_price,
+	      </if>
+	      <if test="monthlyPaymentDiscount != null" >
+	        monthly_payment_discount,
+	      </if>
+	      <if test="monthlyPaymentRelation != null" >
+	        monthly_payment_relation,
+	      </if>
+	      <if test="monthlyBuyDays != null" >
+	        monthly_buy_days,
+	      </if>
+	      <if test="monthlyGiveDays != null" >
+	        monthly_give_days,
+	      </if>
+	      <if test="isFixedPrice != null" >
+	        is_fixed_price,
+	      </if>
+	      <if test="fixedPrice != null" >
+	        fixed_price,
+	      </if>
+	      <if test="prizeQuantity != null" >
+	        prize_quantity,
+	      </if>
+	      <if test="prizePrice != null" >
+	        prize_price,
+	      </if>
+	      <if test="depositMoney != null" >
+	        deposit_money,
+	      </if>
+	      <if test="depositReadPrice != null" >
+	        deposit_read_price,
+	      </if>
+	      <if test="depositGiftReadPrice != null" >
+	        deposit_gift_read_price,
+	      </if>
+	      <if test="depositGiftGoldPrice != null" >
+	        deposit_gift_gold_price,
+	      </if>
+	      <if test="relationProductId != null" >
+	        relation_product_id,
+	      </if>
+	      <if test="creator != null" >
+	        creator,
+	      </if>
+	      <if test="creationDate != null" >
+	        creation_date,
+	      </if>
+	      <if test="modifier != null" >
+	        modifier,
+	      </if>
+	      <if test="lastChangedDate != null" >
+	        last_changed_date,
+	      </if>
+	      <if test="status != null" >
+	        status,
+	      </if>
+	       <if test="fromPaltform != null and fromPaltform != '' "> from_paltform, </if>
+	       <if test="depositCode != null and depositCode != '' "> deposit_code</if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="activityId != null" >
+	        #{activityId,jdbcType=INTEGER},
+	      </if>
+	      <if test="activityName != null" >
+	        #{activityName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="startTime != null" >
+	        #{startTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="endTime != null" >
+	        #{endTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="activityTypeId != null" >
+	        #{activityTypeId,jdbcType=INTEGER},
+	      </if>
+	      <if test="activityTypeCode != null" >
+	        #{activityTypeCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="isFirstDeposit != null" >
+	        #{isFirstDeposit,jdbcType=INTEGER},
+	      </if>
+	      <if test="isPreviousNumber != null" >
+	        #{isPreviousNumber,jdbcType=INTEGER},
+	      </if>
+	      <if test="giveScale != null" >
+	        #{giveScale,jdbcType=INTEGER},
+	      </if>
+	      <if test="consumeSatisfy != null" >
+	        #{consumeSatisfy,jdbcType=INTEGER},
+	      </if>
+	      <if test="originalLevel != null" >
+	        #{originalLevel,jdbcType=VARCHAR},
+	      </if>
+	      <if test="newLevel != null" >
+	        #{newLevel,jdbcType=VARCHAR},
+	      </if>
+	      <if test="giveGoldPiece != null" >
+	        #{giveGoldPiece,jdbcType=INTEGER},
+	      </if>
+	      <if test="dayWorshipLimit != null" >
+	        #{dayWorshipLimit,jdbcType=INTEGER},
+	      </if>
+	      <if test="lowestGoldPiece != null" >
+	        #{lowestGoldPiece,jdbcType=INTEGER},
+	      </if>
+	      <if test="highestGoldPiece != null" >
+	        #{highestGoldPiece,jdbcType=INTEGER},
+	      </if>
+	      <if test="isWholeMedia != null" >
+	        #{isWholeMedia,jdbcType=INTEGER},
+	      </if>
+	      <if test="consumeChapter != null" >
+	        #{consumeChapter,jdbcType=INTEGER},
+	      </if>
+	      <if test="discount != null" >
+	        #{discount,jdbcType=INTEGER},
+	      </if>
+	      <if test="isMonthlyPayment != null" >
+	        #{isMonthlyPayment,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyPaymentType != null" >
+	        #{monthlyPaymentType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="monthlyBuyOrGive != null" >
+	        #{monthlyBuyOrGive,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyPaymentOriginalPrice != null" >
+	        #{monthlyPaymentOriginalPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyPaymentPrice != null" >
+	        #{monthlyPaymentPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyPaymentDiscount != null" >
+	        #{monthlyPaymentDiscount,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyPaymentRelation != null" >
+	        #{monthlyPaymentRelation,jdbcType=VARCHAR},
+	      </if>
+	      <if test="monthlyBuyDays != null" >
+	        #{monthlyBuyDays,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyGiveDays != null" >
+	        #{monthlyGiveDays,jdbcType=INTEGER},
+	      </if>
+	      <if test="isFixedPrice != null" >
+	        #{isFixedPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="fixedPrice != null" >
+	        #{fixedPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="prizeQuantity != null" >
+	        #{prizeQuantity,jdbcType=INTEGER},
+	      </if>
+	      <if test="prizePrice != null" >
+	        #{prizePrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="depositMoney != null" >
+	        #{depositMoney,jdbcType=INTEGER},
+	      </if>
+	      <if test="depositReadPrice != null" >
+	        #{depositReadPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="depositGiftReadPrice != null" >
+	        #{depositGiftReadPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="depositGiftGoldPrice != null" >
+	        #{depositGiftGoldPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="relationProductId != null" >
+	        #{relationProductId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="creator != null" >
+	        #{creator,jdbcType=VARCHAR},
+	      </if>
+	      <if test="creationDate != null" >
+	        #{creationDate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="modifier != null" >
+	        #{modifier,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lastChangedDate != null" >
+	        #{lastChangedDate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="status != null" >
+	        #{status,jdbcType=INTEGER},
+	      </if>
+	      <if test="fromPaltform != null and fromPaltform != '' "> #{fromPaltform,jdbcType=VARCHAR}, </if>
+	      <if test="depositCode != null and depositCode != '' "> #{depositCode,jdbcType=VARCHAR}</if>
+	    </trim>
+	  </insert>
+	  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ActivityInfo" >
+	    update media_activity_info
+	    <set >
+	      <if test="activityName != null" >
+	        activity_name = #{activityName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="startTime != null" >
+	        start_time = #{startTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="endTime != null" >
+	        end_time = #{endTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="activityTypeId != null" >
+	        activity_type_id = #{activityTypeId,jdbcType=INTEGER},
+	      </if>
+	      <if test="activityTypeCode != null" >
+	        activity_type_code = #{activityTypeCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="isFirstDeposit != null" >
+	        is_first_deposit = #{isFirstDeposit,jdbcType=INTEGER},
+	      </if>
+	      <if test="isPreviousNumber != null" >
+	        is_previous_number = #{isPreviousNumber,jdbcType=INTEGER},
+	      </if>
+	      <if test="giveScale != null" >
+	        give_scale = #{giveScale,jdbcType=INTEGER},
+	      </if>
+	      <if test="consumeSatisfy != null" >
+	        consume_satisfy = #{consumeSatisfy,jdbcType=INTEGER},
+	      </if>
+	      <if test="originalLevel != null" >
+	        original_level = #{originalLevel,jdbcType=VARCHAR},
+	      </if>
+	      <if test="newLevel != null" >
+	        new_level = #{newLevel,jdbcType=VARCHAR},
+	      </if>
+	      <if test="giveGoldPiece != null" >
+	        give_gold_piece = #{giveGoldPiece,jdbcType=INTEGER},
+	      </if>
+	      <if test="dayWorshipLimit != null" >
+	        day_worship_limit = #{dayWorshipLimit,jdbcType=INTEGER},
+	      </if>
+	      <if test="lowestGoldPiece != null" >
+	        lowest_gold_piece = #{lowestGoldPiece,jdbcType=INTEGER},
+	      </if>
+	      <if test="highestGoldPiece != null" >
+	        highest_gold_piece = #{highestGoldPiece,jdbcType=INTEGER},
+	      </if>
+	      <if test="isWholeMedia != null" >
+	        is_whole_media = #{isWholeMedia,jdbcType=INTEGER},
+	      </if>
+	      <if test="consumeChapter != null" >
+	        consume_chapter = #{consumeChapter,jdbcType=INTEGER},
+	      </if>
+	      <if test="discount != null" >
+	        discount = #{discount,jdbcType=INTEGER},
+	      </if>
+	      <if test="isMonthlyPayment != null" >
+	        is_monthly_payment = #{isMonthlyPayment,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyPaymentType != null" >
+	        monthly_payment_type = #{monthlyPaymentType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="monthlyBuyOrGive != null" >
+	        monthly_buy_or_give = #{monthlyBuyOrGive,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyPaymentOriginalPrice != null" >
+	        monthly_payment_original_price = #{monthlyPaymentOriginalPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyPaymentPrice != null" >
+	        monthly_payment_price = #{monthlyPaymentPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyPaymentDiscount != null" >
+	        monthly_payment_discount = #{monthlyPaymentDiscount,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyPaymentRelation != null" >
+	        monthly_payment_relation = #{monthlyPaymentRelation,jdbcType=VARCHAR},
+	      </if>
+	      <if test="monthlyBuyDays != null" >
+	        monthly_buy_days = #{monthlyBuyDays,jdbcType=INTEGER},
+	      </if>
+	      <if test="monthlyGiveDays != null" >
+	        monthly_give_days = #{monthlyGiveDays,jdbcType=INTEGER},
+	      </if>
+	      <if test="isFixedPrice != null" >
+	        is_fixed_price = #{isFixedPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="fixedPrice != null" >
+	        fixed_price = #{fixedPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="prizeQuantity != null" >
+	        prize_quantity = #{prizeQuantity,jdbcType=INTEGER},
+	      </if>
+	      <if test="prizePrice != null" >
+	        prize_price = #{prizePrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="depositMoney != null" >
+	        deposit_money = #{depositMoney,jdbcType=INTEGER},
+	      </if>
+	      <if test="depositReadPrice != null" >
+	        deposit_read_price = #{depositReadPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="depositGiftReadPrice != null" >
+	        deposit_gift_read_price = #{depositGiftReadPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="depositGiftGoldPrice != null" >
+	        deposit_gift_gold_price = #{depositGiftGoldPrice,jdbcType=INTEGER},
+	      </if>
+	      <if test="relationProductId != null" >
+	        relation_product_id = #{relationProductId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="creator != null" >
+	        creator = #{creator,jdbcType=VARCHAR},
+	      </if>
+	      <if test="creationDate != null" >
+	        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="modifier != null" >
+	        modifier = #{modifier,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lastChangedDate != null" >
+	        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="status != null" >
+	        status = #{status,jdbcType=INTEGER},
+	      </if>
+	      <if test="fromPaltform != null and fromPaltform != '' "> from_paltform = #{fromPaltform,jdbcType=VARCHAR}, </if>
+	      <if test="depositCode != null and depositCode != '' "> deposit_code = #{depositCode,jdbcType=VARCHAR}</if>
+	    </set>
+	    where activity_id = #{activityId,jdbcType=INTEGER}
+	  </update>
+	  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.ActivityInfo" >
+	    update media_activity_info
+	    set activity_name = #{activityName,jdbcType=VARCHAR},
+	      start_time = #{startTime,jdbcType=TIMESTAMP},
+	      end_time = #{endTime,jdbcType=TIMESTAMP},
+	      activity_type_id = #{activityTypeId,jdbcType=INTEGER},
+	      activity_type_code = #{activityTypeCode,jdbcType=VARCHAR},
+	      is_first_deposit = #{isFirstDeposit,jdbcType=INTEGER},
+	      is_previous_number = #{isPreviousNumber,jdbcType=INTEGER},
+	      give_scale = #{giveScale,jdbcType=INTEGER},
+	      consume_satisfy = #{consumeSatisfy,jdbcType=INTEGER},
+	      original_level = #{originalLevel,jdbcType=VARCHAR},
+	      new_level = #{newLevel,jdbcType=VARCHAR},
+	      give_gold_piece = #{giveGoldPiece,jdbcType=INTEGER},
+	      day_worship_limit = #{dayWorshipLimit,jdbcType=INTEGER},
+	      lowest_gold_piece = #{lowestGoldPiece,jdbcType=INTEGER},
+	      highest_gold_piece = #{highestGoldPiece,jdbcType=INTEGER},
+	      is_whole_media = #{isWholeMedia,jdbcType=INTEGER},
+	      consume_chapter = #{consumeChapter,jdbcType=INTEGER},
+	      discount = #{discount,jdbcType=INTEGER},
+	      is_monthly_payment = #{isMonthlyPayment,jdbcType=INTEGER},
+	      monthly_payment_type = #{monthlyPaymentType,jdbcType=VARCHAR},
+	      monthly_buy_or_give = #{monthlyBuyOrGive,jdbcType=INTEGER},
+	      monthly_payment_original_price = #{monthlyPaymentOriginalPrice,jdbcType=INTEGER},
+	      monthly_payment_price = #{monthlyPaymentPrice,jdbcType=INTEGER},
+	      monthly_payment_discount = #{monthlyPaymentDiscount,jdbcType=INTEGER},
+	      monthly_payment_relation = #{monthlyPaymentRelation,jdbcType=VARCHAR},
+	      monthly_buy_days = #{monthlyBuyDays,jdbcType=INTEGER},
+	      monthly_give_days = #{monthlyGiveDays,jdbcType=INTEGER},
+	      is_fixed_price = #{isFixedPrice,jdbcType=INTEGER},
+	      fixed_price = #{fixedPrice,jdbcType=INTEGER},
+	      prize_quantity = #{prizeQuantity,jdbcType=INTEGER},
+	      prize_price = #{prizePrice,jdbcType=INTEGER},
+	      deposit_money = #{depositMoney,jdbcType=INTEGER},
+	      deposit_read_price = #{depositReadPrice,jdbcType=INTEGER},
+	      deposit_gold_price = #{depositGoldPrice,jdbcType=INTEGER},
+	      deposit_gift_read_price = #{depositGiftReadPrice,jdbcType=INTEGER},
+	      relation_product_id = #{relationProductId,jdbcType=VARCHAR},
+	      creator = #{creator,jdbcType=VARCHAR},
+	      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+	      modifier = #{modifier,jdbcType=VARCHAR},
+	      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+	      status = #{status,jdbcType=INTEGER},
+	      from_paltform = #{fromPaltform,jdbcType=VARCHAR},
+	      deposit_code = #{depositCode,jdbcType=VARCHAR}
+	    where activity_id = #{activityId,jdbcType=INTEGER}
+	  </update>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from media_activity_info
+	    where activity_id in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>  
+	  
+	  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+	    select <include refid="Base_Column_List" /> from media_activity_info where 1=1 <include refid="Base_Where" />
+	    	<if test="orderBy != null" >
+	        	order by ${orderBy}
+	        </if>
+	  </select>
+	  
+	  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+	    select count(1) from media_activity_info where 1=1 <include refid="Base_Where" />
+	  </select>
+	  
+	  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+	    select <include refid="Base_Column_List" /> from media_activity_info where 1=1 <include refid="Base_Where" />
+	  </select>
+	
+	  <select id="queryRelationProductId" resultType="java.lang.String" parameterType="map">
+		select relation_product_id from media_activity_info where activity_type_id
+		in (${activityTypeIds});
+	  </select>
+	<select id="getMonthlyForBuyView" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from media_activity_info where activity_type_id=1005 AND NOW() BETWEEN start_time AND end_time  AND status=1 AND monthly_buy_or_give=0
+	</select>
+	
+	 <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from media_activity_info
+	    where activity_type_code = #{activityTypeCode,jdbcType=VARCHAR}
+	  </select>
+	  
+	  <select id="getDepositPayInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	    select * from media_activity_info where <![CDATA[ now()>start_time and now()<end_time]]>  and status=1 and from_paltform = #{from_paltform,jdbcType=VARCHAR} AND activity_type_id IN(1014,1015,1016,1017,1018) GROUP BY deposit_money ORDER BY deposit_money
+	  </select>
+	  
+	  <select id="getDepositRelationProduct" resultType="java.lang.String" parameterType="map">
+		select relation_product_id from media_activity_info where relation_product_id
+		in (${productIds});
+	  </select>
+</mapper>

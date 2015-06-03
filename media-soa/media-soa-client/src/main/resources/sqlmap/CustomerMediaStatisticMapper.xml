@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CustomerMediaStatisticMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.CustomerMediaStatistic" >
+    <id column="customer_media_statistic_id" property="customerMediaStatisticId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="relation_type" property="relationType" jdbcType="TINYINT" />
+    <result column="relation_date" property="relationDate" jdbcType="TIMESTAMP" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="customerMediaStatisticId != null" > and customer_media_statistic_id=#{customerMediaStatisticId} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="relationType != null" > and relation_type=#{relationType} </if>
+    <if test="relationDate != null" > and relation_date=#{relationDate} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    customer_media_statistic_id, cust_id, media_id, relation_type, relation_date, 
+    creation_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_customer_media_statistic
+    where customer_media_statistic_id = #{customerMediaStatisticId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_customer_media_statistic
+    where customer_media_statistic_id = #{customerMediaStatisticId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.CustomerMediaStatistic" useGeneratedKeys="true" keyProperty="customerMediaStatisticId" >
+    insert into media_customer_media_statistic (customer_media_statistic_id, cust_id, media_id, 
+      relation_type, relation_date, 
+      creation_date)
+    values (#{customerMediaStatisticId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, 
+      #{relationType,jdbcType=TINYINT}, #{relationDate,jdbcType=TIMESTAMP}, 
+      #{creationDate,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <insert id="insertBatch" parameterType="java.util.List">
+  	 insert into media_customer_media_statistic (customer_media_statistic_id, cust_id, media_id, 
+      relation_type, relation_date, 
+      creation_date) values
+  	<foreach collection="list" item="item" index="index" separator=",">
+  		( #{item.customerMediaStatisticId}, #{item.custId}, #{item.mediaId}, 
+      #{item.relationType}, #{item.relationDate}, 
+      #{item.creationDate} )
+  	</foreach>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.CustomerMediaStatistic" useGeneratedKeys="true" keyProperty="customerMediaStatisticId" >
+    insert into media_customer_media_statistic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerMediaStatisticId != null" >
+        customer_media_statistic_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="relationType != null" >
+        relation_type,
+      </if>
+      <if test="relationDate != null" >
+        relation_date,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerMediaStatisticId != null" >
+        #{customerMediaStatisticId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="relationType != null" >
+        #{relationType,jdbcType=TINYINT},
+      </if>
+      <if test="relationDate != null" >
+        #{relationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.CustomerMediaStatistic" >
+    update media_customer_media_statistic
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="relationType != null" >
+        relation_type = #{relationType,jdbcType=TINYINT},
+      </if>
+      <if test="relationDate != null" >
+        relation_date = #{relationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where customer_media_statistic_id = #{customerMediaStatisticId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.CustomerMediaStatistic" >
+    update media_customer_media_statistic
+    set cust_id = #{custId,jdbcType=BIGINT},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      relation_type = #{relationType,jdbcType=TINYINT},
+      relation_date = #{relationDate,jdbcType=TIMESTAMP},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where customer_media_statistic_id = #{customerMediaStatisticId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_media_statistic where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_customer_media_statistic where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_customer_media_statistic where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="getCustomerList" resultType="java.lang.Long" parameterType="map" >
+		select distinct cust_id from media_customer_media_statistic t where t.relation_type=#{relationType, jdbcType=TINYINT} 
+		 	and (t.relation_date &gt; #{startTime, jdbcType=TIMESTAMP} and t.relation_date &lt;= #{toTime, jdbcType=TIMESTAMP}) 
+  				order by t.customer_media_statistic_id asc
+  </select>
+  
+  <select id="getListByTime" resultMap="BaseResultMap" parameterType="map" >
+  	select <include refid="Base_Column_List" /> from media_customer_media_statistic t where 1=1 <include refid="Base_Where" /> 
+  		and (t.relation_date &gt; #{startTime, jdbcType=TIMESTAMP} and t.relation_date &lt;= #{toTime, jdbcType=TIMESTAMP}) 
+  </select>
+  
+  <select id="getCustomerMediaList" resultType="java.lang.Long" parameterType="map" >
+		select distinct media_id from media_customer_media_statistic t where 1=1 <include refid="Base_Where" />  
+		 	and (t.relation_date &gt; #{startTime, jdbcType=TIMESTAMP} and t.relation_date &lt;= #{toTime, jdbcType=TIMESTAMP}) 
+  				order by t.customer_media_statistic_id desc
+  </select>
+  
+  <select id="getMaxId" resultType="java.lang.Long" parameterType="map" >
+		select max(customer_media_statistic_id) from media_customer_media_statistic t where t.relation_type=#{relationType, jdbcType=TINYINT} 
+		 	and (t.relation_date &gt; #{startTime, jdbcType=TIMESTAMP} and t.relation_date &lt;= #{toTime, jdbcType=TIMESTAMP})  			
+  </select>
+  
+</mapper>

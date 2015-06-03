@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="defaultStatementTimeout" value="25000" />
+	</settings>
+	<!-- 配置别名 -->
+	<typeAliases>  
+        <typeAlias alias="Test" type="com.dangdang.digital.model.Test"/>
+        <typeAlias alias="Label" type="com.dangdang.digital.model.Label"/>
+        <typeAlias type="com.dangdang.digital.model.IllWord" alias="IllWord"/>
+        <typeAlias type="com.dangdang.digital.model.IllegalMedia" alias="IllegalMedia"/>
+        <typeAlias type="com.dangdang.digital.model.Column" alias="Column"/>
+        <typeAlias type="com.dangdang.digital.model.ColumnContent" alias="ColumnContent"/>
+        <typeAlias type="com.dangdang.digital.model.SysProperties" alias="SysProperties"/>
+        <typeAlias type="com.dangdang.digital.model.CpContract" alias="CpContract"/>
+        <typeAlias type="com.dangdang.digital.model.ContentProvider" alias="ContentProvider"/>
+        <typeAlias type="com.dangdang.digital.model.ListCategory" alias="ListCategory"/>
+        
+        <typeAlias type="com.dangdang.digital.model.Catetory" alias="Catetory"/>
+        <typeAlias type="com.dangdang.digital.model.ActivitySale" alias="ActivitySale"/>
+        <typeAlias type="com.dangdang.digital.model.ActivityInfo" alias="ActivityInfo"/>
+        <typeAlias type="com.dangdang.digital.model.ActivityType" alias="ActivityType"/>
+        
+        <typeAlias alias="RankConsToBook" type="com.dangdang.digital.model.RankConsToBook"/>
+        <typeAlias alias="ActivityUser" type="com.dangdang.digital.model.ActivityUser"/>
+        <typeAlias alias="Prize" type="com.dangdang.digital.model.Prize"/>
+        <typeAlias alias="Block" type="com.dangdang.digital.model.Block"/>
+        <typeAlias alias="BlockGroup" type="com.dangdang.digital.model.BlockGroup"/>
+        <typeAlias alias="SpecialTopic" type="com.dangdang.digital.model.SpecialTopic"/>
+        
+        <typeAlias alias="SysProperties" type="com.dangdang.digital.model.SysProperties"/>
+        <typeAlias alias="ActivityRecord" type="com.dangdang.digital.model.ActivityRecord"/>
+        <typeAlias alias="GoodArticleSign" type="com.dangdang.digital.model.GoodArticleSign"/>
+        
+        <typeAlias alias="searchAssociate" type="com.dangdang.digital.model.SearchAssociate"/>
+        
+        <typeAlias alias="EpubImage" type="com.dangdang.digital.model.EpubImage"/> 
+        <typeAlias alias="EpubImport" type="com.dangdang.digital.model.EpubImport"/>
+        <typeAlias alias="Digest" type="com.dangdang.digital.model.Digest"/>
+        <typeAlias alias="DigestLable" type="com.dangdang.digital.model.DigestLable"/>
+        <typeAlias alias="BookAuthor" type="com.dangdang.digital.model.BookAuthor"/>
+        
+        <typeAlias alias="userEbook" type="com.dangdang.digital.model.UserEbook"/>
+        <typeAlias alias="userDevice" type="com.dangdang.digital.model.UserDevice"/>
+    </typeAliases>
+    
+    <plugins>
+		<plugin interceptor="com.ibatis3.dialect.OffsetLimitInterceptor">
+			<property name="dialectClass"  value="com.ibatis3.dialect.MySQLDialect" />
+		</plugin>
+	</plugins>
+	
+</configuration>

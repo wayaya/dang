@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserBehaviorMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.UserBehavior">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="saleId" property="saleId" jdbcType="BIGINT" />
+		<result column="mediaId" property="mediaId" jdbcType="BIGINT" />
+		<result column="behavior_type" property="behaviorType" jdbcType="VARCHAR" />
+		<result column="times" property="times" jdbcType="INTEGER" />
+		<result column="custId" property="custId" jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="platform" property="platform" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="id != null"> and id= #{id}</if>
+		<if test="saleId != null"> and saleId= #{saleId}</if>
+		<if test="mediaId != null"> and mediaId= #{mediaId}</if>
+		<if test="behaviorType != null"> and behavior_type= #{behaviorType}</if>
+		<if test="times != null"> and times= #{times}</if>
+		<if test="custId != null"> and custId= #{custId}</if>
+		<if test="createTime != null"> and create_time= #{createTime}</if>
+		<if test="platform != null"> and platform= #{platform}</if>
+	</sql>
+	<sql id="Base_Column_List">
+		id ,
+		saleId ,
+		mediaId ,
+		behavior_type ,
+		times ,
+		custId ,
+		create_time ,
+		platform
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from media_user_behavior
+		where
+		id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from media_user_behavior
+		where
+		id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insert" parameterType="com.dangdang.digital.model.UserBehavior">
+		insert into media_user_behavior (
+		id ,
+		saleId ,
+		mediaId ,
+		behavior_type ,
+		times ,
+		custId ,
+		create_time ,
+		platform
+		)
+		values (
+		#{id,jdbcType=BIGINT},
+		#{saleId,jdbcType=BIGINT},
+		#{mediaId,jdbcType=BIGINT},
+		#{behaviorType,jdbcType=VARCHAR},
+		#{times,jdbcType=INTEGER},
+		#{custId,jdbcType=BIGINT},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{platform,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.UserBehavior">
+		insert into media_user_behavior
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="saleId != null">saleId,</if>
+			<if test="mediaId != null">mediaId,</if>
+			<if test="behaviorType != null">behavior_type,</if>
+			<if test="times != null">times,</if>
+			<if test="custId != null">custId,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="platform != null">platform</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="saleId != null">
+				#{saleId,jdbcType=BIGINT},
+			</if>
+			<if test="mediaId != null">
+				#{mediaId,jdbcType=BIGINT},
+			</if>
+			<if test="behaviorType != null">
+				#{behaviorType,jdbcType=VARCHAR},
+			</if>
+			<if test="times != null">
+				#{times,jdbcType=INTEGER},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="platform != null">
+				#{platform,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.UserBehavior">
+		update media_user_behavior
+		<set>
+			<if test="saleId != null">
+				#{saleId,jdbcType=BIGINT},
+			</if>
+			<if test="mediaId != null">
+				#{mediaId,jdbcType=BIGINT},
+			</if>
+			<if test="behaviorType != null">
+				#{behavior_type,jdbcType=VARCHAR},
+			</if>
+			<if test="times != null">
+				#{times,jdbcType=INTEGER},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{create_time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="platform != null">
+				#{platform,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.UserBehavior">
+		update media_user_behavior
+		set
+		saleId= #{saleId,jdbcType=BIGINT},
+		mediaId= #{mediaId,jdbcType=BIGINT},
+		behavior_type= #{behaviorType,jdbcType=VARCHAR},
+		times= #{times,jdbcType=INTEGER},
+		custId= #{custId,jdbcType=BIGINT},
+		create_time= #{createTime,jdbcType=TIMESTAMP},
+		platform= #{platform,jdbcType=VARCHAR},
+		where
+		id = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_user_behavior where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from media_user_behavior where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_user_behavior where 1=1
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from media_user_behavior where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

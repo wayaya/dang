@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ColumnMapper" >
+  <resultMap id="BaseResultMap" type="Column" >
+    <id column="column_id" property="columnId" jdbcType="INTEGER" />
+    <result column="column_code" property="columnCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="isactiver_forever" property="isactiverForever" jdbcType="BIT" />
+    <result column="is_show_horn" property="isShowHorn" jdbcType="BIT" />
+    <result column="tips" property="tips" jdbcType="VARCHAR" />
+    <result column="descs" property="descs" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_change_date" property="lastChangeDate" jdbcType="TIMESTAMP" />
+    <result column="modifer" property="modifer" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="columnId != null" > and column_id=#{columnId} </if>
+    <if test="columnCode != null" > and column_code=#{columnCode} </if>
+    <if test="name != null" > and name like '%${name}%' </if>
+    <if test="parentId != null" > and parent_id=#{parentId} </if>
+    <if test="startDate != null" > and start_date=#{startDate} </if>
+    <if test="endDate != null" > and end_date=#{endDate} </if>
+    <if test="isactiverForever != null" > and isactiver_forever=#{isactiverForever} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="createDate != null" > and create_date=#{createDate} </if>
+    <if test="lastChangeDate != null" > and last_change_date=#{lastChangeDate} </if>
+    <if test="modifer != null" > and modifer=#{modifer} </if>
+    <if test="icon != null" > and icon=#{icon} </if>
+    <if test="channel != null" > and channel=#{channel} </if>
+    <if test="code != null" > and code=#{code} </if>
+    <if test="path != null and path !='' " > and path=#{path} </if>
+    <if test="type != null  " > and type=#{type} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    column_id, column_code,code, name, parent_id, start_date, end_date, isactiver_forever, creator, create_date, 
+    last_change_date, modifer,icon,is_show_horn,tips,descs,path,type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_column
+    where column_id = #{columnId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_column
+    where column_id = #{columnId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="Column" >
+    insert into media_column
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="columnId != null" >
+        column_id,
+      </if>
+      <if test="columnCode != null" >
+        column_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="isactiverForever != null" >
+        isactiver_forever,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date,
+      </if>
+      <if test="modifer != null" >
+        modifer,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="path != null and path !=''">
+        path,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="columnId != null" >
+        #{columnId,jdbcType=INTEGER},
+      </if>
+      <if test="columnCode != null" >
+        #{columnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isactiverForever != null" >
+        #{isactiverForever,jdbcType=BIT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+       now(),
+      </if>
+      <if test="lastChangeDate != null" >
+        now(),
+      </if>
+      <if test="modifer != null" >
+        #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="Column" >
+    insert into media_column
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="columnId != null" >
+        column_id,
+      </if>
+      <if test="columnCode != null" >
+        column_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="isactiverForever != null" >
+        isactiver_forever,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date,
+      </if>
+      <if test="modifer != null" >
+        modifer,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="isShowHorn != null" >
+        is_show_horn,
+      </if>
+      <if test="tips != null" >
+        tips,
+      </if>
+      <if test="descs != null" >
+        descs,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="path != null and path !=''" >
+        path,
+      </if>
+      <if test="type != null " >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="columnId != null" >
+        #{columnId,jdbcType=INTEGER},
+      </if>
+      <if test="columnCode != null" >
+        #{columnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isactiverForever != null" >
+        #{isactiverForever,jdbcType=BIT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+       now(),
+      </if>
+      <if test="lastChangeDate != null" >
+        now(),
+      </if>
+      <if test="modifer != null" >
+        #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isShowHorn != null" >
+        #{isShowHorn,jdbcType=BIT},
+      </if>
+      <if test="tips != null" >
+        #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null" >
+        #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null and path !=''" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null " >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Column" >
+    update media_column
+    <set >
+      <if test="columnCode != null" >
+        column_code = #{columnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isactiverForever != null" >
+        isactiver_forever = #{isactiverForever,jdbcType=BIT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastChangeDate != null" >
+        last_change_date = now(),
+      </if>
+      <if test="modifer != null" >
+        modifer = #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isShowHorn != null" >
+        is_show_horn = #{isShowHorn,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null" >
+        tips = #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null" >
+        descs = #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where column_id = #{columnId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Column" >
+    update media_column
+    set name = #{name,jdbcType=VARCHAR},
+      column_code = #{columnCode,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      isactiver_forever = #{isactiverForever,jdbcType=BIT},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_change_date = now(),
+      modifer = #{modifer,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      is_show_horn = #{isShowHorn,jdbcType=BIT},
+      tips = #{tips,jdbcType=VARCHAR},
+      descs = #{descs,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
+    where column_id = #{columnId,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_column where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_column where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_column where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="getColumnByCode" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_column where column_code='${column_code}'
+  </select>
+</mapper>

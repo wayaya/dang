@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="StoreUpMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.StoreUp" >
+    <id column="store_id" property="storeId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="target_id" property="targetId" jdbcType="BIGINT" />
+    <result column="store_date" property="storeDate" jdbcType="TIMESTAMP" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="platform" property="platform" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="storeId != null" > and store_id=#{storeId} </if>
+    <if test="type != null" > and type=#{type} </if>
+    <if test="targetId != null" > and target_id=#{targetId} </if>
+    <if test="storeDate != null" > and store_date=#{storeDate} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="userName != null" > and user_name=#{userName} </if>
+    <if test="nickName != null" > and nick_name=#{nickName} </if>
+    <if test="platform != null" > and platform=#{platform} </if>
+    <if test="targetIds != null">
+    	and target_id in 
+    	<foreach item="item" index="index" collection="targetIds" open="(" separator="," close=")">
+  			#{item}  
+  		</foreach>
+    </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    store_id, type, target_id, store_date, cust_id, user_name, nick_name,platform
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_storeup
+    where store_id = #{storeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_storeup
+    where store_id = #{storeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.StoreUp" >
+    insert into media_storeup (store_id, type, target_id, 
+      store_date, cust_id, user_name, 
+      nick_name)
+    values (#{storeId,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{targetId,jdbcType=BIGINT}, 
+    now(), #{custId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.StoreUp" >
+    insert into media_storeup
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="targetId != null" >
+        target_id,
+      </if>
+        store_date,
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="storeId != null" >
+        #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="targetId != null" >
+        #{targetId,jdbcType=BIGINT},
+      </if>
+     	 now(),
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.StoreUp" >
+    update media_storeup
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="targetId != null" >
+        target_id = #{targetId,jdbcType=BIGINT},
+      </if>
+      <if test="storeDate != null" >
+        store_date = #{storeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where store_id = #{storeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.StoreUp" >
+    update media_storeup
+    set type = #{type,jdbcType=VARCHAR},
+      target_id = #{targetId,jdbcType=BIGINT},
+      store_date = #{storeDate,jdbcType=TIMESTAMP},
+      cust_id = #{custId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR}
+    where store_id = #{storeId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_storeup where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_storeup where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_storeup where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  
+  <delete id="deleteByMap" parameterType="map" >
+  	delete from media_storeup where 1=1 <include refid="Base_Where" />
+  </delete>
+  
+  <select id="getTotalCount" parameterType="map" resultType="java.lang.Integer">
+    select count(1) from media_storeup ,media_sale 
+    	where cust_id=#{custId,jdbcType=BIGINT} 
+    	and media_storeup.type=#{type,jdbcType=VARCHAR}
+    	and media_storeup.platform=#{platform,jdbcType=VARCHAR}
+    	and media_storeup.target_id =media_sale.sale_id
+		and media_sale.shelf_status=1
+  </select>
+  
+   <select id="isStoreUp" resultMap="BaseResultMap" parameterType="com.dangdang.digital.model.StoreUp" >
+    select <include refid="Base_Column_List" /> from media_storeup where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="getStoreUpObjectIdListByCustId" parameterType="map" resultType="java.lang.Long">
+    select target_id from media_storeup ,media_sale 
+    	where 
+    	cust_id=#{custId,jdbcType=BIGINT} 
+    	and media_storeup.type=#{type,jdbcType=VARCHAR}
+    	and platform=#{platform,jdbcType=VARCHAR}
+    	and media_storeup.target_id = media_sale.sale_id
+		and media_sale.shelf_status=1
+    	order by store_date desc
+    	limit ${limit_offset},${limit_count}
+  </select>
+  
+  <select id="getStoreUpObjectIdListByCustIdAndTargetIds" parameterType="map" resultType="java.lang.Long">
+    select target_id from media_storeup 
+    	where 
+    	cust_id=#{custId,jdbcType=BIGINT} 
+    	and media_storeup.type=#{type,jdbcType=VARCHAR}
+    	and platform=#{platform,jdbcType=VARCHAR}
+		and media_storeup.target_id in 
+		<foreach item="item" index="index" collection="targetIds" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+  </select>
+</mapper>

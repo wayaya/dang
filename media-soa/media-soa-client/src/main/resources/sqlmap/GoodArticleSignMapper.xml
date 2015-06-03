@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="GoodArticleSignMapper">
+
+	
+	<resultMap id="BaseResultMap" type="GoodArticleSign">
+		<id column="sign_id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="path" property="path" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		<![CDATA[
+			sign_id, name,code,parent_id,status,path
+	 	]]>
+	</sql>
+	
+	<select id="getTreeByParentId" resultMap="BaseResultMap" parameterType="GoodArticleSign">
+		select
+		<include refid="Base_Column_List" />
+		from media_goodarticle_sign
+		where 1=1
+		<if test="id != null">
+			AND parent_id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="id == null">
+			AND parent_id is null
+		</if>
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		    select 
+		    <include refid="Base_Column_List" />
+		    from media_goodarticle_sign
+		    where sign_id = #{id,jdbcType=INTEGER}
+   </select>
+  
+  <!-- 查询指定media集合的分类信息 -->
+	<select id="selectByMediaIds" resultType="java.util.HashMap" parameterType="list" >
+		    select 
+		    <include refid="Base_Column_List" />
+		    from media_goodarticle_sign
+		    where medid_id in
+		    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  					#{item}  
+  		   </foreach>
+   </select>
+  
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from media_goodarticle_sign
+		where sign_id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insert" parameterType="Catetory">
+		insert into media_goodarticle_sign (name,parent_id,code,status)
+		values (#{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}
+		, #{code,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="Test">
+		update media_goodarticle_sign
+		set name = #{name,jdbcType=VARCHAR},
+		code = #{code,jdbcType=VARCHAR}
+		where sign_id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		<![CDATA[
+			select
+			count(1)
+			from media_goodarticle_sign where 1=1
+		]]>
+		<if test="parentId != null">
+			AND parent_id = #{parentId,jdbcType=INTEGER}
+		</if>
+		<if test="id != null">
+			AND sign_id = #{id,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		<![CDATA[
+			select
+			]]>
+			<include refid="Base_Column_List" />
+			<![CDATA[
+			from media_goodarticle_sign where 1=1
+		]]>
+		<if test="parentId != null">
+			AND parent_id = #{parentId,jdbcType=INTEGER}
+		</if>
+		<if test="id != null">
+			AND sign_id = #{id,jdbcType=INTEGER}
+		</if>
+	</select>
+	<!-- <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from test
+	</select> -->
+	
+	<select id="getCatetoryByCode" resultMap="BaseResultMap" parameterType="map">
+			select <include refid="Base_Column_List" />
+			from media_goodarticle_sign where code='${code}'
+	</select>
+</mapper>

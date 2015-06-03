@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SearchAssociateMapper">
+	<resultMap id="BaseResultMap" type="searchAssociate">
+		<id column="as_id" property="asId" jdbcType="BIGINT" />
+		<result column="search_source" property="searchSource" jdbcType="VARCHAR" />
+		<result column="keyword" property="keyword" jdbcType="VARCHAR" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+		<result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+		<result column="last_modify_date" property="lastModifyDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<sql id="Base_Where">
+		<if test="asId != null"> and as_id=#{asId} </if>
+		<if test="searchSource != null"> and search_source=#{searchSource} </if>
+		<if test="keyword != null"> and keyword=#{keyword} </if>
+		<if test="pinyin != null"> and pinyin=#{pinyin} </if>
+		<if test="count != null"> and count=#{count} </if>
+		<if test="creationDate != null"> and creation_date=#{creationDate} </if>
+		<if test="lastModifyDate != null"> and last_modify_date=#{lastModifyDate} </if>
+	</sql>
+	
+	<sql id="Base_Column_List">
+		as_id, search_source, keyword, pinyin, count, creation_date, last_modify_date
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from media_search_associate
+		where as_id = #{asId,jdbcType=BIGINT}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from media_search_associate
+		where as_id = #{asId,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" parameterType="searchAssociate">
+		insert into media_search_associate (as_id, search_source, keyword, pinyin,
+		count, creation_date, last_modify_date
+		)
+		values (#{asId,jdbcType=BIGINT}, #{searchSource,jdbcType=VARCHAR},
+		#{keyword,jdbcType=VARCHAR}, #{pinyin,jdbcType=VARCHAR},
+		#{count,jdbcType=INTEGER}, #{creationDate,jdbcType=TIMESTAMP},
+		#{lastModifyDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<insert id="insertSelective" parameterType="searchAssociate">
+		insert into media_search_associate
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="asId != null">
+				as_id,
+			</if>
+			<if test="searchSource != null">
+				search_source,
+			</if>
+			<if test="keyword != null">
+				keyword,
+			</if>
+			<if test="pinyin != null">
+				pinyin,
+			</if>
+			<if test="count != null">
+				count,
+			</if>
+			<if test="creationDate != null">
+				creation_date,
+			</if>
+			<if test="lastModifyDate != null">
+				last_modify_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="asId != null">
+				#{asId,jdbcType=BIGINT},
+			</if>
+			<if test="searchSource != null">
+				#{search_source,jdbcType=VARCHAR},
+			</if>
+			<if test="keyword != null">
+				#{keyword,jdbcType=VARCHAR},
+			</if>
+			<if test="pinyin != null">
+				#{pinyin,jdbcType=VARCHAR},
+			</if>
+			<if test="count != null">
+				#{count,jdbcType=INTEGER},
+			</if>
+			<if test="creationDate != null">
+				#{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifyDate != null">
+				#{lastModifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="searchAssociate">
+		update media_search_associate
+		<set>
+			<if test="searchSource != null">
+				search_source = #{searchSource,jdbcType=VARCHAR},
+			</if>
+			<if test="keyword != null">
+				keyword = #{keyword,jdbcType=VARCHAR},
+			</if>
+			<if test="pinyin != null">
+				pinyin = #{pinyin,jdbcType=VARCHAR},
+			</if>
+			<if test="count != null">
+				count = #{count,jdbcType=INTEGER},
+			</if>
+			<if test="creationDate != null">
+				creation_date = #{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifyDate != null">
+				last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where as_id = #{asId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="searchAssociate">
+		update media_search_associate
+		set search_source = #{searchSource,jdbcType=VARCHAR},
+		keyword = #{keyword,jdbcType=VARCHAR},
+		pinyin = #{pinyin,jdbcType=VARCHAR},
+		count = #{count,jdbcType=INTEGER},
+		creation_date = #{creationDate,jdbcType=TIMESTAMP},
+		last_modify_date = #{lastModifyDate,jdbcType=TIMESTAMP}
+		where as_id = #{asId,jdbcType=BIGINT}
+	</update>
+	
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_search_associate where 1=1
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="getSearchAssociateLike" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_search_associate where search_source = #{searchSource} 
+		and ((keyword like '${keyword}%' or pinyin like '${keyword}%') and keyword != #{keyword}) 
+		order by count desc limit 10
+	</select>
+	
+	<select id="getSearchAssociateLikePinyin" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_search_associate where search_source = #{searchSource} 
+		and ((keyword like '${keyword}%' or pinyin like '${pinyin}%') and keyword != #{keyword}) 
+		order by count desc limit 10
+	</select>
+	
+	<select id="getSearchAssociateEquals" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_search_associate where search_source = #{searchSource} and keyword = #{keyword} order by count desc
+	</select>
+	
+	<select id="pageCount" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(1) from media_search_associate where 1=1
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_search_associate where 1=1
+		<include refid="Base_Where" />
+	</select>
+</mapper>

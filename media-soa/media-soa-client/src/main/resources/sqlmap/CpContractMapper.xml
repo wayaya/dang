@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CpContractMapper" >
+  <resultMap id="BaseResultMap" type="CpContract" >
+    <id column="contract_id" property="contractId" jdbcType="INTEGER" />
+    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="cp_name" property="cpName" jdbcType="VARCHAR" />
+    <result column="cp_id" property="cpId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="content_ratio" property="contentRatio" jdbcType="REAL" />
+    <result column="manage_ratio" property="manageRatio" jdbcType="REAL" />
+    <result column="other_radtio" property="otherRadtio" jdbcType="REAL" />
+    <result column="pay_cycle" property="payCycle" jdbcType="INTEGER" />
+    <result column="free_ratio" property="freeRatio" jdbcType="INTEGER" />
+    <result column="invoice_type" property="invoiceType" jdbcType="INTEGER" />
+    <result column="is_exclusive" property="isExclusive" jdbcType="BIT" />
+    <result column="attach_file" property="attachFile" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="contractId != null" > and contract_id=#{contractId} </if>
+    <if test="contractCode != null" > and contract_code=#{contractCode} </if>
+    <if test="cpName != null" > and cp_name=#{cpName} </if>
+    <if test="cpId != null" > and cp_id=#{cpId} </if>
+    <if test="type != null" > and type=#{type} </if>
+    <if test="startDate != null" > and start_date=#{startDate} </if>
+    <if test="endDate != null" > and end_date=#{endDate} </if>
+    <if test="contentRatio != null" > and content_ratio=#{contentRatio} </if>
+    <if test="manageRatio != null" > and manage_ratio=#{manageRatio} </if>
+    <if test="otherRadtio != null" > and other_radtio=#{otherRadtio} </if>
+    <if test="payCycle != null" > and pay_cycle=#{payCycle} </if>
+    <if test="freeRatio != null" > and free_ratio=#{freeRatio} </if>
+    <if test="invoiceType != null" > and invoice_type=#{invoiceType} </if>
+    <if test="isExclusive != null" > and is_exclusive=#{isExclusive} </if>
+    <if test="attachFile != null" > and attach_file=#{attachFile} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="auditor != null" > and auditor=#{auditor} </if>
+    <if test="auditDate != null" > and audit_date=#{auditDate} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="comments != null" > and comments=#{comments} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    contract_id, contract_code, cp_name, cp_id, type, start_date, end_date, content_ratio, 
+    manage_ratio, other_radtio, pay_cycle, free_ratio, invoice_type, is_exclusive, attach_file, 
+    creator, creation_date, auditor, audit_date, status, comments
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_cp_contract
+    where contract_id = #{contractId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_cp_contract
+    where contract_id = #{contractId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="CpContract" >
+    insert into media_cp_contract (contract_id, contract_code, cp_name, 
+      cp_id, type, start_date, 
+      end_date, content_ratio, manage_ratio, 
+      other_radtio, pay_cycle, free_ratio, 
+      invoice_type, is_exclusive, attach_file, 
+      creator, creation_date, auditor, 
+      audit_date, status, comments
+      )
+    values (#{contractId,jdbcType=INTEGER}, #{contractCode,jdbcType=VARCHAR}, #{cpName,jdbcType=VARCHAR}, 
+      #{cpId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{contentRatio,jdbcType=REAL}, #{manageRatio,jdbcType=REAL}, 
+      #{otherRadtio,jdbcType=REAL}, #{payCycle,jdbcType=INTEGER}, #{freeRatio,jdbcType=INTEGER}, 
+      #{invoiceType,jdbcType=INTEGER}, #{isExclusive,jdbcType=BIT}, #{attachFile,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{comments,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="CpContract" >
+    insert into media_cp_contract
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="contractId != null" >
+        contract_id,
+      </if>
+      <if test="contractCode != null" >
+        contract_code,
+      </if>
+      <if test="cpName != null" >
+        cp_name,
+      </if>
+      <if test="cpId != null" >
+        cp_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="contentRatio != null" >
+        content_ratio,
+      </if>
+      <if test="manageRatio != null" >
+        manage_ratio,
+      </if>
+      <if test="otherRadtio != null" >
+        other_radtio,
+      </if>
+      <if test="payCycle != null" >
+        pay_cycle,
+      </if>
+      <if test="freeRatio != null" >
+        free_ratio,
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type,
+      </if>
+      <if test="isExclusive != null" >
+        is_exclusive,
+      </if>
+      <if test="attachFile != null" >
+        attach_file,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditDate != null" >
+        audit_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="contractId != null" >
+        #{contractId,jdbcType=INTEGER},
+      </if>
+      <if test="contractCode != null" >
+        #{contractCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cpName != null" >
+        #{cpName,jdbcType=VARCHAR},
+      </if>
+      <if test="cpId != null" >
+        #{cpId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contentRatio != null" >
+        #{contentRatio,jdbcType=REAL},
+      </if>
+      <if test="manageRatio != null" >
+        #{manageRatio,jdbcType=REAL},
+      </if>
+      <if test="otherRadtio != null" >
+        #{otherRadtio,jdbcType=REAL},
+      </if>
+      <if test="payCycle != null" >
+        #{payCycle,jdbcType=INTEGER},
+      </if>
+      <if test="freeRatio != null" >
+        #{freeRatio,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceType != null" >
+        #{invoiceType,jdbcType=INTEGER},
+      </if>
+      <if test="isExclusive != null" >
+        #{isExclusive,jdbcType=BIT},
+      </if>
+      <if test="attachFile != null" >
+        #{attachFile,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="CpContract" >
+    update media_cp_contract
+    <set >
+      <if test="contractCode != null" >
+        contract_code = #{contractCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cpName != null" >
+        cp_name = #{cpName,jdbcType=VARCHAR},
+      </if>
+      <if test="cpId != null" >
+        cp_id = #{cpId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contentRatio != null" >
+        content_ratio = #{contentRatio,jdbcType=REAL},
+      </if>
+      <if test="manageRatio != null" >
+        manage_ratio = #{manageRatio,jdbcType=REAL},
+      </if>
+      <if test="otherRadtio != null" >
+        other_radtio = #{otherRadtio,jdbcType=REAL},
+      </if>
+      <if test="payCycle != null" >
+        pay_cycle = #{payCycle,jdbcType=INTEGER},
+      </if>
+      <if test="freeRatio != null" >
+        free_ratio = #{freeRatio,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type = #{invoiceType,jdbcType=INTEGER},
+      </if>
+      <if test="isExclusive != null" >
+        is_exclusive = #{isExclusive,jdbcType=BIT},
+      </if>
+      <if test="attachFile != null" >
+        attach_file = #{attachFile,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where contract_id = #{contractId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="CpContract" >
+    update media_cp_contract
+    set contract_code = #{contractCode,jdbcType=VARCHAR},
+      cp_name = #{cpName,jdbcType=VARCHAR},
+      cp_id = #{cpId,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      content_ratio = #{contentRatio,jdbcType=REAL},
+      manage_ratio = #{manageRatio,jdbcType=REAL},
+      other_radtio = #{otherRadtio,jdbcType=REAL},
+      pay_cycle = #{payCycle,jdbcType=INTEGER},
+      free_ratio = #{freeRatio,jdbcType=INTEGER},
+      invoice_type = #{invoiceType,jdbcType=INTEGER},
+      is_exclusive = #{isExclusive,jdbcType=BIT},
+      attach_file = #{attachFile,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      comments = #{comments,jdbcType=VARCHAR}
+    where contract_id = #{contractId,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cp_contract where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_cp_contract where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cp_contract where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

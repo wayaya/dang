@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BookCityModelVersionMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.BookCityModelVersion" >
+    <id column="bookcity_model_version_id" property="bookcityModelVersionId" jdbcType="BIGINT" />
+    <result column="model_code" property="modelCode" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="bookcityModelVersionId != null" > and bookcity_model_version_id=#{bookcityModelVersionId} </if>
+    <if test="modelCode != null" > and model_code=#{modelCode} </if>
+    <if test="version != null" > and version=#{version} </if>
+    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    bookcity_model_version_id, model_code, version, last_changed_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_bookcity_model_version
+    where bookcity_model_version_id = #{bookcityModelVersionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_bookcity_model_version
+    where bookcity_model_version_id = #{bookcityModelVersionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.BookCityModelVersion" useGeneratedKeys="true" keyProperty="bookcityModelVersionId" >
+    insert into media_bookcity_model_version (bookcity_model_version_id, model_code, 
+      version, last_changed_date)
+    values (#{bookcityModelVersionId,jdbcType=BIGINT}, #{modelCode,jdbcType=VARCHAR}, 
+      #{version,jdbcType=BIGINT}, #{lastChangedDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.BookCityModelVersion" useGeneratedKeys="true" keyProperty="bookcityModelVersionId" >
+    insert into media_bookcity_model_version
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookcityModelVersionId != null" >
+        bookcity_model_version_id,
+      </if>
+      <if test="modelCode != null" >
+        model_code,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookcityModelVersionId != null" >
+        #{bookcityModelVersionId,jdbcType=BIGINT},
+      </if>
+      <if test="modelCode != null" >
+        #{modelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="lastChangedDate != null" >
+        #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.BookCityModelVersion" >
+    update media_bookcity_model_version
+    <set >
+      <if test="modelCode != null" >
+        model_code = #{modelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where bookcity_model_version_id = #{bookcityModelVersionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.BookCityModelVersion" >
+    update media_bookcity_model_version
+    set model_code = #{modelCode,jdbcType=VARCHAR},
+      version = #{version,jdbcType=BIGINT},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP}
+    where bookcity_model_version_id = #{bookcityModelVersionId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_bookcity_model_version where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_bookcity_model_version where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_bookcity_model_version where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

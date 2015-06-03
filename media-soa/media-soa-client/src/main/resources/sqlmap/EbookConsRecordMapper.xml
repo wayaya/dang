@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="EbookConsRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.EbookConsRecord" >
+    <id column="media_ebook_cons_record_id" property="mediaEbookConsRecordId" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="user_img_url" property="userImgUrl" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="sale_id" property="saleId" jdbcType="BIGINT" />
+    <result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+    <result column="media_url" property="mediaUrl" jdbcType="VARCHAR" />
+    <result column="cons" property="cons" jdbcType="INTEGER" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="mediaEbookConsRecordId != null" > and media_ebook_cons_record_id=#{mediaEbookConsRecordId} </if>
+    <if test="username != null" > and username like CONCAT('%',#{username} ,'%')</if>
+    <if test="userImgUrl != null" > and user_img_url=#{userImgUrl} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="saleId != null" > and sale_id=#{saleId} </if>
+    <if test="mediaName != null" > and media_name like CONCAT('%',#{mediaName} ,'%') </if>
+    <if test="mediaUrl != null" > and media_url=#{mediaUrl} </if>
+    <if test="cons != null" > and cons=#{cons} </if>
+    <if test="channel != null" > and channel=#{channel} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    media_ebook_cons_record_id, username, user_img_url, cust_id, media_id, sale_id, media_name, 
+    media_url, cons, channel, creation_date
+  </sql>
+  
+  <resultMap id="Reward_Top_List" type="com.dangdang.digital.model.RewardTop" >
+  	<result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+  	<result column="sum(cons)" property="totalCons" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_ebook_cons_record
+    where media_ebook_cons_record_id = #{mediaEbookConsRecordId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_ebook_cons_record
+    where media_ebook_cons_record_id = #{mediaEbookConsRecordId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.EbookConsRecord" >
+    insert into media_ebook_cons_record (media_ebook_cons_record_id, username, 
+      user_img_url, cust_id, media_id, 
+      sale_id, media_name, media_url, 
+      cons, channel, creation_date)
+    values (#{mediaEbookConsRecordId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, 
+      #{userImgUrl,jdbcType=VARCHAR}, #{custId,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, 
+      #{saleId,jdbcType=BIGINT}, #{mediaName,jdbcType=VARCHAR}, #{mediaUrl,jdbcType=VARCHAR}, 
+      #{cons,jdbcType=INTEGER}, #{channel,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  
+  <insert id="insertConsRankList" parameterType="map" >
+ 	SET @rank=0;  
+  	insert into media_ebook_cons_ranklist (rank,code,type,cust_id,media_id,media_name,sale_id,username,user_img_url,media_url,channel,cons)
+  		 select @rank:=@rank+1,@code := #{code,jdbcType=VARCHAR},@type := #{type,jdbcType=INTEGER},cust_id,media_id,media_name,sale_id,username,user_img_url,media_url,channel,max(cons) cons from 
+			(select cust_id,media_id,media_name,sale_id,username,user_img_url,media_url,channel,sum(cons) cons 
+			   from media_ebook_cons_record  where
+			   	  	<if test="startDate != null and endDate != null" >  creation_date  between #{startDate,jdbcType=TIMESTAMP} and #{endDate,jdbcType=TIMESTAMP}  and </if>
+			   		 channel = #{channel,jdbcType=VARCHAR}
+			   			GROUP BY media_id, cust_id order by cons desc)t group by media_id order by cons desc ;
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.EbookConsRecord" >
+    insert into media_ebook_cons_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaEbookConsRecordId != null" >
+        media_ebook_cons_record_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="userImgUrl != null" >
+        user_img_url,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="saleId != null" >
+        sale_id,
+      </if>
+      <if test="mediaName != null" >
+        media_name,
+      </if>
+      <if test="mediaUrl != null" >
+        media_url,
+      </if>
+      <if test="cons != null" >
+        cons,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaEbookConsRecordId != null" >
+        #{mediaEbookConsRecordId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userImgUrl != null" >
+        #{userImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="saleId != null" >
+        #{saleId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaUrl != null" >
+        #{mediaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cons != null" >
+        #{cons,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.EbookConsRecord" >
+    update media_ebook_cons_record
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userImgUrl != null" >
+        user_img_url = #{userImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="saleId != null" >
+        sale_id = #{saleId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        media_name = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaUrl != null" >
+        media_url = #{mediaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cons != null" >
+        cons = #{cons,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null" >
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where media_ebook_cons_record_id = #{mediaEbookConsRecordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.EbookConsRecord" >
+    update media_ebook_cons_record
+    set username = #{username,jdbcType=VARCHAR},
+      user_img_url = #{userImgUrl,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=BIGINT},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      sale_id = #{saleId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      media_url = #{mediaUrl,jdbcType=VARCHAR},
+      cons = #{cons,jdbcType=INTEGER},
+      channel = #{channel,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where media_ebook_cons_record_id = #{mediaEbookConsRecordId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_ebook_cons_record where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_ebook_cons_record where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_ebook_cons_record where 1=1 <include refid="Base_Where" />
+  </select>
+  
+    
+  
+  <select id="selectListCount" resultType="java.lang.Integer" parameterType="map" >
+     select count(DISTINCT cust_id) total from media_ebook_cons_record where media_id = #{mediaId,jdbcType=BIGINT} and channel = #{channel,jdbcType=VARCHAR}
+  </select>
+  <select id="selectLimitList" resultMap="BaseResultMap" parameterType="map" >
+    select username,user_img_url,cust_id,sum(cons) cons from media_ebook_cons_record where media_id = #{mediaId,jdbcType=BIGINT} and TO_DAYS(creation_date) = (TO_DAYS(now())-1)  group by cust_id order by cons desc limit #{start,jdbcType=INTEGER},#{count,jdbcType=INTEGER} 
+  </select>
+  <select id="selectHistoryLimitList" resultMap="BaseResultMap" parameterType="map" >
+    select username,user_img_url,cust_id,sum(cons) cons from media_ebook_cons_record where media_id = #{mediaId,jdbcType=BIGINT} and channel = #{channel,jdbcType=VARCHAR} group by cust_id order by cons desc limit #{count,jdbcType=INTEGER} 
+  </select>
+  
+    <!-- 根据具用户id查询用户消费记录的书id【sale_id】 -->
+  <select id="selectUserRewardEbooks" resultType="java.lang.Long"  parameterType="map" >
+    select sale_id from media_ebook_cons_record where cust_id = #{custId,jdbcType=INTEGER} GROUP BY media_id ORDER BY max(media_ebook_cons_record_id) desc
+      limit #{start,jdbcType=INTEGER},#{count,jdbcType=INTEGER}
+  </select>
+  <select id="selectUserRewardEbooksAcount" resultType="java.lang.Integer"  parameterType="java.lang.Long" >
+    select count(distinct media_id)total  from media_ebook_cons_record where cust_id = #{cust_id,jdbcType=BIGINT}
+  </select>
+  <select id="selectRewardTop" resultMap="Reward_Top_List"  parameterType="map" >
+    select media_name, sum(cons) from media_ebook_cons_record where 1=1
+    <if test="startDate != ''">
+    	and creation_date &gt; #{startDate,jdbcType=TIMESTAMP} 
+    </if>
+    <if test="endDate != ''">
+    	and creation_date &lt; #{endDate,jdbcType=TIMESTAMP}
+    </if>
+    	group by media_name order by sum(cons) desc
+    <if test="count != null" >
+        limit #{count,jdbcType=INTEGER}
+    </if>    
+  </select>
+  
+</mapper>

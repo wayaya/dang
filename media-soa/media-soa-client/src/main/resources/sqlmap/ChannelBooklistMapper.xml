@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ChannelBooklistMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.ChannelBooklist">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="channel_id" property="channelId" jdbcType="BIGINT" />
+		<result column="book_list_id" property="bookListId" jdbcType="BIGINT" />
+		<result column="is_show" property="isShow" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="id != null"> and id= #{id}</if>	
+		<if test="channelId != null"> and channel_id= #{channelId}</if>	
+		<if test="bookListId != null"> and book_list_id= #{bookListId}</if>	
+		<if test="isShow != null"> and is_show= #{isShow}</if>	
+		<if test="status != null"> and status= #{status}</if>	
+	</sql>
+	<sql id="Base_Column_List">
+		id ,
+		channel_id ,
+		book_list_id ,
+		is_show ,
+		status 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from channel_booklist
+		where
+		id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from channel_booklist
+		where
+		id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.ChannelBooklist">
+		insert into channel_booklist
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>	
+			<if test="channelId != null">channel_id,</if>	
+			<if test="bookListId != null">book_list_id,</if>	
+			<if test="isShow != null">is_show,</if>	
+			<if test="status != null">status,</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="channelId != null">
+				#{channelId,jdbcType=BIGINT},
+			</if>
+			<if test="bookListId != null">
+				#{bookListId,jdbcType=BIGINT},
+			</if>
+			<if test="isShow != null">
+				#{isShow,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ChannelBooklist">
+		update channel_booklist
+		<set>
+			<if test="channelId != null">
+				channel_id= #{channelId,jdbcType=BIGINT},
+			</if>
+			<if test="bookListId != null">
+				book_list_id= #{bookListId,jdbcType=BIGINT},
+			</if>
+			<if test="isShow != null">
+				is_show= #{isShow,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status= #{status,jdbcType=INTEGER}
+			</if>
+		</set>
+		where
+		id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from channel_booklist where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from channel_booklist where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from channel_booklist where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from channel_booklist where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

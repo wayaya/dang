@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DeviceConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.DeviceConfig" >
+    <id column="media_device_id" property="mediaDeviceId" jdbcType="BIGINT" />
+    <result column="device_type_id" property="deviceTypeId" jdbcType="BIGINT" />
+    <result column="device_type_code" property="deviceTypeCode" jdbcType="VARCHAR" />
+    <result column="device_type_name" property="deviceTypeName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="mediaDeviceId != null" > and media_device_id=#{mediaDeviceId} </if>
+    <if test="deviceTypeId != null" > and device_type_id=#{deviceTypeId} </if>
+    <if test="deviceTypeCode != null" > and device_type_code=#{deviceTypeCode} </if>
+    <if test="deviceTypeName != null" > and device_type_name=#{deviceTypeName} </if>
+    <if test="createTime != null" > and create_time=#{createTime} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    media_device_id, device_type_id, device_type_code, device_type_name, create_time, 
+    media_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_device_config
+    where media_device_id = #{mediaDeviceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_device_config
+    where media_device_id = #{mediaDeviceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.DeviceConfig" >
+    insert into media_device_config (media_device_id, device_type_id, device_type_code, 
+      device_type_name, create_time, media_id
+      )
+    values (#{mediaDeviceId,jdbcType=BIGINT}, #{deviceTypeId,jdbcType=BIGINT}, #{deviceTypeCode,jdbcType=VARCHAR}, 
+      #{deviceTypeName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{mediaId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.DeviceConfig" >
+    insert into media_device_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaDeviceId != null" >
+        media_device_id,
+      </if>
+      <if test="deviceTypeId != null" >
+        device_type_id,
+      </if>
+      <if test="deviceTypeCode != null" >
+        device_type_code,
+      </if>
+      <if test="deviceTypeName != null" >
+        device_type_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaDeviceId != null" >
+        #{mediaDeviceId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceTypeId != null" >
+        #{deviceTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceTypeCode != null" >
+        #{deviceTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceTypeName != null" >
+        #{deviceTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.DeviceConfig" >
+    update media_device_config
+    <set >
+      <if test="deviceTypeId != null" >
+        device_type_id = #{deviceTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceTypeCode != null" >
+        device_type_code = #{deviceTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceTypeName != null" >
+        device_type_name = #{deviceTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where media_device_id = #{mediaDeviceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.DeviceConfig" >
+    update media_device_config
+    set device_type_id = #{deviceTypeId,jdbcType=BIGINT},
+      device_type_code = #{deviceTypeCode,jdbcType=VARCHAR},
+      device_type_name = #{deviceTypeName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      media_id = #{mediaId,jdbcType=BIGINT}
+    where media_device_id = #{mediaDeviceId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_device_config where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_device_config where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_device_config where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

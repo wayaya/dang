@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="NotificationApikeyMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.NotificationApikey" >
+    <id column="notification_apikey_id" property="notificationApikeyId" jdbcType="BIGINT" />
+    <result column="appid" property="appid" jdbcType="INTEGER" />
+    <result column="appname" property="appname" jdbcType="VARCHAR" />
+    <result column="api_key" property="apiKey" jdbcType="VARCHAR" />
+    <result column="secret" property="secret" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="notificationApikeyId != null" > and notification_apikey_id=#{notificationApikeyId} </if>
+    <if test="appid != null" > and appid=#{appid} </if>
+    <if test="appname != null" > and appname=#{appname} </if>
+    <if test="apiKey != null" > and api_key=#{apiKey} </if>
+    <if test="secret != null" > and secret=#{secret} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    notification_apikey_id, appid, appname, api_key, secret
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_notification_apikey
+    where notification_apikey_id = #{notificationApikeyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_notification_apikey
+    where notification_apikey_id = #{notificationApikeyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.NotificationApikey" >
+    insert into media_notification_apikey (notification_apikey_id, appid, appname, 
+      api_key, secret)
+    values (#{notificationApikeyId,jdbcType=BIGINT}, #{appid,jdbcType=INTEGER}, #{appname,jdbcType=VARCHAR}, 
+      #{apiKey,jdbcType=VARCHAR}, #{secret,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.NotificationApikey" >
+    insert into media_notification_apikey
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="notificationApikeyId != null" >
+        notification_apikey_id,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="appname != null" >
+        appname,
+      </if>
+      <if test="apiKey != null" >
+        api_key,
+      </if>
+      <if test="secret != null" >
+        secret,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="notificationApikeyId != null" >
+        #{notificationApikeyId,jdbcType=BIGINT},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="appname != null" >
+        #{appname,jdbcType=VARCHAR},
+      </if>
+      <if test="apiKey != null" >
+        #{apiKey,jdbcType=VARCHAR},
+      </if>
+      <if test="secret != null" >
+        #{secret,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.NotificationApikey" >
+    update media_notification_apikey
+    <set >
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="appname != null" >
+        appname = #{appname,jdbcType=VARCHAR},
+      </if>
+      <if test="apiKey != null" >
+        api_key = #{apiKey,jdbcType=VARCHAR},
+      </if>
+      <if test="secret != null" >
+        secret = #{secret,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where notification_apikey_id = #{notificationApikeyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.NotificationApikey" >
+    update media_notification_apikey
+    set appid = #{appid,jdbcType=INTEGER},
+      appname = #{appname,jdbcType=VARCHAR},
+      api_key = #{apiKey,jdbcType=VARCHAR},
+      secret = #{secret,jdbcType=VARCHAR}
+    where notification_apikey_id = #{notificationApikeyId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_notification_apikey where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_notification_apikey where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_notification_apikey where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BookshelfBookMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.BookshelfBook">
+		<id column="bb_id" property="bbId" jdbcType="BIGINT" />
+		<result column="cust_id" property="custId" jdbcType="BIGINT" />
+		<result column="last_changed_date" property="lastChangedDate" jdbcType="BIGINT" />
+		<result column="product_id" property="productId" jdbcType="BIGINT" />
+		<result column="category_id" property="categoryId" jdbcType="BIGINT" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="bbId != null"> and bb_id= #{bbId}</if>	
+		<if test="custId != null"> and cust_id= #{custId}</if>	
+		<if test="lastChangedDate != null"> and last_changed_date= #{lastChangedDate}</if>	
+		<if test="productId != null"> and product_id= #{productId}</if>	
+		<if test="categoryId != null"> and category_id= #{categoryId}</if>	
+	</sql>
+	<sql id="Base_Column_List">
+		bb_id ,
+		cust_id ,
+		last_changed_date ,
+		product_id ,
+		category_id 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from bookshelf_book
+		where
+		bb_id = #{bbId,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from bookshelf_book
+		where
+		bb_id = #{bbId,jdbcType=BIGINT}
+	</delete>
+	
+	<delete id="deleteByCustId" parameterType="java.lang.String">
+		delete from bookshelf_book
+		where
+		cust_id = #{custId,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.BookshelfBook" useGeneratedKeys="true" keyProperty="bbId">
+		insert into bookshelf_book
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bbId != null">bb_id,</if>	
+			<if test="custId != null">cust_id,</if>	
+			<if test="lastChangedDate != null">last_changed_date,</if>	
+			<if test="productId != null">product_id,</if>	
+			<if test="categoryId != null">category_id,</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bbId != null">
+				#{bbId,jdbcType=BIGINT},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=BIGINT},
+			</if>
+			<if test="lastChangedDate != null">
+				#{lastChangedDate,jdbcType=BIGINT},
+			</if>
+			<if test="productId != null">
+				#{productId,jdbcType=BIGINT},
+			</if>
+			<if test="categoryId != null">
+				#{categoryId,jdbcType=BIGINT},
+			</if>
+			
+		</trim>
+	</insert>
+	
+	<insert id="insertBatch">
+	    insert into bookshelf_book ( 
+				bb_id,
+				cust_id,
+				last_changed_date,
+				product_id,
+				category_id
+		) 
+	    values 
+	    <foreach collection="list" item="item" index="index" separator=",">
+	        (
+				#{bbId,jdbcType=BIGINT},
+				#{custId,jdbcType=BIGINT},
+				#{lastChangedDate,jdbcType=BIGINT},
+				#{productId,jdbcType=BIGINT},
+				#{categoryId,jdbcType=BIGINT}
+			)
+	    </foreach>
+	</insert> 
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.BookshelfBook">
+		update bookshelf_book
+		<set>
+			<if test="custId != null">
+				cust_id= #{custId,jdbcType=BIGINT},
+			</if>
+			<if test="lastChangedDate != null">
+				last_changed_date= #{lastChangedDate,jdbcType=BIGINT},
+			</if>
+			<if test="productId != null">
+				product_id= #{productId,jdbcType=BIGINT},
+			</if>
+			<if test="categoryId != null">
+				category_id= #{categoryId,jdbcType=BIGINT}
+			</if>
+		</set>
+		where
+		bb_id = #{bbId,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from bookshelf_book where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from bookshelf_book where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from bookshelf_book where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from bookshelf_book where bb_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

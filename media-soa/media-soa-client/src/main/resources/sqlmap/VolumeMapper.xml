@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="VolumeMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Volume" >
+    <id column="volume_id" property="volumeId" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="volume_order" property="volumeOrder" jdbcType="INTEGER" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="cp_code" property="cpCode" jdbcType="VARCHAR" />
+    <result column="cp_volume_id" property="cpVolumeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dangdang.digital.model.Volume" extends="BaseResultMap" >
+    <result column="descs" property="descs" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="volumeId != null" > and volume_id=#{volumeId} </if>
+    <if test="title != null" > and title=#{title} </if>
+    <if test="volumeOrder != null" > and volume_order=#{volumeOrder} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="cpCode != null" > and cp_code=#{cpCode} </if>
+    <if test="cpVolumeId != null" > and cp_volume_id=#{cpVolumeId} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    volume_id, title, volume_order, creation_date, media_id, cp_code, cp_volume_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    descs
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from media_volume
+    where volume_id = #{volumeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_volume
+    where volume_id = #{volumeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByMap" parameterType="java.util.Map" >
+    delete from media_volume
+    where 1=1 <include refid="Base_Where" />
+  </delete>
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="volumeId"  parameterType="com.dangdang.digital.model.Volume" >
+    insert into media_volume (volume_id, title, volume_order, 
+      creation_date, media_id, cp_code, 
+      cp_volume_id, descs)
+    values (#{volumeId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{volumeOrder,jdbcType=INTEGER}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{mediaId,jdbcType=BIGINT}, #{cpCode,jdbcType=VARCHAR}, 
+      #{cpVolumeId,jdbcType=VARCHAR}, #{descs,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertBatch" parameterType="com.dangdang.digital.model.Volume">
+		insert into media_volume 
+		(
+			volume_id, title, volume_order, 
+      creation_date, media_id, cp_code, 
+      cp_volume_id, descs
+		)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{item.volumeId,jdbcType=BIGINT}, #{item.title,jdbcType=VARCHAR}, #{item.volumeOrder,jdbcType=INTEGER}, 
+      #{item.creationDate,jdbcType=TIMESTAMP}, #{item.mediaId,jdbcType=BIGINT}, #{item.cpCode,jdbcType=VARCHAR}, 
+      #{item.cpVolumeId,jdbcType=VARCHAR}, #{item.descs,jdbcType=LONGVARCHAR}
+		)
+		</foreach>
+	</insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="volumeId" parameterType="com.dangdang.digital.model.Volume" >
+    insert into media_volume
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="volumeId != null" >
+        volume_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="volumeOrder != null" >
+        volume_order,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="cpCode != null" >
+        cp_code,
+      </if>
+      <if test="cpVolumeId != null" >
+        cp_volume_id,
+      </if>
+      <if test="descs != null" >
+        descs,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="volumeId != null" >
+        #{volumeId,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="volumeOrder != null" >
+        #{volumeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="cpCode != null" >
+        #{cpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cpVolumeId != null" >
+        #{cpVolumeId,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null" >
+        #{descs,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Volume" >
+    update media_volume
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="volumeOrder != null" >
+        volume_order = #{volumeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="cpCode != null" >
+        cp_code = #{cpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cpVolumeId != null" >
+        cp_volume_id = #{cpVolumeId,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null" >
+        descs = #{descs,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where volume_id = #{volumeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dangdang.digital.model.Volume" >
+    update media_volume
+    set title = #{title,jdbcType=VARCHAR},
+      volume_order = #{volumeOrder,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      cp_code = #{cpCode,jdbcType=VARCHAR},
+      cp_volume_id = #{cpVolumeId,jdbcType=VARCHAR},
+      descs = #{descs,jdbcType=LONGVARCHAR}
+    where volume_id = #{volumeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Volume" >
+    update media_volume
+    set title = #{title,jdbcType=VARCHAR},
+      volume_order = #{volumeOrder,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      cp_code = #{cpCode,jdbcType=VARCHAR},
+      cp_volume_id = #{cpVolumeId,jdbcType=VARCHAR}
+    where volume_id = #{volumeId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_volume where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_volume where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_volume where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

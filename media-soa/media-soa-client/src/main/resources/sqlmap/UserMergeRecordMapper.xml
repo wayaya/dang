@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserMergeRecordMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.UserMergeRecord">
+		<id column="user_merge_id" property="userMergeId" jdbcType="BIGINT" />
+		<result column="old_cust_id" property="oldCustId" jdbcType="BIGINT" />
+		<result column="new_cust_id" property="newCustId" jdbcType="BIGINT" />
+		<result column="consumer_deposit_id" property="consumerDepositId" jdbcType="LONGVARCHAR" />
+		<result column="bought_id" property="boughtId" jdbcType="LONGVARCHAR" />
+		<result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="userMergeId != null"> and user_merge_id= #{userMergeId}</if>	
+		<if test="oldCustId != null"> and old_cust_id= #{oldCustId}</if>	
+		<if test="newCustId != null"> and new_cust_id= #{newCustId}</if>	
+		<if test="consumerDepositId != null and consumerDepositId !=''"> and consumer_deposit_id= #{consumerDepositId}</if>
+		<if test="boughtId != null and boughtId !=''"> and bought_id= #{boughtId}</if>
+		<if test="lastUpdateTime != null"> and last_update_time= #{lastUpdateTime}</if>	
+		<if test="createTime != null"> and create_time= #{createTime}</if>	
+	</sql>
+	<sql id="Base_Column_List">
+		user_merge_id ,
+		old_cust_id ,
+		new_cust_id ,
+		consumer_deposit_id ,
+		bought_id ,
+		last_update_time ,
+		create_time 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from media_user_merge_record
+		where
+		user_merge_id = #{userMergeId,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from media_user_merge_record
+		where
+		user_merge_id = #{userMergeId,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.UserMergeRecord">
+		insert into media_user_merge_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userMergeId != null">user_merge_id,</if>	
+			<if test="oldCustId != null">old_cust_id,</if>	
+			<if test="newCustId != null">new_cust_id,</if>	
+			<if test="consumerDepositId != null and consumerDepositId !=''">consumer_deposit_id,</if>
+			<if test="boughtId != null and boughtId !=''">bought_id,</if>
+			<if test="lastUpdateTime != null">last_update_time,</if>	
+			<if test="createTime != null">create_time,</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userMergeId != null">
+				#{userMergeId,jdbcType=BIGINT},
+			</if>
+			<if test="oldCustId != null">
+				#{oldCustId,jdbcType=BIGINT},
+			</if>
+			<if test="newCustId != null">
+				#{newCustId,jdbcType=BIGINT},
+			</if>
+			<if test="consumerDepositId != null and consumerDepositId !=''">
+				#{consumerDepositId,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="boughtId != null and boughtId !=''">
+				#{boughtId,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.UserMergeRecord">
+		update media_user_merge_record
+		<set>
+			<if test="oldCustId != null">
+				old_cust_id=#{oldCustId,jdbcType=BIGINT},
+			</if>
+			<if test="newCustId != null">
+				new_cust_id=#{newCustId,jdbcType=BIGINT},
+			</if>
+			<if test="consumerDepositId != null and consumerDepositId !=''">
+				consumer_deposit_id=#{consumerDepositId,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="boughtId != null and boughtId !=''">
+				bought_id=#{boughtId,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time=#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				create_time=#{createTime,jdbcType=TIMESTAMP}
+			</if>
+		</set>
+		where
+		user_merge_id = #{userMergeId,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_user_merge_record where 1=1
+		<include refid="Base_Where" /> order by create_time desc
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from media_user_merge_record where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_user_merge_record where 1=1
+		<include refid="Base_Where" /> order by create_time desc
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from media_user_merge_record where user_merge_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

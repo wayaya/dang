@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SpecialTopicCategoryMapper">
+    <resultMap id="BaseResultMap" type="com.dangdang.digital.model.SpecialTopicCategory">
+		     	<id column="st_type_id" property="stTypeId" jdbcType="BIGINT" />
+		        <result column="category_name" property="categoryName" jdbcType="VARCHAR"  />
+		        <result column="parent_id" property="parentId" jdbcType="BIGINT"  />
+		        <result column="category_code" property="categoryCode" jdbcType="VARCHAR"  />
+		        <result column="path" property="path" jdbcType="VARCHAR"  />
+		        <result column="channel" property="channel" jdbcType="VARCHAR"  />
+		        <result column="creator" property="creator" jdbcType="VARCHAR"  />
+		        <result column="modifier" property="modifier" jdbcType="VARCHAR"  />
+		        <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP"  />
+		        <result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP"  />
+    </resultMap>
+  <sql id="Base_Where" >
+   		<if test="stTypeId != null " > and st_type_id= #{stTypeId}</if>
+   		<if test="categoryName != null and categoryName !=''" > and category_name= #{categoryName}</if>
+   		<if test="parentId != null " > and parent_id= #{parentId}</if>
+   		<if test="categoryCode != null and categoryCode !=''" > and category_code= #{categoryCode}</if>
+   		<if test="path != null and path !=''" > and path= #{path}</if>
+   		<if test="channel != null and channel !=''" > and channel= #{channel}</if>
+   		<if test="creator != null and creator !=''" > and creator= #{creator}</if>
+   		<if test="modifier != null and modifier !=''" > and modifier= #{modifier}</if>
+   		<if test="creationDate != null and creationDate !=''" > and creation_date= #{creationDate}</if>
+   		<if test="lastModifiedDate != null and lastModifiedDate !=''" > and last_modified_date= #{lastModifiedDate}</if>
+  </sql>
+ <sql id="Base_Column_List" >
+        	st_type_id ,
+        	category_name ,
+        	parent_id ,
+        	category_code ,
+        	path ,
+        	channel ,
+        	creator ,
+        	modifier ,
+        	creation_date ,
+        	last_modified_date 
+  </sql>
+
+<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from  media_special_topic_category 
+     	where 
+	     			st_type_id = #{stTypeId,jdbcType=BIGINT}
+  </select>
+  
+   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from media_special_topic_category 
+    	where 
+	     		st_type_id = #{stTypeId,jdbcType=BIGINT}
+  </delete>
+ 
+  
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.SpecialTopicCategory" >
+    insert into media_special_topic_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+         <if test="categoryName != null" >category_name,</if>
+         <if test="parentId != null" >parent_id,</if>
+         <if test="categoryCode != null" >category_code,</if>
+         <if test="path != null" >path,</if>
+         <if test="channel != null" >channel,</if>
+         <if test="creator != null" >creator,</if>
+         <if test="modifier != null" >modifier,</if>
+      	 creation_date,
+         <if test="lastModifiedDate != null" >last_modified_date,</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     <if test="categoryName != null and categoryName !=''" >
+       #{categoryName,jdbcType=VARCHAR},
+      </if>
+     <if test="parentId != null" >
+       #{parentId,jdbcType=BIGINT},
+      </if>
+     <if test="categoryCode != null and categoryCode !=''" >
+       #{categoryCode,jdbcType=VARCHAR},
+      </if>
+     <if test="path != null and path !=''" >
+       #{path,jdbcType=VARCHAR},
+      </if>
+     <if test="channel != null and channel !=''" >
+       #{channel,jdbcType=VARCHAR},
+      </if>
+       <if test="creator != null and creator !=''" >
+       #{creator,jdbcType=VARCHAR},
+      </if>
+     <if test="modifier != null and modifier !=''" >
+       #{modifier,jdbcType=VARCHAR},
+      </if>
+       now(),
+     <if test="lastModifiedDate != null and lastModifiedDate !=''" >
+       now(),
+      </if>
+    </trim>
+  </insert>
+  
+   <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.SpecialTopicCategory" >
+    update media_special_topic_category
+    <set >
+     <if test="categoryName != null and categoryName !=''" >
+       #{categoryName,jdbcType=VARCHAR},
+      </if>
+     <if test="parentId != null " >
+       #{parentId,jdbcType=BIGINT},
+      </if>
+     <if test="categoryCode != null and categoryCode !=''" >
+       #{category_code,jdbcType=VARCHAR},
+      </if>
+     <if test="path != null and path !=''" >
+       #{path,jdbcType=VARCHAR},
+      </if>
+     <if test="channel != null and channel !=''" >
+       #{channel,jdbcType=VARCHAR},
+      </if>
+     <if test="creator != null and creator !=''" >
+       #{creator,jdbcType=VARCHAR},
+      </if>
+     <if test="modifier != null and modifier !=''" >
+       #{modifier,jdbcType=VARCHAR},
+      </if>
+     <if test="creationDate != null and creationDate !=''" >
+       #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+     <if test="lastModifiedDate != null and lastModifiedDate !=''" >
+       #{lastModifiedDate,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where 
+     		st_type_id = #{stTypeId,jdbcType=BIGINT}
+  </update>
+  
+   <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.SpecialTopicCategory" >
+    update media_special_topic_category
+     set 
+     	 		category_name= #{categoryName,jdbcType=VARCHAR},
+     	 		parent_id= #{parentId,jdbcType=BIGINT},
+     	 		category_code= #{categoryCode,jdbcType=VARCHAR},
+     	 		path= #{path,jdbcType=VARCHAR},
+     	 		channel= #{path,jdbcType=VARCHAR},
+     	 		creator= #{creator,jdbcType=VARCHAR},
+     	 		modifier= #{modifier,jdbcType=VARCHAR},
+     	 		creation_date= #{creationDate,jdbcType=TIMESTAMP},
+     	 		last_modified_date= #{lastModifiedDate,jdbcType=TIMESTAMP},
+    where 
+     		st_type_id = #{stTypeId,jdbcType=BIGINT}
+  </update>
+ <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_special_topic_category where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_special_topic_category where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_special_topic_category where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

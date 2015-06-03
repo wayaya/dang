@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MediaResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.MediaResource" >
+    <result column="file_id" property="fileId" jdbcType="BIGINT" />
+    <result column="cdn_path" property="cdnPath" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="file_size" property="fileSize" jdbcType="VARCHAR" />
+    <result column="upload_date" property="uploadDate" jdbcType="TIMESTAMP" />
+    <result column="dir_id" property="dirId" jdbcType="INTEGER" />
+    <result column="uploader" property="uploader" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="fileId != null" > and d.file_id=#{fileId} </if>
+    <if test="cdnPath != null" > and d.cdn_path=#{cdnPath} </if>
+    <if test="fileName != null" > and d.file_name=#{fileName} </if>
+    <if test="fileSize != null" > and d.file_size=#{fileSize} </if>
+    <if test="uploadDate != null" > and d.upload_date=#{uploadDate} </if>
+    <if test="dirId != null" > and d.dir_id=#{dirId} </if>
+    <if test="dirPath != null">
+    	and r.path like concat('${dirPath}','%')
+    </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    d.file_id, d.cdn_path, d.file_name, d.file_size, d.upload_date,d.dir_id,r.path dirPath,d.uploader
+  </sql>
+  <insert id="insert" parameterType="com.dangdang.digital.model.MediaResource" >
+    insert into media_resource (file_id, cdn_path, file_name, 
+      file_size, upload_date,dir_id,uploader)
+    values (#{fileId,jdbcType=BIGINT}, #{cdnPath,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
+      #{fileSize,jdbcType=BIGINT}, #{uploadDate,jdbcType=TIMESTAMP},#{dirId,jdbcType=INTEGER}
+      ,#{uploader,jdbcType=VARCHAR})
+  </insert>
+   <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.MediaResource" >
+    update media_resource
+    <set >
+      <if test="cdnPath != null" >
+        cdn_path = #{cdnPath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        file_size = #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="uploadDate != null" >
+        upload_date = #{uploadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dirId != null" >
+        dir_id = #{dirId,jdbcType=INTEGER},
+      </if>
+      <if test="uploader != null" >
+        uploader = #{uploader,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where file_id = #{fileId,jdbcType=BIGINT}
+  </update>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.MediaResource" >
+    insert into media_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fileId != null" >
+        file_id,
+      </if>
+      <if test="cdnPath != null" >
+        cdn_path,
+      </if>
+      <if test="fileName != null" >
+        file_name,
+      </if>
+      <if test="fileSize != null" >
+        file_size,
+      </if>
+      <if test="uploadDate != null" >
+        upload_date,
+      </if>
+      <if test="dirId != null" >
+        dir_id,
+      </if>
+      <if test="uploader != null" >
+        uploader,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fileId != null" >
+        #{fileId,jdbcType=BIGINT},
+      </if>
+      <if test="cdnPath != null" >
+        #{cdnPath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="uploadDate != null" >
+        #{uploadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dirId != null" >
+        #{dirId,jdbcType=INTEGER},
+      </if>
+      <if test="uploader != null" >
+        #{uploader,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    d.file_id, d.cdn_path, d.file_name, d.file_size, d.upload_date,d.dir_id,d.uploader
+    from media_resource d
+    where d.file_Id = #{fileId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_resource
+    where file_id = #{fileId,jdbcType=BIGINT}
+  </delete>
+  <delete id="delResByPath" parameterType="map" >
+    delete from media_resource
+    where  dir_id in (select dir_id from media_resource_directory where path like concat('${path}','%'))
+  </delete>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_resource d left join media_resource_directory r on d.dir_id=r.dir_id where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_resource d left join media_resource_directory r on d.dir_id=r.dir_id where r.is_cdn=${isCdn} <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_resource d left join media_resource_directory r on d.dir_id=r.dir_id where r.is_cdn=${isCdn} <include refid="Base_Where" />
+  </select>
+</mapper>

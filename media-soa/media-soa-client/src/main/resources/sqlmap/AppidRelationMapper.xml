@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AppidRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.AppidRelation" >
+    <id column="appid_relation_id" property="appidRelationId" jdbcType="INTEGER" />
+    <result column="appid" property="appid" jdbcType="INTEGER" />
+    <result column="appkey" property="appkey" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="INTEGER" />
+    <result column="device_key" property="deviceKey" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="appidRelationId != null" > and notification_apikey_id=#{appidRelationId} </if>
+    <if test="appid != null" > and appid=#{appid} </if>
+    <if test="appkey != null" > and appkey=#{appkey} </if>
+    <if test="deviceType != null" > and device_type=#{deviceType} </if>
+    <if test="deviceKey != null" > and device_key=#{deviceKey} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    appid_relation_id, appid, appkey, device_type, device_key
+  </sql>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_appid_relation where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

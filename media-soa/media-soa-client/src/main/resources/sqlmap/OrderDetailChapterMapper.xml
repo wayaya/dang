@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="OrderDetailChapterMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.OrderDetailChapter" >
+    <id column="order_detail_chapter_id" property="orderDetailChapterId" jdbcType="BIGINT" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+    <result column="sale_info_relation_id" property="saleInfoRelationId" jdbcType="BIGINT" />
+    <result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="chapter_no" property="chapterNo" jdbcType="INTEGER" />
+    <result column="chapter_id" property="chapterId" jdbcType="BIGINT" />
+    <result column="chapter_price" property="chapterPrice" jdbcType="INTEGER" />
+    <result column="pay_main_price" property="payMainPrice" jdbcType="INTEGER" />
+    <result column="pay_sub_price" property="paySubPrice" jdbcType="INTEGER" />
+    <result column="pre_price" property="prePrice" jdbcType="INTEGER" />
+    <result column="vsp_price" property="vspPrice" jdbcType="INTEGER" />
+    <result column="active_id" property="activeId" jdbcType="INTEGER" />
+    <result column="coupon_price" property="couponPrice" jdbcType="INTEGER" />
+    <result column="giving_point" property="givingPoint" jdbcType="INTEGER" />
+    <result column="down_ration" property="downRation" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="orderDetailChapterId != null" > and order_detail_chapter_id=#{orderDetailChapterId} </if>
+    <if test="orderNo != null" > and order_no=#{orderNo} </if>
+    <if test="orderDetailId != null" > and order_detail_id=#{orderDetailId} </if>
+    <if test="saleInfoRelationId != null" > and sale_info_relation_id=#{saleInfoRelationId} </if>
+    <if test="mediaName != null" > and media_name=#{mediaName} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="chapterNo != null" > and chapter_no=#{chapterNo} </if>
+    <if test="chapterId != null" > and chapter_id=#{chapterId} </if>
+    <if test="chapterPrice != null" > and chapter_price=#{chapterPrice} </if>
+    <if test="payMainPrice != null" > and pay_main_price=#{payMainPrice} </if>
+    <if test="paySubPrice != null" > and pay_sub_price=#{paySubPrice} </if>
+    <if test="prePrice != null" > and pre_price=#{prePrice} </if>
+    <if test="vspPrice != null" > and vsp_price=#{vspPrice} </if>
+    <if test="activeId != null" > and active_id=#{activeId} </if>
+    <if test="couponPrice != null" > and coupon_price=#{couponPrice} </if>
+    <if test="givingPoint != null" > and giving_point=#{givingPoint} </if>
+    <if test="downRation != null"> and down_ration= #{downRation}</if>	
+  </sql>
+  <sql id="Base_Column_List" >
+    order_detail_chapter_id, order_no, order_detail_id, sale_info_relation_id, media_name, 
+    media_id, chapter_no, chapter_id, chapter_price, pay_main_price, pay_sub_price, pre_price, vsp_price, 
+    active_id, coupon_price, giving_point,down_ration
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_order_detail_chapter
+    where order_detail_chapter_id = #{orderDetailChapterId,jdbcType=BIGINT}
+  </select>
+  <select id="getOrderDetailChaptersListByOrderDetailId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_order_detail_chapter
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_order_detail_chapter
+    where order_detail_chapter_id = #{orderDetailChapterId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.OrderDetailChapter" >
+    insert into media_order_detail_chapter (order_detail_chapter_id, order_no, order_detail_id, 
+      sale_info_relation_id, media_name, media_id, 
+      chapter_no, chapter_id, chapter_price, pay_main_price, 
+      pay_sub_price, pre_price, vsp_price, 
+      active_id, coupon_price, giving_point,down_ration
+      )
+    values (#{orderDetailChapterId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{orderDetailId,jdbcType=BIGINT}, 
+      #{saleInfoRelationId,jdbcType=BIGINT}, #{mediaName,jdbcType=VARCHAR}, #{mediaId,jdbcType=BIGINT}, 
+      #{chapterNo,jdbcType=INTEGER}, #{chapterId,jdbcType=BIGINT}, #{chapterPrice,jdbcType=INTEGER}, #{payMainPrice,jdbcType=INTEGER}, 
+      #{paySubPrice,jdbcType=INTEGER}, #{prePrice,jdbcType=INTEGER}, #{vspPrice,jdbcType=INTEGER}, 
+      #{activeId,jdbcType=INTEGER}, #{couponPrice,jdbcType=INTEGER}, #{givingPoint,jdbcType=INTEGER},#{downRation,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.OrderDetailChapter" useGeneratedKeys="true" keyProperty="orderDetailChapterId">
+    insert into media_order_detail_chapter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderDetailChapterId != null" >
+        order_detail_chapter_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="saleInfoRelationId != null" >
+        sale_info_relation_id,
+      </if>
+      <if test="mediaName != null" >
+        media_name,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="chapterNo != null" >
+        chapter_no,
+      </if>
+      <if test="chapterId != null" >
+        chapter_id,
+      </if>
+      <if test="chapterPrice != null" >
+        chapter_price,
+      </if>
+      <if test="payMainPrice != null" >
+        pay_main_price,
+      </if>
+      <if test="paySubPrice != null" >
+        pay_sub_price,
+      </if>
+      <if test="prePrice != null" >
+        pre_price,
+      </if>
+      <if test="vspPrice != null" >
+        vsp_price,
+      </if>
+      <if test="activeId != null" >
+        active_id,
+      </if>
+      <if test="couponPrice != null" >
+        coupon_price,
+      </if>
+      <if test="givingPoint != null" >
+        giving_point,
+      </if>
+      <if test="downRation != null">down_ration,</if>	
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderDetailChapterId != null" >
+        #{orderDetailChapterId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="saleInfoRelationId != null" >
+        #{saleInfoRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="chapterNo != null" >
+        #{chapterNo,jdbcType=INTEGER},
+      </if>
+      <if test="chapterId != null" >
+        #{chapterId,jdbcType=BIGINT},
+      </if>
+      <if test="chapterPrice != null" >
+        #{chapterPrice,jdbcType=INTEGER},
+      </if>
+      <if test="payMainPrice != null" >
+        #{payMainPrice,jdbcType=INTEGER},
+      </if>
+      <if test="paySubPrice != null" >
+        #{paySubPrice,jdbcType=INTEGER},
+      </if>
+      <if test="prePrice != null" >
+        #{prePrice,jdbcType=INTEGER},
+      </if>
+      <if test="vspPrice != null" >
+        #{vspPrice,jdbcType=INTEGER},
+      </if>
+      <if test="activeId != null" >
+        #{activeId,jdbcType=INTEGER},
+      </if>
+      <if test="couponPrice != null" >
+        #{couponPrice,jdbcType=INTEGER},
+      </if>
+      <if test="givingPoint != null" >
+        #{givingPoint,jdbcType=INTEGER},
+      </if>
+      <if test="downRation != null">
+		#{downRation,jdbcType=INTEGER},
+	</if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.OrderDetailChapter" >
+    update media_order_detail_chapter
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="saleInfoRelationId != null" >
+        sale_info_relation_id = #{saleInfoRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        media_name = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="chapterNo != null" >
+        chapter_no = #{chapterNo,jdbcType=INTEGER},
+      </if>
+      <if test="chapterId != null" >
+        chapter_id = #{chapterId,jdbcType=BIGINT},
+      </if>
+      <if test="chapterPrice != null" >
+        chapter_price = #{chapterPrice,jdbcType=INTEGER},
+      </if>
+      <if test="payMainPrice != null" >
+        pay_main_price = #{payMainPrice,jdbcType=INTEGER},
+      </if>
+      <if test="paySubPrice != null" >
+        pay_sub_price = #{paySubPrice,jdbcType=INTEGER},
+      </if>
+      <if test="prePrice != null" >
+        pre_price = #{prePrice,jdbcType=INTEGER},
+      </if>
+      <if test="vspPrice != null" >
+        vsp_price = #{vspPrice,jdbcType=INTEGER},
+      </if>
+      <if test="activeId != null" >
+        active_id = #{activeId,jdbcType=INTEGER},
+      </if>
+      <if test="couponPrice != null" >
+        coupon_price = #{couponPrice,jdbcType=INTEGER},
+      </if>
+      <if test="givingPoint != null" >
+        giving_point = #{givingPoint,jdbcType=INTEGER},
+      </if>
+      <if test="downRation != null">
+		down_ration = #{downRation,jdbcType=INTEGER}
+	</if>
+    </set>
+    where order_detail_chapter_id = #{orderDetailChapterId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.OrderDetailChapter" >
+    update media_order_detail_chapter
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      sale_info_relation_id = #{saleInfoRelationId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      chapter_no = #{chapterNo,jdbcType=INTEGER},
+      chapter_id = #{chapterId,jdbcType=BIGINT},
+      chapter_price = #{chapterPrice,jdbcType=INTEGER},
+      pay_main_price = #{payMainPrice,jdbcType=INTEGER},
+      pay_sub_price = #{paySubPrice,jdbcType=INTEGER},
+      pre_price = #{prePrice,jdbcType=INTEGER},
+      vsp_price = #{vspPrice,jdbcType=INTEGER},
+      active_id = #{activeId,jdbcType=INTEGER},
+      coupon_price = #{couponPrice,jdbcType=INTEGER},
+      giving_point = #{givingPoint,jdbcType=INTEGER},
+      down_ration = #{downRation,jdbcType=INTEGER}
+    where order_detail_chapter_id = #{orderDetailChapterId,jdbcType=BIGINT}
+  </update>
+  <insert id="insertbatch" parameterType="java.util.List">  
+    insert into media_order_detail_chapter (order_no, order_detail_id, 
+      sale_info_relation_id, media_name, media_id, 
+      chapter_no, chapter_id, chapter_price, pay_main_price, 
+      pay_sub_price, pre_price, vsp_price, 
+      active_id, coupon_price, giving_point,down_ration
+      ) values  
+    <foreach collection="list" item="item" index="index"  
+        separator=",">  
+        (#{item.orderNo,jdbcType=VARCHAR}, #{item.orderDetailId,jdbcType=BIGINT}, 
+      #{item.saleInfoRelationId,jdbcType=BIGINT}, #{item.mediaName,jdbcType=VARCHAR}, #{item.mediaId,jdbcType=BIGINT}, 
+      #{item.chapterNo,jdbcType=INTEGER}, #{item.chapterId,jdbcType=BIGINT}, #{item.chapterPrice,jdbcType=INTEGER}, #{item.payMainPrice,jdbcType=INTEGER}, 
+      #{item.paySubPrice,jdbcType=INTEGER}, #{item.prePrice,jdbcType=INTEGER}, #{item.vspPrice,jdbcType=INTEGER}, 
+      #{item.activeId,jdbcType=INTEGER}, #{item.couponPrice,jdbcType=INTEGER}, #{item.givingPoint,jdbcType=INTEGER},#{item.downRation,jdbcType=INTEGER})  
+    </foreach>  
+  </insert>  
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_order_detail_chapter where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_order_detail_chapter where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_order_detail_chapter where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

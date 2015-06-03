@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MediaStatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.MediaStatistics" >
+    <id column="s_id" property="sId" jdbcType="BIGINT" />
+    <result column="sale_id" property="saleId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="media_title" property="mediaTitle" jdbcType="VARCHAR" />
+    <result column="media_author_penname" property="mediaAuthorPenname" jdbcType="VARCHAR" />
+    <result column="media_cover" property="mediaCover" jdbcType="VARCHAR" />
+    <result column="media_introduce" property="mediaIntroduce" jdbcType="LONGVARCHAR" />
+    <result column="media_category_ids" property="mediaCategoryIds" jdbcType="VARCHAR" />
+    <result column="statistics_day" property="statisticsDay" jdbcType="TIMESTAMP" />
+    <result column="sale_count" property="saleCount" jdbcType="BIGINT" />
+    <result column="prize_count" property="prizeCount" jdbcType="BIGINT" />
+    <result column="rewards_count" property="rewardsCount" jdbcType="BIGINT" />
+    <result column="star_count" property="starCount" jdbcType="REAL" />
+    <result column="comment_count" property="commentCount" jdbcType="BIGINT" />
+    <result column="search_count" property="searchCount" jdbcType="BIGINT" />
+    <result column="download_count" property="downloadCount" jdbcType="BIGINT" />
+    <result column="play_count" property="playCount" jdbcType="BIGINT" />
+    <result column="media_chapter_change_date" property="mediaChapterChangeDate" jdbcType="TIMESTAMP" />
+    <result column="media_creation_date" property="mediaCreationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="sId != null" > and s_id=#{sId} </if>
+    <if test="saleId != null" > and sale_id=#{saleId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="mediaTitle != null" > and media_title=#{mediaTitle} </if>
+    <if test="mediaAuthorPenname != null" > and media_author_penname=#{mediaAuthorPenname} </if>
+    <if test="mediaCover != null" > and media_cover=#{mediaCover} </if>
+    <if test="mediaIntroduce != null" > and media_introduce=#{mediaIntroduce} </if>
+    <if test="mediaCategoryIds != null" > and media_category_ids=#{mediaCategoryIds} </if>
+    <if test="statisticsDay != null" > and statistics_day=#{statisticsDay} </if>
+    <if test="saleCount != null" > and sale_count=#{saleCount} </if>
+    <if test="prizeCount != null" > and prize_count=#{prizeCount} </if>
+    <if test="rewardsCount != null" > and rewards_count=#{rewardsCount} </if>
+    <if test="starCount != null" > and star_count=#{starCount} </if>
+    <if test="commentCount != null" > and comment_count=#{commentCount} </if>
+    <if test="searchCount != null" > and search_count=#{commentCount} </if>
+    <if test="downloadCount != null" > and download_count=#{commentCount} </if>
+    <if test="playCount != null" > and play_count=#{playCount} </if>
+    <if test="mediaChapterChangeDate != null" > and media_chapter_change_date=#{mediaChapterChangeDate} </if>
+    <if test="mediaCreationDate != null" > and media_creation_date=#{mediaCreationDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    s_id, sale_id, media_id, media_title, media_author_penname, media_cover, media_introduce, 
+    media_category_ids, statistics_day, sale_count, prize_count, rewards_count, star_count, 
+    comment_count, search_count, download_count, play_count, media_chapter_change_date, media_creation_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_statistics
+    where s_id = #{sId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_statistics
+    where s_id = #{sId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.MediaStatistics" >
+    insert into media_statistics (s_id, sale_id, media_id, 
+      media_title, media_author_penname, media_cover, 
+      media_introduce, media_category_ids, statistics_day, 
+      sale_count, prize_count, rewards_count, 
+      star_count, comment_count, search_count, download_count, play_count, media_chapter_change_date, 
+      media_creation_date)
+    values (#{sId,jdbcType=BIGINT}, #{saleId,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, 
+      #{mediaTitle,jdbcType=VARCHAR}, #{mediaAuthorPenname,jdbcType=VARCHAR}, #{mediaCover,jdbcType=VARCHAR}, 
+      #{mediaIntroduce,jdbcType=VARCHAR}, #{mediaCategoryIds,jdbcType=VARCHAR}, #{statisticsDay,jdbcType=TIMESTAMP}, 
+      #{saleCount,jdbcType=BIGINT}, #{prizeCount,jdbcType=BIGINT}, #{rewardsCount,jdbcType=BIGINT}, 
+      #{starCount,jdbcType=INTEGER}, #{commentCount,jdbcType=BIGINT}, #{searchCount,jdbcType=BIGINT}, #{downloadCount,jdbcType=BIGINT}, #{playCount,jdbcType=BIGINT}, #{mediaChapterChangeDate,jdbcType=TIMESTAMP}, 
+      #{mediaCreationDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.MediaStatistics" >
+    insert into media_statistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        s_id,
+      </if>
+      <if test="saleId != null" >
+        sale_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="mediaTitle != null" >
+        media_title,
+      </if>
+      <if test="mediaAuthorPenname != null" >
+        media_author_penname,
+      </if>
+      <if test="mediaCover != null" >
+        media_cover,
+      </if>
+      <if test="mediaIntroduce != null" >
+        media_introduce,
+      </if>
+      <if test="mediaCategoryIds != null" >
+        media_category_ids,
+      </if>
+      <if test="statisticsDay != null" >
+        statistics_day,
+      </if>
+      <if test="saleCount != null" >
+        sale_count,
+      </if>
+      <if test="prizeCount != null" >
+        prize_count,
+      </if>
+      <if test="rewardsCount != null" >
+        rewards_count,
+      </if>
+      <if test="starCount != null" >
+        star_count,
+      </if>
+      <if test="commentCount != null" >
+        comment_count,
+      </if>
+      <if test="searchCount != null" >
+        search_count,
+      </if>
+      <if test="downloadCount != null" >
+        download_count,
+      </if>
+      <if test="playCount != null" >
+        play_count,
+      </if>
+      <if test="mediaChapterChangeDate != null" >
+        media_chapter_change_date,
+      </if>
+      <if test="mediaCreationDate != null" >
+        media_creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        #{sId,jdbcType=BIGINT},
+      </if>
+      <if test="saleId != null" >
+        #{saleId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaTitle != null" >
+        #{mediaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaAuthorPenname != null" >
+        #{mediaAuthorPenname,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaCover != null" >
+        #{mediaCover,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaIntroduce != null" >
+        #{mediaIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaCategoryIds != null" >
+        #{mediaCategoryIds,jdbcType=VARCHAR},
+      </if>
+      <if test="statisticsDay != null" >
+        #{statisticsDay,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleCount != null" >
+        #{saleCount,jdbcType=BIGINT},
+      </if>
+      <if test="prizeCount != null" >
+        #{prizeCount,jdbcType=BIGINT},
+      </if>
+      <if test="rewardsCount != null" >
+        #{rewardsCount,jdbcType=BIGINT},
+      </if>
+      <if test="starCount != null" >
+        #{starCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null" >
+        #{commentCount,jdbcType=BIGINT},
+      </if>
+      <if test="searchCount != null" >
+        #{searchCount,jdbcType=BIGINT},
+      </if>
+      <if test="downloadCount != null" >
+        #{downloadtCount,jdbcType=BIGINT},
+      </if>
+      <if test="playCount != null" >
+        #{playCount,jdbcType=BIGINT},
+      </if>
+      <if test="mediaChapterChangeDate != null" >
+        #{mediaChapterChangeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaCreationDate != null" >
+        #{mediaCreationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.MediaStatistics" >
+    update media_statistics
+    <set >
+      <if test="saleId != null" >
+        sale_id = #{saleId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaTitle != null" >
+        media_title = #{mediaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaAuthorPenname != null" >
+        media_author_penname = #{mediaAuthorPenname,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaCover != null" >
+        media_cover = #{mediaCover,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaIntroduce != null" >
+        media_introduce = #{mediaIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mediaCategoryIds != null" >
+        media_category_ids = #{mediaCategoryIds,jdbcType=VARCHAR},
+      </if>
+      <if test="statisticsDay != null" >
+        statistics_day = #{statisticsDay,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleCount != null" >
+        sale_count = #{saleCount,jdbcType=BIGINT},
+      </if>
+      <if test="prizeCount != null" >
+        prize_count = #{prizeCount,jdbcType=BIGINT},
+      </if>
+      <if test="rewardsCount != null" >
+        rewards_count = #{rewardsCount,jdbcType=BIGINT},
+      </if>
+      <if test="starCount != null" >
+        star_count = #{starCount,jdbcType=REAL},
+      </if>
+      <if test="commentCount != null" >
+        comment_count = #{commentCount,jdbcType=BIGINT},
+      </if>
+      <if test="searchCount != null" >
+        search_count = #{searchCount,jdbcType=BIGINT},
+      </if>
+      <if test="downloadCount != null" >
+        download_count = #{downloadCount,jdbcType=BIGINT},
+      </if>
+      <if test="playCount != null" >
+        play_count = #{playCount,jdbcType=BIGINT},
+      </if>
+      <if test="mediaChapterChangeDate != null" >
+        media_chapter_change_date = #{mediaChapterChangeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediaCreationDate != null" >
+        media_creation_date = #{mediaCreationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where s_id = #{sId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.MediaStatistics" >
+    update media_statistics
+    set sale_id = #{saleId,jdbcType=BIGINT},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      media_title = #{mediaTitle,jdbcType=VARCHAR},
+      media_author_penname = #{mediaAuthorPenname,jdbcType=VARCHAR},
+      media_cover = #{mediaCover,jdbcType=VARCHAR},
+      media_introduce = #{mediaIntroduce,jdbcType=LONGVARCHAR},
+      media_category_ids = #{mediaCategoryIds,jdbcType=VARCHAR},
+      statistics_day = #{statisticsDay,jdbcType=TIMESTAMP},
+      sale_count = #{saleCount,jdbcType=BIGINT},
+      prize_count = #{prizeCount,jdbcType=BIGINT},
+      rewards_count = #{rewardsCount,jdbcType=BIGINT},
+      star_count = #{starCount,jdbcType=REAL},
+      comment_count = #{commentCount,jdbcType=BIGINT},
+      search_count = #{searchCount,jdbcType=BIGINT},
+      download_count = #{downloadCount,jdbcType=BIGINT},
+      play_count = #{playCount,jdbcType=BIGINT},
+      media_chapter_change_date = #{mediaChapterChangeDate,jdbcType=TIMESTAMP},
+      media_creation_date = #{mediaCreationDate,jdbcType=TIMESTAMP}
+    where s_id = #{sId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_statistics where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_statistics where 1=1 <include refid="Base_Where" />
+  </select>
+  <!-- media_statistics每天的统计是一下事务,所在只需要查询 max(statistics_day)即可,而不需要再判断维度-->
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+   <![CDATA[
+  		select  media_id,sale_id,media_title,media_author_penname,media_chapter_change_date,media_creation_date 
+  			from  media_statistics
+	 		where 
+	 			media_category_ids like '%${sexChannel}%'
+	 			and  statistics_day= (select max(statistics_day) from media_statistics ) 
+			order by ${order_column} desc
+  			
+  ]]>
+  </select>
+  <delete id="deleteByMap"  parameterType="map">
+  delete from media_statistics where statistics_day=#{statisticsDay,jdbcType=TIMESTAMP}
+  </delete>
+  
+  <select id="getSaleIdList" resultType="java.lang.Long" parameterType="map" >
+   <![CDATA[
+  		select  media_statistics.sale_id  
+  			from  media_statistics  left join media_sale on media_statistics.sale_id = media_sale.sale_id
+	 		where 
+	 		 statistics_day =(select max(statistics_day) from media_statistics)
+	 		 and media_category_ids like '%${sexChannel}%'
+	 		 and media_sale.shelf_status =1
+			 order by ${order_column} desc
+			 limit ${limit_offset}, ${limit_count}
+  ]]>
+  </select>
+  <select id="getBySaleId" resultMap="BaseResultMap"  parameterType="map">
+  	  select <include refid="Base_Column_List" /> from media_statistics where 
+  	  	statistics_day= (select max(statistics_day) from media_statistics) 
+  	  	and sale_id in
+	  <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	   	${item}
+	  </foreach> 
+  </select>
+  <!-- 单品销售主体 -->
+  <select id="getSaleTotalCount" resultType="java.lang.Long" parameterType="map" >
+   <![CDATA[
+  		select  count(1)  
+  			from  media_statistics left join media_sale on media_statistics.sale_id = media_sale.sale_id
+	 		where 
+	 			statistics_day= (select max(statistics_day) from media_statistics)
+	 			and media_category_ids like '%${sexChannel}%'
+	 			and media_sale.shelf_status =1
+				order by ${order_column}
+  			
+  ]]>
+  
+  </select>
+  
+  <select id="getData" resultMap="BaseResultMap" parameterType="map" >
+   <![CDATA[
+  		select  media_id,sale_id,media_title,media_author_penname,media_chapter_change_date,media_creation_date 
+  			from  media_statistics
+	 		where 
+	 			media_category_ids like '%${sexChannel}%'
+				order by ${order_column}
+				limit ${limit_offset},${limit_count}
+  			
+  ]]>
+  </select>
+  <!-- 按media分类读取销量前3名media信息,列表只显示前3,但这里读取前10,防防范下架的情况-->
+  <select id="getSaleTopNByCategory" resultMap="BaseResultMap" parameterType="map" >
+   <![CDATA[
+  		select  media_id,sale_id,media_title,media_author_penname
+  			from  media_statistics
+	 		where 
+	 			statistics_day =(select max(statistics_day) from media_statistics)
+	 			and media_category_ids like '%${category_path}%'
+				order by sale_count desc
+				limit ${topN}
+  			
+  ]]>
+  </select>
+  <select id="getSaleIdListByCategoryCodeAndDimension" resultType="java.lang.Long" parameterType="map" >
+   <![CDATA[
+  		select  sale_id 
+  			from  media_statistics
+	 		where 
+	 			media_category_ids like '%${categoryPath}%'
+	 			and  statistics_day = (select max(statistics_day) from media_statistics)
+				order by ${dimension} desc
+				limit ${limitStart},${count}
+  ]]>
+  </select>
+  
+  <!-- 销量,打赏,更新,评星榜统计条件  按维度排序,不同周期限统计  添加  media_creation_date asc-->
+  <select id="getSaleRankingList"  resultMap="BaseResultMap" parameterType="map">
+   <![CDATA[
+    select   sale_id, media_id, media_title, media_cover, 
+    	media_category_ids, statistics_day, sum(sale_count) as sale_count, sum(prize_count) as prize_count ,sum(rewards_count)  as rewards_count,
+    	avg(star_count) as star_count, sum(comment_count) as comment_count,  sum(download_count) as download_count,  sum(play_count) as play_count,
+    	sum(search_count) as search_count, media_chapter_change_date, media_creation_date  from media_statistics
+				 where  statistics_day between '${startTime}' and '${endTime}'
+        			and  media_category_ids like '%${sexChannel}%'
+        			group by media_id
+					order by ${orderColumn}  desc
+					limit ${limit}
+	 ]]>
+  </select>
+  
+  
+  <select id="getMediaCategoryMappingCount" resultType="java.lang.Integer" parameterType="map" >
+  	<![CDATA[
+	  	select count(1) from (select distinct media_id, media_category_ids from media_statistics t where t.statistics_day=#{statisticsDay,jdbcType=TIMESTAMP}) a
+  	]]>
+  </select>
+  <select id="getMediaCategoryMapping" resultType="HashMap" parameterType="map" >
+  	<![CDATA[
+	  	select distinct media_id, media_category_ids from media_statistics t 
+  			where t.statistics_day=#{statisticsDay,jdbcType=TIMESTAMP} order by t.media_id asc
+  	]]>
+  </select>
+  <select id="getBestSellerOfSpecifiedCategory" resultType="HashMap" parameterType="map" >
+  	<![CDATA[
+	  	select media_id, sale_id, sum(sale_count) as someDaysSum from media_statistics t 
+	  		where t.statistics_day>=#{fromDate,jdbcType=TIMESTAMP} and t.media_category_ids like '%${categoryPath}%'  
+	  			group by media_id, sale_id order by someDaysSum desc 
+  	]]>
+  </select>
+</mapper>

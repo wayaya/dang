@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dangdang.digital.dao.BookListDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.BookListDetail" >
+    <id column="booklist_detail_id" property="booklistDetailId" jdbcType="BIGINT" />
+    <result column="booklist_id" property="booklistId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="sale_id" property="saleId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="index" property="index" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="booklistDetailId != null" > and booklist_detail_id=#{booklistDetailId} </if>
+    <if test="booklistId != null" > and booklist_id=#{booklistId} </if>
+    <if test="type != null" > and type=#{type} </if>
+    <if test="saleId != null" > and sale_id=#{saleId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="productId != null" > and product_id=#{productId} </if>
+    <if test="index != null" > and index=#{index} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    booklist_detail_id, booklist_id, type, sale_id, media_id, product_id, index
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_booklist_detail
+    where booklist_detail_id = #{booklistDetailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_booklist_detail
+    where booklist_detail_id = #{booklistDetailId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.BookListDetail" >
+    insert into media_booklist_detail (booklist_detail_id, booklist_id, type, 
+      sale_id, media_id, product_id, 
+      index)
+    values (#{booklistDetailId,jdbcType=BIGINT}, #{booklistId,jdbcType=BIGINT}, #{type,jdbcType=TINYINT}, 
+      #{saleId,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
+      #{index,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.BookListDetail" >
+    insert into media_booklist_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="booklistDetailId != null" >
+        booklist_detail_id,
+      </if>
+      <if test="booklistId != null" >
+        booklist_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="saleId != null" >
+        sale_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="index != null" >
+        index,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="booklistDetailId != null" >
+        #{booklistDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="booklistId != null" >
+        #{booklistId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="saleId != null" >
+        #{saleId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="index != null" >
+        #{index,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.BookListDetail" >
+    update media_booklist_detail
+    <set >
+      <if test="booklistId != null" >
+        booklist_id = #{booklistId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="saleId != null" >
+        sale_id = #{saleId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="index != null" >
+        index = #{index,jdbcType=BIGINT},
+      </if>
+    </set>
+    where booklist_detail_id = #{booklistDetailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.BookListDetail" >
+    update media_booklist_detail
+    set booklist_id = #{booklistId,jdbcType=BIGINT},
+      type = #{type,jdbcType=TINYINT},
+      sale_id = #{saleId,jdbcType=BIGINT},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT},
+      index = #{index,jdbcType=BIGINT}
+    where booklist_detail_id = #{booklistDetailId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_booklist_detail where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_booklist_detail where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_booklist_detail where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

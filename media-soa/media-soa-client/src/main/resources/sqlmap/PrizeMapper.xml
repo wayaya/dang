@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PrizeMapper" >
+  <resultMap id="BaseResultMap" type="Prize" >
+    <id column="media_lottery_prize_id" property="mediaLotteryPrizeId" jdbcType="BIGINT" />
+    <result column="prize_name" property="prizeName" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="probability" property="probability" jdbcType="REAL" />
+    <result column="day_limit" property="dayLimit" jdbcType="INTEGER" />
+    <result column="total_limit" property="totalLimit" jdbcType="INTEGER" />
+    <result column="prize_type" property="prizeType" jdbcType="INTEGER" />
+    <result column="prize_id" property="prizeId" jdbcType="BIGINT" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="vest_type" property="vestType" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="mediaLotteryPrizeId != null" > and media_lottery_prize_id=#{mediaLotteryPrizeId} </if>
+    <if test="prizeName != null" > and prize_name like CONCAT('%',#{prizeName} ,'%')</if>
+    <if test="introduce != null" > and introduce=#{introduce} </if>
+    <if test="probability != null" > and probability=#{probability} </if>
+    <if test="dayLimit != null" > and day_limit=#{dayLimit} </if>
+    <if test="totalLimit != null" > and total_limit=#{totalLimit} </if>
+    <if test="prizeType != null" > and prize_type=#{prizeType} </if>
+    <if test="prizeId != null" > and prize_id=#{prizeId} </if>
+    <if test="amount != null" > and amount=#{amount} </if>
+    <if test="vestType != null" > and vest_type=#{vestType} </if>
+    <if test="startDate != null" > and start_date=#{startDate} </if>
+    <if test="endDate != null" > and end_date=#{endDate} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="lastModifiedDate != null" > and last_modified_date=#{lastModifiedDate} </if>
+    <if test="creator != null" > and creator=#{creator} </if>
+    <if test="modifier != null" > and modifier=#{modifier} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    media_lottery_prize_id, prize_name, introduce, probability, day_limit, total_limit, 
+    prize_type, prize_id, amount, vest_type, start_date, end_date, creation_date, last_modified_date, 
+    creator, modifier
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_lottery_prize
+    where media_lottery_prize_id = #{mediaLotteryPrizeId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByVestType" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_lottery_prize
+    where vest_type = #{vest_type,jdbcType=INTEGER} and (probability!=0 and probability is not null) and NOW() BETWEEN start_date and end_date
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_lottery_prize
+    where media_lottery_prize_id = #{mediaLotteryPrizeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="Prize" >
+    insert into media_lottery_prize (media_lottery_prize_id, prize_name, introduce, 
+      probability, day_limit, total_limit, 
+      prize_type, prize_id, amount, 
+      vest_type, start_date, end_date, 
+      creation_date, last_modified_date, creator, 
+      modifier)
+    values (#{mediaLotteryPrizeId,jdbcType=BIGINT}, #{prizeName,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
+      #{probability,jdbcType=REAL}, #{dayLimit,jdbcType=INTEGER}, #{totalLimit,jdbcType=INTEGER}, 
+      #{prizeType,jdbcType=INTEGER}, #{prizeId,jdbcType=BIGINT}, #{amount,jdbcType=INTEGER}, 
+      #{vestType,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{lastModifiedDate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
+      #{modifier,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="Prize" >
+    insert into media_lottery_prize
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaLotteryPrizeId != null" >
+        media_lottery_prize_id,
+      </if>
+      <if test="prizeName != null" >
+        prize_name,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+      <if test="probability != null" >
+        probability,
+      </if>
+      <if test="dayLimit != null" >
+        day_limit,
+      </if>
+      <if test="totalLimit != null" >
+        total_limit,
+      </if>
+      <if test="prizeType != null" >
+        prize_type,
+      </if>
+      <if test="prizeId != null" >
+        prize_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="vestType != null" >
+        vest_type,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaLotteryPrizeId != null" >
+        #{mediaLotteryPrizeId,jdbcType=BIGINT},
+      </if>
+      <if test="prizeName != null" >
+        #{prizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="probability != null" >
+        #{probability,jdbcType=REAL},
+      </if>
+      <if test="dayLimit != null" >
+        #{dayLimit,jdbcType=INTEGER},
+      </if>
+      <if test="totalLimit != null" >
+        #{totalLimit,jdbcType=INTEGER},
+      </if>
+      <if test="prizeType != null" >
+        #{prizeType,jdbcType=INTEGER},
+      </if>
+      <if test="prizeId != null" >
+        #{prizeId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="vestType != null" >
+        #{vestType,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedDate != null" >
+        #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Prize" >
+    update media_lottery_prize
+    <set >
+      <if test="prizeName != null" >
+        prize_name = #{prizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="probability != null" >
+        probability = #{probability,jdbcType=REAL},
+      </if>
+      <if test="dayLimit != null" >
+        day_limit = #{dayLimit,jdbcType=INTEGER},
+      </if>
+      <if test="totalLimit != null" >
+        total_limit = #{totalLimit,jdbcType=INTEGER},
+      </if>
+      <if test="prizeType != null" >
+        prize_type = #{prizeType,jdbcType=INTEGER},
+      </if>
+      <if test="prizeId != null" >
+        prize_id = #{prizeId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="vestType != null" >
+        vest_type = #{vestType,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where media_lottery_prize_id = #{mediaLotteryPrizeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Prize" >
+    update media_lottery_prize
+    set prize_name = #{prizeName,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      probability = #{probability,jdbcType=REAL},
+      day_limit = #{dayLimit,jdbcType=INTEGER},
+      total_limit = #{totalLimit,jdbcType=INTEGER},
+      prize_type = #{prizeType,jdbcType=INTEGER},
+      prize_id = #{prizeId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=INTEGER},
+      vest_type = #{vestType,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where media_lottery_prize_id = #{mediaLotteryPrizeId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_lottery_prize where 1=1 
+    <include refid="Base_Where" /> order by media_lottery_prize_id desc
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_lottery_prize where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_lottery_prize where 1=1 
+    <include refid="Base_Where" /> order by media_lottery_prize_id desc
+  </select>
+  
+  <!-- 获取有效奖品的概率总和 -->
+  <select id="selectSumProByVestType" resultType="java.lang.Double" parameterType="int" >
+    select IFNULL(sum(probability),0) from media_lottery_prize where vest_type = #{vestType,jdbcType=INTEGER} and NOW() BETWEEN start_date and end_date
+  </select>
+  
+   <select id="selectPrizeAmountVestType" resultType="java.lang.Integer" parameterType="int" >
+    select count(1) from media_lottery_prize where vest_type = #{vestType,jdbcType=INTEGER} and probability!=0 and probability is not null and NOW() BETWEEN start_date and end_date
+  </select>
+  
+</mapper>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AnthologyMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Anthology" >
+    <id column="anthology_id" property="anthologyId" jdbcType="BIGINT" />
+    <result column="anthology_name" property="anthologyName" jdbcType="VARCHAR" />
+    <result column="anthology_pic" property="anthologyPic" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="platform" property="platform" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="anthologyId != null" > and anthology_id=#{anthologyId} </if>
+    <if test="anthologyName != null" > and anthology_name=#{anthologyName} </if>
+    <if test="anthologyPic != null" > and anthology_pic=#{anthologyPic} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="custName != null" > and cust_name=#{custName} </if>
+    <if test="createDate != null" > and create_date=#{createDate} </if>
+    <if test="platform != null" > and platform=#{platform} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    anthology_id, anthology_name, anthology_pic, cust_id, cust_name, create_date, platform
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_anthology
+    where anthology_id = #{anthologyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_anthology
+    where anthology_id = #{anthologyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.Anthology" useGeneratedKeys="true" keyProperty="anthologyId">
+    insert into media_anthology (anthology_id, anthology_name, anthology_pic, 
+      cust_id, cust_name, create_date, 
+      platform)
+    values (#{anthologyId,jdbcType=BIGINT}, #{anthologyName,jdbcType=VARCHAR}, #{anthologyPic,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=BIGINT}, #{custName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{platform,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Anthology" >
+    insert into media_anthology
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="anthologyId != null" >
+        anthology_id,
+      </if>
+      <if test="anthologyName != null" >
+        anthology_name,
+      </if>
+      <if test="anthologyPic != null" >
+        anthology_pic,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="custName != null" >
+        cust_name,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="anthologyId != null" >
+        #{anthologyId,jdbcType=BIGINT},
+      </if>
+      <if test="anthologyName != null" >
+        #{anthologyName,jdbcType=VARCHAR},
+      </if>
+      <if test="anthologyPic != null" >
+        #{anthologyPic,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Anthology" >
+    update media_anthology
+    <set >
+      <if test="anthologyName != null" >
+        anthology_name = #{anthologyName,jdbcType=VARCHAR},
+      </if>
+      <if test="anthologyPic != null" >
+        anthology_pic = #{anthologyPic,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="custName != null" >
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="platform != null" >
+        platform = #{platform,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where anthology_id = #{anthologyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Anthology" >
+    update media_anthology
+    set anthology_name = #{anthologyName,jdbcType=VARCHAR},
+      anthology_pic = #{anthologyPic,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=BIGINT},
+      cust_name = #{custName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      platform = #{platform,jdbcType=VARCHAR}
+    where anthology_id = #{anthologyId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_anthology where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_anthology where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_anthology where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="queryAnthologyListByCustId" resultMap="BaseResultMap" parameterType="map">
+  	select <include refid="Base_Column_List" /> from media_anthology where 1=1 
+  	<if test="custId != null and custId !=''">
+  		and cust_id = #{custId,jdbcType=BIGINT} 
+  	</if>
+  	<if test="platform != null and platform !=''">
+  		and platform = #{platform} 
+  	</if>
+  	<if test="lastDate != null and lastDate !=''">
+  		<![CDATA[
+  			and create_date < #{lastDate} 
+  		]]>
+  	</if>
+  	order by create_date desc 
+  	limit #{pageSize}
+  </select>
+</mapper>

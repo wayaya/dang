@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CloudPushStatisticMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.CloudPushStatistic" >
+    <id column="cloud_push_statistics_id" property="cloudPushStatisticsId" jdbcType="BIGINT" />
+    <result column="cloud_push_plan_id" property="cloudPushPlanId" jdbcType="BIGINT" />
+    <result column="pushed_number" property="pushedNumber" jdbcType="BIGINT" />
+    <result column="opened_number" property="openedNumber" jdbcType="BIGINT" />
+    <result column="statistic_day" property="statisticDay" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="cloudPushStatisticsId != null" > and cloud_push_statistics_id=#{cloudPushStatisticsId} </if>
+    <if test="cloudPushPlanId != null" > and cloud_push_plan_id=#{cloudPushPlanId} </if>
+    <if test="pushedNumber != null" > and pushed_number=#{pushedNumber} </if>
+    <if test="openedNumber != null" > and opened_number=#{openedNumber} </if>
+    <if test="statisticDay != null" > and statistic_day=#{statisticDay} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    cloud_push_statistics_id, cloud_push_plan_id, pushed_number, opened_number, statistic_day
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_cloud_push_statistics
+    where cloud_push_statistics_id = #{cloudPushStatisticsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_cloud_push_statistics
+    where cloud_push_statistics_id = #{cloudPushStatisticsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.CloudPushStatistic"  useGeneratedKeys="true" keyProperty="cloudPushStatisticsId"  >
+    insert into media_cloud_push_statistics (cloud_push_statistics_id, cloud_push_plan_id, 
+      pushed_number, opened_number, statistic_day
+      )
+    values (#{cloudPushStatisticsId,jdbcType=BIGINT}, #{cloudPushPlanId,jdbcType=BIGINT}, 
+      #{pushedNumber,jdbcType=BIGINT}, #{openedNumber,jdbcType=BIGINT}, #{statisticDay,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.CloudPushStatistic"  useGeneratedKeys="true" keyProperty="cloudPushStatisticsId"  >
+    insert into media_cloud_push_statistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cloudPushStatisticsId != null" >
+        cloud_push_statistics_id,
+      </if>
+      <if test="cloudPushPlanId != null" >
+        cloud_push_plan_id,
+      </if>
+      <if test="pushedNumber != null" >
+        pushed_number,
+      </if>
+      <if test="openedNumber != null" >
+        opened_number,
+      </if>
+      <if test="statisticDay != null" >
+        statistic_day,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cloudPushStatisticsId != null" >
+        #{cloudPushStatisticsId,jdbcType=BIGINT},
+      </if>
+      <if test="cloudPushPlanId != null" >
+        #{cloudPushPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="pushedNumber != null" >
+        #{pushedNumber,jdbcType=BIGINT},
+      </if>
+      <if test="openedNumber != null" >
+        #{openedNumber,jdbcType=BIGINT},
+      </if>
+      <if test="statisticDay != null" >
+        #{statisticDay,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.CloudPushStatistic" >
+    update media_cloud_push_statistics
+    <set >
+      <if test="cloudPushPlanId != null" >
+        cloud_push_plan_id = #{cloudPushPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="pushedNumber != null" >
+        pushed_number = #{pushedNumber,jdbcType=BIGINT},
+      </if>
+      <if test="openedNumber != null" >
+        opened_number = #{openedNumber,jdbcType=BIGINT},
+      </if>
+      <if test="statisticDay != null" >
+        statistic_day = #{statisticDay,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cloud_push_statistics_id = #{cloudPushStatisticsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.CloudPushStatistic" >
+    update media_cloud_push_statistics
+    set cloud_push_plan_id = #{cloudPushPlanId,jdbcType=BIGINT},
+      pushed_number = #{pushedNumber,jdbcType=BIGINT},
+      opened_number = #{openedNumber,jdbcType=BIGINT},
+      statistic_day = #{statisticDay,jdbcType=TIMESTAMP}
+    where cloud_push_statistics_id = #{cloudPushStatisticsId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="addOpenNumber" parameterType="com.dangdang.digital.model.CloudPushStatistic">
+  	update media_cloud_push_statistics set opened_number = (opened_number+#{openedNumber,jdbcType=BIGINT}) where cloud_push_plan_id = #{cloudPushPlanId,jdbcType=BIGINT} 
+  		and statistic_day = #{statisticDay,jdbcType=TIMESTAMP}
+  </update>
+  <update id="addPushNumber" parameterType="com.dangdang.digital.model.CloudPushStatistic">
+  	update media_cloud_push_statistics set pushed_number = (pushed_number+#{pushedNumber,jdbcType=BIGINT}) where cloud_push_plan_id = #{cloudPushPlanId,jdbcType=BIGINT} 
+  		and statistic_day = #{statisticDay,jdbcType=TIMESTAMP}
+  </update>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cloud_push_statistics where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_cloud_push_statistics where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cloud_push_statistics where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

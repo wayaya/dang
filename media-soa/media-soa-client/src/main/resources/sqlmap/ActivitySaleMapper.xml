@@ -1,0 +1,260 @@
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ActivitySaleMapper">
+
+	<resultMap id="BaseResultMap" type="ActivitySale">
+		<id column="activity_sale_id" property="activitySaleId" jdbcType="INTEGER" />
+		<result column="activity_id" property="activityId" jdbcType="INTEGER" />
+		<result column="sale_id" property="saleId" jdbcType="INTEGER" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="sale_price" property="salePrice" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<sql id="Base_Where">
+		<if test="activitySaleId != null"> and activity_sale_id=#{activitySaleId} </if>
+		<if test="activityId != null"> and activity_id=#{activityId} </if>
+		<if test="saleId != null"> and sale_id=#{saleId} </if>
+		<if test="startTime != null"> and start_time=#{startTime} </if>
+		<if test="endTime != null"> and end_time=#{endTime} </if>
+		<if test="status != null"> and status=#{status} </if>
+		<if test="sort != null"> and sort=#{sort} </if>
+		<if test="salePrice != null"> and sale_price=#{salePrice} </if>
+		<if test="withinPeriodValidity != null"> and now() BETWEEN start_time AND end_time and status=1 </if>
+	</sql>
+
+	<sql id="Base_Column_List">
+		activity_sale_id, activity_id, sale_id, start_time, end_time, status,sort,
+		sale_price
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from media_activity_sale
+		where activity_sale_id = #{activitySaleId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from media_activity_sale
+		where activity_sale_id = #{activitySaleId,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="ActivitySale">
+		insert into media_activity_sale 
+		(
+			activity_sale_id, 
+			activity_id, 
+			sale_id,
+			start_time, 
+			end_time,
+			status, 
+			sort,
+			sale_price
+		)
+		values 
+		(
+			#{activitySaleId,jdbcType=INTEGER}, 
+			#{activityId,jdbcType=INTEGER},
+			#{saleId,jdbcType=INTEGER},
+			#{startTime,jdbcType=TIMESTAMP}, 
+			#{endTime,jdbcType=TIMESTAMP},
+			#{status,jdbcType=INTEGER}, 
+			#{sort,jdbcType=INTEGER}, 
+			#{salePrice,jdbcType=DECIMAL}
+		)
+	</insert>
+
+	<insert id="batchInsert" parameterType="ActivitySale">
+		insert into media_activity_sale 
+		(
+			activity_sale_id, 
+			activity_id, 
+			sale_id,
+			start_time, 
+			end_time,
+			status, 
+			sort,
+			sale_price
+		)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{item.activitySaleId,jdbcType=INTEGER}, 
+			#{item.activityId,jdbcType=INTEGER},
+			#{item.saleId,jdbcType=INTEGER},
+			#{item.startTime,jdbcType=TIMESTAMP}, 
+			#{item.endTime,jdbcType=TIMESTAMP},
+			#{item.status,jdbcType=INTEGER}, 
+			#{item.sort,jdbcType=INTEGER}, 
+			#{item.salePrice,jdbcType=DECIMAL}
+		)
+		</foreach>
+	</insert>
+
+	<insert id="insertSelective" parameterType="ActivitySale">
+		insert into media_activity_sale
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="activitySaleId != null">
+				activity_sale_id,
+			</if>
+			<if test="activityId != null">
+				activity_id,
+			</if>
+			<if test="saleId != null">
+				sale_id,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="salePrice != null">
+				sale_price,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="activitySaleId != null">
+				#{activitySaleId,jdbcType=INTEGER},
+			</if>
+			<if test="activityId != null">
+				#{activityId,jdbcType=INTEGER},
+			</if>
+			<if test="saleId != null">
+				#{saleId,jdbcType=INTEGER},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=INTEGER},
+			</if>
+			<if test="salePrice != null">
+				#{salePrice,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="ActivitySale">
+		update media_activity_sale
+		<set>
+			<if test="activityId != null">
+				activity_id = #{activityId,jdbcType=INTEGER},
+			</if>
+			<if test="saleId != null">
+				sale_id = #{saleId,jdbcType=INTEGER},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="salePrice != null">
+				sale_price = #{salePrice,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where activity_sale_id = #{activitySaleId,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="ActivitySale">
+		update media_activity_sale
+		set activity_id = #{activityId,jdbcType=INTEGER},
+		sale_id = #{saleId,jdbcType=INTEGER},
+		start_time = #{startTime,jdbcType=TIMESTAMP},
+		end_time = #{endTime,jdbcType=TIMESTAMP},
+		status = #{status,jdbcType=INTEGER},
+		sort = #{sort,jdbcType=INTEGER},
+		sale_price = #{salePrice,jdbcType=DECIMAL}
+		where activity_sale_id = #{activitySaleId,jdbcType=INTEGER}
+	</update>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" /> 
+		from media_activity_sale where activity_sale_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			${item}
+		</foreach>
+	</select>
+	
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_activity_sale where 1=1
+		<include refid="Base_Where" />  order by activity_sale_id desc
+	</select>
+
+	<select id="pageCount" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(1) from media_activity_sale where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_activity_sale where 1=1
+		<include refid="Base_Where" />  order by activity_sale_id desc
+	</select>
+	
+	<select id="getHotFreeSaleIdList" resultType="java.lang.Long" parameterType="java.lang.Integer">
+		select sale_id 
+		from media_activity_sale 
+			where activity_id=#{activityId,jdbcType=INTEGER}
+ 			and `status` =1
+			and now() between start_time  and end_time order by sort desc
+	</select>
+	
+	<select id="getHotFreeExpireTime" resultType="java.lang.String" parameterType="java.lang.Integer">
+		SELECT max(end_time )  from media_activity_sale 
+			where activity_id=#{activityId,jdbcType=INTEGER}
+  			and `status` =1
+			and now() between start_time  and end_time
+	</select>
+	
+	<select id="getAllInUse" resultMap="BaseResultMap" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		media_activity_sale
+		where STATUS = 1
+		AND now() &lt; end_time
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="getAllInUseByActivityIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" /> 
+		from media_activity_sale where
+		STATUS = 1
+		AND now() &lt; end_time
+		and activity_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			${item}
+		</foreach>
+	</select>
+	
+</mapper>

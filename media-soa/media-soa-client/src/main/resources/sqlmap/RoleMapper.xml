@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.Role" >
+    <id column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="roleId != null" > and role_id=#{roleId} </if>
+    <if test="name != null and name !='' " > and name=#{name} </if>
+    <if test="creator != null and creator !='' " > and creator=#{creator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="modifier != null and modifier !='' " > and modifier=#{modifier} </if>
+    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    role_id, name, creator, creation_date, modifier, last_changed_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_role
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_role
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByIds" parameterType="list" >
+    delete from media_role
+    where role_id in 
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  		#{item}  
+  	</foreach>
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.Role" useGeneratedKeys="true" keyProperty="roleId" >
+    insert into media_role (role_id, name, creator, 
+      creation_date, modifier, last_changed_date
+      )
+    values (#{roleId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{lastChangedDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Role" useGeneratedKeys="true" keyProperty="roleId" >
+    insert into media_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Role" >
+    update media_role
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Role" >
+    update media_role
+    set name = #{name,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP}
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByIds" resultMap="BaseResultMap">  
+    select  
+    <include refid="Base_Column_List" />  
+    from media_role where role_id in 
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+     	#{item}  
+    </foreach>  
+  </select>  
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_role where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_role where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_role where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

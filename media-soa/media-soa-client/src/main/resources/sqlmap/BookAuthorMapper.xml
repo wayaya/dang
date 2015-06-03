@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BookAuthorMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.BookAuthor" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="digest_id" property="digestId" jdbcType="BIGINT" />
+    <result column="author_id" property="authorId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="id != null" > and id=#{id} </if>
+    <if test="digestId != null" > and digest_id=#{digestId} </if>
+    <if test="authorId != null" > and author_id=#{authorId} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, digest_id, author_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_digest_author
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_digest_author
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.BookAuthor" >
+    insert into media_digest_author (id, digest_id, author_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{digestId,jdbcType=BIGINT}, #{authorId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.BookAuthor" >
+    insert into media_digest_author
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="digestId != null" >
+        digest_id,
+      </if>
+      <if test="authorId != null" >
+        author_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="digestId != null" >
+        #{digestId,jdbcType=BIGINT},
+      </if>
+      <if test="authorId != null" >
+        #{authorId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.BookAuthor" >
+    update media_digest_author
+    <set >
+      <if test="digestId != null" >
+        digest_id = #{digestId,jdbcType=BIGINT},
+      </if>
+      <if test="authorId != null" >
+        author_id = #{authorId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.BookAuthor" >
+    update media_digest_author
+    set digest_id = #{digestId,jdbcType=BIGINT},
+      author_id = #{authorId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_digest_author where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_digest_author where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_digest_author where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <select id="queryDigestIdsByAuthorId" resultType="java.lang.Long" parameterType="map">
+  	select digest_id from media_digest_author where 1=1 
+  	<if test="authorId != null and authorId !=  ''">
+  		and author_id = #{authorId}
+  	</if>
+  </select>
+  
+</mapper>

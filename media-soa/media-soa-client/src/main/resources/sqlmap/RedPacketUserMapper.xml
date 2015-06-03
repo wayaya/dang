@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="RedPacketUserMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.RedPacketUser" >
+    <id column="media_red_packet_user_id" property="mediaRedPacketUserId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="prize_id" property="prizeId" jdbcType="BIGINT" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="put_cons" property="putCons" jdbcType="INTEGER" />
+    <result column="left_amount" property="leftAmount" jdbcType="INTEGER" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="mediaRedPacketUserId != null" > and media_red_packet_user_id=#{mediaRedPacketUserId} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="prizeId != null" > and prize_id=#{prizeId} </if>
+    <if test="amount != null" > and amount=#{amount} </if>
+    <if test="putCons != null" > and put_cons=#{putCons} </if>
+    <if test="leftAmount != null" > and left_amount=#{leftAmount} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    media_red_packet_user_id, cust_id, prize_id, amount, put_cons, left_amount, creation_date
+  </sql>
+  <sql id="CustID_Base_Where" >
+    <if test="custId != null" > cust_id=#{custId} </if>
+    <if test="creationDateStart != null" ><![CDATA[ and creation_date > #{creationDateStart}]]> </if>
+    <if test="creationDateEnd != null" ><![CDATA[ and creation_date < #{creationDateEnd}]]> </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_red_packet_user
+    where media_red_packet_user_id = #{mediaRedPacketUserId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_red_packet_user
+    where media_red_packet_user_id = #{mediaRedPacketUserId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.RedPacketUser" >
+    insert into media_red_packet_user (media_red_packet_user_id, cust_id, prize_id, 
+      amount, put_cons, left_amount, 
+      creation_date)
+    values (#{mediaRedPacketUserId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{prizeId,jdbcType=BIGINT}, 
+      #{amount,jdbcType=INTEGER}, #{putCons,jdbcType=INTEGER}, #{leftAmount,jdbcType=INTEGER}, 
+      #{creationDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.RedPacketUser"   useGeneratedKeys="true" keyProperty="mediaRedPacketUserId">
+    insert into media_red_packet_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaRedPacketUserId != null" >
+        media_red_packet_user_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="prizeId != null" >
+        prize_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="putCons != null" >
+        put_cons,
+      </if>
+      <if test="leftAmount != null" >
+        left_amount,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaRedPacketUserId != null" >
+        #{mediaRedPacketUserId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="prizeId != null" >
+        #{prizeId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="putCons != null" >
+        #{putCons,jdbcType=INTEGER},
+      </if>
+      <if test="leftAmount != null" >
+        #{leftAmount,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.RedPacketUser" >
+    update media_red_packet_user
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="prizeId != null" >
+        prize_id = #{prizeId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="putCons != null" >
+        put_cons = #{putCons,jdbcType=INTEGER},
+      </if>
+      <if test="leftAmount != null" >
+        left_amount = #{leftAmount,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where media_red_packet_user_id = #{mediaRedPacketUserId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.RedPacketUser" >
+    update media_red_packet_user
+    set cust_id = #{custId,jdbcType=BIGINT},
+      prize_id = #{prizeId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=INTEGER},
+      put_cons = #{putCons,jdbcType=INTEGER},
+      left_amount = #{leftAmount,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where media_red_packet_user_id = #{mediaRedPacketUserId,jdbcType=BIGINT}
+  </update>
+  
+   <!-- 次数-1，发放钱数，增加 -->
+  <update id="updateGetted" parameterType="map" >
+    update media_red_packet_user
+    set put_cons = put_cons+#{putCons,jdbcType=INTEGER},
+      left_amount = left_amount-1
+    where media_red_packet_user_id = #{mediaRedPacketUserId,jdbcType=BIGINT}
+  </update>
+  
+   <!-- 查询该红包剩余的次数 -->
+  <select id="getLefts" resultType="java.lang.Integer" parameterType="long" >
+    select left_amount from media_red_packet_user where media_red_packet_user_id = #{mediaRedPacketUserId,jdbcType=BIGINT}
+  </select>
+  
+   <!-- 查询，该用户今天分享的红包个数 -->
+   <select id="selectCountByCustId" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) total
+    from media_red_packet_user
+    where <include refid="CustID_Base_Where" /> 
+  </select>
+  
+  <!--  通过奖品id查取红包id -->
+  <select id="selectRedPacketIdByPrizeIdFromDb" resultType="java.lang.Long" parameterType="long" >
+    select media_red_packet_user_id from media_red_packet_user where  prize_id = #{prizeId,jdbcType=BIGINT}
+  </select>
+  
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_red_packet_user where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_red_packet_user where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_red_packet_user where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="OrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.OrderDetail" >
+    <id column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="sale_info_id" property="saleInfoId" jdbcType="BIGINT" />
+    <result column="sale_info_name" property="saleInfoName" jdbcType="VARCHAR" />
+    <result column="active_id" property="activeId" jdbcType="VARCHAR" />
+    <result column="pay_main_price" property="payMainPrice" jdbcType="INTEGER" />
+    <result column="pay_sub_price" property="paySubPrice" jdbcType="INTEGER" />
+    <result column="pre_price" property="prePrice" jdbcType="INTEGER" />
+    <result column="vsp_price" property="vspPrice" jdbcType="INTEGER" />
+    <result column="coupon_price" property="couponPrice" jdbcType="INTEGER" />
+    <result column="giving_point" property="givingPoint" jdbcType="INTEGER" />
+    <result column="down_ration_price" property="downRationPrice" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="orderDetailId != null" > and order_detail_id=#{orderDetailId} </if>
+    <if test="orderNo != null" > and order_no=#{orderNo} </if>
+    <if test="saleInfoId != null" > and sale_info_id=#{saleInfoId} </if>
+    <if test="saleInfoName != null" > and sale_info_name=#{saleInfoName} </if>
+    <if test="activeId != null" > and active_id=#{activeId} </if>
+    <if test="totalPrice != null" > and total_price=#{totalPrice} </if>
+    <if test="payMainPrice != null" > and pay_main_price=#{payMainPrice} </if>
+    <if test="paySubPrice != null" > and pay_sub_price=#{paySubPrice} </if>
+    <if test="prePrice != null" > and pre_price=#{prePrice} </if>
+    <if test="vspPrice != null" > and vsp_price=#{vspPrice} </if>
+    <if test="couponPrice != null" > and coupon_price=#{couponPrice} </if>
+    <if test="givingPoint != null" > and giving_point=#{givingPoint} </if>
+    <if test="downRationPrice != null"> and down_ration_price= #{downRationPrice}</if>	
+  </sql>
+  <sql id="Base_Column_List" >
+    order_detail_id, order_no, sale_info_id, sale_info_name, active_id, total_price, 
+    pay_main_price, pay_sub_price, pre_price, vsp_price, coupon_price, giving_point,down_ration_price 
+  </sql>
+  <resultMap id="Buy_Glob_Top_List" type="com.dangdang.digital.model.RewardTop" >
+  	<result column="sale_info_name" property="mediaName" jdbcType="VARCHAR" />
+  	<result column="sum(a.pay_main_price)" property="totalCons" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="Buy_Silver_Top_List" type="com.dangdang.digital.model.RewardTop" >
+  	<result column="sale_info_name" property="mediaName" jdbcType="VARCHAR" />
+  	<result column="sum(a.pay_sub_price)" property="totalCons" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_order_detail
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </select>
+  <select id="getOrderDetailsListByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_order_detail
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_order_detail
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.OrderDetail" >
+    insert into media_order_detail (order_detail_id, order_no, sale_info_id, 
+      sale_info_name, active_id, total_price, 
+      pay_main_price, pay_sub_price, pre_price, 
+      vsp_price, coupon_price, giving_point,down_ration_price)
+    values (#{orderDetailId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{saleInfoId,jdbcType=BIGINT}, 
+      #{saleInfoName,jdbcType=VARCHAR}, #{activeId,jdbcType=VARCHAR}, #{totalPrice,jdbcType=INTEGER}, 
+      #{payMainPrice,jdbcType=INTEGER}, #{paySubPrice,jdbcType=INTEGER}, #{prePrice,jdbcType=INTEGER}, 
+      #{vspPrice,jdbcType=INTEGER}, #{couponPrice,jdbcType=INTEGER}, #{givingPoint,jdbcType=INTEGER},#{downRationPrice,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.OrderDetail" useGeneratedKeys="true" keyProperty="orderDetailId">
+    insert into media_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="saleInfoId != null" >
+        sale_info_id,
+      </if>
+      <if test="saleInfoName != null" >
+        sale_info_name,
+      </if>
+      <if test="activeId != null" >
+        active_id,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="payMainPrice != null" >
+        pay_main_price,
+      </if>
+      <if test="paySubPrice != null" >
+        pay_sub_price,
+      </if>
+      <if test="prePrice != null" >
+        pre_price,
+      </if>
+      <if test="vspPrice != null" >
+        vsp_price,
+      </if>
+      <if test="couponPrice != null" >
+        coupon_price,
+      </if>
+      <if test="givingPoint != null" >
+        giving_point,
+      </if>
+      <if test="downRationPrice != null">down_ration_price,</if>	
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="saleInfoId != null" >
+        #{saleInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="saleInfoName != null" >
+        #{saleInfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="activeId != null" >
+        #{activeId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="payMainPrice != null" >
+        #{payMainPrice,jdbcType=INTEGER},
+      </if>
+      <if test="paySubPrice != null" >
+        #{paySubPrice,jdbcType=INTEGER},
+      </if>
+      <if test="prePrice != null" >
+        #{prePrice,jdbcType=INTEGER},
+      </if>
+      <if test="vspPrice != null" >
+        #{vspPrice,jdbcType=INTEGER},
+      </if>
+      <if test="couponPrice != null" >
+        #{couponPrice,jdbcType=INTEGER},
+      </if>
+      <if test="givingPoint != null" >
+        #{givingPoint,jdbcType=INTEGER},
+      </if>
+      <if test="downRationPrice != null">
+		#{downRationPrice,jdbcType=INTEGER},
+	</if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.OrderDetail" >
+    update media_order_detail
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="saleInfoId != null" >
+        sale_info_id = #{saleInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="saleInfoName != null" >
+        sale_info_name = #{saleInfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="activeId != null" >
+        active_id = #{activeId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="payMainPrice != null" >
+        pay_main_price = #{payMainPrice,jdbcType=INTEGER},
+      </if>
+      <if test="paySubPrice != null" >
+        pay_sub_price = #{paySubPrice,jdbcType=INTEGER},
+      </if>
+      <if test="prePrice != null" >
+        pre_price = #{prePrice,jdbcType=INTEGER},
+      </if>
+      <if test="vspPrice != null" >
+        vsp_price = #{vspPrice,jdbcType=INTEGER},
+      </if>
+      <if test="couponPrice != null" >
+        coupon_price = #{couponPrice,jdbcType=INTEGER},
+      </if>
+      <if test="givingPoint != null" >
+        giving_point = #{givingPoint,jdbcType=INTEGER},
+      </if>
+      <if test="downRationPrice != null">
+		down_ration_price = #{downRationPrice,jdbcType=INTEGER}
+	</if>
+    </set>
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.OrderDetail" >
+    update media_order_detail
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      sale_info_id = #{saleInfoId,jdbcType=BIGINT},
+      sale_info_name = #{saleInfoName,jdbcType=VARCHAR},
+      active_id = #{activeId,jdbcType=VARCHAR},
+      total_price = #{totalPrice,jdbcType=INTEGER},
+      pay_main_price = #{payMainPrice,jdbcType=INTEGER},
+      pay_sub_price = #{paySubPrice,jdbcType=INTEGER},
+      pre_price = #{prePrice,jdbcType=INTEGER},
+      vsp_price = #{vspPrice,jdbcType=INTEGER},
+      coupon_price = #{couponPrice,jdbcType=INTEGER},
+      giving_point = #{givingPoint,jdbcType=INTEGER},
+      down_ration_price = #{downRationPrice,jdbcType=INTEGER}
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_order_detail where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_order_detail where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_order_detail where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="selectBuyChapterGlobTop" resultMap="Buy_Glob_Top_List"  parameterType="map" >
+    select a.sale_info_name, sum(a.pay_main_price) from media_order_detail a left join media_order_main b on a.order_no=b.order_no where 1=1
+    <if test="startDate != ''">
+    	and b.pay_time &gt; #{startDate,jdbcType=TIMESTAMP} 
+    </if>
+    <if test="endDate != ''">
+    	and b.pay_time &lt; #{endDate,jdbcType=TIMESTAMP}
+    </if>
+    	group by a.sale_info_name order by sum(a.pay_main_price) desc
+    <if test="count != null" >
+        limit #{count,jdbcType=INTEGER}
+    </if>    
+  </select>
+  <select id="selectBuyChapterSilverTop" resultMap="Buy_Silver_Top_List"  parameterType="map" >
+    select a.sale_info_name, sum(a.pay_sub_price) from media_order_detail a left join media_order_main b on a.order_no=b.order_no where 1=1
+    <if test="startDate != ''">
+    	and b.pay_time &gt; #{startDate,jdbcType=TIMESTAMP} 
+    </if>
+    <if test="endDate != ''">
+    	and b.pay_time &lt; #{endDate,jdbcType=TIMESTAMP}
+    </if>
+    	group by a.sale_info_name order by sum(a.pay_sub_price) desc
+    <if test="count != null" >
+        limit #{count,jdbcType=INTEGER}
+    </if>    
+  </select>
+</mapper>

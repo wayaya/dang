@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DailyStatisticReadAlsoReadMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.DailyStatisticReadAlsoRead" >
+    <id column="readalsoread_daily_statistic_id" property="readalsoreadDailyStatisticId" jdbcType="BIGINT" />
+    <result column="result_key" property="resultKey" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="readalsoreadDailyStatisticId != null" > and readalsoread_daily_statistic_id=#{readalsoreadDailyStatisticId} </if>
+    <if test="resultKey != null" > and result_key=#{resultKey} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    readalsoread_daily_statistic_id, result_key
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_daily_statistic_readalsoread
+    where readalsoread_daily_statistic_id = #{readalsoreadDailyStatisticId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_daily_statistic_readalsoread
+    where readalsoread_daily_statistic_id = #{readalsoreadDailyStatisticId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.DailyStatisticReadAlsoRead" >
+    insert into media_daily_statistic_readalsoread (readalsoread_daily_statistic_id, result_key
+      )
+    values (#{readalsoreadDailyStatisticId,jdbcType=BIGINT}, #{resultKey,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.DailyStatisticReadAlsoRead" >
+    insert into media_daily_statistic_readalsoread
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="readalsoreadDailyStatisticId != null" >
+        readalsoread_daily_statistic_id,
+      </if>
+      <if test="resultKey != null" >
+        result_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="readalsoreadDailyStatisticId != null" >
+        #{readalsoreadDailyStatisticId,jdbcType=BIGINT},
+      </if>
+      <if test="resultKey != null" >
+        #{resultKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <insert id="truncateTable">
+  	truncate table media_daily_statistic_readalsoread;
+  </insert>
+  
+  <insert id="moveDataToRecommendRelation">
+  	insert into media_recommend_relation(media_id, related_media_id, relation_type, score, creation_date)
+	(select 0+SUBSTRING(result_key, 12, 10), 
+			0+SUBSTRING(result_key, 23, 10),
+			0+SUBSTRING(result_key, 10, 1), 
+			count(1), 
+			CONCAT(SUBSTRING(result_key, 1, 4),'/',SUBSTRING(result_key, 5, 2),'/',SUBSTRING(result_key, 7, 2), ' 00:00:00')
+				from media_daily_statistic_readalsoread group by result_key )
+  </insert>
+  
+  <insert id="insertBatch" parameterType="java.util.List">
+  	 insert into media_daily_statistic_readalsoread (result_key) values 
+  	<foreach collection="list" item="item" index="index" separator=",">
+  		(#{item.resultKey})
+  	</foreach>
+  </insert>
+  
+  <select id="findUniqueByResultKeys" resultMap="BaseResultMap" >
+  	select distinct result_key from media_daily_statistic_readalsoread where result_key in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			'${item}'
+		</foreach> 
+  </select>
+  
+  <select id="countByResultKey" resultType="java.lang.Integer" parameterType="map">
+		select 1 from media_daily_statistic_readalsoread where result_key=#{resultKey} limit 1
+  </select>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.DailyStatisticReadAlsoRead" >
+    update media_daily_statistic_readalsoread
+    <set >
+      <if test="resultKey != null" >
+        result_key = #{resultKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where readalsoread_daily_statistic_id = #{readalsoreadDailyStatisticId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.DailyStatisticReadAlsoRead" >
+    update media_daily_statistic_readalsoread
+    set result_key = #{resultKey,jdbcType=VARCHAR}
+    where readalsoread_daily_statistic_id = #{readalsoreadDailyStatisticId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_daily_statistic_readalsoread where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_daily_statistic_readalsoread where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_daily_statistic_readalsoread where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

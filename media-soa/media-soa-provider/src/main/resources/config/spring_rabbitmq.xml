@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.1.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- 定义rabbitmq连接工厂，生产环境使用集群配置，支持failover -->
+	<rabbit:connection-factory id="rabbitConnectionFactory" addresses="${rabbitmq.address}" username="${rabbitmq.username}" password="${rabbitmq.password}" channel-cache-size="30" />
+
+	<rabbit:admin connection-factory="rabbitConnectionFactory" />
+
+	<bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter">
+		<property name="classMapper">
+			<bean class="org.springframework.amqp.support.converter.DefaultClassMapper">
+			</bean>
+		</property>
+	</bean>
+
+	<rabbit:template id="rabbitTemplate" connection-factory="rabbitConnectionFactory" channel-transacted="false" message-converter="jsonMessageConverter" />
+	<!-- 创建订单后继处理queue -->
+	<rabbit:queue id="createOrderSubsequentQueue" name="media.create.order.subsequent.queue">
+		<rabbit:queue-arguments>
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	<!-- 除订单外其它添加已购信息queue -->
+	<rabbit:queue id="otherAddBoughtQueue" name="media.other.add.bought.queue">
+		<rabbit:queue-arguments>
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	<!-- 修改上下架状态queue -->
+	<rabbit:queue id="mediaSaleChgShelf" name="media.sale.change.shelf">
+		<rabbit:queue-arguments>
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	<!-- 添加用户行为queue -->
+	<rabbit:queue id="mediaAddUserBehavior" name="media.add.user.behavior">
+		<rabbit:queue-arguments>
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+
+	<!-- 监听生产者发送的消息开始 -->
+	<!-- 创建订单后继处理消息监听 -->
+	<bean id="createOrderSubsequentListener" class="com.dangdang.digital.listener.CreateOrderSubsequentListener"></bean>
+	<!-- 除订单外其它添加已购信息消息监听 -->
+	<bean id="otherAddBoughtListener" class="com.dangdang.digital.listener.OtherAddBoughtListener"></bean>
+	<!-- 上下架消息监听 -->
+	<bean id="changeShelfStatusListener" class="com.dangdang.digital.listener.ChangeShelfStatusListener"></bean>
+	<!-- 添加用户行为消息监听 -->
+	<bean id="addUserBehaviorListener" class="com.dangdang.digital.listener.AddUserBehaviorListener"></bean>
+	<!-- 异常监听 -->
+	<bean id="rabbitMqErrorHandler" class=" com.dangdang.digital.listener.RabbitMqErrorHandler" />
+
+	<rabbit:listener-container connection-factory="rabbitConnectionFactory" message-converter="jsonMessageConverter" channel-transacted="false" error-handler="rabbitMqErrorHandler"
+		concurrency="4">
+		<rabbit:listener queues="media.sale.change.shelf" ref="changeShelfStatusListener" method="handleMessage" />
+		<rabbit:listener queues="media.create.order.subsequent.queue" ref="createOrderSubsequentListener" method="handleMessage" />
+		<rabbit:listener queues="media.other.add.bought.queue" ref="otherAddBoughtListener" method="handleMessage" />
+		<rabbit:listener queues="media.add.user.behavior" ref="addUserBehaviorListener" method="handleMessage" />
+	</rabbit:listener-container>
+
+</beans>

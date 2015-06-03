@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ChapterContentMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.ChapterContent" >
+    <id column="chapter_id" property="chapterId" jdbcType="BIGINT" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="last_changed_date" property="lastChangedDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dangdang.digital.model.ChapterContent" extends="BaseResultMap" >
+    <result column="chapter_content" property="chapterContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="chapterId != null" > and chapter_id=#{chapterId} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="lastChangedDate != null" > and last_changed_date=#{lastChangedDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    chapter_id, creation_date, last_changed_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    chapter_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from media_chapter_content
+    where chapter_id = #{chapterId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_chapter_content
+    where chapter_id = #{chapterId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.ChapterContent" >
+    insert into media_chapter_content (chapter_id, creation_date, last_changed_date, 
+      chapter_content)
+    values (#{chapterId,jdbcType=BIGINT}, #{creationDate,jdbcType=TIMESTAMP}, #{lastChangedDate,jdbcType=TIMESTAMP}, 
+      #{chapterContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.ChapterContent" >
+    insert into media_chapter_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="chapterId != null" >
+        chapter_id,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date,
+      </if>
+      <if test="chapterContent != null" >
+        chapter_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="chapterId != null" >
+        #{chapterId,jdbcType=BIGINT},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastChangedDate != null" >
+        #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chapterContent != null" >
+        #{chapterContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.ChapterContent" >
+    update media_chapter_content
+    <set >
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastChangedDate != null" >
+        last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chapterContent != null" >
+        chapter_content = #{chapterContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where chapter_id = #{chapterId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dangdang.digital.model.ChapterContent" >
+    update media_chapter_content
+    set creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP},
+      chapter_content = #{chapterContent,jdbcType=LONGVARCHAR}
+    where chapter_id = #{chapterId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.ChapterContent" >
+    update media_chapter_content
+    set creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      last_changed_date = #{lastChangedDate,jdbcType=TIMESTAMP}
+    where chapter_id = #{chapterId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_chapter_content where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_chapter_content where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_chapter_content where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

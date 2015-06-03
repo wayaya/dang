@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserMonthlyMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.UserMonthly" >
+    <id column="user_monthly_id" property="userMonthlyId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="monthly_payment_relation" property="monthlyPaymentRelation" jdbcType="VARCHAR" />
+    <result column="monthly_type" property="monthlyType" jdbcType="SMALLINT" />
+    <result column="monthly_start_time" property="monthlyStartTime" jdbcType="TIMESTAMP" />
+    <result column="monthly_end_time" property="monthlyEndTime" jdbcType="TIMESTAMP" />
+    <result column="share_giving_time" property="shareGivingTime" jdbcType="TIMESTAMP" />
+    <result column="first_login_giving" property="firstLoginGiving" jdbcType="SMALLINT" />
+    <result column="first_share_giving" property="firstShareGiving" jdbcType="SMALLINT" />
+    <result column="first_login_giving_days" property="firstLoginGivingDays" jdbcType="INTEGER" />
+    <result column="first_share_giving_days" property="firstShareGivingDays" jdbcType="INTEGER" />
+    <result column="operate_version" property="operateVersion" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="userMonthlyId != null" > and user_monthly_id=#{userMonthlyId} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="monthlyPaymentRelation != null" > and monthly_payment_relation=#{monthlyPaymentRelation} </if>
+    <if test="monthlyType != null" > and monthly_type=#{monthlyType} </if>
+    <if test="monthlyStartTime != null" > and monthly_start_time=#{monthlyStartTime} </if>
+    <if test="monthlyEndTime != null" > and monthly_end_time=#{monthlyEndTime} </if>
+    <if test="shareGivingTime != null" > and share_giving_time=#{shareGivingTime} </if>
+    <if test="firstLoginGiving != null" > and first_login_giving=#{firstLoginGiving} </if>
+    <if test="firstShareGiving != null" > and first_share_giving=#{firstShareGiving} </if>
+    <if test="operateVersion != null" > and operate_version=#{operateVersion} </if>
+    <if test="firstLoginGivingDays != null" > and first_login_giving_days=#{firstLoginGivingDays} </if>
+    <if test="firstShareGivingDays != null" > and first_share_giving_days=#{firstShareGivingDays} </if>
+    <if test="withinPeriodValidity != null"> and now() BETWEEN monthly_start_time AND monthly_end_time </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_monthly_id, cust_id, monthly_payment_relation, monthly_type, monthly_start_time, 
+    monthly_end_time, first_login_giving, first_share_giving, first_login_giving_days, 
+    first_share_giving_days, operate_version,share_giving_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_user_monthly
+    where user_monthly_id = #{userMonthlyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_user_monthly
+    where user_monthly_id = #{userMonthlyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.UserMonthly" >
+    insert into media_user_monthly (user_monthly_id, cust_id, monthly_payment_relation, 
+      monthly_type, monthly_start_time, monthly_end_time, 
+      first_login_giving, first_share_giving, first_login_giving_days, 
+      first_share_giving_days, operate_version,share_giving_time)
+    values (#{userMonthlyId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{monthlyPaymentRelation,jdbcType=VARCHAR}, 
+      #{monthlyType,jdbcType=SMALLINT}, #{monthlyStartTime,jdbcType=TIMESTAMP}, #{monthlyEndTime,jdbcType=TIMESTAMP}, 
+      #{firstLoginGiving,jdbcType=SMALLINT}, #{firstShareGiving,jdbcType=SMALLINT}, #{firstLoginGivingDays,jdbcType=INTEGER}, 
+      #{firstShareGivingDays,jdbcType=INTEGER}, #{operateVersion,jdbcType=INTEGER}, #{shareGivingTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.UserMonthly" >
+    insert into media_user_monthly
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userMonthlyId != null" >
+        user_monthly_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+       <if test="monthlyPaymentRelation != null" >
+        monthly_payment_relation,
+      </if>
+      <if test="monthlyType != null" >
+        monthly_type,
+      </if>
+      <if test="monthlyStartTime != null" >
+        monthly_start_time,
+      </if>
+      <if test="monthlyEndTime != null" >
+        monthly_end_time,
+      </if>
+       <if test="shareGivingTime != null" >
+        share_giving_time,
+      </if>
+      <if test="firstLoginGiving != null" >
+        first_login_giving,
+      </if>
+      <if test="firstShareGiving != null" >
+        first_share_giving,
+      </if>
+       <if test="firstLoginGivingDays != null" >
+        first_login_giving_days,
+      </if>
+      <if test="firstShareGivingDays != null" >
+        first_share_giving_days,
+      </if>
+      <if test="operateVersion != null" >
+        operate_version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userMonthlyId != null" >
+        #{userMonthlyId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="monthlyPaymentRelation != null" >
+        #{monthlyPaymentRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyType != null" >
+        #{monthlyType,jdbcType=SMALLINT},
+      </if>
+      <if test="monthlyStartTime != null" >
+        #{monthlyStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monthlyEndTime != null" >
+        #{monthlyEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shareGivingTime != null" >
+        #{shareGivingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstLoginGiving != null" >
+        #{firstLoginGiving,jdbcType=SMALLINT},
+      </if>
+      <if test="firstShareGiving != null" >
+        #{firstShareGiving,jdbcType=SMALLINT},
+      </if>
+      <if test="firstLoginGivingDays != null" >
+        #{firstLoginGivingDays,jdbcType=INTEGER},
+      </if>
+      <if test="firstShareGivingDays != null" >
+        #{firstShareGivingDays,jdbcType=INTEGER},
+      </if>
+      <if test="operateVersion != null" >
+        #{operateVersion,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.UserMonthly" >
+    update media_user_monthly
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="monthlyPaymentRelation != null" >
+        monthly_payment_relation = #{monthlyPaymentRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyType != null" >
+        monthly_type = #{monthlyType,jdbcType=SMALLINT},
+      </if>
+      <if test="monthlyStartTime != null" >
+        monthly_start_time = #{monthlyStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monthlyEndTime != null" >
+        monthly_end_time = #{monthlyEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shareGivingTime != null" >
+        share_giving_time = #{shareGivingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstLoginGiving != null" >
+        first_login_giving = #{firstLoginGiving,jdbcType=SMALLINT},
+      </if>
+      <if test="firstShareGiving != null" >
+        first_share_giving = #{firstShareGiving,jdbcType=SMALLINT},
+      </if>
+      <if test="firstLoginGivingDays != null" >
+        first_login_giving_days = #{firstLoginGivingDays,jdbcType=INTEGER},
+      </if>
+      <if test="firstShareGivingDays != null" >
+        first_share_giving_days = #{firstShareGivingDays,jdbcType=INTEGER},
+      </if>
+      <if test="operateVersion != null" >
+        operate_version = #{operateVersion,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_monthly_id = #{userMonthlyId,jdbcType=BIGINT} and operate_version = #{operateVersion}-1
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.UserMonthly" >
+    update media_user_monthly
+    set cust_id = #{custId,jdbcType=BIGINT},
+      monthly_payment_relation = #{monthlyPaymentRelation,jdbcType=VARCHAR},
+      monthly_type = #{monthlyType,jdbcType=SMALLINT},
+      monthly_start_time = #{monthlyStartTime,jdbcType=TIMESTAMP},
+      monthly_end_time = #{monthlyEndTime,jdbcType=TIMESTAMP},
+      share_giving_time = #{shareGivingTime,jdbcType=TIMESTAMP},
+      first_login_giving = #{firstLoginGiving,jdbcType=SMALLINT},
+      first_share_giving = #{firstShareGiving,jdbcType=SMALLINT},
+      first_login_giving_days = #{firstLoginGivingDays,jdbcType=INTEGER},
+      first_share_giving_days = #{firstShareGivingDays,jdbcType=INTEGER},
+      operate_version = #{operateVersion,jdbcType=INTEGER}
+    where user_monthly_id = #{userMonthlyId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_user_monthly where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_user_monthly where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_user_monthly where 1=1 <include refid="Base_Where" />
+  </select>
+    <update id="updateUserMonthly" parameterType="map" >
+    update media_user_monthly
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+     <if test="monthlyPaymentRelation != null" >
+        monthly_payment_relation = #{monthlyPaymentRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyType != null" >
+        monthly_type = #{monthlyType,jdbcType=SMALLINT},
+      </if>
+      <if test="monthlyDays != null" >
+        monthly_start_time = CASE WHEN monthly_start_time IS NULL OR monthly_end_time IS NULL OR monthly_end_time &lt; NOW() THEN NOW() ELSE monthly_start_time END, 
+        monthly_end_time = CASE WHEN monthly_end_time IS NULL OR monthly_end_time &lt; NOW() THEN DATE_ADD(NOW(), INTERVAL #{monthlyDays} DAY) ELSE DATE_ADD( monthly_end_time, INTERVAL #{monthlyDays} DAY ) END,
+      </if>
+      <if test="firstLoginGiving != null" >
+        first_login_giving = #{firstLoginGiving,jdbcType=SMALLINT},
+      </if>
+      <if test="firstShareGiving != null" >
+        first_share_giving = #{firstShareGiving,jdbcType=SMALLINT},
+      </if>
+      <if test="firstLoginGivingDays != null" >
+        first_login_giving_days = #{firstLoginGivingDays,jdbcType=INTEGER},
+      </if>
+      <if test="firstShareGivingDays != null" >
+        first_share_giving_days = #{firstShareGivingDays,jdbcType=INTEGER},
+      </if>
+      <if test="shareGivingTime != null" >
+        share_giving_time = #{shareGivingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateVersion != null" >
+        operate_version = #{operateVersion,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_monthly_id = #{userMonthlyId,jdbcType=BIGINT} and operate_version = #{operateVersion}-1
+  </update>
+  <insert id="insertUserMonthly" parameterType="map" >
+    insert into media_user_monthly
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userMonthlyId != null" >
+        user_monthly_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+       <if test="monthlyPaymentRelation != null" >
+        monthly_payment_relation,
+      </if>
+      <if test="monthlyType != null" >
+        monthly_type,
+      </if>
+      <if test="monthlyDays != null" >
+        monthly_start_time,monthly_end_time,
+      </if>
+      <if test="firstLoginGiving != null" >
+        first_login_giving,
+      </if>
+      <if test="firstShareGiving != null" >
+        first_share_giving,
+      </if>
+      <if test="firstLoginGivingDays != null" >
+        first_login_giving_days,
+      </if>
+      <if test="firstShareGivingDays != null" >
+        first_share_giving_days,
+      </if>
+      <if test="shareGivingTime != null" >
+        share_giving_time,
+      </if>
+      <if test="operateVersion != null" >
+        operate_version,
+      </if>
+    </trim>
+    <trim prefix="SELECT " suffix="" suffixOverrides="," >
+      <if test="userMonthlyId != null" >
+        #{userMonthlyId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+       <if test="monthlyPaymentRelation != null" >
+        #{monthlyPaymentRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyType != null" >
+        #{monthlyType,jdbcType=SMALLINT},
+      </if>
+      <if test="monthlyDays != null" >
+        NOW(), 
+        DATE_ADD(NOW(), INTERVAL #{monthlyDays} DAY),
+      </if>
+      <if test="firstLoginGiving != null" >
+        #{firstLoginGiving,jdbcType=SMALLINT},
+      </if>
+      <if test="firstShareGiving != null" >
+        #{firstShareGiving,jdbcType=SMALLINT},
+      </if>
+      <if test="firstLoginGivingDays != null" >
+        #{firstLoginGivingDays,jdbcType=INTEGER},
+      </if>
+      <if test="firstShareGivingDays != null" >
+        #{firstShareGivingDays,jdbcType=INTEGER},
+      </if>
+      <if test="shareGivingTime != null" >
+        #{shareGivingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateVersion != null" >
+        #{operateVersion,jdbcType=INTEGER},
+      </if>
+    </trim>
+    FROM DUAL WHERE NOT EXISTS (
+    select 1 from media_user_monthly WHERE cust_id=#{custId} and monthly_type=#{monthlyType}
+    <if test="monthlyPaymentRelation != null" > and monthly_payment_relation=#{monthlyPaymentRelation} </if>
+    <if test="monthlyPaymentRelation == null" > and monthly_payment_relation is null </if>
+    )
+  </insert>
+  
+  <select id="findCustIdsByExpireday" resultType="java.lang.Long" parameterType="map"  >
+  	select cust_id from media_user_monthly where monthly_end_time &gt;=#{todayMorning,jdbcType=TIMESTAMP} and monthly_end_time &lt;#{tomorrowMorning,jdbcType=TIMESTAMP}
+  </select>
+  
+  <select id="countCustIdsByExpireday" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_user_monthly where monthly_end_time &gt;=#{todayMorning,jdbcType=TIMESTAMP} and monthly_end_time &lt;#{tomorrowMorning,jdbcType=TIMESTAMP}
+  </select>
+  
+  <select id="findMasterUserMonthly" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_user_monthly WHERE cust_id=#{custId} and monthly_type=#{monthlyType}
+    <if test="monthlyPaymentRelation != null" > and monthly_payment_relation=#{monthlyPaymentRelation} </if>
+    <if test="monthlyPaymentRelation == null" > and monthly_payment_relation is null </if>
+  </select>
+</mapper>

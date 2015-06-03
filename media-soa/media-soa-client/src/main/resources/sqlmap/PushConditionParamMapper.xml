@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PushConditionParamMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.PushConditionParam" >
+    <id column="push_condition_params_id" property="pushConditionParamsId" jdbcType="BIGINT" />
+    <result column="push_plan_id" property="pushPlanId" jdbcType="BIGINT" />
+    <result column="condition_id" property="conditionId" jdbcType="BIGINT" />
+    <result column="key_input_name" property="keyInputName" jdbcType="VARCHAR" />
+    <result column="key_name" property="keyName" jdbcType="VARCHAR" />
+    <result column="key_value" property="keyValue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="pushConditionParamsId != null" > and push_condition_params_id=#{pushConditionParamsId} </if>
+    <if test="pushPlanId != null" > and push_plan_id=#{pushPlanId} </if>
+    <if test="conditionId != null" > and condition_id=#{conditionId} </if>
+    <if test="keyInputName != null" > and key_input_name=#{keyInputName} </if>
+    <if test="keyName != null" > and key_name=#{keyName} </if>
+    <if test="keyValue != null" > and key_value=#{keyValue} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    push_condition_params_id, push_plan_id, condition_id, key_input_name, key_name, key_value
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_push_condition_params
+    where push_condition_params_id = #{pushConditionParamsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_push_condition_params
+    where push_condition_params_id = #{pushConditionParamsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.PushConditionParam"  useGeneratedKeys="true" keyProperty="pushConditionParamsId" >
+    insert into media_push_condition_params (push_condition_params_id, push_plan_id, 
+      condition_id, key_input_name, key_name, 
+      key_value)
+    values (#{pushConditionParamsId,jdbcType=BIGINT}, #{pushPlanId,jdbcType=BIGINT}, 
+      #{conditionId,jdbcType=BIGINT}, #{keyInputName,jdbcType=VARCHAR}, #{keyName,jdbcType=VARCHAR}, 
+      #{keyValue,jdbcType=VARCHAR})
+  </insert>
+  
+   <insert id="insertBatch" parameterType="java.util.List">
+  	insert into media_push_condition_params (push_condition_params_id, push_plan_id, 
+      condition_id, key_input_name, key_name, 
+      key_value)
+    values
+  	<foreach collection="list" item="item" index="index" separator=",">
+  		(#{item.pushConditionParamsId}, #{item.pushPlanId},#{item.conditionId}, #{item.keyInputName}, #{item.keyName}, #{item.keyValue})
+  	</foreach>
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.PushConditionParam"  useGeneratedKeys="true" keyProperty="pushConditionParamsId" >
+    insert into media_push_condition_params
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pushConditionParamsId != null" >
+        push_condition_params_id,
+      </if>
+      <if test="pushPlanId != null" >
+        push_plan_id,
+      </if>
+      <if test="conditionId != null" >
+        condition_id,
+      </if>
+      <if test="keyInputName != null" >
+        key_input_name,
+      </if>
+      <if test="keyName != null" >
+        key_name,
+      </if>
+      <if test="keyValue != null" >
+        key_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pushConditionParamsId != null" >
+        #{pushConditionParamsId,jdbcType=BIGINT},
+      </if>
+      <if test="pushPlanId != null" >
+        #{pushPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="conditionId != null" >
+        #{conditionId,jdbcType=BIGINT},
+      </if>
+      <if test="keyInputName != null" >
+        #{keyInputName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyName != null" >
+        #{keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyValue != null" >
+        #{keyValue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.PushConditionParam" >
+    update media_push_condition_params
+    <set >
+      <if test="pushPlanId != null" >
+        push_plan_id = #{pushPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="conditionId != null" >
+        condition_id = #{conditionId,jdbcType=BIGINT},
+      </if>
+      <if test="keyInputName != null" >
+        key_input_name = #{keyInputName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyName != null" >
+        key_name = #{keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyValue != null" >
+        key_value = #{keyValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where push_condition_params_id = #{pushConditionParamsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.PushConditionParam" >
+    update media_push_condition_params
+    set push_plan_id = #{pushPlanId,jdbcType=BIGINT},
+      condition_id = #{conditionId,jdbcType=BIGINT},
+      key_input_name = #{keyInputName,jdbcType=VARCHAR},
+      key_name = #{keyName,jdbcType=VARCHAR},
+      key_value = #{keyValue,jdbcType=VARCHAR}
+    where push_condition_params_id = #{pushConditionParamsId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_push_condition_params where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_push_condition_params where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_push_condition_params where 1=1 <include refid="Base_Where" />
+  </select>
+  
+  <delete id="deleteByMap" parameterType="map" >
+  	delete from media_push_condition_params where 1=1 <include refid="Base_Where" />
+  </delete>
+</mapper>

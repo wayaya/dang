@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CloudPushPlanStatusMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.CloudPushPlanStatus" >
+    <id column="cloud_push_plan_status_id" property="cloudPushPlanStatusId" jdbcType="BIGINT" />
+    <result column="plan_id" property="planId" jdbcType="BIGINT" />
+    <result column="plan_type" property="planType" jdbcType="INTEGER" />
+    <result column="plan_job_status" property="planJobStatus" jdbcType="INTEGER" />
+    <result column="plan_send_status" property="planSendStatus" jdbcType="INTEGER" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="cloudPushPlanStatusId != null" > and cloud_push_plan_status_id=#{cloudPushPlanStatusId} </if>
+    <if test="planId != null" > and plan_id=#{planId} </if>
+    <if test="planType != null" > and plan_type=#{planType} </if>
+    <if test="planJobStatus != null" > and plan_job_status=#{planJobStatus} </if>
+    <if test="planSendStatus != null" > and plan_send_status=#{planSendStatus} </if>
+    <if test="sendTime != null" > and send_time=#{sendTime} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    cloud_push_plan_status_id, plan_id, plan_type, plan_job_status, plan_send_status, 
+    send_time, creation_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_cloud_push_plan_status
+    where cloud_push_plan_status_id = #{cloudPushPlanStatusId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_cloud_push_plan_status
+    where cloud_push_plan_status_id = #{cloudPushPlanStatusId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.CloudPushPlanStatus"  useGeneratedKeys="true" keyProperty="cloudPushPlanStatusId"  >
+    insert into media_cloud_push_plan_status (cloud_push_plan_status_id, plan_id, plan_type, 
+      plan_job_status, plan_send_status, send_time, 
+      creation_date)
+    values (#{cloudPushPlanStatusId,jdbcType=BIGINT}, #{planId,jdbcType=BIGINT}, #{planType,jdbcType=INTEGER}, 
+      #{planJobStatus,jdbcType=INTEGER}, #{planSendStatus,jdbcType=INTEGER}, #{sendTime,jdbcType=TIMESTAMP}, 
+      #{creationDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.CloudPushPlanStatus"  useGeneratedKeys="true" keyProperty="cloudPushPlanStatusId" >
+    insert into media_cloud_push_plan_status
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cloudPushPlanStatusId != null" >
+        cloud_push_plan_status_id,
+      </if>
+      <if test="planId != null" >
+        plan_id,
+      </if>
+      <if test="planType != null" >
+        plan_type,
+      </if>
+      <if test="planJobStatus != null" >
+        plan_job_status,
+      </if>
+      <if test="planSendStatus != null" >
+        plan_send_status,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cloudPushPlanStatusId != null" >
+        #{cloudPushPlanStatusId,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="planType != null" >
+        #{planType,jdbcType=INTEGER},
+      </if>
+      <if test="planJobStatus != null" >
+        #{planJobStatus,jdbcType=INTEGER},
+      </if>
+      <if test="planSendStatus != null" >
+        #{planSendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.CloudPushPlanStatus" >
+    update media_cloud_push_plan_status
+    <set >
+      <if test="planId != null" >
+        plan_id = #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="planType != null" >
+        plan_type = #{planType,jdbcType=INTEGER},
+      </if>
+      <if test="planJobStatus != null" >
+        plan_job_status = #{planJobStatus,jdbcType=INTEGER},
+      </if>
+      <if test="planSendStatus != null" >
+        plan_send_status = #{planSendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cloud_push_plan_status_id = #{cloudPushPlanStatusId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.CloudPushPlanStatus" >
+    update media_cloud_push_plan_status
+    set plan_id = #{planId,jdbcType=BIGINT},
+      plan_type = #{planType,jdbcType=INTEGER},
+      plan_job_status = #{planJobStatus,jdbcType=INTEGER},
+      plan_send_status = #{planSendStatus,jdbcType=INTEGER},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where cloud_push_plan_status_id = #{cloudPushPlanStatusId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findPreparedSendUntriggeredPlan" resultMap="BaseResultMap" parameterType="map">
+  	select <include refid="Base_Column_List" /> from media_cloud_push_plan_status where creation_date=#{creationDate} and
+  	 plan_job_status=#{planJobStatus} and plan_send_status=#{planSendStatus} and send_time&lt;=#{sendTime}
+  </select>
+  
+  <select id="findByCreationDateAndPlanId" resultMap="BaseResultMap" parameterType="map">
+  	select <include refid="Base_Column_List" /> from media_cloud_push_plan_status where creation_date=#{creationDate} and
+  	   plan_id = #{planId}
+  </select>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cloud_push_plan_status where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_cloud_push_plan_status where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_cloud_push_plan_status where 1=1 <include refid="Base_Where" />
+  </select>
+   <delete id="deleteByMap" parameterType="map" >
+  	delete from media_cloud_push_plan_status where 1=1 <include refid="Base_Where" />
+  </delete>
+</mapper>

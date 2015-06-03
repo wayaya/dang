@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace="RankConsToBookMapper" >
+  <resultMap id="BaseResultMap" type="RankConsToBook" >
+    <id column="media_ebook_cons_ranklist_id" property="mediaEbookConsRanklistId" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="user_img_url" property="userImgUrl" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+    <result column="sale_id" property="saleId" jdbcType="BIGINT" />
+    <result column="media_name" property="mediaName" jdbcType="VARCHAR" />
+    <result column="media_url" property="mediaUrl" jdbcType="VARCHAR" />
+    <result column="cons" property="cons" jdbcType="INTEGER" />
+    <result column="show_cons" property="showCons" jdbcType="INTEGER" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  
+  <resultMap id="RankResultMap" type="RankConsToBook" >
+    <id column="media_ebook_cons_ranklist_id" property="mediaEbookConsRanklistId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
+  </resultMap>
+  
+  
+  <sql id="Base_Where" >
+    <if test="mediaEbookConsRanklistId != null" > and media_ebook_cons_ranklist_id=#{mediaEbookConsRanklistId} </if>
+    <if test="code != null" > and code=#{code} </if>
+    <if test="username != null" > and username like CONCAT('%',#{username} ,'%')</if>
+    <if test="userImgUrl != null" > and user_img_url=#{userImgUrl} </if>
+    <if test="custId != null" > and cust_id=#{custId} </if>
+    <if test="mediaId != null" > and media_id=#{mediaId} </if>
+    <if test="saleId != null" > and sale_id=#{saleId} </if>
+    <if test="mediaName != null" > and media_name like CONCAT('%',#{mediaName} ,'%')</if>
+    <if test="mediaUrl != null" > and media_url=#{mediaUrl} </if>
+    <if test="cons != null" > and cons=#{cons} </if>
+    <if test="showCons != null" > and show_cons=#{showCons} </if>
+    <if test="rank != null" > and rank=#{rank} </if>
+    <if test="status != null" > and status=#{status} </if>
+    <if test="channel != null" > and channel=#{channel} </if>
+    <if test="type != null" > and type=#{type} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+    <if test="lastModifiedDate != null" > and last_modified_date=#{lastModifiedDate} </if>
+    <if test="modifier != null" > and modifier=#{modifier} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    media_ebook_cons_ranklist_id, code, username, user_img_url, cust_id, media_id, sale_id, 
+    media_name, media_url, cons, show_cons,rank, status, channel, type, creation_date, last_modified_date, 
+    modifier
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_ebook_cons_ranklist
+    where media_ebook_cons_ranklist_id = #{mediaEbookConsRanklistId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_ebook_cons_ranklist
+    where media_ebook_cons_ranklist_id = #{mediaEbookConsRanklistId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="RankConsToBook" >
+    insert into media_ebook_cons_ranklist (media_ebook_cons_ranklist_id, code, username, 
+      user_img_url, cust_id, media_id, 
+      sale_id, media_name, media_url, 
+      cons, show_cons, status, 
+      channel, type, creation_date, 
+      last_modified_date, modifier)
+    values (#{mediaEbookConsRanklistId,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{userImgUrl,jdbcType=VARCHAR}, #{custId,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, 
+      #{saleId,jdbcType=BIGINT}, #{mediaName,jdbcType=VARCHAR}, #{mediaUrl,jdbcType=VARCHAR}, 
+      #{cons,jdbcType=INTEGER}, #{showCons,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{channel,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{lastModifiedDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="RankConsToBook" >
+    insert into media_ebook_cons_ranklist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaEbookConsRanklistId != null" >
+        media_ebook_cons_ranklist_id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="userImgUrl != null" >
+        user_img_url,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="saleId != null" >
+        sale_id,
+      </if>
+      <if test="mediaName != null" >
+        media_name,
+      </if>
+      <if test="mediaUrl != null" >
+        media_url,
+      </if>
+      <if test="cons != null" >
+        cons,
+      </if>
+      <if test="showCons != null" >
+        show_cons,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaEbookConsRanklistId != null" >
+        #{mediaEbookConsRanklistId,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userImgUrl != null" >
+        #{userImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="saleId != null" >
+        #{saleId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaUrl != null" >
+        #{mediaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cons != null" >
+        #{cons,jdbcType=INTEGER},
+      </if>
+      <if test="showCons != null" >
+        #{showCons,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedDate != null" >
+        #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <insert id="insertTotalRank" parameterType="RankConsToBook">
+  
+  	insert into media_ebook_cons_ranklist (
+  	  code, 
+  	  username, 
+      user_img_url,
+      cust_id, 
+      cons, 
+      show_cons, 
+      rank,
+      status,
+      type,
+      creation_date)
+	values 
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			  'TOTAL', 
+		      #{item.username,jdbcType=VARCHAR}, 
+		      #{item.userImgUrl,jdbcType=VARCHAR}, 
+		      #{item.custId,jdbcType=BIGINT}, 
+		      #{item.cons,jdbcType=INTEGER}, 
+		      #{item.showCons,jdbcType=INTEGER}, 
+		      #{item.rank,jdbcType=INTEGER}, 
+		      0, 
+		      4,
+		      #{item.creationDate,jdbcType=TIMESTAMP}
+		)
+		</foreach>
+	</insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="RankConsToBook" >
+    update media_ebook_cons_ranklist
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userImgUrl != null" >
+        user_img_url = #{userImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="saleId != null" >
+        sale_id = #{saleId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        media_name = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaUrl != null" >
+        media_url = #{mediaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cons != null" >
+        cons = #{cons,jdbcType=INTEGER},
+      </if>
+      <if test="showCons != null" >
+        show_cons = #{showCons,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null" >
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedDate != null" >
+        last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where media_ebook_cons_ranklist_id = #{mediaEbookConsRanklistId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="RankConsToBook" >
+    update media_ebook_cons_ranklist
+    set code = #{code,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      user_img_url = #{userImgUrl,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=BIGINT},
+      media_id = #{mediaId,jdbcType=BIGINT},
+      sale_id = #{saleId,jdbcType=BIGINT},
+      media_name = #{mediaName,jdbcType=VARCHAR},
+      media_url = #{mediaUrl,jdbcType=VARCHAR},
+      cons = #{cons,jdbcType=INTEGER},
+      show_cons = #{showCons,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      channel = #{channel,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where media_ebook_cons_ranklist_id = #{mediaEbookConsRanklistId,jdbcType=BIGINT}
+  </update>
+  
+  
+   <update id="updateStatusTotalRank" parameterType="java.lang.Integer">
+    update media_ebook_cons_ranklist
+    set status = #{status,jdbcType=INTEGER}
+    where type=4 and status = 0 
+  </update>
+  
+  <update id="updateStatusByCode" parameterType="map" >
+    update media_ebook_cons_ranklist
+    set status = #{status,jdbcType=INTEGER}
+    where code = #{code,jdbcType=VARCHAR} and status = 0 
+  </update>
+   <update id="updateShowCons">
+    update media_ebook_cons_ranklist
+    set cons = show_cons
+    where status = 0 
+  </update>
+  
+  <update id="updateCons">
+    update media_ebook_cons_ranklist
+    set cons = show_cons
+    where status = 0 
+  </update>
+  
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_ebook_cons_ranklist where 1=1 
+    <include refid="Base_Where" /> order by channel,type, show_cons desc
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_ebook_cons_ranklist where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_ebook_cons_ranklist where 1=1 
+    <include refid="Base_Where" /> order by show_cons desc,channel,type desc
+  </select>
+  
+  <select id="selectCountByCode" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) total
+    from media_ebook_cons_ranklist
+    where code = #{code,jdbcType=VARCHAR} and status = 0
+  </select>
+  
+  
+  <!-- 根据code获取数据 -->
+   <select id="findListByCode" resultMap="BaseResultMap" parameterType="map" >
+    select username,cust_id,sale_id,user_img_url,media_id,media_name,media_url,show_cons from media_ebook_cons_ranklist 
+    where code = #{code,jdbcType=VARCHAR} and status = 0 order by show_cons desc limit #{start,jdbcType=INTEGER},#{count,jdbcType=INTEGER} 
+  </select>
+  
+   <!-- 查询该榜单此次插入的数量 -->
+  <select id="selectInsertAcountByCode" resultType="java.lang.Integer"  parameterType="java.lang.String" >
+    select IFNULL(count(1),0) total  from media_ebook_cons_ranklist where code = #{code,jdbcType=VARCHAR} and status = 0
+  </select>
+
+   <!-- 查询该用户该榜单的最高排名 -->
+  <select id="selectTopRankOfCustIdByType" resultType="java.lang.Integer"  parameterType="map" >
+  select IFNULL(MIN(rank),0)   from media_ebook_cons_ranklist where cust_id = #{custId,jdbcType=BIGINT} and type = #{type,jdbcType=INTEGER}
+  </select>
+  <!-- 根据类型，查询此时更新的榜单数据  custId,rank -->
+   <select id="selectTodayRankDatasByType" resultType="java.util.HashMap" parameterType="java.lang.Integer" >
+    select cust_id,rank rank from media_ebook_cons_ranklist 
+    where type = #{type,jdbcType=INTEGER} and status = 0 
+  </select>
+  
+  
+</mapper>

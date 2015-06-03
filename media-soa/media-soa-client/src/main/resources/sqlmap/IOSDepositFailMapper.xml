@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="IOSDepositFailMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.IOSDepositFail">
+		<id column="ios_deposit_fail_id" property="iosDepositFailId" jdbcType="BIGINT" />
+		<result column="cust_id" property="custId" jdbcType="BIGINT" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="deposit_order_no" property="depositOrderNo" jdbcType="VARCHAR" />
+		<result column="payment" property="payment" jdbcType="VARCHAR" />
+		<result column="relation_product_id" property="relationProductId" jdbcType="VARCHAR" />
+		<result column="money" property="money" jdbcType="INTEGER" />
+		<result column="main_gold" property="mainGold" jdbcType="INTEGER" />
+		<result column="give_main_gold" property="giveMainGold" jdbcType="INTEGER" />
+		<result column="sub_gold" property="subGold" jdbcType="INTEGER" />
+		<result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+		<result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+		<result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+		<result column="from_paltform" property="fromPaltform" jdbcType="VARCHAR" />
+		<result column="product_count" property="productCount" jdbcType="INTEGER" />
+		<result column="receipt_data" property="receiptData" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="SMALLINT" />
+		<result column="operate_count" property="operateCount" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="iosDepositFailId != null"> and ios_deposit_fail_id= #{iosDepositFailId}</if>	
+		<if test="custId != null"> and cust_id= #{custId}</if>	
+		<if test="userName != null and userName !=''"> and user_name= #{userName}</if>
+		<if test="depositOrderNo != null and depositOrderNo !=''"> and deposit_order_no= #{depositOrderNo}</if>
+		<if test="payment != null and payment !=''"> and payment= #{payment}</if>
+		<if test="relationProductId != null and relationProductId !=''"> and relation_product_id= #{relationProductId}</if>
+		<if test="money != null"> and money= #{money}</if>	
+		<if test="mainGold != null"> and main_gold= #{mainGold}</if>	
+		<if test="giveMainGold != null"> and give_main_gold= #{giveMainGold}</if>	
+		<if test="subGold != null"> and sub_gold= #{subGold}</if>	
+		<if test="deviceType != null and deviceType !=''"> and device_type= #{deviceType}</if>
+		<if test="payTime != null"> and pay_time= #{payTime}</if>	
+		<if test="creationDate != null"> and creation_date= #{creationDate}</if>	
+		<if test="fromPaltform != null and fromPaltform !=''"> and from_paltform= #{fromPaltform}</if>
+		<if test="productCount != null"> and product_count= #{productCount}</if>	
+		<if test="receiptData != null and receiptData !=''"> and receipt_data= #{receiptData}</if>
+		<if test="status != null"> and status= #{status}</if>	
+		<if test="operateCount != null"> and operate_count= #{operateCount}</if>	
+	</sql>
+	<sql id="Base_Column_List">
+		ios_deposit_fail_id ,
+		cust_id ,
+		user_name ,
+		deposit_order_no ,
+		payment ,
+		relation_product_id ,
+		money ,
+		main_gold ,
+		give_main_gold ,
+		sub_gold ,
+		device_type ,
+		pay_time ,
+		creation_date ,
+		from_paltform ,
+		product_count ,
+		receipt_data ,
+		status ,
+		operate_count 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from media_ios_deposit_fail
+		where
+		ios_deposit_fail_id = #{iosDepositFailId,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from media_ios_deposit_fail
+		where
+		ios_deposit_fail_id = #{iosDepositFailId,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.dangdang.digital.model.IOSDepositFail">
+		insert into media_ios_deposit_fail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iosDepositFailId != null">ios_deposit_fail_id,</if>	
+			<if test="custId != null">cust_id,</if>	
+			<if test="userName != null and userName !=''">user_name,</if>
+			<if test="depositOrderNo != null and depositOrderNo !=''">deposit_order_no,</if>
+			<if test="payment != null and payment !=''">payment,</if>
+			<if test="relationProductId != null and relationProductId !=''">relation_product_id,</if>
+			<if test="money != null">money,</if>	
+			<if test="mainGold != null">main_gold,</if>	
+			<if test="giveMainGold != null">give_main_gold,</if>	
+			<if test="subGold != null">sub_gold,</if>	
+			<if test="deviceType != null and deviceType !=''">device_type,</if>
+			<if test="payTime != null">pay_time,</if>	
+			<if test="creationDate != null">creation_date,</if>	
+			<if test="fromPaltform != null and fromPaltform !=''">from_paltform,</if>
+			<if test="productCount != null">product_count,</if>	
+			<if test="receiptData != null and receiptData !=''">receipt_data,</if>
+			<if test="status != null">status,</if>	
+			<if test="operateCount != null">operate_count,</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iosDepositFailId != null">
+				#{iosDepositFailId,jdbcType=BIGINT},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null and userName !=''">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="depositOrderNo != null and depositOrderNo !=''">
+				#{depositOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payment != null and payment !=''">
+				#{payment,jdbcType=VARCHAR},
+			</if>
+			<if test="relationProductId != null and relationProductId !=''">
+				#{relationProductId,jdbcType=VARCHAR},
+			</if>
+			<if test="money != null">
+				#{money,jdbcType=INTEGER},
+			</if>
+			<if test="mainGold != null">
+				#{mainGold,jdbcType=INTEGER},
+			</if>
+			<if test="giveMainGold != null">
+				#{giveMainGold,jdbcType=INTEGER},
+			</if>
+			<if test="subGold != null">
+				#{subGold,jdbcType=INTEGER},
+			</if>
+			<if test="deviceType != null and deviceType !=''">
+				#{deviceType,jdbcType=VARCHAR},
+			</if>
+			<if test="payTime != null">
+				#{payTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creationDate != null">
+				#{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fromPaltform != null and fromPaltform !=''">
+				#{fromPaltform,jdbcType=VARCHAR},
+			</if>
+			<if test="productCount != null">
+				#{productCount,jdbcType=INTEGER},
+			</if>
+			<if test="receiptData != null and receiptData !=''">
+				#{receiptData,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=SMALLINT},
+			</if>
+			<if test="operateCount != null">
+				#{operateCount,jdbcType=INTEGER},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.IOSDepositFail">
+		update media_ios_deposit_fail
+		<set>
+			<if test="custId != null">
+				cust_id = #{custId,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null and userName !=''">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="depositOrderNo != null and depositOrderNo !=''">
+				deposit_order_no = #{depositOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payment != null and payment !=''">
+				payment = #{payment,jdbcType=VARCHAR},
+			</if>
+			<if test="relationProductId != null and relationProductId !=''">
+				relation_product_id = #{relationProductId,jdbcType=VARCHAR},
+			</if>
+			<if test="money != null">
+				money = #{money,jdbcType=INTEGER},
+			</if>
+			<if test="mainGold != null">
+				main_gold = #{mainGold,jdbcType=INTEGER},
+			</if>
+			<if test="giveMainGold != null">
+				give_main_gold = #{giveMainGold,jdbcType=INTEGER},
+			</if>
+			<if test="subGold != null">
+				sub_gold = #{subGold,jdbcType=INTEGER},
+			</if>
+			<if test="deviceType != null and deviceType !=''">
+				device_type = #{deviceType,jdbcType=VARCHAR},
+			</if>
+			<if test="payTime != null">
+				pay_time = #{payTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creationDate != null">
+				creation_date = #{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fromPaltform != null and fromPaltform !=''">
+				from_paltform = #{fromPaltform,jdbcType=VARCHAR},
+			</if>
+			<if test="productCount != null">
+				product_count = #{productCount,jdbcType=INTEGER},
+			</if>
+			<if test="receiptData != null and receiptData !=''">
+				receipt_data = #{receiptData,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=SMALLINT},
+			</if>
+			<if test="operateCount != null">
+				operate_count = #{operateCount,jdbcType=INTEGER}
+			</if>
+		</set>
+		where
+		ios_deposit_fail_id = #{iosDepositFailId,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_ios_deposit_fail where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from media_ios_deposit_fail where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from media_ios_deposit_fail where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from media_ios_deposit_fail where ios_deposit_fail_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

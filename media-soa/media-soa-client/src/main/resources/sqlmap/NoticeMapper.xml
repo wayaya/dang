@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="NoticeMapper">
+    <resultMap id="BaseResultMap"  type="com.dangdang.digital.model.Notice">
+		     	<id column="notice_id" property="noticeId" jdbcType="BIGINT" />
+		        <result column="title" property="title" jdbcType="VARCHAR"  />
+		        <result column="creator" property="creator" jdbcType="VARCHAR"  />
+		        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"  />
+		        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"  />
+		        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"  />
+		        <result column="url" property="url" jdbcType="VARCHAR"  />
+		        <result column="type" property="type" jdbcType="INTEGER"  />
+		        <result column="parameter" property="parameter" jdbcType="VARCHAR"  />
+		        <result column="last_change_time" property="lastChangeTime" jdbcType="TIMESTAMP"  />
+		        <result column="modifer" property="modifer" jdbcType="VARCHAR"  />
+		        <result column="channel_type" property="channelType" jdbcType="VARCHAR"  />
+    </resultMap>
+  <sql id="Base_Where" >
+   		<if test="noticeId != null" > and notice_id= #{noticeId}</if>
+   		<if test="title != null" > and title like concat('%',#{title},'%')</if>
+   		<if test="creator != null" > and creator= #{creator}</if>
+   		<if test="createTime != null" > and create_time= #{createTime}</if>
+   		<if test="startTime != null" > and start_time= #{startTime}</if>
+   		<if test="endTime != null" > and end_time= #{endTime}</if>
+   		<if test="url != null" > and url= #{url}</if>
+   		<if test="type != null" > and type= #{type}</if>
+   		<if test="parameter != null" > and parameter= #{parameter}</if>
+   		<if test="lastChangeTime != null" > and last_change_time= #{lastChangeTime}</if>
+   		<if test="modifer != null" > and modifer= #{modifer}</if>
+   		<if test="channelType != null and channelType !='' " > and channel_type= #{channelType}</if>
+  </sql>
+ <sql id="Base_Column_List" >
+        	notice_id ,
+        	title ,
+        	creator ,
+        	create_time ,
+        	start_time ,
+        	end_time ,
+        	url ,
+        	type ,
+        	parameter ,
+        	last_change_time ,
+        	modifer ,
+        	channel_type
+  </sql>
+
+<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from  media_notice 
+     where notice_id = #{noticeId,jdbcType=BIGINT}
+  </select>
+   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+   	 delete from media_notice 
+   	 where  notice_id = #{noticeId,jdbcType=BIGINT}
+  </delete>
+
+ <insert id="insert" parameterType="com.dangdang.digital.model.Notice" >
+    insert into media_notice (
+        	notice_id ,
+        	title ,
+        	creator ,
+        	create_time ,
+        	start_time ,
+        	end_time ,
+        	url ,
+        	type ,
+        	parameter ,
+        	last_change_time ,
+        	modifer 
+      )
+    values (
+    	#{noticeId,jdbcType=BIGINT},
+    	#{title,jdbcType=VARCHAR},
+    	#{creator,jdbcType=VARCHAR},
+    	now(),
+    	#{startTime,jdbcType=TIMESTAMP},
+    	#{endTime,jdbcType=TIMESTAMP},
+    	#{url,jdbcType=VARCHAR},
+    	#{type,jdbcType=INTEGER},
+    	#{parameter,jdbcType=VARCHAR},
+    	#{lastChangeTime,jdbcType=TIMESTAMP},
+    	#{modifer,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.Notice" >
+    insert into media_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+         <if test="noticeId != null" >notice_id,</if>
+         <if test="title != null" >title,</if>
+         <if test="creator != null" >creator,</if>
+      	  create_time,
+         <if test="startTime != null" >start_time,</if>
+         <if test="endTime != null" >end_time,</if>
+         <if test="url != null" >url,</if>
+         <if test="type != null" >type,</if>
+         <if test="parameter != null" >parameter,</if>
+         <if test="lastChangeTime != null" >last_change_time,</if>
+         <if test="modifer != null" >modifer,</if>
+         <if test="channelType != null and channelType!=''" >channel_type,</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     <if test="noticeId != null" >
+       #{notice_id,jdbcType=BIGINT},
+      </if>
+     <if test="title != null" >
+       #{title,jdbcType=VARCHAR},
+      </if>
+     <if test="creator != null" >
+       #{creator,jdbcType=VARCHAR},
+      </if>
+     now(),
+     <if test="startTime != null" >
+       #{startTime,jdbcType=TIMESTAMP},
+      </if>
+     <if test="endTime != null" >
+       #{endTime,jdbcType=TIMESTAMP},
+      </if>
+     <if test="url != null" >
+       #{url,jdbcType=VARCHAR},
+      </if>
+     <if test="type != null" >
+       #{type,jdbcType=INTEGER},
+      </if>
+     <if test="parameter != null" >
+       #{parameter,jdbcType=VARCHAR},
+      </if>
+     <if test="lastChangeTime != null" >
+       #{lastChangeTime,jdbcType=TIMESTAMP},
+      </if>
+     <if test="modifer != null" >
+       #{modifer,jdbcType=VARCHAR},
+      </if>
+     <if test="channelType != null and channelType!=''" >
+       #{channelType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+   <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.Notice" >
+    update media_notice
+    <set >
+     <if test="title != null" >
+      title =  #{title,jdbcType=VARCHAR},
+      </if>
+     <if test="creator != null" >
+      creator =  #{creator,jdbcType=VARCHAR},
+      </if>
+     <if test="createTime != null" >
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+     <if test="startTime != null" >
+     start_time =  #{startTime,jdbcType=TIMESTAMP},
+      </if>
+     <if test="endTime != null" >
+      end_time =  #{endTime,jdbcType=TIMESTAMP},
+      </if>
+     <if test="url != null" >
+      url = #{url,jdbcType=VARCHAR},
+      </if>
+     <if test="type != null" >
+     type =  #{type,jdbcType=INTEGER},
+      </if>
+     <if test="parameter != null" >
+     parameter =  #{parameter,jdbcType=VARCHAR},
+      </if>
+ 	   last_change_time =now(),
+     <if test="modifer != null" >
+      modifer = #{modifer,jdbcType=VARCHAR}
+      </if>
+     <if test="channelType != null" >
+      channel_type = #{channelType,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </update>
+  
+   <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.Notice" >
+    update media_notice
+     set title= #{title,jdbcType=VARCHAR},
+     	 		creator= #{creator,jdbcType=VARCHAR},
+     	 		create_time= #{createTime,jdbcType=TIMESTAMP},
+     	 		start_time= #{startTime,jdbcType=TIMESTAMP},
+     	 		end_time= #{endTime,jdbcType=TIMESTAMP},
+     	 		url= #{url,jdbcType=VARCHAR},
+     	 		type= #{type,jdbcType=INTEGER},
+     	 		parameter= #{parameter,jdbcType=VARCHAR},
+     	 		last_change_time= #{lastChangeTime,jdbcType=TIMESTAMP},
+     	 		modifer= #{modifer,jdbcType=VARCHAR},
+     	 		channel_type= #{channelType,jdbcType=VARCHAR},
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </update>
+ <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_notice where 1=1 <include refid="Base_Where" /> order by type
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_notice where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_notice where 1=1 <include refid="Base_Where" />
+  </select>
+  
+   <select id="getNoticeList" resultMap="BaseResultMap" parameterType="map"  >
+  
+    select <include refid="Base_Column_List" /> from media_notice 
+    	where UNIX_TIMESTAMP(create_time)*1000  > ${lastRequestTime} 
+    	and end_time > now()  and   ${lastRequestTime}&lt;UNIX_TIMESTAMP(end_time)*1000  order by create_time asc
+    	
+  </select>
+
+ 
+</mapper>

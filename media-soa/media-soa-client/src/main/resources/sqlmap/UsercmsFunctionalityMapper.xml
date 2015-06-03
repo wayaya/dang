@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UsercmsFunctionalityMapper" >
+  <resultMap id="BaseResultMap" type="com.dangdang.digital.model.UsercmsFunctionality" >
+    <id column="usercms_functionality_id" property="usercmsFunctionalityId" jdbcType="BIGINT" />
+    <result column="usercms_id" property="usercmsId" jdbcType="BIGINT" />
+    <result column="func_id" property="funcId" jdbcType="BIGINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Where" >
+    <if test="usercmsFunctionalityId != null" > and usercms_functionality_id=#{usercmsFunctionalityId} </if>
+    <if test="usercmsId != null" > and usercms_id=#{usercmsId} </if>
+    <if test="funcId != null" > and func_id=#{funcId} </if>
+    <if test="creator != null and creator !='' " > and creator=#{creator} </if>
+    <if test="creationDate != null" > and creation_date=#{creationDate} </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    usercms_functionality_id, usercms_id, func_id, creator, creation_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_usercms_functionality
+    where usercms_functionality_id = #{usercmsFunctionalityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByIds" parameterType="list" >
+    delete from media_usercms_functionality
+    where usercms_functionality_id in 
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  		#{item}  
+  	</foreach>
+  </delete>
+  <select id="selectByIds" resultMap="BaseResultMap">  
+    select  
+    <include refid="Base_Column_List" />  
+    from media_usercms_functionality where usercms_functionality_id in  
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+     	#{item}  
+    </foreach>  
+  </select>  
+  <delete id="deleteByMap" parameterType="map" >
+  	delete from media_usercms_functionality where 1=1 <include refid="Base_Where" />
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from media_usercms_functionality
+    where usercms_functionality_id = #{usercmsFunctionalityId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dangdang.digital.model.UsercmsFunctionality" useGeneratedKeys="true" keyProperty="usercmsFunctionalityId" >
+    insert into media_usercms_functionality (usercms_functionality_id, usercms_id, 
+      func_id, creator, creation_date
+      )
+    values (#{usercmsFunctionalityId,jdbcType=BIGINT}, #{usercmsId,jdbcType=BIGINT}, 
+      #{funcId,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <insert id="insertList" parameterType="list" useGeneratedKeys="true" keyProperty="usercmsFunctionalityId">
+  	insert into media_usercms_functionality (usercms_functionality_id, usercms_id, 
+      func_id, creator, creation_date
+      ) values 
+  	<foreach collection="list" item="item" index="index" separator=","> 
+  		 (
+  		 #{item.usercmsFunctionalityId},
+         #{item.usercmsId},
+         #{item.funcId},
+         #{item.creator},
+         #{item.creationDate}
+         )
+    </foreach>  
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.dangdang.digital.model.UsercmsFunctionality" >
+    insert into media_usercms_functionality
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="usercmsFunctionalityId != null" >
+        usercms_functionality_id,
+      </if>
+      <if test="usercmsId != null" >
+        usercms_id,
+      </if>
+      <if test="funcId != null" >
+        func_id,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="usercmsFunctionalityId != null" >
+        #{usercmsFunctionalityId,jdbcType=BIGINT},
+      </if>
+      <if test="usercmsId != null" >
+        #{usercmsId,jdbcType=BIGINT},
+      </if>
+      <if test="funcId != null" >
+        #{funcId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.UsercmsFunctionality" >
+    update media_usercms_functionality
+    <set >
+      <if test="usercmsId != null" >
+        usercms_id = #{usercmsId,jdbcType=BIGINT},
+      </if>
+      <if test="funcId != null" >
+        func_id = #{funcId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where usercms_functionality_id = #{usercmsFunctionalityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.UsercmsFunctionality" >
+    update media_usercms_functionality
+    set usercms_id = #{usercmsId,jdbcType=BIGINT},
+      func_id = #{funcId,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where usercms_functionality_id = #{usercmsFunctionalityId,jdbcType=BIGINT}
+  </update>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_usercms_functionality where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageCount" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) from media_usercms_functionality where 1=1 <include refid="Base_Where" />
+  </select>
+  <select id="pageData" resultMap="BaseResultMap" parameterType="map" >
+    select <include refid="Base_Column_List" /> from media_usercms_functionality where 1=1 <include refid="Base_Where" />
+  </select>
+</mapper>

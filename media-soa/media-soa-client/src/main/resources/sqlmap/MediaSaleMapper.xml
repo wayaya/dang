@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MediaSaleMapper">
+	<resultMap id="BaseResultMap" type="com.dangdang.digital.model.MediaSale">
+		<id column="sale_id" property="saleId" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="description" property="desc" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="SMALLINT" />
+		<result column="price" property="price" jdbcType="BIGINT" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
+		<result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+		
+		<result column="is_support_subscribe" property="isSupportSubscribe" jdbcType="SMALLINT" />
+		<result column="cover_pic" property="coverPic" jdbcType="VARCHAR" />
+		<result column="shelf_status" property="shelfStatus" jdbcType="INTEGER" />
+		<result column="is_support_full_buy" property="isSupportFullBuy" jdbcType="INTEGER" />
+		<result column="is_full" property="isFull" jdbcType="INTEGER" />
+		
+	</resultMap>
+	
+	<resultMap id="BaseResultWithDetailMap" type="com.dangdang.digital.model.MediaSale">
+		<id column="sale_id" property="saleId" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="description" property="desc" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="SMALLINT" />
+		<result column="price" property="price" jdbcType="BIGINT" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
+		<result column="last_modified_date" property="lastModifiedDate" jdbcType="TIMESTAMP" />
+		<result column="cover_pic" property="coverPic" jdbcType="VARCHAR" />
+		<result column="is_support_subscribe" property="isSupportSubscribe" jdbcType="SMALLINT" />
+		<result column="shelf_status" property="shelfStatus" jdbcType="INTEGER" />
+		<result column="is_support_full_buy" property="isSupportFullBuy" jdbcType="INTEGER" />
+		<result column="is_full" property="isFull" jdbcType="INTEGER" />
+		
+		<collection property="mediaRelations" ofType="com.dangdang.digital.model.MediaRelation" column="sale_id"> 
+		  	<id column="media_relation_id" property="mediaRelationId" jdbcType="BIGINT" />
+		    <result column="r_sale_id" property="saleId" jdbcType="BIGINT" />
+		    <result column="chapter_id" property="chapterId" jdbcType="BIGINT" />
+		    <result column="media_id" property="mediaId" jdbcType="BIGINT" />
+        </collection>  		
+	</resultMap>
+	
+	<sql id="Base_Where">
+		<if test="saleId != null"> and sale_id=#{saleId} </if>
+		<if test="name != null"> and name like concat('%',#{name},'%') </if>
+		<if test="desc != null"> and description=#{desc} </if>
+		<if test="type != null"> and type=#{type} </if>
+		<if test="price != null"> and price=#{price} </if>
+		<if test="creator != null"> and creator=#{creator} </if>
+		<if test="creationDate != null"> and creation_date=#{creationDate} </if>
+		<if test="modifier != null"> and modifier=#{modifier} </if>
+		<if test="lastModifiedDate != null"> and last_modified_date=#{lastModifiedDate} </if>
+		
+		<if test="isSupportSubscribe != null"> and is_support_subscribe=#{isSupportSubscribe} </if>
+		<if test="shelfStatus != null"> and shelf_status=#{shelfStatus} </if>
+		<if test="isSupportFullBuy != null"> and is_support_full_buy = #{isSupportFullBuy} </if>
+		<if test="pId != null"> and sale_id in (select distinct sale_id from media_relation where media_id=#{pId}) </if>
+		<if test="isFull != null"> and is_full = #{isFull} </if>
+	</sql>
+	<sql id="Base_Column_List">
+		sale_id, name, description, type, price, creator, creation_date, modifier,
+		last_modified_date,
+		 is_support_subscribe,cover_pic,shelf_status,is_support_full_buy,is_full
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from media_sale
+		where sale_id = #{saleId,jdbcType=BIGINT}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from media_sale
+		where sale_id = #{saleId,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="saleId" parameterType="com.dangdang.digital.model.MediaSale">
+		insert into media_sale (sale_id, name, description,
+		type, price, creator,
+		creation_date, modifier, last_modified_date,
+		is_support_subscribe,cover_pic,shelf_status,is_support_full_buy,is_full
+		)
+		values (#{saleId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+		#{desc,jdbcType=VARCHAR},
+		#{type,jdbcType=SMALLINT}, #{price,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR},
+		#{creationDate,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR},
+		#{lastModifiedDate,jdbcType=TIMESTAMP},
+		
+		#{isSupportSubscribe,jdbcType=SMALLINT},
+		#{coverPic,jdbcType=VARCHAR},#{shelfStatus,jdbcType=INTEGER},
+		#{isSupportFullBuy,jdbcType=INTEGER},
+		#{isFull,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<select id="getSale" parameterType="map" resultMap="BaseResultMap">
+		select distinct m.sale_id, m.name, m.description,
+		m.type, m.price, m.creator,
+		m.creation_date, m.modifier, m.last_modified_date,
+		m.cover_pic,m.is_support_subscribe,m.shelf_status,
+		m.is_support_full_buy,m.is_full from media_relation r left join media_sale m on r.sale_id = m.sale_id 
+		where 1=1
+		<if test="type != null">
+			and m.type = #{type,jdbcType=SMALLINT}
+		</if>
+		<if test="mediaId != null">
+			and r.media_id = #{mediaId,jdbcType=BIGINT}
+		</if>
+		<if test="chapterId != null">
+			and r.chapter_id = #{chapterId,jdbcType=BIGINT}
+		</if>
+		<if test="shelfStatus != null">
+			and m.shelf_status = #{shelfStatus,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="getSales" parameterType="map" resultType="HashMap" >
+		select distinct r.media_id, r.sale_id from media_relation r , media_sale m where r.sale_id = m.sale_id 
+		<if test="type != null">
+			and m.type = #{type,jdbcType=SMALLINT}
+		</if>
+		<if test="mediaIds != null">
+			and r.media_id in 
+			<foreach item="item" index="index" collection="mediaIds" open="(" separator="," close=")">  
+		     	#{item}  
+		    </foreach>  
+		</if>
+	</select>
+	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="saleId" parameterType="com.dangdang.digital.model.MediaSale">
+		insert into media_sale
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="saleId != null">
+				sale_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="desc != null">
+				description,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="creationDate != null">
+				creation_date,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="lastModifiedDate != null">
+				last_modified_date,
+			</if>
+			
+			<if test="isSupportSubscribe != null">
+				is_support_subscribe,
+			</if>
+			<if test="coverPic != null">
+				cover_pic,
+			</if>
+			<if test="shelfStatus != null">
+				shelf_Status,
+			</if>
+			<if test="isSupportFullBuy != null">
+				is_support_full_buy,
+			</if>
+			<if test="isFull != null">
+				is_full,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="saleId != null">
+				#{saleId,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				#{desc,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=SMALLINT},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=BIGINT},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="creationDate != null">
+				#{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="lastModifiedDate != null">
+				#{lastModifiedDate,jdbcType=TIMESTAMP},
+			</if>
+			
+			<if test="isSupportSubscribe != null">
+				#{isSupportSubscribe,jdbcType=SMALLINT},
+			</if>
+			<if test="coverPic != null">
+				#{coverPic,jdbcType=VARCHAR},
+			</if>
+			<if test="shelfStatus != null">
+				#{shelfStatus,jdbcType=INTEGER},
+			</if>
+			<if test="isSupportFullBuy != null">
+				#{isSupportFullBuy,jdbcType=INTEGER},
+			</if>
+			<if test="isFull != null">
+				#{isFull,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 上下架更新 -->
+	<update id="toShelf" parameterType="map">
+		update media_sale set shelf_status = #{status},last_modified_date=SYSDATE() where sale_id in 
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+			${item}
+		</foreach>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.dangdang.digital.model.MediaSale">
+		update media_sale
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				description = #{desc,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=SMALLINT},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=BIGINT},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="creationDate != null">
+				creation_date = #{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="lastModifiedDate != null">
+				last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+			</if>
+			
+			<if test="isSupportSubscribe != null">
+				is_support_subscribe = #{isSupportSubscribe,jdbcType=SMALLINT},
+			</if>
+			<if test="coverPic != null">
+				cover_pic = #{coverPic,jdbcType=VARCHAR},
+			</if>
+			<if test="shelfStatus != null">
+				shelf_Status = #{shelfStatus,jdbcType=INTEGER},
+			</if>
+			<if test="isSupportFullBuy != null">
+				is_support_full_buy = #{isSupportFullBuy,jdbcType=INTEGER},
+			</if>
+			<if test="isFull != null">
+				is_full = #{isFull,jdbcType=INTEGER},
+			</if>
+		</set>
+		where sale_id = #{saleId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.dangdang.digital.model.MediaSale">
+		update media_sale
+		set name = #{name,jdbcType=VARCHAR},
+		description = #{desc,jdbcType=VARCHAR},
+		type = #{type,jdbcType=SMALLINT},
+		price = #{price,jdbcType=BIGINT},
+		creator = #{creator,jdbcType=VARCHAR},
+		creation_date = #{creationDate,jdbcType=TIMESTAMP},
+		modifier = #{modifier,jdbcType=VARCHAR},
+		last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+		
+		is_support_subscribe = #{isSupportSubscribe,jdbcType=SMALLINT},
+		cover_pic=#{coverPic,jdbcType=VARCHAR},
+		shelf_Status=#{shelfStatus,jdbcType=INTEGER},
+		is_support_full_buy=#{isSupportFullBuy,jdbcType=INTEGER},
+		is_full=#{isFull,jdbcType=INTEGER}
+		where sale_id = #{saleId,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" /> 
+		from media_sale where sale_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			${item}
+		</foreach>
+	</select>
+	<select id="getWithDetail" resultMap="BaseResultWithDetailMap" parameterType="map">
+		select m.*,r.media_relation_id,r.sale_id r_sale_id,r.chapter_id,r.media_id
+		from media_sale m,media_relation r where m.sale_id=r.sale_id
+		<if test="type != null"> and m.type=#{type} </if>
+        <if test="mediaId != null">
+			 and r.media_id = #{mediaId} 
+		</if>
+		<if test="chapterIds != null">
+			 and r.chapter_id in (
+			 <foreach collection="chapterIds" item="chapterId" index="index" separator=",">  
+	        	#{chapterId}
+	    	 </foreach> 
+	    	 )
+	     </if>
+	</select>
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" /> 
+		from media_sale where 1=1
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="pageCount" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(1) from media_sale where 1=1 
+		<include refid="Base_Where" />
+	</select>
+	
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" /> 
+		from media_sale where 1=1
+		<include refid="Base_Where" /> 
+	</select>
+</mapper>
