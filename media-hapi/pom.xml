@@ -343,7 +343,7 @@ v4_0_0.xsd">
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3.5</version>
+			<version>4.5.13</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-httpclient</groupId>
